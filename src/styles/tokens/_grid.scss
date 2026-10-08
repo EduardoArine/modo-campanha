@@ -4,6 +4,9 @@
 
 $container-max: 1200px;
 
+// Altura do header fixo (SiteHeader). Usada também para o scroll-margin das âncoras.
+$header-height: 64px;
+
 $columns: (
   sm: 4,
   md: 8,

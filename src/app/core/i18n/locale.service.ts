@@ -22,13 +22,16 @@ export class LocaleService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
 
-  readonly locale = toSignal(
+  /** URL atual do Router (inclui fragmento), atualizada a cada navegação. */
+  readonly url = toSignal(
     this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
-      map((event) => localeFromUrl(event.urlAfterRedirects)),
+      map((event) => event.urlAfterRedirects),
     ),
-    { initialValue: localeFromUrl(this.router.url) },
+    { initialValue: this.router.url },
   );
+
+  readonly locale = computed(() => localeFromUrl(this.url()));
 
   /** Dicionário de UI do idioma ativo. */
   readonly ui = computed(() => UI_DICTIONARIES[this.locale()]);
@@ -49,7 +52,12 @@ export class LocaleService {
 
   /** URL atual no idioma informado (para links de troca de idioma). */
   urlFor(target: Locale): string {
-    return localizedUrl(this.router.url, target);
+    return localizedUrl(this.url(), target);
+  }
+
+  /** Caminho da Home no idioma ativo (`/` ou `/en`). */
+  homePath(): string {
+    return localizedUrl('/', this.locale());
   }
 
   switchTo(target: Locale): Promise<boolean> {

@@ -43,6 +43,11 @@ a {
   color: var(--mc-text-on-accent);
 }
 
+// Âncoras da onepage não ficam escondidas sob o header fixo.
+section[id] {
+  scroll-margin-top: calc(var(--mc-header-height) + var(--mc-space-4));
+}
+
 img,
 svg,
 video {

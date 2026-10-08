@@ -57,6 +57,7 @@
 
   // Grid
   --mc-container-max: #{$container-max};
+  --mc-header-height: #{$header-height};
   --mc-page-margin: clamp(var(--mc-space-4), 4vw, var(--mc-space-7));
   --mc-gutter: var(--mc-space-4);
   --mc-columns: #{map.get($columns, sm)};

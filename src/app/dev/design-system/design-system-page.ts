@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/c
 import { RouterLink } from '@angular/router';
 
 import { LocaleService } from '../../core/i18n';
+import { PLAYER_PROFILE } from '../../data';
 import { UI_EN } from '../../core/i18n/ui.en';
 import { UI_PT_BR } from '../../core/i18n/ui.pt-BR';
 import {
@@ -45,11 +46,15 @@ import {
 export class DesignSystemPage {
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
+  protected readonly profileName = PLAYER_PROFILE.name;
 
   // Player Card: valores reais já aprovados (cargo, XP profissional), via dicionário.
   protected readonly playerFields = computed(() => [
-    { label: this.ui().playerCard.classLabel, value: this.ui().hero.role },
-    { label: this.ui().playerCard.xpLabel, value: this.ui().profile.xp },
+    { label: this.ui().playerCard.classLabel, value: this.locale.pick(PLAYER_PROFILE.role) },
+    {
+      label: this.ui().playerCard.xpLabel,
+      value: this.locale.pick(PLAYER_PROFILE.status.xp.value),
+    },
   ]);
 
   protected readonly typeRoles = [
@@ -149,8 +154,9 @@ export class DesignSystemPage {
   protected readonly previewStates = ['default', 'hover', 'active', 'focus'] as const;
 
   protected readonly dictionaryRows = [
-    { key: 'hero.role', pt: UI_PT_BR.hero.role, en: UI_EN.hero.role },
-    { key: 'hero.motto', pt: UI_PT_BR.hero.motto, en: UI_EN.hero.motto },
+    { key: 'profile.role', pt: PLAYER_PROFILE.role['pt-BR'], en: PLAYER_PROFILE.role.en },
+    { key: 'profile.motto', pt: PLAYER_PROFILE.motto['pt-BR'], en: PLAYER_PROFILE.motto.en },
+    { key: 'hero.eyebrow', pt: UI_PT_BR.hero.eyebrow, en: UI_EN.hero.eyebrow },
     { key: 'cta.explore', pt: UI_PT_BR.cta.explore, en: UI_EN.cta.explore },
     { key: 'cta.resume', pt: UI_PT_BR.cta.resume, en: UI_EN.cta.resume },
     { key: 'inventory.subtitle', pt: UI_PT_BR.inventory.subtitle, en: UI_EN.inventory.subtitle },

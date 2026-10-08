@@ -1,6 +1,6 @@
 // Dicionário de UI em pt-BR. Define a forma (`UiDictionary`) que o inglês precisa seguir.
 // Labels de sistema podem ficar em inglês por decisão de conteúdo (D-018), nunca por hardcode.
-// Hero: textos provisórios até existir o modelo PlayerProfile (docs/07-content-model.md).
+// Textos humanos (cargo, resumo, motto, dados do Player Status) vivem em data/profile.data.ts.
 export const UI_PT_BR = {
   meta: {
     title: 'Modo Campanha — Eduardo Arine',
@@ -10,11 +10,26 @@ export const UI_PT_BR = {
   language: {
     switcherLabel: 'Idioma',
     names: { 'pt-BR': 'Português', en: 'English' },
+    short: { 'pt-BR': 'PT', en: 'EN' },
+  },
+  // Marca provisória até o monograma MC / wordmark final (D-015).
+  brand: {
+    name: 'MODO CAMPANHA',
+    monogram: 'MC',
+    homeLabel: 'Modo Campanha, voltar ao topo',
+  },
+  nav: {
+    label: 'Navegação principal',
+    about: 'Sobre',
+    projects: 'Projetos',
+    journey: 'Jornada',
+    contact: 'Contato',
   },
   hero: {
-    name: 'Eduardo Arine',
-    role: 'Desenvolvedor de Produtos Digitais',
-    motto: 'XP real, sem personagem.',
+    eyebrow: 'MC-01 / PORTFÓLIO PROFISSIONAL',
+  },
+  a11y: {
+    newTab: '(abre em nova aba)',
   },
   cta: {
     explore: 'Explorar campanha',
@@ -25,10 +40,6 @@ export const UI_PT_BR = {
   status: {
     active: 'ACTIVE',
     inProgress: 'IN PROGRESS',
-  },
-  // Provisório até o modelo PlayerProfile (docs/07): XP profissional real, nunca pontos.
-  profile: {
-    xp: '10+ anos em tecnologia',
   },
   playerCard: {
     player: 'PLAYER 01',

@@ -9,3 +9,13 @@
 .mc-columns {
   @include columns;
 }
+
+// Texto disponível só para tecnologias assistivas (ex.: "abre em nova aba").
+.mc-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

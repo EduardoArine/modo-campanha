@@ -37,4 +37,17 @@ describe('LocaleService', () => {
 
     expect(service.pick({ 'pt-BR': 'Projetos', en: 'Projects' })).toBe('Projects');
   });
+
+  it('exposes the current URL and the localized home path', async () => {
+    const harness = await RouterTestingHarness.create();
+    const service = TestBed.inject(LocaleService);
+
+    await harness.navigateByUrl('/en#player-status');
+    expect(service.url()).toBe('/en#player-status');
+    expect(service.homePath()).toBe('/en');
+    expect(service.urlFor('pt-BR')).toBe('/#player-status');
+
+    await harness.navigateByUrl('/');
+    expect(service.homePath()).toBe('/');
+  });
 });

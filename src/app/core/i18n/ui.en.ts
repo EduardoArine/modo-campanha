@@ -12,11 +12,25 @@ export const UI_EN: UiDictionary = {
   language: {
     switcherLabel: 'Language',
     names: { 'pt-BR': 'Português', en: 'English' },
+    short: { 'pt-BR': 'PT', en: 'EN' },
+  },
+  brand: {
+    name: 'MODO CAMPANHA',
+    monogram: 'MC',
+    homeLabel: 'Modo Campanha, back to top',
+  },
+  nav: {
+    label: 'Main navigation',
+    about: 'About',
+    projects: 'Projects',
+    journey: 'Journey',
+    contact: 'Contact',
   },
   hero: {
-    name: 'Eduardo Arine',
-    role: 'Digital Product Developer',
-    motto: 'Real XP. No persona.',
+    eyebrow: 'MC-01 / PROFESSIONAL PORTFOLIO',
+  },
+  a11y: {
+    newTab: '(opens in a new tab)',
   },
   cta: {
     explore: 'Explore the campaign',
@@ -27,9 +41,6 @@ export const UI_EN: UiDictionary = {
   status: {
     active: 'ACTIVE',
     inProgress: 'IN PROGRESS',
-  },
-  profile: {
-    xp: '10+ years in technology',
   },
   playerCard: {
     player: 'PLAYER 01',
