@@ -86,7 +86,12 @@ $supported-pairs: (
   (border-default, surface, non-text),
   (border-default, panel, non-text),
   (accent, bg, non-text),
-  (accent, panel, non-text)
+  (accent, panel, non-text),
+  // Sprint 4: tinta impressa nos materiais físicos (MC-CART, CRT)
+  (material-dark-ink, material-dark, text),
+  (material-light-ink, material-light, text),
+  (material-orange-ink, material-orange, text),
+  (material-cool-ink, material-cool, text)
 );
 
 @function -linear($channel) {

@@ -1,0 +1,27 @@
+<!-- Conteúdo visual; o nome acessível fica no host (role="img"). -->
+<div class="shell">
+  <span class="notch"></span>
+  <span class="ribs ribs--left"></span>
+  <span class="ribs ribs--right"></span>
+
+  <div class="top">
+    <span class="system">{{ ui().cart.system }}</span>
+    <span class="serial">{{ serial() }}</span>
+  </div>
+
+  <div class="label" [class]="'label label--' + accent()">
+    <div class="art">
+      @if (artwork(); as art) {
+        <img [src]="art.src" alt="" />
+      } @else {
+        <span class="art-placeholder">{{ ui().cart.artworkPlaceholder }}</span>
+      }
+    </div>
+    <div class="band">
+      <span class="title">{{ title() }}</span>
+      <span class="type">{{ type() }}</span>
+    </div>
+  </div>
+
+  <span class="contacts"></span>
+</div>

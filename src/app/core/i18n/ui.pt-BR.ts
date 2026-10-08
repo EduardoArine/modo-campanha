@@ -26,6 +26,21 @@ export const UI_PT_BR = {
     active: 'ACTIVE',
     inProgress: 'IN PROGRESS',
   },
+  // Provisório até o modelo PlayerProfile (docs/07): XP profissional real, nunca pontos.
+  profile: {
+    xp: '10+ anos em tecnologia',
+  },
+  playerCard: {
+    player: 'PLAYER 01',
+    photoPlaceholder: 'FOTO DO EDUARDO',
+    classLabel: 'CLASS',
+    xpLabel: 'XP',
+    statusLabel: 'STATUS',
+  },
+  cart: {
+    system: 'MC-CART',
+    artworkPlaceholder: 'PROJECT ARTWORK',
+  },
   sections: {
     playerStatus: 'PLAYER STATUS',
     skillTree: 'SKILL TREE',
@@ -42,6 +57,7 @@ export const UI_PT_BR = {
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',
+    identification: 'MC-01',
   },
 };
 

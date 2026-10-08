@@ -1,0 +1,111 @@
+// CRT Project Viewer (docs/11, Signature Components).
+// Objeto físico por fora (material, sombra de objeto, glow controlado);
+// conteúdo legível por dentro (efeitos atrás do conteúdo, nunca sobre texto ou screenshots).
+@use 'mc' as *;
+
+:host {
+  display: block;
+  container-type: inline-size;
+}
+
+.body {
+  display: grid;
+  gap: space(3);
+  padding: space(5) space(5) space(3);
+  background: var(--mc-material-dark);
+  border-radius: var(--mc-radius-sm);
+  box-shadow:
+    inset 0 1px 0 var(--mc-material-highlight),
+    var(--mc-shadow-object);
+}
+
+.bezel {
+  padding: space(4);
+  background: var(--mc-bg);
+  border-radius: var(--mc-radius-sm);
+  box-shadow: inset 0 0 0 var(--mc-border-width-strong) var(--mc-material-groove);
+}
+
+.screen {
+  position: relative;
+  display: grid;
+  // 4:3 é o mínimo; a tela cresce com o conteúdo (nunca corta texto ou screenshots).
+  aspect-ratio: 4 / 3;
+  background: var(--mc-surface);
+  border-radius: var(--mc-radius-sm);
+  // Glow quente controlado (permitido no CRT, D-024).
+  box-shadow: 0 0 space(7) var(--mc-glow-warm);
+}
+
+// Vinheta + scanlines muito leves, ATRÁS do conteúdo (z-index 0) e mais fortes nas bordas.
+.fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at center, transparent 55%, var(--mc-material-groove) 100%),
+    repeating-linear-gradient(to bottom, var(--mc-material-groove) 0 1px, transparent 1px 4px);
+  opacity: 0.5;
+}
+
+.viewport {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  padding: space(6);
+}
+
+.empty {
+  place-self: center;
+  margin: 0;
+  @include type(system);
+  color: var(--mc-text-muted);
+}
+
+.base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: space(1);
+}
+
+.id {
+  @include type(system);
+  color: var(--mc-material-dark-ink);
+}
+
+// LED decorativo do aparelho (não indica estado).
+.led {
+  width: space(2);
+  height: space(2);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-accent);
+}
+
+// Mobile: prioriza o conteúdo. Moldura mínima, sem proporção fixa, sem efeitos.
+@container (max-width: 34rem) {
+  .body {
+    padding: space(2) space(2) space(2);
+  }
+
+  .bezel {
+    padding: space(2);
+  }
+
+  .screen {
+    aspect-ratio: auto;
+    min-height: 12rem;
+    box-shadow: none;
+  }
+
+  .fx {
+    display: none;
+  }
+
+  .viewport {
+    padding: space(4);
+  }
+}

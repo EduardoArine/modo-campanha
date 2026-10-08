@@ -1,0 +1,33 @@
+<article class="card" [attr.aria-labelledby]="nameId">
+  <span class="bracket bracket--tl" aria-hidden="true"></span>
+  <span class="bracket bracket--tr" aria-hidden="true"></span>
+  <span class="bracket bracket--bl" aria-hidden="true"></span>
+  <span class="bracket bracket--br" aria-hidden="true"></span>
+
+  <p class="player">{{ ui().playerCard.player }}</p>
+
+  <div class="photo">
+    @if (photo(); as p) {
+      <img [src]="p.src" [alt]="p.alt" />
+    } @else {
+      <span class="placeholder" aria-hidden="true">{{ ui().playerCard.photoPlaceholder }}</span>
+    }
+  </div>
+
+  <p class="name" [id]="nameId">{{ name() }}</p>
+
+  <dl class="fields">
+    @for (field of fields(); track field.label) {
+      <div class="field">
+        <dt>{{ field.label }}</dt>
+        <dd>{{ field.value }}</dd>
+      </div>
+    }
+    @if (statusLabel()) {
+      <div class="field">
+        <dt>{{ statusLabel() }}</dt>
+        <dd><ng-content select="mc-status" /></dd>
+      </div>
+    }
+  </dl>
+</article>

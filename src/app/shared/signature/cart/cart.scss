@@ -1,0 +1,160 @@
+// MC-CART (docs/11, Signature Components). Objeto físico: materiais + sombra de objeto.
+// Arquitetura fixa; variam shell, accent, label e artwork.
+@use 'mc' as *;
+
+:host {
+  // Tinta e material do shell (tokens de material, D-032).
+  --cart-material: var(--mc-material-dark);
+  --cart-ink: var(--mc-material-dark-ink);
+  display: block;
+  width: 100%;
+  max-width: 22rem;
+}
+
+:host(.mc-cart--light) {
+  --cart-material: var(--mc-material-light);
+  --cart-ink: var(--mc-material-light-ink);
+}
+
+:host(.mc-cart--orange) {
+  --cart-material: var(--mc-material-orange);
+  --cart-ink: var(--mc-material-orange-ink);
+}
+
+:host(.mc-cart--cool) {
+  --cart-material: var(--mc-material-cool);
+  --cart-ink: var(--mc-material-cool-ink);
+}
+
+.shell {
+  position: relative;
+  display: grid;
+  gap: space(2);
+  padding: space(3) space(5) space(5);
+  background: var(--cart-material);
+  color: var(--cart-ink);
+  border-radius: var(--mc-radius-sm);
+  box-shadow:
+    inset 0 1px 0 var(--mc-material-highlight),
+    var(--mc-shadow-object);
+}
+
+// Encaixe no topo (chave do slot do console MC-01).
+.notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 28%;
+  height: space(1);
+  translate: -50% 0;
+  background: var(--mc-material-groove);
+}
+
+// Sulcos laterais de pega.
+.ribs {
+  position: absolute;
+  top: 34%;
+  bottom: 22%;
+  width: space(2);
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--mc-material-groove) 0 2px,
+    transparent 2px 6px
+  );
+}
+
+.ribs--left {
+  left: space(2);
+}
+
+.ribs--right {
+  right: space(2);
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  gap: space(3);
+  @include type(label);
+  color: var(--cart-ink);
+}
+
+.label {
+  --label-accent: var(--mc-accent);
+  display: grid;
+  overflow: hidden;
+  background: var(--mc-panel);
+  border: var(--mc-border-width-strong) solid var(--mc-material-groove);
+  border-top: space(1) solid var(--label-accent);
+}
+
+.label--cool {
+  --label-accent: var(--mc-cool);
+}
+
+.label--special {
+  --label-accent: var(--mc-special);
+}
+
+.art {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 10;
+  background:
+    repeating-linear-gradient(-45deg, var(--mc-border-subtle) 0 1px, transparent 1px 10px),
+    var(--mc-bg);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    image-rendering: pixelated;
+  }
+}
+
+.art-placeholder {
+  padding: space(1) space(2);
+  background: var(--mc-bg);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+.band {
+  display: grid;
+  align-content: start;
+  gap: space(1);
+  padding: space(3);
+}
+
+.title {
+  // Proporção fixa do cartucho: nome em até 2 linhas, sempre reservadas. O nome
+  // completo está no Project Summary e no nome acessível do host.
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  min-height: calc(2 * 1.15em);
+  @include type(cart-title);
+  color: var(--mc-text);
+}
+
+.type {
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Contatos na base (borda que entra no console).
+.contacts {
+  position: absolute;
+  bottom: space(2);
+  left: 50%;
+  width: 40%;
+  height: space(1);
+  translate: -50% 0;
+  background: repeating-linear-gradient(
+    to right,
+    var(--mc-material-groove) 0 4px,
+    transparent 4px 7px
+  );
+}

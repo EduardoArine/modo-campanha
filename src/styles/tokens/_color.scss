@@ -63,7 +63,20 @@ $color-semantic: (
   border-subtle: (cream-100, 12%),
   border-default: (cream-100, 40%),
   border-accent: orange-700,
-  border-cool: teal-500
+  border-cool: teal-500,
+  // Materiais de objetos físicos (MC-CART, CRT, console). Aliases da paleta, sem cor nova.
+  // Não significam status nem raridade. Cada material tem a sua tinta (texto impresso).
+  material-dark: ink-800,
+  material-dark-ink: cream-100,
+  material-light: cream-300,
+  material-light-ink: ink-950,
+  material-orange: orange-500,
+  material-orange-ink: ink-950,
+  material-cool: petrol-800,
+  material-cool-ink: cream-100,
+  // Sombreamento de relevo (sulcos, contatos) e brilho de aresta, sobre qualquer material
+  material-groove: (ink-950, 35%),
+  material-highlight: (cream-100, 14%)
 );
 
 /// Valor CSS de um token semântico, referenciando o primitivo via custom property.
