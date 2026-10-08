@@ -1,9 +1,10 @@
 // Tipografia do MC Design System (docs/11-design-system.md, Typography). Aprovada em D-022.
-// Pixelify Sans = voz do sistema (≥ ~14 px). IBM Plex Sans = voz do Eduardo e micro-labels.
+// Pixelify Sans = brand/sistema validado (D-029). IBM Plex Sans = voz do Eduardo, títulos de seção e micro-labels.
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
 @use 'sass:math';
+@use 'breakpoints' as bp;
 
 $font-display: 'Pixelify Sans', ui-monospace, 'Cascadia Mono', 'Courier New', monospace;
 $font-text:
@@ -33,7 +34,8 @@ $fluid-max-vw: 1200px;
 
 // Papéis tipográficos. `size` aceita um valor fixo ou uma lista (mobile, desktop).
 $type-roles: (
-  // Pixelify Sans
+  // Pixelify Sans: só displays visualmente validados (D-029). Validado: "MODO CAMPANHA" (contexto
+  // de palavra). Códigos curtos com "C" (MC, MC-01, MC-CART) não validados em nenhum tamanho testado.
   display-hero: (
       family: display,
       size: (
@@ -42,51 +44,59 @@ $type-roles: (
       ),
       line-height: 0.95,
       tracking: 0,
-      weight: 700,
+      // 500 no mobile (48–71 px); 700 a partir de md, onde o tamanho já passa de ~71 px
+      weight: (
+          500,
+          700,
+        ),
       case: uppercase,
     ),
-  display-section: (
-    family: display,
-    size: (
-      28px,
-      40px,
-    ),
-    line-height: 1.1,
-    tracking: 0.02em,
-    weight: 700,
-    case: uppercase,
-  ),
-  display-cart: (
-    family: display,
-    size: (
-      14px,
-      16px,
-    ),
-    line-height: 1.15,
-    tracking: 0.02em,
-    weight: 700,
-    case: uppercase,
-  ),
-  system: (
-    family: display,
-    size: 14px,
-    line-height: 1.3,
-    tracking: 0.06em,
-    weight: 500,
-    case: uppercase,
-  ),
   // IBM Plex Sans
-  label: (
+  // Títulos de seção: linguagem de game via caixa alta, peso, tracking e composição do header.
+  section-title: (
       family: text,
       size: (
-        12px,
-        13px,
+        24px,
+        32px,
       ),
+      line-height: 1.15,
+      tracking: 0.06em,
+      weight: 600,
+      case: uppercase,
+    ),
+  // Códigos curtos de sistema (MC-01, MC-CART, ON-001) em tamanho pequeno: legibilidade
+  // do "C" exige Plex aqui (D-029). Pixelify só volta a códigos após nova validação visual.
+  system: (
+      family: text,
+      size: 14px,
       line-height: 1.3,
       tracking: 0.08em,
       weight: 500,
       case: uppercase,
     ),
+  // Nome do projeto no rótulo do MC-CART (conteúdo, não código de sistema).
+  cart-title: (
+      family: text,
+      size: (
+        14px,
+        16px,
+      ),
+      line-height: 1.15,
+      tracking: 0.04em,
+      weight: 600,
+      case: uppercase,
+    ),
+  label: (
+    family: text,
+    size: (
+      12px,
+      13px,
+    ),
+    line-height: 1.3,
+    tracking: 0.08em,
+    weight: 500,
+    case: uppercase,
+  ),
   name: (
     family: text,
     size: (
@@ -165,7 +175,8 @@ $type-roles: (
   @return rem($size);
 }
 
-/// Aplica um papel tipográfico completo: `@include type(display-section);`
+/// Aplica um papel tipográfico completo: `@include type(section-title);`
+/// `weight` aceita um valor ou uma lista (base, a partir de md).
 @mixin type($role) {
   @if not map.has-key($type-roles, $role) {
     @error 'Papel tipográfico desconhecido: #{$role}. Use: #{map.keys($type-roles)}';
@@ -173,8 +184,15 @@ $type-roles: (
   $r: map.get($type-roles, $role);
   font-family: var(--mc-font-#{map.get($r, family)});
   font-size: var(--mc-font-size-#{$role});
-  font-weight: map.get($r, weight);
+  $weight: map.get($r, weight);
+  font-weight: list.nth($weight, 1);
   line-height: map.get($r, line-height);
   letter-spacing: map.get($r, tracking);
   text-transform: map.get($r, case);
+
+  @if list.length($weight) > 1 {
+    @include bp.mq(md) {
+      font-weight: list.nth($weight, 2);
+    }
+  }
 }

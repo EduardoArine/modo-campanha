@@ -1,7 +1,8 @@
 import { UiDictionary } from './ui.pt-BR';
 
 // Dicionário de UI em inglês. Chave faltando ou sobrando quebra o build.
-// Textos humanos: "Real XP. No persona." e "Digital Product Developer" aprovados (refináveis na FASE 7).
+// Traduções aprovadas: "Real XP. No persona.", "Digital Product Developer", "Explore the campaign",
+// "Résumé" (ação mais descritiva futura: "View résumé"). Refináveis na FASE 7.
 export const UI_EN: UiDictionary = {
   meta: {
     title: 'Modo Campanha — Eduardo Arine',

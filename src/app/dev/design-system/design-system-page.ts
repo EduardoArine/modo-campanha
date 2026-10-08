@@ -30,9 +30,9 @@ export class DesignSystemPage {
 
   protected readonly typeRoles = [
     { role: 'display-hero', sample: 'Modo Campanha' },
-    { role: 'display-section', sample: 'Player Status' },
-    { role: 'display-cart', sample: 'Comunidade On' },
-    { role: 'system', sample: 'MC-01 · MC-CART · ON-001' },
+    { role: 'section-title', sample: 'Current Main Quest' },
+    { role: 'cart-title', sample: 'Comunidade On' },
+    { role: 'system', sample: 'MC · MC-01 · MC-CART · ON-001' },
     { role: 'label', sample: 'Origin · XP · Current Campaign' },
     { role: 'name', sample: 'Eduardo Arine' },
     { role: 'title-l', sample: 'Desenvolvedor de Produtos Digitais' },

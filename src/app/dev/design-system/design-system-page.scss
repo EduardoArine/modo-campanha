@@ -95,6 +95,27 @@
   color: var(--mc-accent);
 }
 
+.pixel-code {
+  font-family: var(--mc-font-display);
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  color: var(--mc-text);
+}
+
+.pixel-code .token {
+  margin-left: space(3);
+  letter-spacing: 0;
+}
+
+.note {
+  margin: 0;
+  max-width: 65ch;
+  @include type(body-s);
+  color: var(--mc-text-muted);
+}
+
 .t-body-l,
 .t-body,
 .t-body-s {

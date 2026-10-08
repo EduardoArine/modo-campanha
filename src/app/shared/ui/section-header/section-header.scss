@@ -28,7 +28,7 @@
 
 .heading {
   margin: 0;
-  @include type(display-section);
+  @include type(section-title);
   color: var(--mc-text);
   text-wrap: balance;
 }
