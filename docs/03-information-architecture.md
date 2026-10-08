@@ -31,7 +31,7 @@ Não é uma seção, é a moldura fixa do site. Base 03-A:
 
 ## Notas da FASE 1 sobre as seções
 
-- **Hero:** visualmente, "MODO CAMPANHA" é o maior texto. Semanticamente, o `h1` deve continuar identificando Eduardo (ex.: `h1` = "Eduardo Arine", com "Modo Campanha" como marca/eyebrow, ou `h1` combinado). Decidir na FASE 3, pensando em SEO e leitores de tela.
+- **Hero:** "MODO CAMPANHA" é o maior texto visualmente, mas o **H1 semântico identifica Eduardo Arine** (D-026). A hierarquia visual não precisa espelhar a hierarquia de headings. Validar na FASE 3.
 - **Player Status (03-A):** Player Card (foto real) | Origin · XP · Current Campaign | Focus · Sobre a jornada · Estado atual. Grid em `docs/11`.
 - **Project Inventory:** grade de cartuchos MC-CART com nome, tipo, descrição curta e 1–2 tags; detalhes no CRT Viewer.
 - Todas as âncoras (`id`) permanecem iguais nos dois idiomas; só os textos mudam.

@@ -7,16 +7,16 @@
 
 | #   | Fundamento               | Status                                                        |
 | --- | ------------------------ | ------------------------------------------------------------- |
-| 1   | Colors                   | ✅ Paleta-base aprovada (D-014) · 🟡 **regras e tokens: proposta (Sprint 2)** |
+| 1   | Colors                   | ✅ Aprovado e implementado (D-014, D-024, D-025)              |
 | 2   | Typography               | ✅ Aprovada e implementada (D-022)                             |
 | 3   | Grid                     | ✅ Aprovado e implementado (D-022)                             |
 | 4   | Spacing                  | ✅ Aprovado e implementado (D-022)                             |
-| 5   | Borders                  | 🟡 **Proposta (Sprint 2), aguardando aprovação**              |
-| 6   | Surfaces                 | 🟡 **Proposta (Sprint 2), aguardando aprovação**              |
-| 7   | Icons                    | ⬜ backlog (setas ↗ → não existem nas fontes: virão como SVG) |
-| 8   | Buttons                  | ⬜ backlog                                                     |
-| 9   | Labels / Chips           | ⬜ backlog                                                     |
-| 10  | Status                   | ⬜ backlog                                                     |
+| 5   | Borders                  | ✅ Aprovado e implementado (D-024)                             |
+| 6   | Surfaces                 | ✅ Aprovado e implementado (D-024)                             |
+| 7   | Icons                    | 🟡 Proposta Sprint 3 (setas ↗ → não existem nas fontes: SVG)  |
+| 8   | Buttons                  | 🟡 Proposta Sprint 3                                           |
+| 9   | Labels / Chips           | 🟡 Proposta Sprint 3                                           |
+| 10  | Status                   | 🟡 Proposta Sprint 3                                           |
 | 11  | Player Card              | ⬜ backlog (regras de conteúdo em D-017)                       |
 | 12  | MC-CART                  | ⬜ backlog (direção em D-013)                                  |
 | 13  | CRT                      | ⬜ backlog                                                     |
@@ -24,11 +24,12 @@
 | 15  | Motion                   | ⬜ backlog                                                     |
 | 16  | Easter Egg Language      | ⬜ backlog                                                     |
 | 17  | Responsive behavior      | ⬜ backlog (base definida em Grid)                             |
-| 18  | Accessibility            | ⬜ backlog (contraste medido em Colors)                        |
+| 18  | Accessibility            | 🟡 parcial: contratos de contraste e foco implementados (D-025) |
 | 19  | i18n / content behavior  | ✅ Arquitetura aprovada e implementada (D-020)                 |
 
 - **Sprint 1 (concluído):** Typography + Grid + Spacing + infraestrutura de i18n.
-- **Sprint 2 (proposta):** Colors + Borders + Surfaces. Nada visual é implementado antes da aprovação.
+- **Sprint 2 (concluído):** Colors + Borders + Surfaces + contratos de contraste.
+- **Sprint 3 (proposta):** Icons + Buttons + Labels/Chips + Status. Não iniciado.
 
 ---
 
@@ -45,7 +46,7 @@
 
 ---
 
-## Implementação (Sprint 1)
+## Implementação
 
 ```
 src/styles/
@@ -55,6 +56,9 @@ src/styles/
     _spacing.scss          # $space (primitivos), $space-semantic (aliases), função space(n)
     _typography.scss       # famílias, $type-roles, função fluid(), mixin type(role)
     _grid.scss             # $container-max, $columns, mixins page-grid e columns
+    _color.scss            # primitivos + semânticos (Sprint 2; não encaminhado aos componentes)
+    _surface.scss          # border widths, radii, foco, mixin focus-ring (Sprint 2)
+    _contrast.scss         # supported color pairs + verificação na compilação (Sprint 2)
   _custom-properties.scss  # emite todos os tokens como --mc-* em :root (uma vez)
   _fonts.scss              # @font-face (WOFF2 self-hosted)
   _layout.scss             # classes .mc-page-grid e .mc-columns
@@ -119,7 +123,7 @@ src/styles.scss            # fonts → custom-properties → base → layout
 
 Sobre petrol `#1F3A4A`: text 9.9 · text-2 7.4 · brand-light 6.7 · **teal 4.1** (não usar teal como texto pequeno sobre petrol).
 
-Restrições já aprovadas: `#C96A1B` nunca como texto pequeno; `#C44536` nunca como texto; petrol predominantemente como superfície; botão `#F28C28` com texto escuro. O Sprint 2 abaixo transforma isso em regras de token.
+Restrições aprovadas (`#C96A1B` nunca como texto pequeno; `#C44536` nunca como texto; petrol como superfície; botão `#F28C28` com texto escuro; chips frios com texto creme) viraram regras de token e contratos automatizados no Sprint 2 abaixo.
 
 ---
 
@@ -229,90 +233,147 @@ Sempre referenciam primitivos, sem duplicar valores.
 
 ---
 
-## Sprint 2 — Colors + Borders + Surfaces (PROPOSTA, aguardando aprovação)
+## Sprint 2 — Colors + Borders + Surfaces (APROVADO e implementado, D-024)
 
-Nada desta seção está implementado. **Nenhum HEX novo**: tudo deriva da paleta D-014, com transparência via `color-mix()` quando necessário.
+Arquivos: `src/styles/tokens/_color.scss` (primitivos + semânticos), `_surface.scss` (borders, radius, foco), `_contrast.scss` (contratos), emitidos em `_custom-properties.scss`; regras globais em `_base.scss`. **Nenhum HEX novo**: tudo deriva da paleta D-014; camadas translúcidas usam `color-mix()`.
 
-### 5. Colors: tokens em duas camadas
+### 5. Colors: duas camadas
 
-**Primitivos** (`--mc-color-*`, nomes neutros de matiz/tom, mapeiam 1:1 a paleta):
+**Primitivos** (`--mc-color-*`): `orange-300` `orange-500` `orange-700` `gold-400` `ink-950` `ink-900` `ink-850` `ink-800` `cream-100` `cream-300` `cream-500` `petrol-800` `teal-500` `green-500` `red-600`.
+Uso exclusivo dentro de `src/styles/tokens/`. O `_mc.scss` **não** encaminha cores para componentes.
 
-`orange-300 #FFB357` · `orange-500 #F28C28` · `orange-700 #C96A1B` · `gold-400 #F2C14E` · `ink-950 #14110F` · `ink-900 #1D1815` · `ink-850 #231F1C` · `ink-800 #2B2521` · `cream-100 #F3E9D2` · `cream-300 #D7CBB5` · `cream-500 #A89A86` · `petrol-800 #1F3A4A` · `teal-500 #3FA7A3` · `green-500 #7FB069` · `red-600 #C44536`
+**Semânticos** (`--mc-*`): os únicos permitidos em componentes, sempre via `var(--mc-<token>)`.
 
-**Semânticos** (o que os componentes usam; primitivos nunca são usados direto em componentes):
+| Grupo        | Token                    | Valor                    | Uso                                                        | Proibido                                         |
+| ------------ | ------------------------ | ------------------------ | ---------------------------------------------------------- | ------------------------------------------------ |
+| Superfícies  | `--mc-bg`                | ink-950                  | página (nível 0)                                           | —                                                |
+|              | `--mc-surface`           | ink-900                  | header (nível 1)                                           | —                                                |
+|              | `--mc-panel`             | ink-850                  | Player Card, painéis (nível 2)                             | —                                                |
+|              | `--mc-elevated`          | ink-800                  | menus, tooltips (nível 3)                                  | —                                                |
+| Texto        | `--mc-text`              | cream-100                | títulos, nome, texto principal                             | —                                                |
+|              | `--mc-text-secondary`    | cream-300                | parágrafos, cargo, descrições                              | —                                                |
+|              | `--mc-text-muted`        | cream-500                | micro-labels, metadados                                    | texto essencial longo                            |
+|              | `--mc-text-on-accent`    | ink-950                  | texto sobre accent / accent-hover / accent-active          | —                                                |
+|              | `--mc-text-on-cool`      | cream-300                | texto de chips frios sobre `--mc-cool-surface`             | —                                                |
+| Acento       | `--mc-accent`            | orange-500               | MODO CAMPANHA, marcador de seção, CTA primário, nav ativa  | fundo de seção, glow genérico                    |
+|              | `--mc-accent-hover`      | orange-300               | hover do CTA primário                                      | —                                                |
+|              | `--mc-accent-active`     | orange-700               | CTA pressionado (com `--mc-text-on-accent`)                | **texto < 24 px** (ou < 18.66 px bold)           |
+| Links        | `--mc-link`              | orange-500               | links em texto                                             | —                                                |
+|              | `--mc-link-hover`        | orange-300               | hover de links                                             | —                                                |
+| Foco         | `--mc-focus-ring`        | orange-300               | anel de foco por teclado (contrato próprio)                | ser o único indicador visual além do outline     |
+| Interação    | `--mc-interactive-hover` | cream-100 a 6%           | hover de elementos neutros (nav, cartucho, botão secundário) | —                                              |
+|              | `--mc-interactive-active`| cream-100 a 10%          | pressionado de elementos neutros                           | —                                                |
+| Desabilitado | `--mc-disabled-bg`       | cream-100 a 4%           | fundo de controle desabilitado                             | —                                                |
+|              | `--mc-disabled-text`     | cream-500                | texto de controle desabilitado                             | —                                                |
+|              | `--mc-disabled-border`   | cream-100 a 12%          | borda de controle desabilitado                             | —                                                |
+| Especial     | `--mc-special`           | gold-400                 | achievements, raridade, `featured`                         | decoração genérica                               |
+| Frios        | `--mc-cool-surface`      | petrol-800               | fundo de chips/labels frios                                | **texto**                                        |
+|              | `--mc-cool`              | teal-500                 | ícones, bordas, texto sobre bg/panel                       | texto pequeno sobre `cool-surface` (4.1)         |
+| Status       | `--mc-status-online`     | green-500                | ONLINE / ACTIVE / XP                                       | —                                                |
+|              | `--mc-status-danger`     | red-600                  | ícone, borda, indicador de erro                            | **qualquer texto**                               |
+| Bordas       | `--mc-border-subtle`     | cream-100 a 12%          | divisores decorativos                                      | limite de controle interativo                    |
+|              | `--mc-border-default`    | cream-100 a 40%          | limite de controles interativos                            | —                                                |
+|              | `--mc-border-accent`     | orange-700               | Player Card (decorativa), chips quentes                    | único indicador de estado                        |
+|              | `--mc-border-cool`       | teal-500                 | chips frios                                                | —                                                |
 
-| Token                    | Primitivo     | Uso permitido                                         | Proibido                                   |
-| ------------------------ | ------------- | ----------------------------------------------------- | ------------------------------------------ |
-| `--mc-bg`                | ink-950       | fundo da página                                       | —                                          |
-| `--mc-surface`           | ink-900       | header, faixas de seção (se necessário)               | —                                          |
-| `--mc-panel`             | ink-850       | Player Card, painéis, rótulo do MC-CART               | —                                          |
-| `--mc-elevated`          | ink-800       | hover de superfícies, menus (seletor de idioma), tooltips | —                                      |
-| `--mc-text`              | cream-100     | títulos, nome, texto principal                        | —                                          |
-| `--mc-text-secondary`    | cream-300     | parágrafos longos, cargo, descrições                  | —                                          |
-| `--mc-text-muted`        | cream-500     | micro-labels, metadados, placeholders                 | texto essencial longo                      |
-| `--mc-text-on-accent`    | ink-950       | texto sobre `--mc-accent` (7.7) e `--mc-accent-hover` (10.6) | —                                   |
-| `--mc-accent`            | orange-500    | MODO CAMPANHA, marcador de seção, CTA primário, links, nav ativa | grandes áreas de fundo          |
-| `--mc-accent-hover`      | orange-300    | hover do CTA/links; texto de destaque pequeno         | —                                          |
-| `--mc-accent-strong`     | orange-700    | bordas e cantos (Player Card), estado pressionado do CTA (texto ink-950: 5.0) | **texto < 24 px** (ou < 18.66 px bold) |
-| `--mc-special`           | gold-400      | achievements, raridade, projeto `featured`            | uso decorativo genérico                    |
-| `--mc-cool-surface`      | petrol-800    | fundo de chips/labels frios, rótulos de cartucho      | **texto**                                  |
-| `--mc-cool`              | teal-500      | ícones, bordas e texto ≥ 14 px sobre bg/panel         | texto pequeno sobre petrol (4.1)           |
-| `--mc-status-online`     | green-500     | bolinha/label ONLINE/ACTIVE, XP                       | —                                          |
-| `--mc-status-danger`     | red-600       | ícones, bordas, indicadores (3.8 ≥ 3:1 não-texto)     | **qualquer texto**                         |
-| `--mc-focus`             | orange-300    | anel de foco 2 px + offset 2 px (10.6 sobre bg)       | —                                          |
+### Supported color pairs (contratos de contraste)
 
-Regras operacionais do 70/20/10:
+O sistema mantém uma **lista explícita** dos pares que permite usar (`$supported-pairs` em `_contrast.scss`). Ela é verificada **na compilação do CSS global**: se algum par cair abaixo do mínimo do seu tipo, `npm run build` e `npm test` falham com a mensagem `Contrato de contraste violado: <token> sobre <fundo> = N:1`. Única fonte de verdade: os próprios tokens Sass. Pares fora da lista **não são suportados** e não precisam passar. Para usar uma combinação nova, adicioná-la à lista (e ela precisa passar).
 
-- **Laranja só onde há intenção:** título do Hero, marcador ■ de seção, **um** CTA primário por viewport, nav ativa, foco, cantos do Player Card, shell laranja do MC-CART. Nunca fundo de seção.
-- **Frios (petrol/teal) ≤ 10%:** chips de categoria, detalhes de cartucho, pontos de informação. Nunca competem com o CTA.
-- **Status** só comunica estado real (online, em andamento, erro); não é decoração.
-- Mensagem de erro: texto `--mc-text` + ícone/borda `--mc-status-danger` (nunca texto vermelho).
+Mínimos: `text` 4.5:1 · `large-text` 3:1 (≥ 24 px ou ≥ 18.66 px bold) · `non-text` 3:1 (WCAG 1.4.11). Camadas translúcidas são compostas sobre a superfície indicada.
+
+| Primeiro plano            | Fundo(s)                                   | Tipo        | Menor razão |
+| ------------------------- | ------------------------------------------ | ----------- | ----------- |
+| `text`                    | bg, surface, panel, elevated               | text        | 12.5        |
+| `text-secondary`          | bg, surface, panel, elevated               | text        | 9.4         |
+| `text-muted`              | bg, surface, panel, elevated               | text        | 5.5         |
+| `accent`                  | bg, surface, panel, elevated               | text        | 6.2         |
+| `accent-active`           | bg, panel                                  | large-text  | 4.3         |
+| `text-on-accent`          | accent, accent-hover, accent-active        | text        | 5.0         |
+| `link`                    | bg, surface, panel                         | text        | 6.7         |
+| `link-hover`              | bg, surface, panel                         | text        | 9.2         |
+| `text`                    | interactive-hover / -active sobre bg e panel | text      | 10.3        |
+| `disabled-text`           | disabled-bg sobre bg e panel               | text        | 5.4         |
+| `special`                 | bg, panel                                  | text        | 9.7         |
+| `text-on-cool`, `text`    | cool-surface                               | text        | 7.4         |
+| `cool`                    | bg, panel                                  | text        | 5.7         |
+| `status-online`           | bg, panel                                  | text        | 6.5         |
+| `status-danger`           | bg, surface, panel                         | non-text    | 3.3         |
+| `focus-ring`              | bg, surface, panel, elevated, cool-surface | non-text    | 6.7         |
+| `border-default`          | bg, surface, panel                         | non-text    | 3.3         |
+| `accent` (limite do CTA)  | bg, panel                                  | non-text    | 6.7         |
+
+Pares explicitamente **não suportados** (não usar): `accent-active` como texto pequeno; `status-danger` como texto; `cool` como texto sobre `cool-surface`; qualquer texto sobre `border-*`; `text` claro sobre `accent`/`accent-active`.
+
+### Regras de estado: focus, hover, active, disabled
+
+- **Focus (contrato):** só por teclado (`:focus-visible`), anel `--mc-focus-ring-width` (2 px) sólido `--mc-focus-ring`, com `--mc-focus-ring-offset` (2 px) **obrigatório**, para que o anel fique sobre a superfície de trás e não sobre o preenchimento do elemento. Aplicado globalmente em `_base.scss`; componentes que precisarem reaplicar usam `@include focus-ring`. Nunca remover o foco sem substituto equivalente.
+- **Hover:** CTA primário → `--mc-accent-hover`; links → `--mc-link-hover`; elementos neutros → sobreposição `--mc-interactive-hover`. Hover nunca é o único caminho para uma informação (touch não tem hover).
+- **Active (pressionado):** CTA primário → `--mc-accent-active` (texto continua `--mc-text-on-accent`, 5.0); neutros → `--mc-interactive-active`.
+- **Disabled:** `--mc-disabled-bg` + `--mc-disabled-text` + `--mc-disabled-border`, cursor `not-allowed`, `disabled`/`aria-disabled`. Nunca indicado só por cor: o atributo e o comportamento também mudam. Sem hover/active quando desabilitado.
+- **Selecionado / ativo / erro:** nunca indicados só por cor ou só por borda decorativa. Combinar com texto, ícone, peso, `aria-current`/`aria-selected`/`aria-invalid`.
+- Seleção de texto: `--mc-accent` com `--mc-text-on-accent`.
 
 ### 6. Borders
 
-| Token                      | Valor                                                       | Uso                                                       |
-| -------------------------- | ----------------------------------------------------------- | --------------------------------------------------------- |
-| `--mc-border-width`        | 1px                                                         | divisores, chips, contornos                               |
-| `--mc-border-width-strong` | 2px                                                         | objetos "hardware" (MC-CART, moldura CRT), anel de foco   |
-| `--mc-border-subtle`       | `color-mix(in srgb, cream-100 12%, transparent)` (1.3:1)    | divisores decorativos (Player Status, header de seção)    |
-| `--mc-border-default`      | `color-mix(in srgb, cream-100 40%, transparent)` (3.4:1)    | contornos de elementos **interativos** (botão secundário, input) |
-| `--mc-border-accent`       | `--mc-accent-strong` (5.0 sobre bg)                         | Player Card, chips quentes                                |
-| `--mc-border-cool`         | `--mc-cool` (4.1 sobre petrol)                              | chips frios                                               |
-| `--mc-radius-none`         | 0                                                           | padrão: painéis, Player Card, seções, CRT                 |
-| `--mc-radius-sm`           | 4px                                                         | botões, chips, inputs                                     |
-| `--mc-radius-round`        | 50%                                                         | só indicadores de status (bolinha)                        |
+| Token                        | Valor   | Uso                                                       |
+| ---------------------------- | ------- | --------------------------------------------------------- |
+| `--mc-border-width-default`  | 1px     | estrutura: divisores, chips, contornos                    |
+| `--mc-border-width-strong`   | 2px     | objetos físicos (MC-CART, moldura CRT) e foco             |
+| `--mc-radius-none`           | 0       | padrão: painéis, Player Card, seções, CRT                 |
+| `--mc-radius-sm`             | 4px     | botões, chips, inputs                                     |
+| `--mc-radius-round`          | 50%     | só elementos realmente circulares (indicador de status)   |
 
-Padrões de linha (do 03-A):
+Cores de borda: `--mc-border-subtle` (decorativa), `--mc-border-default` (interativa, ≥ 3:1), `--mc-border-accent` (especial/decorativa), `--mc-border-cool`.
 
-- **Section header:** marcador ■ 12–14 px `--mc-accent` + título + linha 1 px `--mc-border-subtle` ocupando o resto + status opcional à direita.
-- **Player Status:** itens separados por linha 1 px subtle; coluna da jornada com divisor vertical 1 px subtle.
-- **Cantos de bracket (HUD):** traço 2 px `--mc-accent-strong`, ~12 px de perna, só nos 4 cantos. Exclusivo do Player Card (e, se aprovado, da moldura do CRT). Não espalhar.
-- WCAG 1.4.11: bordas que identificam um controle interativo usam `--mc-border-default` ou mais forte (≥ 3:1); `--mc-border-subtle` só para separação decorativa.
+- **Section header:** marcador ■ 12–14 px `--mc-accent` + título + linha 1 px `--mc-border-subtle` + status opcional.
+- **Cantos de mira (bracket):** traço 2 px `--mc-border-accent`, ~12 px de perna, **exclusivos do Player Card**. Não reutilizar em cards ou painéis.
+- **Borda do Player Card:** `--mc-border-accent` sobre `--mc-panel` dá 4.3:1, mas ela é **decorativa**. Ela (e os cantos de mira) **nunca** pode ser o único indicador de foco, seleção, ativo, erro ou qualquer estado funcional; estados usam os tokens de estado acima.
+- WCAG 1.4.11: bordas que identificam controles interativos usam `--mc-border-default` ou mais forte.
 
 ### 7. Surfaces
 
-Modelo de elevação **por luminosidade, não por sombra** (dark UI quente):
+| Nível | Token           | Exemplos                                 |
+| ----- | --------------- | ---------------------------------------- |
+| 0     | `--mc-bg`       | página                                   |
+| 1     | `--mc-surface`  | header fixo                              |
+| 2     | `--mc-panel`    | Player Card, painéis, corpo do CRT       |
+| 3     | `--mc-elevated` | menu de idioma, tooltip                  |
 
-| Nível | Token           | Exemplos                                                   |
-| ----- | --------------- | ---------------------------------------------------------- |
-| 0     | `--mc-bg`       | página                                                     |
-| 1     | `--mc-surface`  | header fixo                                                |
-| 2     | `--mc-panel`    | Player Card, painéis, CRT (corpo)                          |
-| 3     | `--mc-elevated` | hover, menu de idioma, tooltip                             |
+- Profundidade da UI por **luminosidade**, não por `box-shadow`.
+- Máximo de **dois níveis aninhados** (bg → panel). Evitar card dentro de card dentro de card.
+- **Linhas antes de caixas:** caixa só para objetos físicos e camadas interativas.
+- **Header sólido** (`--mc-surface` + borda inferior `--mc-border-subtle`). Proibido: glassmorphism, `backdrop-filter` decorativo, superfície translúcida estilo SaaS.
 
-Regras:
+### Sombras: objetos físicos vs. UI digital
 
-- No máximo **dois níveis aninhados** (ex.: bg → panel). Panel dentro de panel = repensar.
-- **Linhas antes de caixas:** Player Status, Skill Tree e Campaign Log usam espaço + divisores; caixa só para objetos físicos (Player Card, MC-CART, CRT) e camadas interativas.
-- **Sombras só em objetos físicos** (MC-CART, console/CRT): `--mc-shadow-object: 0 12px 24px -8px color-mix(in srgb, black 60%, transparent)`. Interface plana não tem sombra.
-- **Luz quente (atmosfera 03-B):** `--mc-glow-warm: radial-gradient(… color-mix(in srgb, orange-500 24%, transparent) …)` aplicada **só** atrás do visual do Hero e, no futuro, ao redor da tela do CRT ligada. Nunca atrás de texto corrido; contraste do texto é medido sem o glow.
-- Header: `--mc-surface` com borda inferior subtle; sem blur/vidro (evita estética SaaS).
-- Sem textura de ruído global; scanlines só dentro da tela do CRT (FASE 5), respeitando `prefers-reduced-motion`.
-- Shells do MC-CART (preto, creme, grafite, laranja) **não** são tokens de surface da interface: serão especificados no fundamento MC-CART.
+> UI digital e objetos físicos têm comportamentos visuais diferentes.
 
-### Entregáveis do Sprint 2 após aprovação
+- `--mc-shadow-object` (`0 12px 24px -8px` ink-950 a 85%) é **exclusiva de objetos físicos** do universo: MC-CART, console MC-01, CRT quando necessário, futuros objetos físicos.
+- Painéis, cards de interface, header, menus e botões **não** usam sombra.
 
-1. `src/styles/tokens/_color.scss` (primitivos + semânticos) e `_surface.scss` (borders, radius, shadow, glow), emitidos em `_custom-properties.scss`.
-2. `body` com `--mc-bg` / `--mc-text`; foco global com `--mc-focus`.
-3. Página interna de referência (não pública) ou especímen atualizado para revisão visual.
-4. Teste automatizado de contraste dos pares semânticos (falha se algum par cair abaixo do mínimo).
+### Glow
+
+- `--mc-glow-warm` (orange-500 a 24%, usado em gradiente radial) é permitido **apenas** em: área visual do Hero, CRT e, no futuro, ativação/boot de cartucho.
+- Proibido atrás de texto, em headings comuns, em botões, em todos os elementos laranja e em bordas comuns. O laranja mantém hierarquia e intenção.
+
+---
+
+## Backlog registrado para a FASE 3
+
+- **Papel tipográfico `stat-value`** para valores e números reais (ex.: `10+` no XP profissional; futuras métricas reais). Definir família, tamanho e regras na implementação do Player Status.
+- **Wordmark MODO CAMPANHA e monograma MC** como assets próprios (SVG). Pixelify Sans não será forçada a reproduzir o logo do concept.
+- **H1 semântico = "Eduardo Arine"** (D-026); "MODO CAMPANHA" pode ser visualmente maior sem ser o H1. Validar no Hero.
+
+---
+
+## Sprint 3 (PROPOSTA, aguardando aprovação): Icons + Buttons + Labels/Chips + Status
+
+Primitivos de interface que Hero, Player Status e Project Inventory vão consumir.
+
+1. **Icons:** SVG inline, grade de 16 px (renderizados a 16 e 24 px), estilo pixel coerente com a Pixelify (`shape-rendering: crispEdges`), `currentColor`. Conjunto inicial só do que o concept usa: seta direita, seta para baixo, link externo (↗), documento (currículo), idioma. Logos de GitHub e LinkedIn como marcas oficiais monocromáticas (sem pixelizar, por respeito às diretrizes de marca). Componente `mc-icon` próprio, sem biblioteca. Decorativo = `aria-hidden`; ícone sozinho exige rótulo traduzido.
+2. **Buttons:** primário (accent + text-on-accent, radius-sm, padding 12 × 24, Plex 500), link-botão secundário (sublinhado accent, como "GitHub ↗" no 03-A) e contornado (`border-default`, como "Currículo" no header do 03-A). Estados conforme as regras acima. Alvo mínimo 44 × 44 px. Navegação usa `<a>` com o estilo, ação usa `<button>` (diretiva aplicada ao elemento nativo, preservando semântica).
+3. **Labels / Chips:** micro-label (`label` em `--mc-text-muted`); chip quente (borda `--mc-border-accent`, texto `--mc-accent-hover`, a adicionar aos contratos) e chip frio (`--mc-cool-surface` + `--mc-text-on-cool` + `--mc-border-cool`). Chips não interativos por padrão; máximo 2 por cartucho.
+4. **Status:** indicador circular 8 px + texto sempre presente (ONLINE, ACTIVE, IN PROGRESS). Cor nunca sozinha. Danger com ícone + borda.
+5. **Section header:** composição marcador + título `display-section` + linha subtle + status opcional.
+6. **Revisão visual:** página de showcase do design system **apenas em modo de desenvolvimento** (`isDevMode()`), fora do build publicado.

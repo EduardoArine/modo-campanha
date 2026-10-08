@@ -149,7 +149,7 @@ src/app/core/i18n/
 - Um `effect` sincroniza `<html lang>`, `document.title` e `<meta name="description">`. Instanciado no boot via `provideAppInitializer` (`app.config.ts`).
 - `aria-label`, `alt` e metadados futuros (Open Graph) também vêm do dicionário / conteúdo `Localized`.
 - **Todos** os textos passam pelo dicionário, inclusive labels de sistema (`PLAYER STATUS` tem o mesmo valor nos dois idiomas por decisão de conteúdo).
-- Os textos do Hero no dicionário são provisórios até existir o modelo `PlayerProfile` (docs/07). As traduções en de textos humanos são **rascunho**, a revisar por Eduardo.
+- Os textos do Hero no dicionário são provisórios até existir o modelo `PlayerProfile` (docs/07). Traduções en aprovadas por Eduardo até aqui: "XP real, sem personagem." → **"Real XP. No persona."** (nunca "no character", que muda o sentido) e "Desenvolvedor de Produtos Digitais" → **"Digital Product Developer"**; refináveis na FASE 7.
 - Testes: `locale.spec.ts` (funções de URL), `locale.service.spec.ts` (lang/título), `home-page.spec.ts` (renderização em `/en` e `/`).
 
 ### URL, SEO e GitHub Pages

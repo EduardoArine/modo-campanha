@@ -43,16 +43,17 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 - ✅ Spacing: escala fechada + arquitetura de aliases (D-022)
 - ✅ i18n: D-020 aprovada; `LocaleService`, dicionários tipados, rotas `/` e `/en`
 
-### Sprint 2 🟡
+### Sprint 2 ✅ (2026-10-08)
 
-- 🟡 Colors + Borders + Surfaces: **proposta em docs/11, aguardando aprovação**
+- ✅ Colors (primitivos + semânticos, foco, links, interação, disabled), Borders, Surfaces (D-024)
+- ✅ Contratos de contraste verificados na compilação (D-025)
+
+### Sprint 3 🟡
+
+- 🟡 Icons + Buttons + Labels/Chips + Status (+ section header): **proposta em docs/11, aguardando aprovação**
 
 ### Próximos sprints ⬜
 
-- ⬜ Icons
-- ⬜ Buttons
-- ⬜ Labels / Chips
-- ⬜ Status
 - ⬜ Player Card (foto real, D-017)
 - ⬜ MC-CART System (shells preto, creme, grafite, laranja)
 - ⬜ CRT
@@ -69,7 +70,9 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)
-- ⬜ Hero
+- ⬜ Wordmark MODO CAMPANHA + monograma MC em SVG (Pixelify não imita o logo do concept)
+- ⬜ Hero (H1 semântico = Eduardo Arine, D-026)
+- ⬜ Papel tipográfico `stat-value` para números reais (ex.: `10+`)
 - ⬜ Player Status
 - ⬜ Skill Tree (inclui decisão sobre estados das skills)
 - ⬜ Project Inventory
