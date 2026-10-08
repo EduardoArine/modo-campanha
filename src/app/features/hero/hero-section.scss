@@ -1,0 +1,91 @@
+// Hero (docs/12-home-slice-01.md, §8). Desktop: conteúdo 1–6, cena 7–12.
+// Tablet/mobile ainda NÃO definitivos (Slice 01-D): por ora empilha sem overflow.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.hero {
+  position: relative;
+  // A luz quente da cena pode passar da coluna; nunca cria scroll horizontal.
+  overflow-x: clip;
+  // Base menor: a seção seguinte já traz o próprio espaço de seção (ritmo 03-A).
+  padding-block: space(8) space(5);
+}
+
+.layout {
+  @include columns;
+  align-items: center;
+  row-gap: space(8);
+}
+
+.content {
+  grid-column: 1 / -1;
+  display: grid;
+  justify-items: start;
+
+  @include mq(lg) {
+    grid-column: 1 / 7;
+  }
+}
+
+.visual {
+  grid-column: 1 / -1;
+
+  @include mq(lg) {
+    grid-column: 7 / -1;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Marca em display: maior que o H1, mas não é o H1 (D-026). Único uso validado da Pixelify (D-029).
+.brand-display {
+  margin: space(4) 0 0;
+  @include type(display-hero);
+  color: var(--mc-accent);
+}
+
+.name {
+  margin: space(4) 0 0;
+  @include type(name);
+  color: var(--mc-text);
+}
+
+.role {
+  margin: space(2) 0 0;
+  @include type(title-l);
+  color: var(--mc-text);
+}
+
+.focus {
+  margin: space(1) 0 0;
+  @include type(body);
+  color: var(--mc-text-muted);
+}
+
+.summary {
+  max-width: 46ch;
+  margin: space(5) 0 0;
+  @include type(body-l);
+  color: var(--mc-text-secondary);
+}
+
+.motto {
+  margin: space(3) 0 0;
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(4) space(5);
+  margin-top: space(6);
+}

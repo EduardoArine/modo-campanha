@@ -1,0 +1,27 @@
+<section id="hero" class="hero mc-page-grid" aria-labelledby="hero-title">
+  <div class="layout">
+    <div class="content">
+      <p class="eyebrow">{{ ui().hero.eyebrow }}</p>
+      <p class="brand-display" lang="pt-BR">{{ ui().brand.name }}</p>
+      <h1 id="hero-title" class="name">{{ profile.name }}</h1>
+      <p class="role">{{ locale.pick(profile.role) }}</p>
+      <p class="focus">{{ locale.pick(profile.focusLine) }}</p>
+      <p class="summary">{{ locale.pick(profile.summary) }}</p>
+      <p class="motto">{{ locale.pick(profile.motto) }}</p>
+
+      <div class="actions">
+        <a mcAction [routerLink]="locale.homePath()" fragment="player-status">
+          {{ ui().cta.explore }} <mc-icon name="arrow-down" />
+        </a>
+        @for (link of socialLinks; track link.kind) {
+          <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+            {{ link.label }} <mc-icon name="external" />
+            <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+          </a>
+        }
+      </div>
+    </div>
+
+    <app-hero-visual class="visual" />
+  </div>
+</section>

@@ -7,6 +7,7 @@ import { HomePage } from './home-page';
 
 describe('HomePage', () => {
   it('should render every onepage section in order', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const fixture = TestBed.createComponent(HomePage);
     await fixture.whenStable();
     const ids = Array.from(
