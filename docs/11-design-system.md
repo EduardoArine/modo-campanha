@@ -17,9 +17,9 @@
 | 8   | Buttons / Actions        | ✅ Implementado (D-027): `mcAction` primary/secondary/text     |
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
-| 11  | Player Card              | 🟡 Implementado (D-031), aguardando aprovação visual           |
-| 12  | MC-CART                  | 🟡 Implementado + Project Summary + material tokens (D-032)    |
-| 13  | CRT                      | 🟡 Estrutura implementada, sem animação (D-033)                |
+| 11  | Player Card              | ✅ Aprovado (D-031)                                            |
+| 12  | MC-CART                  | ✅ Aprovado + Project Summary + material tokens (D-032)        |
+| 13  | CRT                      | 🟡 Arquitetura aprovada; refinamento físico aguardando aprovação (D-033) |
 | 14  | XP                       | ⬜ backlog (regras conceituais em D-021)                       |
 | 15  | Motion                   | ⬜ backlog                                                     |
 | 16  | Easter Egg Language      | ⬜ backlog                                                     |
@@ -524,7 +524,17 @@ Componentes autorais em `src/app/shared/signature/` (barrel `index.ts`), avaliad
 | **UI digital**  | Player Card, Project Summary, primitivos | superfícies (`panel`...), bordas, tokens de texto                    | sombra de objeto, glow, material |
 | **Objeto físico** | MC-CART, CRT (e futuro console MC-01) | **tokens de material**, `--mc-shadow-object`, relevo (`material-groove` / `material-highlight`); glow só no CRT | glow permanente no MC-CART    |
 
-### 13. Material tokens (D-032)
+### 13. Material tokens (D-032, aprovado)
+
+Três níveis de token de cor:
+
+```
+primitive colors        --mc-color-*      paleta D-014 (só dentro de src/styles/tokens/)
+  → semantic UI tokens  --mc-*            UI digital (texto, superfícies, estados, bordas)
+  → physical material   --mc-material-*   objetos físicos (MC-CART, CRT, console)
+```
+
+> **Material tokens não criam uma segunda paleta.** Eles mapeiam para cores existentes da paleta e não abrem famílias de novos tons de plástico/material sem necessidade real. São preferíveis a reutilizar um token semântico de UI de forma incorreta só porque ele tem a mesma cor.
 
 Aliases semânticos de cores **já existentes** na paleta D-014 (nenhum HEX novo), para objetos físicos. Variação física; **não** significam status nem raridade.
 
@@ -637,7 +647,15 @@ Anatomia: **shell** (material dark + sombra de objeto + aresta) → **bezel** (`
 - A tela **nunca corta conteúdo** (4:3 é mínimo).
 - Responsivo por **container query** (≤ 34 rem): moldura mínima, sem proporção fixa, sem glow nem efeitos. No mobile o conteúdo vem primeiro.
 - Acessibilidade: host `role="region"` com rótulo traduzido; conteúdo semântico projetado (headings, `dl`, imagens com alt); decoração ignorada por tecnologias assistivas.
-- Sem animação: inserção, boot, power-on, no signal e glitch ficam para Motion/Game Feel.
+- Sem animação: inserção, boot, power-on, no signal e glitch ficam para Motion/Game Feel. "INSERT CARTRIDGE" é o único estado de tela nesta fase.
+
+**Refinamento físico (desktop), sem mudar a arquitetura:**
+
+- **Vidro:** raio próprio `--mc-radius-glass` (20 px / 24 px, levemente elíptico) e aro interno (sulco `material-groove` + aresta `material-highlight`) que sugerem convexidade **pela moldura**; reflexo suave no topo e vinheta mais perceptível nas extremidades, ambos na camada de efeitos **atrás** do conteúdo; scanlines continuam discretas (camada própria, opacidade 0.45). Sem `transform`, sem blur, sem deformar conteúdo.
+- **Profundidade shell → bezel → vidro:** shell com bisel (aresta clara em cima, sulco embaixo); bezel mais escuro e espesso (24 px) com luz rasante no topo; vidro com aro. Sem novas sombras pesadas (a única sombra continua sendo `--mc-shadow-object` no shell).
+- **Faixa inferior de hardware:** MC-01 à esquerda; à direita, ranhuras de ventilação discretas, **um** botão físico simples e o LED. Tudo decorativo (`aria-hidden`), não interativo. Sem knobs, controles analógicos, grade de alto-falante ou painéis de botões.
+- **Mobile (container ≤ 34 rem):** inalterado em espírito: moldura mínima, raio de UI no vidro, sem efeitos, ranhuras nem botão; conteúdo primeiro.
+- `--mc-radius-glass` é um raio de **objeto físico** e só pode ser usado no vidro do CRT; a escala de raios da UI (0, 4 px, circular) não muda.
 
 ### Validação responsiva e acessibilidade (Sprint 4)
 

@@ -323,7 +323,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** primeiro signature component; representa Eduardo no MC System.
 - **Motivo:** reforça "XP real, sem personagem" e reproduz o 03-A com a linguagem já aprovada.
 - **Alternativas:** carta de RPG com atributos (proibido); moldura toda em laranja (testada: a moldura sutil com acento só nos cantos ficou mais próxima do 03-A e preserva a hierarquia do laranja).
-- **Status:** Implementada, **aguardando aprovação visual**.
+- **Status:** **Aprovada** (2026-10-08). Manter como está: sem ornamentação extra para compensar o placeholder; a presença visual final virá da foto real.
 
 ## D-032 — MC-CART, Project Summary e material tokens
 
@@ -332,7 +332,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** os shells do 03-B precisam de cores de "material" (ex.: creme como superfície), que não cabiam nos tokens de UI sem desvirtuar sua semântica (ex.: usar `text-secondary` como fundo).
 - **Motivo:** separar materiais físicos da UI digital mantém os tokens de UI honestos e o objeto consistente entre variantes.
 - **Alternativas:** reutilizar tokens de texto como fundo (rejeitado); criar cores novas (desnecessário); cartucho com descrição embutida (rejeitado: "coleção primeiro, documentação depois").
-- **Status:** Implementada, **aguardando aprovação visual**. Seriais finais e artwork real ficam para a FASE 7.
+- **Status:** **Aprovada** (2026-10-08): MC-CART (sem adicionar informação ao cartucho), separação MC-CART × Project Summary (sem CTA novo por enquanto; a ação "ver projeto" será definida com interação real), material tokens e comportamento responsivo. Regra registrada: **três níveis de token** (primitive → semantic UI → physical material) e **material tokens não criam uma segunda paleta**. Seriais finais e artwork real ficam para a FASE 7.
 
 ## D-033 — CRT Project Viewer (estrutura)
 
@@ -341,5 +341,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** visualizador dos project cases.
 - **Motivo:** sensação física por fora sem sacrificar leitura de texto e screenshots por dentro.
 - **Alternativas:** scanlines sobre o conteúdo (rejeitado: reduz contraste); proporção fixa com scroll interno (rejeitado: cortava conteúdo, defeito encontrado e corrigido na validação).
-- **Status:** Implementada, **aguardando aprovação visual**.
+- **Status:** Arquitetura e conteúdo **aprovados** (2026-10-08). Refinamento físico do desktop (≈15–20% mais sensação de objeto) implementado sem mudar a arquitetura: vidro com `--mc-radius-glass` e aro, vinheta e reflexo atrás do conteúdo, bezel mais distinto, faixa inferior com ranhuras, um botão e LED. Novo raio `--mc-radius-glass` restrito ao vidro do CRT (objeto físico). **Aguardando aprovação visual** do refinamento.
 
