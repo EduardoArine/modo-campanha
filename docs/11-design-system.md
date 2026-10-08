@@ -647,7 +647,16 @@ Separado do objeto: **o cartucho não carrega a descrição.** Abaixo/ao lado do
 
 Coleção primeiro, documentação depois: detalhes completos ficam no CRT.
 
-### 17. CRT Project Viewer (`mc-crt`, D-033)
+### 17. CRT: `mc-crt-frame` + `mc-crt-project-viewer` (D-033, D-037)
+
+Desde o Home Slice 01 o CRT tem duas peças:
+
+- **`mc-crt-frame`**: base visual presentational e ignorante de contexto (não conhece Project, Hero, estados nem textos). Conteúdo da tela por projeção; `label` opcional impresso na faixa inferior. Usado diretamente pela cena do Hero.
+- **`mc-crt-project-viewer`**: compõe o frame e adiciona a função: `role="region"` rotulado, identificação MC-01, estado vazio "INSERT CARTRIDGE".
+
+Simplificação responsiva do frame: container ≤ **28rem** (antes 34rem; reduzido no Slice 01-C para o CRT do Hero não simplificar em desktop; estados aprovados do Project Viewer inalterados, diff 0 px).
+
+Anatomia e regras abaixo valem para os dois.
 
 > CRT na moldura; clareza no conteúdo.
 

@@ -370,3 +370,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** os componentes autorais funcionam isoladamente; o próximo passo é validá-los numa página real.
 - **Alternativas:** —
 - **Status:** Aceita. Próximo: planejamento do **Home Slice 01** (Header, Hero, entrada do Player Status), `docs/12-home-slice-01.md`. Sem implementação antes de aprovação.
+
+# FASE 3 — Core Experience
+
+## D-037 — Home Slice 01: decisões aprovadas e implementação até 01-C
+
+- **Data:** 2026-10-08
+- **Decisão:**
+  - **CRT:** `mc-crt-frame` (base visual presentational, ignorante de contexto: não conhece Project, Hero, "INSERT CARTRIDGE" nem regras de case; conteúdo por projeção, label impresso opcional) + `mc-crt-project-viewer` (compõe o frame e adiciona região rotulada, MC-01 e estado vazio). O Hero usa só o frame.
+  - **Header:** sólido e fixo; marca provisória MC + MODO CAMPANHA (explicitamente provisória até monograma/wordmark); navegação Sobre/Projetos/Jornada/Contato · About/Projects/Journey/Contact; PT/EN; Currículo só com URL real. Sem ONLINE, build, versão, MC-01 ou outros metadados técnicos. A marca volta ao topo.
+  - **Nav no mobile:** ausente temporariamente no Slice 01 porque as seções de destino ainda não existem. **Isso não define o comportamento mobile final**; um menu mobile real será reavaliado quando as seções existirem.
+  - **Hero:** eyebrow "MC-01 / PORTFÓLIO PROFISSIONAL" · "MC-01 / PROFESSIONAL PORTFOLIO"; "MODO CAMPANHA" em Pixelify (único uso validado); H1 "Eduardo Arine"; cargo, linha de foco, texto humano e motto aprovados nos dois idiomas; CTAs: Explorar campanha (primary), GitHub e LinkedIn (text). Currículo não renderizado (sem URL real, sem href placeholder).
+  - **Cena:** só CRT + console MC-01 (CSS local, não componente) + luz quente; `aria-hidden`. Sem controller, plantas, pôster, cartuchos, motion.
+  - **Conteúdo:** `PlayerProfile` bilíngue em `data/profile.data.ts` com o conteúdo aprovado (inclui os dados futuros do Player Status: ORIGEM/ORIGIN, XP, CAMPANHA ATUAL/CURRENT CAMPAIGN, FOCO/FOCUS, STATUS ATIVO/ACTIVE).
+- **Desvios do plano (registrados):**
+  1. Limite da container query do `mc-crt-frame` reduzido de 34rem para **28rem**: com 34rem o CRT do Hero (~479 px) caía na moldura simplificada em pleno desktop. Diff de pixels do Project Viewer aprovado antes/depois em 1280, 820 e 390 px: **0 px**.
+  2. Placeholder do Player Status ganhou só o `mc-section-header` + status (ATIVO/ACTIVE) para servir de referência de ritmo no checkpoint; a seção real continua sendo o 01-E.
+  3. Padding inferior do Hero reduzido (space-5) para a entrada do Player Status aparecer na primeira dobra (900 px), como no 03-A.
+  4. Histórico: o commit do refactor do CRT inclui o showcase já lendo o `PlayerProfile`, que só existe no commit seguinte; os dois juntos compilam.
+- **Contexto:** primeiro vertical slice real da Home (docs/12).
+- **Motivo:** validar o design system e os signature components numa página real antes das demais seções.
+- **Status:** Implementado até **01-C**, aguardando revisão visual. Tablet/mobile definitivos (01-D), Player Status (01-E) e revisão final (01-F) não iniciados.

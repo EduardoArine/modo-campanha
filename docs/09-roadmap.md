@@ -81,9 +81,10 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 ## FASE 3 — CORE EXPERIENCE 🟡 ← atual (planejamento)
 
-### Home Slice 01 🟡 (planejamento aguardando aprovação, `docs/12-home-slice-01.md`)
+### Home Slice 01 🟡 (plano aprovado, D-037; `docs/12-home-slice-01.md`)
 
-- ⬜ Header · Hero · entrada do Player Status
+- ✅ 01-0 preparação · ✅ 01-A header · ✅ 01-B Hero content · ✅ 01-C Hero visual (◆ aguardando revisão)
+- ⬜ 01-D Hero responsive · ⬜ 01-E entrada do Player Status · ⬜ 01-F revisão pt/en + a11y
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)

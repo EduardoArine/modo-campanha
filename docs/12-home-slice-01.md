@@ -1,6 +1,6 @@
 # 12 — Home Slice 01 (plano)
 
-> Status: **planejamento, aguardando aprovação de Eduardo.** Nada implementado.
+> Status: **plano aprovado (D-037). Implementado até 01-C (Hero desktop), aguardando revisão visual.** 01-D, 01-E e 01-F não iniciados.
 > Escopo: **Header**, **Hero** e **entrada do Player Status**: o primeiro vertical slice real da página.
 > Objetivo: validar se o MC Design System e os Signature Components reproduzem o espírito do **Concept 03 — Approved as Hybrid** numa página real.
 
@@ -215,7 +215,19 @@ Cada sub-slice termina com build/test/typecheck/Prettier, contratos de contraste
 7. A transição Hero → Player Status parece natural?
 8. O layout é implementável e responsivo?
 
-## 17. Primeira decisão para aprovação
+## 16-A. Progresso (até o checkpoint 01-C)
+
+| Sub-slice | Estado | Notas |
+|---|---|---|
+| 01-0 | ✅ | `mc-crt-frame` + `mc-crt-project-viewer` (diff 0 px); `PlayerProfile`; `--mc-header-height` + `scroll-margin-top`; navegação de mesma URL volta a rolar; `.mc-visually-hidden` |
+| 01-A | ✅ | `app-site-header` no shell do app |
+| 01-B | ✅ | conteúdo real do Hero, pt/en, H1 = Eduardo Arine |
+| 01-C | ✅ ◆ | cena: CRT + console MC-01 + luz quente; aguardando revisão |
+| 01-D, 01-E, 01-F | ⬜ | não iniciados |
+
+Desvios do plano: ver D-037 (limite do CRT 34rem → 28rem; cabeçalho do Player Status como referência de ritmo; padding inferior do Hero). Bundle inicial de produção passou de ~209 kB para ~253 kB (69 kB transferidos), porque o header vive no shell do app; abaixo do orçamento de 500 kB.
+
+## 17. Primeira decisão para aprovação (resolvida)
 
 **Arquitetura do CRT (§4):** extrair `mc-crt-frame` (base visual compartilhada) e renomear o componente atual para `mc-crt-project-viewer` (função especializada), com o Hero usando o frame diretamente. É pré-requisito do 01-0 e do 01-C.
 
