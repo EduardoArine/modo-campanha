@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
 
+import { LocaleService } from '../../core/i18n';
 import { Project } from '../../models';
 
 // Visualizador de cases dentro da TV CRT. Usado pelo Project Inventory, não é uma seção própria.
@@ -7,11 +8,11 @@ import { Project } from '../../models';
 @Component({
   selector: 'app-crt-project-viewer',
   template: `
-    <div role="region" aria-label="CRT Project Viewer">
+    <div role="region" [attr.aria-label]="ui().crt.regionLabel">
       @if (project(); as p) {
         <h3>{{ p.title }}</h3>
       } @else {
-        <p>INSERT CARTRIDGE</p>
+        <p>{{ ui().crt.empty }}</p>
       }
     </div>
   `,
@@ -19,4 +20,5 @@ import { Project } from '../../models';
 })
 export class CrtProjectViewer {
   readonly project = input<Project | null>(null);
+  protected readonly ui = inject(LocaleService).ui;
 }

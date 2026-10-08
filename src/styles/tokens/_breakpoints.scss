@@ -1,0 +1,18 @@
+// Breakpoints do MC Design System (docs/11-design-system.md, Grid).
+// Mobile-first: `sm` é a base (< 768 px), sem media query.
+@use 'sass:map';
+
+$breakpoints: (
+  md: 768px,
+  lg: 1024px,
+);
+
+/// Aplica estilos a partir do breakpoint informado (`md` ou `lg`).
+@mixin mq($bp) {
+  @if not map.has-key($breakpoints, $bp) {
+    @error 'Breakpoint desconhecido: #{$bp}. Use: #{map.keys($breakpoints)}';
+  }
+  @media (min-width: map.get($breakpoints, $bp)) {
+    @content;
+  }
+}

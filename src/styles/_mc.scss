@@ -1,0 +1,6 @@
+// Ponto de entrada dos tokens para componentes: `@use 'mc' as *;`
+// Só variáveis, funções e mixins. Nada aqui gera CSS (evita duplicação por componente).
+@forward 'tokens/breakpoints';
+@forward 'tokens/spacing';
+@forward 'tokens/typography';
+@forward 'tokens/grid';

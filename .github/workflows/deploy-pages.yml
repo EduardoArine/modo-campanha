@@ -35,7 +35,11 @@ jobs:
       - run: npm run build:gh-pages
 
       # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
-      - run: cp dist/modo-campanha/browser/index.html dist/modo-campanha/browser/404.html
+      # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).
+      - run: |
+          cd dist/modo-campanha/browser
+          cp index.html 404.html
+          mkdir -p en && cp index.html en/index.html
 
       - uses: actions/configure-pages@v6
 

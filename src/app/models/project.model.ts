@@ -11,7 +11,7 @@ export interface Cartridge {
   art?: string;
   /** Cor predominante do cartucho. Definida no design system (FASE 2). */
   color: string;
-  /** Serial fictício impresso no cartucho (ex.: `MC-001`). Elemento puramente estético. */
+  /** Serial fictício impresso no cartucho (ex.: `ON-001`). Elemento puramente estético. */
   serial: string;
 }
 

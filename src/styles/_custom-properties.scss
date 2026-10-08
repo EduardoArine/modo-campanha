@@ -1,0 +1,40 @@
+// Emite os tokens como CSS custom properties (`--mc-*`) uma única vez, no CSS global.
+// Cores entram no sprint Colors + Borders + Surfaces.
+@use 'sass:map';
+@use 'sass:meta';
+@use 'mc' as *;
+
+:root {
+  // Typography
+  --mc-font-display: #{meta.inspect($font-display)};
+  --mc-font-text: #{meta.inspect($font-text)};
+
+  @each $role, $_ in $type-roles {
+    --mc-font-size-#{$role}: #{role-size($role)};
+  }
+
+  // Spacing: primitivos
+  @each $step, $value in $space {
+    --mc-space-#{$step}: #{$value};
+  }
+
+  // Spacing: aliases semânticos
+  @each $name, $value in $space-semantic {
+    --mc-space-#{$name}: #{$value};
+  }
+
+  // Grid
+  --mc-container-max: #{$container-max};
+  --mc-page-margin: clamp(var(--mc-space-4), 4vw, var(--mc-space-7));
+  --mc-gutter: var(--mc-space-4);
+  --mc-columns: #{map.get($columns, sm)};
+
+  @include mq(md) {
+    --mc-gutter: var(--mc-space-5);
+    --mc-columns: #{map.get($columns, md)};
+  }
+
+  @include mq(lg) {
+    --mc-columns: #{map.get($columns, lg)};
+  }
+}

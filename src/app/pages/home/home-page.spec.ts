@@ -1,5 +1,8 @@
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { RouterTestingHarness } from '@angular/router/testing';
 
+import { routes } from '../../app.routes';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
@@ -21,5 +24,19 @@ describe('HomePage', () => {
       'side-quests',
       'final-checkpoint',
     ]);
+  });
+
+  it('should render texts in the locale of the URL', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    const harness = await RouterTestingHarness.create();
+    await harness.navigateByUrl('/en', HomePage);
+    expect(harness.routeNativeElement?.textContent).toContain(
+      'Cartridges collected along the campaign.',
+    );
+
+    await harness.navigateByUrl('/');
+    expect(harness.routeNativeElement?.textContent).toContain(
+      'Cartuchos coletados durante a campanha.',
+    );
   });
 });

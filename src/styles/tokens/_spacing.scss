@@ -1,0 +1,32 @@
+// Spacing do MC Design System (docs/11-design-system.md, Spacing). Aprovado em D-022.
+// Primitivos: escala base 4 px, fechada em 10 valores. Não adicionar valores sem nova decisão.
+@use 'sass:map';
+
+$space: (
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 24px,
+  6: 32px,
+  7: 48px,
+  8: 64px,
+  9: 96px,
+  10: 128px,
+);
+
+// Aliases semânticos: sempre referenciam primitivos (nunca valores novos).
+// Grupos previstos: `section` (definido), `block` e `component` (a definir quando os
+// componentes da FASE 3 existirem). Cada entrada vira `--mc-space-<nome>`.
+$space-semantic: (
+  section: clamp(var(--mc-space-8), 8vw, var(--mc-space-9)),
+  section-head: clamp(var(--mc-space-6), 4vw, var(--mc-space-7)),
+);
+
+/// Atalho para o custom property de um primitivo: `space(5)` → `var(--mc-space-5)`.
+@function space($step) {
+  @if not map.has-key($space, $step) {
+    @error 'Spacing fora da escala: #{$step}. Use 1–10.';
+  }
+  @return var(--mc-space-#{$step});
+}

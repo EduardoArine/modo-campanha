@@ -1,0 +1,180 @@
+// Tipografia do MC Design System (docs/11-design-system.md, Typography). Aprovada em D-022.
+// Pixelify Sans = voz do sistema (≥ ~14 px). IBM Plex Sans = voz do Eduardo e micro-labels.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+@use 'sass:math';
+
+$font-display: 'Pixelify Sans', ui-monospace, 'Cascadia Mono', 'Courier New', monospace;
+$font-text:
+  'IBM Plex Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  Roboto,
+  sans-serif;
+
+// Faixa de viewport usada nos tamanhos fluidos.
+$fluid-min-vw: 360px;
+$fluid-max-vw: 1200px;
+
+@function rem($px) {
+  @return math.div(math.round(math.div($px, 16px) * 10000), 10000) * 1rem;
+}
+
+/// Tamanho fluido entre `$min` (viewport 360 px) e `$max` (viewport 1200 px), em rem
+/// para respeitar o tamanho de fonte escolhido pelo usuário.
+@function fluid($min, $max) {
+  $slope: math.div($max - $min, $fluid-max-vw - $fluid-min-vw);
+  $intercept: $min - $slope * $fluid-min-vw;
+  $vw: math.div(math.round($slope * 10000), 100);
+  @return clamp(#{rem($min)}, #{rem($intercept)} + #{$vw}vw, #{rem($max)});
+}
+
+// Papéis tipográficos. `size` aceita um valor fixo ou uma lista (mobile, desktop).
+$type-roles: (
+  // Pixelify Sans
+  display-hero: (
+      family: display,
+      size: (
+        48px,
+        96px,
+      ),
+      line-height: 0.95,
+      tracking: 0,
+      weight: 700,
+      case: uppercase,
+    ),
+  display-section: (
+    family: display,
+    size: (
+      28px,
+      40px,
+    ),
+    line-height: 1.1,
+    tracking: 0.02em,
+    weight: 700,
+    case: uppercase,
+  ),
+  display-cart: (
+    family: display,
+    size: (
+      14px,
+      16px,
+    ),
+    line-height: 1.15,
+    tracking: 0.02em,
+    weight: 700,
+    case: uppercase,
+  ),
+  system: (
+    family: display,
+    size: 14px,
+    line-height: 1.3,
+    tracking: 0.06em,
+    weight: 500,
+    case: uppercase,
+  ),
+  // IBM Plex Sans
+  label: (
+      family: text,
+      size: (
+        12px,
+        13px,
+      ),
+      line-height: 1.3,
+      tracking: 0.08em,
+      weight: 500,
+      case: uppercase,
+    ),
+  name: (
+    family: text,
+    size: (
+      36px,
+      56px,
+    ),
+    line-height: 1.05,
+    tracking: -0.02em,
+    weight: 600,
+    case: none,
+  ),
+  title-l: (
+    family: text,
+    size: (
+      20px,
+      24px,
+    ),
+    line-height: 1.3,
+    tracking: -0.01em,
+    weight: 400,
+    case: none,
+  ),
+  title-m: (
+    family: text,
+    size: (
+      18px,
+      20px,
+    ),
+    line-height: 1.35,
+    tracking: -0.005em,
+    weight: 600,
+    case: none,
+  ),
+  body-l: (
+    family: text,
+    size: (
+      17px,
+      18px,
+    ),
+    line-height: 1.6,
+    tracking: 0,
+    weight: 400,
+    case: none,
+  ),
+  body: (
+    family: text,
+    size: 16px,
+    line-height: 1.6,
+    tracking: 0,
+    weight: 400,
+    case: none,
+  ),
+  body-s: (
+    family: text,
+    size: 14px,
+    line-height: 1.5,
+    tracking: 0,
+    weight: 400,
+    case: none,
+  ),
+  caption: (
+    family: text,
+    size: 12px,
+    line-height: 1.4,
+    tracking: 0.01em,
+    weight: 500,
+    case: none,
+  )
+);
+
+@function role-size($role) {
+  $size: map.get(map.get($type-roles, $role), size);
+  @if meta.type-of($size) == list {
+    @return fluid(list.nth($size, 1), list.nth($size, 2));
+  }
+  @return rem($size);
+}
+
+/// Aplica um papel tipográfico completo: `@include type(display-section);`
+@mixin type($role) {
+  @if not map.has-key($type-roles, $role) {
+    @error 'Papel tipográfico desconhecido: #{$role}. Use: #{map.keys($type-roles)}';
+  }
+  $r: map.get($type-roles, $role);
+  font-family: var(--mc-font-#{map.get($r, family)});
+  font-size: var(--mc-font-size-#{$role});
+  font-weight: map.get($r, weight);
+  line-height: map.get($r, line-height);
+  letter-spacing: map.get($r, tracking);
+  text-transform: map.get($r, case);
+}

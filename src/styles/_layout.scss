@@ -1,0 +1,11 @@
+// Primitivos de layout globais (sem aparência): mesmos mixins de `tokens/_grid.scss`
+// expostos como classes para uso direto em templates.
+@use 'mc' as *;
+
+.mc-page-grid {
+  @include page-grid;
+}
+
+.mc-columns {
+  @include columns;
+}

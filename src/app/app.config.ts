@@ -1,7 +1,13 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import {
+  ApplicationConfig,
+  inject,
+  provideAppInitializer,
+  provideBrowserGlobalErrorListeners,
+} from '@angular/core';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
+import { LocaleService } from './core/i18n';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -10,5 +16,9 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
     ),
+    // Instancia o LocaleService no boot para sincronizar <html lang>, título e description.
+    provideAppInitializer(() => {
+      inject(LocaleService);
+    }),
   ],
 };

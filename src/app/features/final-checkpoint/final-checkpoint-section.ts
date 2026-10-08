@@ -1,13 +1,17 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
-// Placeholder estrutural. Layout e conteúdo definitivos vêm após a FASE 1 (docs/09-roadmap.md).
+import { LocaleService } from '../../core/i18n';
+
+// Placeholder estrutural. Layout e conteúdo definitivos vêm na FASE 3 (docs/09-roadmap.md).
 @Component({
   selector: 'app-final-checkpoint-section',
   template: `
     <section id="final-checkpoint" aria-labelledby="final-checkpoint-title">
-      <h2 id="final-checkpoint-title">Final Checkpoint</h2>
+      <h2 id="final-checkpoint-title">{{ ui().sections.finalCheckpoint }}</h2>
     </section>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FinalCheckpointSection {}
+export class FinalCheckpointSection {
+  protected readonly ui = inject(LocaleService).ui;
+}

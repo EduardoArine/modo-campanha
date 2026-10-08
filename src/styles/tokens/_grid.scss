@@ -1,0 +1,39 @@
+// Grid do MC Design System (docs/11-design-system.md, Grid). Aprovado em D-022.
+// "O grid organiza; ele não obriga simetria": as seções escolhem seus spans (4/4/4, 3/4/5...).
+@use 'breakpoints' as bp;
+
+$container-max: 1200px;
+
+$columns: (
+  sm: 4,
+  md: 8,
+  lg: 12,
+);
+
+/// Grid de página com linhas nomeadas: `content` (container de 1200 px) e `full`
+/// (borda a borda). Filhos ficam em `content` por padrão; use `grid-column: full` ou
+/// `content-start / full-end` para sangrar (ex.: área visual do Hero) sem position absolute.
+@mixin page-grid {
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(var(--mc-page-margin), 1fr)
+    [content-start] min(100% - 2 * var(--mc-page-margin), var(--mc-container-max))
+    [content-end] minmax(var(--mc-page-margin), 1fr)
+    [full-end];
+
+  > * {
+    grid-column: content;
+    min-width: 0;
+  }
+}
+
+/// Grid de colunas dentro do container: 4 (base) → 8 (md) → 12 (lg).
+@mixin columns {
+  display: grid;
+  grid-template-columns: repeat(var(--mc-columns), minmax(0, 1fr));
+  gap: var(--mc-gutter);
+
+  > * {
+    min-width: 0;
+  }
+}
