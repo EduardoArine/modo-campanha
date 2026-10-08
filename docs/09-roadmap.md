@@ -32,7 +32,7 @@ Legenda: ✅ concluído · 🟡 em andamento · ⬜ não iniciado
 - ✅ Direção de marca: monograma MC; MC-01 como linguagem de sistema; alien descartado (D-015, D-016)
 - ✅ Nova exigência: site bilíngue pt-BR / en (D-018)
 
-## FASE 2 — MC DESIGN SYSTEM 🟡 ← atual
+## FASE 2 — MC DESIGN SYSTEM ✅ (núcleo + signature components aprovados)
 
 Especificação completa em `docs/11-design-system.md`. **A home final só é implementada depois do Design System.**
 
@@ -56,13 +56,14 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 **MC Design System Core — APPROVED** (D-030, 2026-10-08).
 
-### Sprint 4 🟡 Signature Components (implementado, aguardando aprovação visual)
+### Sprint 4 ✅ Signature Components: APPROVED (D-036)
 
 - ✅ Player Card (D-031)
 - ✅ MC-CART + Project Summary + material tokens (D-032)
 - ✅ CRT Project Viewer, incluindo refinamento físico (D-033)
-- 🟡 Sprint 4.2 — MC-CART physical refinement (D-034), aguardando aprovação visual
-- ⬜ Ao aprovar: marcar **Sprint 4 — Signature Components: APPROVED** e planejar a primeira implementação real da Home
+- ✅ Sprint 4.2 — MC-CART physical refinement (D-034)
+
+Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consolidação responsive/a11y/i18n) seguem para as fases onde são usados.
 
 ### Próximos sprints ⬜
 
@@ -78,7 +79,11 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 - ⬜ Monograma MC (símbolo, favicon, loading, selo)
 - ⬜ Pixel assets
 
-## FASE 3 — CORE EXPERIENCE ⬜
+## FASE 3 — CORE EXPERIENCE 🟡 ← atual (planejamento)
+
+### Home Slice 01 🟡 (planejamento aguardando aprovação, `docs/12-home-slice-01.md`)
+
+- ⬜ Header · Hero · entrada do Player Status
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)

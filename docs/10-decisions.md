@@ -351,4 +351,22 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** teste de silhueta: sem texto e artwork, a forma precisa ler como hardware; mantendo silhueta autoral (sem formatos comerciais) e implementável em CSS frontal.
 - **Alternativas:** perspectiva 3D (rejeitado: pesado, menos responsivo); ornamentos (parafusos, badges, glow) (rejeitado: fisicalidade deve vir da construção).
 - **Nota técnica:** o CSS do componente passou do orçamento de aviso de 4 kB por componente (`angular.json`). Em vez de aumentar o orçamento, o SCSS foi enxugado (nomes curtos de custom properties documentados no arquivo, regras compartilhadas), sem mudança visual.
-- **Status:** Implementada, **aguardando aprovação visual**.
+- **Status:** **Aprovada** (2026-10-08): a comparação de silhueta confirma leitura de hardware/cartucho mesmo sem artwork ou texto.
+
+## D-035 — Orçamento de CSS por componente: enxugar antes de aumentar
+
+- **Data:** 2026-10-08
+- **Decisão:** quando um componente passa do orçamento de estilo do `angular.json`, a primeira resposta é **enxugar o SCSS** (regras compartilhadas, nomes locais mais curtos), não aumentar o orçamento. Regra: **Abreviações utilizadas para otimização de CSS/SCSS devem permanecer locais ao componente e documentadas. Elas não devem reduzir a clareza de APIs públicas, tokens do Design System ou contratos compartilhados.**
+- **Contexto:** o MC-CART refinado (D-034) chegou a 4,64 kB para um aviso de 4 kB.
+- **Motivo:** o orçamento protege a performance; abreviações locais e documentadas resolvem sem custo para quem consome o componente.
+- **Alternativas:** aumentar o orçamento (aceitável só com justificativa registrada).
+- **Status:** Aceita.
+
+## D-036 — Sprint 4 — Signature Components: APPROVED
+
+- **Data:** 2026-10-08
+- **Decisão:** **Sprint 4 — Signature Components: APPROVED.** Aprovados: Player Card (D-031), MC-CART (D-032, D-034), Project Summary (D-032), CRT Project Viewer (D-033), material tokens (D-032), `--mc-radius-glass` (D-033), comportamento responsivo e linguagem de objeto físico.
+- **Contexto:** revisões visuais do showcase, incluindo o refinamento do CRT e o teste de silhueta do MC-CART.
+- **Motivo:** os componentes autorais funcionam isoladamente; o próximo passo é validá-los numa página real.
+- **Alternativas:** —
+- **Status:** Aceita. Próximo: planejamento do **Home Slice 01** (Header, Hero, entrada do Player Status), `docs/12-home-slice-01.md`. Sem implementação antes de aprovação.

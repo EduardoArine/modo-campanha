@@ -18,7 +18,7 @@
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
 | 11  | Player Card              | ✅ Aprovado (D-031)                                            |
-| 12  | MC-CART                  | ✅ Aprovado (D-032); refinamento físico 4.2 aguardando aprovação (D-034) |
+| 12  | MC-CART                  | ✅ Aprovado, incluindo construção física 4.2 (D-032, D-034)    |
 | 13  | CRT                      | ✅ Aprovado, incluindo refinamento físico e `--mc-radius-glass` (D-033) |
 | 14  | XP                       | ⬜ backlog (regras conceituais em D-021)                       |
 | 15  | Motion                   | ⬜ backlog                                                     |
@@ -30,7 +30,7 @@
 - **Sprint 1 (concluído):** Typography + Grid + Spacing + infraestrutura de i18n.
 - **Sprint 2 (concluído):** Colors + Borders + Surfaces + contratos de contraste.
 - **Sprint 3 (concluído):** Icons + Actions + Chips + Status + Section header + showcase dev-only.
-- **Sprint 4 (implementado, aguardando aprovação):** Signature Components: Player Card, MC-CART + Project Summary, CRT.
+- **Sprint 4 — Signature Components: APPROVED** (D-036): Player Card, MC-CART + Project Summary, CRT, material tokens, glass radius, linguagem de objeto físico.
 
 ---
 
@@ -513,7 +513,7 @@ Chips, status, actions primary/text e section header já estavam cobertos pelos 
 
 ---
 
-## Sprint 4 — Signature Components (implementado, aguardando aprovação visual)
+## Sprint 4 — Signature Components (APPROVED, D-036)
 
 Componentes autorais em `src/app/shared/signature/` (barrel `index.ts`), avaliados isoladamente no showcase (`/dev/design-system`, área **SIGNATURE COMPONENTS**) antes de qualquer Home. Testes em `signature.spec.ts`.
 
@@ -679,6 +679,11 @@ Anatomia: **shell** (material dark + sombra de objeto + aresta) → **bezel** (`
 
 ---
 
-## Próximo (não iniciado)
+## Regras de manutenção do CSS
 
-Aguardando aprovação visual do Sprint 4. Depois: fundamentos restantes (XP, Motion, Easter Egg Language, responsive/a11y/i18n consolidados) e, então, a Home (FASE 3).
+- Orçamento de estilo por componente (`angular.json`): enxugar antes de aumentar (D-035).
+- Abreviações utilizadas para otimização de CSS/SCSS devem permanecer locais ao componente e documentadas. Elas não devem reduzir a clareza de APIs públicas, tokens do Design System ou contratos compartilhados.
+
+## Próximo
+
+Fundamentos restantes seguem para as fases onde são usados: XP (product exploration), Motion (FASE 5), Easter Egg Language (FASE 6), consolidação responsive/a11y/i18n (FASE 8). Agora: planejamento do **Home Slice 01** (`docs/12-home-slice-01.md`).
