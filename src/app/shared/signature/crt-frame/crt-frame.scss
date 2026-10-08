@@ -130,8 +130,9 @@
   background: var(--mc-accent);
 }
 
-// Mobile: prioriza o conteúdo. Moldura mínima, sem proporção fixa, sem efeitos nem detalhes.
-@container (max-width: 34rem) {
+// Container estreito (≤ 28rem): prioriza o conteúdo. Moldura mínima, sem proporção fixa,
+// sem efeitos nem detalhes. (Era 34rem até o Home Slice 01-C, D-037.)
+@container (max-width: 28rem) {
   .body {
     padding: space(2);
   }
