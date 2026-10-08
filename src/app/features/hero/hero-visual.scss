@@ -1,0 +1,101 @@
+// Cena do Hero: objeto físico (materiais, sombra de objeto) + luz quente só nesta área.
+// "A ambientação apoia o conteúdo. Nunca compete com ele."
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.scene {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  justify-items: center;
+  width: 100%;
+  max-width: 34rem;
+  margin-inline: auto;
+
+  // Luz quente difusa atrás da cena (permitido só na área visual do Hero, D-024).
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -20% -30% -10%;
+    z-index: -1;
+    background: radial-gradient(closest-side, var(--mc-glow-warm), transparent);
+  }
+}
+
+.crt {
+  width: 88%;
+}
+
+.screen-message {
+  place-self: center;
+  margin: 0;
+  @include type(system);
+  color: var(--mc-text-muted);
+}
+
+// Console MC-01 (CSS local): corpo baixo sob o CRT, slot de cartucho, etiqueta, LED.
+.console {
+  display: flex;
+  align-items: center;
+  gap: space(4);
+  width: 100%;
+  padding: space(4) space(5);
+  background: var(--mc-material-dark);
+  border-radius: var(--mc-radius-sm);
+  box-shadow:
+    inset 0 1px 0 var(--mc-material-highlight),
+    inset 0 calc(-1 * var(--mc-border-width-strong)) 0 var(--mc-material-groove),
+    var(--mc-shadow-object);
+}
+
+.console-label {
+  @include type(system);
+  color: var(--mc-material-dark-ink);
+}
+
+// Slot de cartucho: ranhura funda que conversa com a língua de conexão do MC-CART.
+.console-slot {
+  flex: 0 1 38%;
+  height: space(3);
+  margin-inline-start: auto;
+  background: var(--mc-bg);
+  border-radius: var(--mc-radius-sm);
+  box-shadow:
+    inset 0 2px 0 var(--mc-material-groove),
+    0 1px 0 var(--mc-material-highlight);
+}
+
+.console-vents {
+  flex: 0 1 space(8);
+  height: space(2);
+  margin-inline-start: auto;
+  background: repeating-linear-gradient(
+    to right,
+    var(--mc-material-groove) 0 space(2),
+    transparent space(2) space(3)
+  );
+}
+
+// No máximo dois botões físicos (decorativos).
+.console-buttons {
+  display: flex;
+  gap: space(2);
+
+  span {
+    width: space(5);
+    height: space(3);
+    background: var(--mc-material-groove);
+    border-radius: var(--mc-radius-sm);
+    box-shadow: inset 0 1px 0 var(--mc-material-highlight);
+  }
+}
+
+.console-led {
+  width: space(2);
+  height: space(2);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-accent);
+}
