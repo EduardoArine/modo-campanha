@@ -75,6 +75,7 @@ Registro da evolução profissional, portfólio, vitrine de projetos, ferramenta
 | `09-roadmap.md`                     | fases 0–9 e decisões em aberto                    |
 | `10-decisions.md`                   | decision log (D-001...)                           |
 | `11-design-system.md`               | MC Design System: princípios, cores, tipografia, grid, spacing, backlog |
+| `12-home-slice-01.md`               | Plano do primeiro vertical slice da Home (Header, Hero, Player Status) |
 
 Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atualize os checkboxes.
 
@@ -88,6 +89,7 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 - i18n (D-020): `src/app/core/i18n/`. **A URL é a fonte da verdade** (`/` pt-BR, `/en` en); trocar idioma = navegar. Componentes usam `inject(LocaleService).ui` (dicionário tipado) e `pick()` para conteúdo `Localized`. Todo texto novo entra em `ui.pt-BR.ts` **e** `ui.en.ts`. Sem bibliotecas de i18n; sem localStorage sobrepondo a URL.
 - `src/app/shared/ui/`: primitivos do design system: `mc-icon` (16/20/24; sem `label` = decorativo), `a[mcAction]`/`button[mcAction]` (`primary` no máximo 1 por região, `secondary`, `text`; navegação = `<a>`, ação = `<button>`), `mc-chip` (warm/cool, informativo), `mc-status` (active/in-progress, sempre com texto), `mc-section-header`. Reusar antes de criar.
 - `src/app/shared/signature/`: componentes autorais: `mc-player-card` (UI digital, único com cantos de mira, sem métricas inventadas), `mc-cart` (objeto físico, shells dark/light/orange/cool, `role="img"`, não clicável), `mc-project-summary` (nome, descrição, até 2 chips), `mc-crt` (efeitos atrás do conteúdo, nunca corta). Objetos físicos usam tokens `--mc-material-*` e `--mc-shadow-object`; UI digital não. Três níveis de token: primitive → semantic UI → physical material; **material tokens não criam uma segunda paleta**. `--mc-radius-glass` só no vidro do CRT.
+- CSS: orçamento de estilo por componente → enxugar antes de aumentar (D-035). Abreviações utilizadas para otimização de CSS/SCSS devem permanecer locais ao componente e documentadas. Elas não devem reduzir a clareza de APIs públicas, tokens do Design System ou contratos compartilhados.
 - Showcase dev-only: `npm start` → `/dev/design-system` (D-028). Nunca registrar rotas de dev em produção.
 - `src/app/core/`: infraestrutura transversal (boot, konami listener). `src/app/shared/`: componentes reutilizáveis (só criar quando um elemento se repetir).
 - `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(section-title)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans só em `display-hero`; IBM Plex Sans no resto, D-029). Escala de spacing fechada. **Cores: só tokens semânticos** via `var(--mc-<token>)` (`--mc-text`, `--mc-accent`, `--mc-focus-ring`...); primitivos `--mc-color-*` nunca em componentes. Combinação nova de cor = adicionar em `$supported-pairs` (`tokens/_contrast.scss`); o build falha se não passar. Sombra só em objetos físicos; glow só no Hero visual/CRT/boot; header sólido; cantos de mira só no Player Card.
@@ -110,7 +112,8 @@ Deploy: `.github/workflows/deploy-pages.yml`, **disparo manual** (`workflow_disp
 ## Roadmap e fase atual
 
 - FASE 0 ✅ · FASE 1 ✅ (Concept 03 híbrido).
-- **Fase atual: FASE 2 — MC Design System.** Sprints 1 (Typography, Grid, Spacing, i18n) e 2 (Colors, Borders, Surfaces, contratos de contraste) ✅. Sprint 3 (Icons, Actions, Chips, Status, Section header, showcase) ✅. Próximo checkpoint (Player Card + MC-CART + CRT) **aguarda revisão do showcase e aprovação**. A home final só depois do Design System.
+- FASE 2 ✅: MC Design System Core (D-030) e **Sprint 4 — Signature Components: APPROVED** (D-036).
+- **Fase atual: FASE 3 — Core Experience, em planejamento.** Home Slice 01 (Header, Hero, entrada do Player Status) planejado em `docs/12-home-slice-01.md`; **não implementar sem aprovação**.
 - Fases: 0 Foundation · 1 Visual Concept · 2 Design System · 3 Core Experience · 4 Career Content · 5 Game Feel · 6 Secrets · 7 Content · 8 Quality · 9 Release. Detalhes em `docs/09-roadmap.md`.
 
 ## Fluxo de trabalho
