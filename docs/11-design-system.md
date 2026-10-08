@@ -13,10 +13,10 @@
 | 4   | Spacing                  | ✅ Aprovado e implementado (D-022)                             |
 | 5   | Borders                  | ✅ Aprovado e implementado (D-024)                             |
 | 6   | Surfaces                 | ✅ Aprovado e implementado (D-024)                             |
-| 7   | Icons                    | 🟡 Proposta Sprint 3 (setas ↗ → não existem nas fontes: SVG)  |
-| 8   | Buttons                  | 🟡 Proposta Sprint 3                                           |
-| 9   | Labels / Chips           | 🟡 Proposta Sprint 3                                           |
-| 10  | Status                   | 🟡 Proposta Sprint 3                                           |
+| 7   | Icons                    | ✅ Implementado (D-027): `mc-icon`, 4 system + 2 brand        |
+| 8   | Buttons / Actions        | ✅ Implementado (D-027): `mcAction` primary/secondary/text     |
+| 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
+| 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
 | 11  | Player Card              | ⬜ backlog (regras de conteúdo em D-017)                       |
 | 12  | MC-CART                  | ⬜ backlog (direção em D-013)                                  |
 | 13  | CRT                      | ⬜ backlog                                                     |
@@ -29,7 +29,8 @@
 
 - **Sprint 1 (concluído):** Typography + Grid + Spacing + infraestrutura de i18n.
 - **Sprint 2 (concluído):** Colors + Borders + Surfaces + contratos de contraste.
-- **Sprint 3 (proposta):** Icons + Buttons + Labels/Chips + Status. Não iniciado.
+- **Sprint 3 (concluído):** Icons + Actions + Chips + Status + Section header + showcase dev-only.
+- **Próximo (não iniciado):** Player Card + MC-CART + CRT, após revisão do showcase.
 
 ---
 
@@ -367,13 +368,133 @@ Cores de borda: `--mc-border-subtle` (decorativa), `--mc-border-default` (intera
 
 ---
 
-## Sprint 3 (PROPOSTA, aguardando aprovação): Icons + Buttons + Labels/Chips + Status
+## Sprint 3 — Icons, Actions, Chips, Status e Section Header (APROVADO e implementado, D-027)
 
-Primitivos de interface que Hero, Player Status e Project Inventory vão consumir.
+Componentes em `src/app/shared/ui/` (barrel `index.ts`). Consomem só tokens semânticos; textos sempre vêm de fora (dicionário / conteúdo `Localized`). Testes em `ui.spec.ts`.
 
-1. **Icons:** SVG inline, grade de 16 px (renderizados a 16 e 24 px), estilo pixel coerente com a Pixelify (`shape-rendering: crispEdges`), `currentColor`. Conjunto inicial só do que o concept usa: seta direita, seta para baixo, link externo (↗), documento (currículo), idioma. Logos de GitHub e LinkedIn como marcas oficiais monocromáticas (sem pixelizar, por respeito às diretrizes de marca). Componente `mc-icon` próprio, sem biblioteca. Decorativo = `aria-hidden`; ícone sozinho exige rótulo traduzido.
-2. **Buttons:** primário (accent + text-on-accent, radius-sm, padding 12 × 24, Plex 500), link-botão secundário (sublinhado accent, como "GitHub ↗" no 03-A) e contornado (`border-default`, como "Currículo" no header do 03-A). Estados conforme as regras acima. Alvo mínimo 44 × 44 px. Navegação usa `<a>` com o estilo, ação usa `<button>` (diretiva aplicada ao elemento nativo, preservando semântica).
-3. **Labels / Chips:** micro-label (`label` em `--mc-text-muted`); chip quente (borda `--mc-border-accent`, texto `--mc-accent-hover`, a adicionar aos contratos) e chip frio (`--mc-cool-surface` + `--mc-text-on-cool` + `--mc-border-cool`). Chips não interativos por padrão; máximo 2 por cartucho.
-4. **Status:** indicador circular 8 px + texto sempre presente (ONLINE, ACTIVE, IN PROGRESS). Cor nunca sozinha. Danger com ícone + borda.
-5. **Section header:** composição marcador + título `display-section` + linha subtle + status opcional.
-6. **Revisão visual:** página de showcase do design system **apenas em modo de desenvolvimento** (`isDevMode()`), fora do build publicado.
+### 8. Icons (`mc-icon`)
+
+Duas famílias, sem biblioteca:
+
+| Família           | Ícones                                     | Estilo                                                                                   |
+| ----------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| MC system icons   | `arrow-down`, `external`, `document`, `language` | desenhados para o Modo Campanha: grade 16 px, traço 1.5, pontas retas, só 0/45/90° (curvas viram chanfros). Técnico, levemente pixel, sem cara de sprite. |
+| Brand icons       | `github`, `linkedin`                       | marcas oficiais monocromáticas (GitHub Octicons "mark-github", MIT; LinkedIn via Simple Icons, CC0). **Sem pixelização.** |
+
+Só existem ícones usados por componentes reais. Novo ícone = necessidade concreta.
+
+API:
+
+```html
+<mc-icon name="external" />                                  <!-- decorativo: aria-hidden="true" -->
+<mc-icon name="github" [size]="24" [label]="ui().cta.github" /> <!-- informativo: role="img" + aria-label -->
+```
+
+| Input   | Tipo                  | Padrão | Regra                                                                                |
+| ------- | --------------------- | ------ | ------------------------------------------------------------------------------------ |
+| `name`  | `McIconName`          | —      | obrigatório; união fechada dos ícones registrados em `icons.ts`                       |
+| `size`  | `16 \| 20 \| 24`      | 16     | só tamanhos do sistema (valores arbitrários não compilam com `strictTemplates`)      |
+| `label` | `string` (traduzido)  | —      | só quando o ícone informa **sem** texto adjacente; com texto visível, omitir (evita leitura duplicada) |
+
+Cor: `currentColor` (herda do texto). SVG inline, sem requisições.
+
+### 9. Actions (`a[mcAction]`, `button[mcAction]`)
+
+Estilo aplicado ao **elemento nativo**: navegação = `<a>`, ação = `<button>`. Não existe abstração semântica única. `<button>` sem `type` vira `type="button"` automaticamente.
+
+| Variante    | Uso                                                           | Visual                                                                      |
+| ----------- | ------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `primary`   | CTA principal. **No máximo um por região visual** (ex.: "Explorar campanha" no Hero) | `--mc-accent` + `--mc-text-on-accent`, padding 12 × 24, radius 4 |
+| `secondary` | ações secundárias importantes (ex.: Currículo)                | contorno `--mc-border-default`, texto `--mc-text`                           |
+| `text`      | baixa ênfase (ex.: GitHub, LinkedIn)                          | texto `body-s`, sublinhado 1 px `--mc-accent` com offset 6 px (03-A)        |
+
+```html
+<a mcAction href="#project-inventory">{{ ui().cta.explore }} <mc-icon name="arrow-down" /></a>
+<a mcAction="secondary" [href]="resumeUrl"><mc-icon name="document" /> {{ ui().cta.resume }}</a>
+<a mcAction="text" href="https://github.com/EduardoArine">{{ ui().cta.github }} <mc-icon name="external" /></a>
+```
+
+Estados (tokens do Sprint 2):
+
+| Estado          | primary                    | secondary                    | text                                   |
+| --------------- | -------------------------- | ---------------------------- | -------------------------------------- |
+| hover           | `--mc-accent-hover`        | `--mc-interactive-hover`     | texto e sublinhado `--mc-link-hover`   |
+| active          | `--mc-accent-active`       | `--mc-interactive-active`    | texto `--mc-link`                      |
+| focus-visible   | anel global `--mc-focus-ring` + offset | idem             | idem                                   |
+| disabled        | `--mc-disabled-*`, `cursor: not-allowed`, sem hover/active (só `<button>`; links não têm estado desabilitado) | idem | sublinhado `--mc-disabled-border` |
+
+- Alvo mínimo **44 × 44 px** (`min-height`/`min-width`), inclusive no `text`.
+- `data-mc-preview="hover|active|focus"` força o estado visual **apenas para o showcase**.
+
+### 10. Chips (`mc-chip`)
+
+Somente `warm` (borda `--mc-border-accent`) e `cool` (`--mc-cool-surface` + `--mc-border-cool`); texto `--mc-text-secondary` / `--mc-text-on-cool` em `caption`.
+
+- **Informativos:** sem `cursor: pointer`, sem `role="button"`, sem `tabindex`, sem hover. Se um dia virarem filtros, serão especificados como outro componente.
+- **Cor = categorização visual**, não importância, alerta ou status.
+- Máximo de 2 por cartucho na listagem.
+- O texto do chip quente é creme (não laranja), para o laranja não aparecer em todos os elementos ao mesmo tempo; a borda carrega o tom.
+
+### 11. Status (`mc-status`)
+
+Indicador de 8 px (`aria-hidden`) + **texto sempre visível** (traduzível, papel `label`). Só os estados usados pelo produto:
+
+| Estado        | Onde                 | Indicador                       | Cor                  |
+| ------------- | -------------------- | ------------------------------- | -------------------- |
+| `active`      | Player Status        | círculo cheio                   | `--mc-status-online` |
+| `in-progress` | Current Main Quest   | círculo vazado (borda 2 px)     | `--mc-accent`        |
+
+Forma diferente + texto: status nunca é comunicado só por cor. Sem conjunto genérico success/warning/info/error.
+
+```html
+<mc-status state="active">{{ ui().status.active }}</mc-status>
+```
+
+### 12. Section header (`mc-section-header`)
+
+`■ TÍTULO ───────── ● STATUS`, com partes opcionais. Só `heading` é obrigatório.
+
+| Input       | Tipo       | Padrão | Uso                                               |
+| ----------- | ---------- | ------ | ------------------------------------------------- |
+| `heading`   | `string`   | —      | título (`display-section`)                        |
+| `headingId` | `string`   | —      | id do heading, para `<section aria-labelledby>`   |
+| `level`     | `2 \| 3`   | 2      | nível semântico do heading                        |
+| `code`      | `string`   | —      | código de sistema acima do título (`system`)      |
+| `subtitle`  | `string`   | —      | linha de apoio (`body`, `--mc-text-secondary`)    |
+| `divider`   | `boolean`  | `true` | linha 1 px `--mc-border-subtle`                   |
+| conteúdo    | `<mc-status>` | —   | status alinhado à direita (projeção)              |
+
+```html
+<mc-section-header [heading]="ui().sections.playerStatus" headingId="player-status-title">
+  <mc-status state="active">{{ ui().status.active }}</mc-status>
+</mc-section-header>
+```
+
+Marcador ■ 12 px `--mc-accent` decorativo. Sem ornamentação extra.
+
+### Contratos de contraste adicionados
+
+Só os pares realmente usados pelos novos componentes: action `secondary` no header (`--mc-surface`):
+
+- `text` sobre `interactive-hover` / `interactive-active` compostos sobre `surface`;
+- `disabled-text` sobre `disabled-bg` composto sobre `surface`.
+
+Chips, status, actions primary/text e section header já estavam cobertos pelos pares do Sprint 2 (`text-secondary`, `text-on-cool`, `status-online`, `accent`, `link`, `link-hover`, `text-on-accent`, `border-default`, `focus-ring`).
+
+### Design System Showcase (dev only)
+
+- Rotas: `/dev/design-system` (pt-BR) e `/en/dev/design-system` (en), com `npm start`.
+- Mostra: section headers, typography, semantic colors, surfaces (+ sombra de objeto e glow), borders, icons (16/20/24), actions × estados (default/hover/active/focus/disabled), composição dos CTAs do Hero, chips e status sobre bg e panel, focus-visible, dicionário pt-BR × en.
+- **Não existe em produção** (D-028): `src/app/dev/dev.routes.ts` exporta `DEV_ROUTES = []`; só a configuração `development` troca o arquivo por `dev.routes.development.ts` (`fileReplacements`). O `tsconfig.app.json` exclui as fontes do showcase das raízes de compilação e o workflow de deploy falha se `design-system-page` aparecer no bundle publicado.
+- Textos da própria página do showcase são da ferramenta (não passam pelo dicionário); textos dos componentes de exemplo passam.
+
+### Pontos abertos encontrados no Sprint 3
+
+- **"C" da Pixelify Sans:** no desenho da fonte, o C maiúsculo é quase fechado e, nos títulos de seção (28–40 px, peso 700), lê como "O" ("AOTIONS", "OURRENT MAIN QUEST"). Em 96 px (hero) lê bem. Igual em todos os pesos (testado 400–700). Opções em aberto: aceitar como característica; trocar `display-section` para outra família; ou adiantar o wordmark/headings críticos como SVG. **Decisão pendente com Eduardo.**
+- Traduções en novas a revisar: "Explore the campaign", "Résumé".
+
+---
+
+## Próximo checkpoint provável (não iniciado): Player Card + MC-CART + CRT
+
+Aguardando revisão do showcase e aprovação. Escopo esperado: especificação e componentes do Player Card (foto real / placeholder "FOTO DO EDUARDO", cantos de mira exclusivos), do MC-CART (anatomia, 4 shells, metadados fixos, sombra de objeto físico) e da moldura CRT (estado vazio `INSERT CARTRIDGE`, glow permitido), ainda sem animações de cartucho.

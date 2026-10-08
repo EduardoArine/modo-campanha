@@ -86,6 +86,8 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 - `src/app/models/`: interfaces (`Project`, `Cartridge`, `Skill`, `SkillGroup`, `Achievement`, `CampaignCheckpoint`, `SocialLink`).
 - `src/app/data/`: conteúdo estático tipado (hoje apenas skills e link do GitHub). Textos humanos migrarão para `Localized<T>` (ver `docs/07`).
 - i18n (D-020): `src/app/core/i18n/`. **A URL é a fonte da verdade** (`/` pt-BR, `/en` en); trocar idioma = navegar. Componentes usam `inject(LocaleService).ui` (dicionário tipado) e `pick()` para conteúdo `Localized`. Todo texto novo entra em `ui.pt-BR.ts` **e** `ui.en.ts`. Sem bibliotecas de i18n; sem localStorage sobrepondo a URL.
+- `src/app/shared/ui/`: primitivos do design system: `mc-icon` (16/20/24; sem `label` = decorativo), `a[mcAction]`/`button[mcAction]` (`primary` no máximo 1 por região, `secondary`, `text`; navegação = `<a>`, ação = `<button>`), `mc-chip` (warm/cool, informativo), `mc-status` (active/in-progress, sempre com texto), `mc-section-header`. Reusar antes de criar.
+- Showcase dev-only: `npm start` → `/dev/design-system` (D-028). Nunca registrar rotas de dev em produção.
 - `src/app/core/`: infraestrutura transversal (boot, konami listener). `src/app/shared/`: componentes reutilizáveis (só criar quando um elemento se repetir).
 - `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(display-section)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans ≥ ~14 px; IBM Plex Sans para texto e micro-labels). Escala de spacing fechada. **Cores: só tokens semânticos** via `var(--mc-<token>)` (`--mc-text`, `--mc-accent`, `--mc-focus-ring`...); primitivos `--mc-color-*` nunca em componentes. Combinação nova de cor = adicionar em `$supported-pairs` (`tokens/_contrast.scss`); o build falha se não passar. Sombra só em objetos físicos; glow só no Hero visual/CRT/boot; header sólido; cantos de mira só no Player Card.
 - `public/assets/`: imagens, ícones, cartuchos, pixel art (referenciar como `assets/...`).
@@ -107,7 +109,7 @@ Deploy: `.github/workflows/deploy-pages.yml`, **disparo manual** (`workflow_disp
 ## Roadmap e fase atual
 
 - FASE 0 ✅ · FASE 1 ✅ (Concept 03 híbrido).
-- **Fase atual: FASE 2 — MC Design System.** Sprints 1 (Typography, Grid, Spacing, i18n) e 2 (Colors, Borders, Surfaces, contratos de contraste) ✅. Sprint 3 (Icons, Buttons, Labels/Chips, Status) em **proposta aguardando aprovação** (`docs/11`). A home final só depois do Design System.
+- **Fase atual: FASE 2 — MC Design System.** Sprints 1 (Typography, Grid, Spacing, i18n) e 2 (Colors, Borders, Surfaces, contratos de contraste) ✅. Sprint 3 (Icons, Actions, Chips, Status, Section header, showcase) ✅. Próximo checkpoint (Player Card + MC-CART + CRT) **aguarda revisão do showcase e aprovação**. A home final só depois do Design System.
 - Fases: 0 Foundation · 1 Visual Concept · 2 Design System · 3 Core Experience · 4 Career Content · 5 Game Feel · 6 Secrets · 7 Content · 8 Quality · 9 Release. Detalhes em `docs/09-roadmap.md`.
 
 ## Fluxo de trabalho

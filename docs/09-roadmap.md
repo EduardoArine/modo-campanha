@@ -48,9 +48,15 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 - ✅ Colors (primitivos + semânticos, foco, links, interação, disabled), Borders, Surfaces (D-024)
 - ✅ Contratos de contraste verificados na compilação (D-025)
 
-### Sprint 3 🟡
+### Sprint 3 ✅ (2026-10-08)
 
-- 🟡 Icons + Buttons + Labels/Chips + Status (+ section header): **proposta em docs/11, aguardando aprovação**
+- ✅ Icons (`mc-icon`), Actions (`mcAction`), Chips, Status, Section header (D-027)
+- ✅ Design System Showcase dev-only em `/dev/design-system` (D-028)
+- 🟡 Ponto aberto: legibilidade do "C" da Pixelify Sans nos títulos de seção
+
+### Próximo checkpoint ⬜ (aguardando revisão do showcase)
+
+- ⬜ Player Card + MC-CART + CRT
 
 ### Próximos sprints ⬜
 

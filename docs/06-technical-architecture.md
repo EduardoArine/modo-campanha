@@ -72,6 +72,9 @@ O Angular 21 usa a pasta `public/` (copiada para a raiz do build) no lugar do an
 
 ## Componentização
 
+- Primitivos de UI em `src/app/shared/ui/` (`mc-icon`, `mcAction`, `mc-chip`, `mc-status`, `mc-section-header`); importar do barrel `shared/ui`. API em `docs/11`.
+- **Rotas de desenvolvimento** (D-028): `src/app/dev/dev.routes.ts` é vazio em produção; a configuração `development` troca por `dev.routes.development.ts` (`fileReplacements` no `angular.json`). Fontes do showcase excluídas do `tsconfig.app.json`; o deploy falha se o showcase aparecer no bundle. Novas páginas internas seguem o mesmo padrão.
+
 - Cada seção é dona do seu layout e lê seus dados de `data/`.
 - Elementos visuais repetidos entre seções (títulos pixel, painéis HUD, badges, botões) vão para `shared/` quando aparecerem **pela segunda vez**, não antes.
 - `CrtProjectViewer` é um componente "burro": recebe `project` por input; a seleção é responsabilidade do `ProjectInventorySection`.

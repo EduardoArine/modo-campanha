@@ -271,3 +271,26 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** SEO e leitores de tela devem identificar a pessoa do portfólio; a marca é contexto.
 - **Alternativas:** H1 = "Modo Campanha"; H1 combinado.
 - **Status:** Direção aprovada; validar na implementação do Hero (FASE 3).
+
+## D-027 — Sprint 3 aprovado: Icons, Actions, Chips, Status e Section Header
+
+- **Data:** 2026-10-08
+- **Decisão:**
+  - **Icons:** duas famílias, sem biblioteca. *MC system icons* próprios (grade 16 px, simples, técnicos, levemente pixel, sem estética de sprite), criados só quando usados; *brand icons* GitHub e LinkedIn como marcas oficiais monocromáticas, sem pixelização. Componente `mc-icon` com tamanhos fechados 16/20/24; decorativo = `aria-hidden`, informativo sem texto adjacente = nome acessível.
+  - **Actions:** `primary` (no máximo um por região visual), `secondary` (contorno) e `text` (baixa ênfase, sublinhado discreto). Semântica nativa preservada: navegação = `<a>`, ação = `<button>`; estilos compartilhados, elemento correto. Alvo mínimo 44 × 44 px; estados do Sprint 2.
+  - **Chips:** só `warm` e `cool`, informativos (sem pointer, role button ou aparência de filtro). Cor = categorização, não importância/status.
+  - **Status:** indicador ~8 px + texto, só estados usados pelo produto (`active`, `in-progress`); nunca só cor; sem conjunto corporativo genérico.
+  - **Section header:** código, subtítulo, divider e status opcionais; nenhuma parte obrigatória por simetria.
+- **Contexto:** primitivos de interface que Hero, Player Status e Project Inventory vão consumir.
+- **Motivo:** consistência sem dependências e sem virar design system corporativo genérico.
+- **Alternativas:** biblioteca de ícones; componente `<mc-button>` único com `href` opcional (rejeitado: mistura semânticas); conjunto completo de variantes/estados.
+- **Status:** Aceita e implementada (`src/app/shared/ui/`).
+
+## D-028 — Showcase do design system só em desenvolvimento
+
+- **Data:** 2026-10-08
+- **Decisão:** a página `/dev/design-system` (e `/en/dev/design-system`) existe **apenas no build de desenvolvimento**. `src/app/dev/dev.routes.ts` exporta `DEV_ROUTES = []`; a configuração `development` do `angular.json` substitui esse arquivo por `dev.routes.development.ts` via `fileReplacements`. O `tsconfig.app.json` exclui as fontes do showcase das raízes de compilação, então a produção nem compila a página. O workflow de deploy falha se `design-system-page` aparecer no bundle.
+- **Contexto:** a rota não pode existir em produção; esconder o link não basta.
+- **Motivo:** a rota não é registrada nem empacotada em produção, com mecanismo nativo do Angular CLI e poucos arquivos.
+- **Alternativas:** `isDevMode()` em runtime (código ainda iria para o bundle); projeto/aplicação separada no workspace (complexo demais para uma página interna).
+- **Status:** Aceita e implementada. Verificado: build de produção sem o chunk; build de desenvolvimento com o chunk; guarda do CI testada nos dois casos.
