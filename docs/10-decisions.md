@@ -303,4 +303,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** a perda de legibilidade não é aceita como característica; o caráter retro não depende exclusivamente da pixel font.
 - **Alternativas:** aceitar o C como característica (rejeitado por Eduardo); SVG para títulos (rejeitado: títulos são traduzíveis); terceira família pixel (rejeitado); manter Pixelify nos códigos de 14 px (rejeitado após validação: "MC-01" lia "MO-01").
 - **Implementação:** `display-section` → `section-title` (Plex 600, 24→32 px, tracking 0.06em); `display-cart` → `cart-title` (Plex 600); `system` → Plex 500, 14 px, tracking 0.08em; `display-hero` mantém Pixelify com peso 500 abaixo de 768 px e 700 a partir de md.
-- **Status:** Aceita e implementada. **Ponto para revisão de Eduardo:** a lista aprovada citava MC / MC-01 / MC-CART / seriais em Pixelify; a validação não aprovou nenhum desses usos, então estão em Plex. Caminhos futuros: monograma MC / wordmark em SVG (já no backlog) ou nova validação num tamanho maior no Sprint 4 (ex.: MC-01 no console).
+- **Status:** Aceita, implementada e **aprovada por Eduardo em 2026-10-08**. Pixelify fica restrita aos usos visualmente validados (principalmente o display grande "MODO CAMPANHA"). **Não reintroduzir em códigos pequenos.** O monograma MC e o wordmark MODO CAMPANHA poderão recuperar essa linguagem via SVG autoral.
+
+## D-030 — MC Design System Core aprovado
+
+- **Data:** 2026-10-08
+- **Decisão:** **MC Design System Core — APPROVED.** Os Sprints 1–3 (tipografia, grid, spacing, i18n, cores, bordas, superfícies, contratos de contraste, ícones, actions, chips, status, section header) formam o núcleo aprovado do sistema.
+- **Contexto:** revisão visual dos screenshots do Design System Showcase.
+- **Motivo:** os screenshots confirmaram que o núcleo funciona e continua pertencendo ao Modo Campanha **mesmo sem CRT, cartuchos ou ambientação**.
+- **Alternativas:** iterar mais o núcleo antes dos componentes autorais.
+- **Status:** Aceita. Próximo: Sprint 4 — Signature Components (Player Card, MC-CART, CRT), avaliados isoladamente no showcase antes da Home.

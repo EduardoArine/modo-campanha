@@ -54,9 +54,13 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 - ✅ Design System Showcase dev-only em `/dev/design-system` (D-028)
 - ✅ Legibilidade do "C" da Pixelify: resolvida com nova regra de uso (D-029)
 
-### Próximo checkpoint ⬜ (aguardando revisão do showcase)
+**MC Design System Core — APPROVED** (D-030, 2026-10-08).
 
-- ⬜ Player Card + MC-CART + CRT
+### Sprint 4 🟡 Signature Components
+
+- 🟡 Player Card
+- 🟡 MC-CART + Project Summary
+- 🟡 CRT Project Viewer (estrutura, sem animação)
 
 ### Próximos sprints ⬜
 
