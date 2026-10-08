@@ -13,6 +13,10 @@
 | Gerenciador     | npm                                                |
 | Node.js local   | 22.14                                              |
 | Hospedagem      | GitHub Pages via GitHub Actions                    |
+| Idiomas         | pt-BR (padrão) + en, troca em runtime (D-018)      |
+| i18n            | solução própria com signals, URL como fonte da verdade (D-020) |
+| Fontes          | Pixelify Sans + IBM Plex Sans, WOFF2 self-hosted em `src/styles/fonts/` (D-022, D-023) |
+| Design tokens   | SCSS em `src/styles/tokens/`, emitidos como `--mc-*` (docs/11) |
 
 Sem biblioteca de UI, sem biblioteca de animação, sem backend, sem CMS, sem analytics. Adicionar qualquer uma delas exige registro em `docs/10-decisions.md`.
 
@@ -29,7 +33,7 @@ Sem biblioteca de UI, sem biblioteca de animação, sem backend, sem CMS, sem an
 ```
 src/
   app/
-    core/                 # infraestrutura transversal (boot, konami listener, serviços globais)
+    core/                 # infraestrutura transversal: i18n/ (LocaleService, dicionários); futuramente boot, konami
     shared/               # componentes/utilitários reutilizáveis (pixel-title, panel, badge...)
     features/             # uma pasta por seção da onepage
       hero/
@@ -47,7 +51,7 @@ src/
     models/               # interfaces TypeScript do conteúdo
     data/                 # conteúdo estático tipado
     app.ts | app.config.ts | app.routes.ts
-  styles/                 # parciais SCSS globais (_base.scss; tokens na FASE 2)
+  styles/                 # tokens/ (SCSS), fonts/, parciais globais; entrada para componentes: _mc.scss (docs/11)
   styles.scss             # entrada global de estilos
 public/
   assets/
@@ -104,12 +108,62 @@ Regras: toda animação respeita `prefers-reduced-motion` (já existe regra glob
 - Easter eggs nunca necessários para acessar conteúdo.
 - `lang="pt-BR"` no documento.
 
+- `<html lang>` acompanha o idioma ativo; o seletor de idioma mostra cada opção no próprio idioma ("Português", "English") com `lang` no elemento.
+- Textos de acessibilidade (`aria-label`, `alt`) também são traduzidos.
+
+## i18n
+
+> Status: **aprovada (D-020) e implementada** em `src/app/core/i18n/`.
+
+Requisitos (D-018): pt-BR padrão + en; troca em runtime; todo conteúdo relevante nos dois idiomas; nenhum texto hardcoded em componentes finais; tipado; SEO e acessibilidade considerados.
+
+### Alternativas avaliadas
+
+| Critério                       | Signals + dicionários próprios | Angular i18n nativo (`$localize`) | Transloco / ngx-translate |
+| ------------------------------ | ------------------------------ | --------------------------------- | ------------------------- |
+| Troca em runtime sem reload    | ✅                              | ❌ (um build por idioma)           | ✅                         |
+| Tipagem / tradução faltando quebra o build | ✅ total            | 🟡 (extração + XLIFF)             | ❌ chaves string (sem tooling extra) |
+| Dependências novas             | nenhuma                        | `@angular/localize`               | 1 lib                     |
+| Conteúdo estruturado (`data/`) | ✅ natural (`Localized<T>`)     | ❌ desajeitado                     | 🟡 JSON separado do dado  |
+| SEO                            | 🟡 SPA (mitigável, ver abaixo)  | ✅ HTML estático por idioma        | 🟡 SPA                    |
+| Escala para muitos idiomas / tradutores não-devs | 🟡            | ✅                                 | ✅                         |
+| Complexidade para 2 idiomas    | baixa                          | média-alta (2 builds, deploy)      | média                     |
+
+**Escolhida:** signals + dicionários próprios. Reavaliar Transloco apenas se houver mais de 3 idiomas ou tradução feita por terceiros.
+
+### Implementação (aprovada, D-020)
+
+```
+src/app/core/i18n/
+  locale.ts             # LOCALES, Locale, DEFAULT_LOCALE, Localized<T>, localeFromUrl(), localizedUrl()
+  ui.pt-BR.ts           # dicionário de UI pt-BR; define o tipo UiDictionary
+  ui.en.ts              # dicionário en: UI_EN: UiDictionary (chave faltando/sobrando quebra o build)
+  locale.service.ts     # LocaleService
+  index.ts
+```
+
+- **A URL é a fonte da verdade.** Rotas: `/` → pt-BR, `/en` → en (`app.routes.ts`). `LocaleService.locale` é um signal derivado dos `NavigationEnd` do Router. Não existe `setLocale()`: trocar idioma = navegar (`switchTo(locale)` / `urlFor(locale)`, que preservam caminho, query e fragmento).
+- `localStorage` **não** é usado. No futuro poderá apenas sugerir uma preferência, sem substituir a URL nem impedir deep links.
+- `LocaleService.ui`: `computed` com o dicionário do idioma ativo. Componentes fazem `protected readonly ui = inject(LocaleService).ui;` e usam `{{ ui().sections.playerStatus }}`.
+- `LocaleService.pick(localized)`: resolve conteúdo `Localized<T>` no idioma ativo.
+- Um `effect` sincroniza `<html lang>`, `document.title` e `<meta name="description">`. Instanciado no boot via `provideAppInitializer` (`app.config.ts`).
+- `aria-label`, `alt` e metadados futuros (Open Graph) também vêm do dicionário / conteúdo `Localized`.
+- **Todos** os textos passam pelo dicionário, inclusive labels de sistema (`PLAYER STATUS` tem o mesmo valor nos dois idiomas por decisão de conteúdo).
+- Os textos do Hero no dicionário são provisórios até existir o modelo `PlayerProfile` (docs/07). As traduções en de textos humanos são **rascunho**, a revisar por Eduardo.
+- Testes: `locale.spec.ts` (funções de URL), `locale.service.spec.ts` (lang/título), `home-page.spec.ts` (renderização em `/en` e `/`).
+
+### URL, SEO e GitHub Pages
+
+- pt-BR em `/modo-campanha/`, en em `/modo-campanha/en`.
+- O workflow de deploy copia `index.html` para `en/index.html` (resposta 200 em vez do 404 do fallback).
+- **FASE 8:** prerender estático das duas versões (avaliar `@angular/ssr` só em build), `hreflang`, Open Graph por idioma. Até lá, o HTML estático inicial é pt-BR.
+
 ## Performance
 
 - Rota principal com lazy loading (`loadComponent`).
 - Budgets do `angular.json` mantidos (500 kB warning / 1 MB erro inicial).
 - Imagens otimizadas (WebP/AVIF), `NgOptimizedImage` quando houver screenshots.
-- Fontes self-hosted com `font-display: swap` e subset.
+- Fontes self-hosted (`src/styles/fonts/`, WOFF2 variável, subset latin, ~57 kB no total), empacotadas com hash pelo build (D-023), `font-display: swap`. Preload da fonte do Hero na FASE 8. Sem Google Fonts em runtime e sem pacote npm de fontes.
 - Meta Lighthouse ≥ 90 em todas as categorias (FASE 8).
 
 ## GitHub Pages

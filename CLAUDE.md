@@ -8,6 +8,21 @@ Guia para qualquer sessão de IA que trabalhe neste repositório. Leia inteiro a
 
 - Frase central: **"XP real, sem personagem."** Tudo é real; a linguagem de jogo é só a forma.
 - Princípio de design: **"Retro na linguagem. Moderno na experiência."** (~30% retro/pixel, 70% produto digital moderno.)
+- Voz: **"O sistema fala a linguagem dos videogames; Eduardo fala como pessoa."**
+- **Bilíngue: pt-BR (padrão) + en**, troca em runtime (D-018).
+
+## Direção visual aprovada (FASE 1 concluída)
+
+**Concept 03 — Approved as Hybrid** (D-011). Não reinventar a direção nem propor novos concepts sem pedido explícito.
+
+- **03-A** (limpo): base de estrutura, grid, hierarquia, espaçamento e do **Player Status**.
+- **03-B** (atmosférico): ~30% da atmosfera do Hero (CRT, console MC-01, controle, luz quente) e base dos cartuchos **MC-CART** (shells preto, creme, grafite, laranja).
+- Hero = 70% 03-A + 30% 03-B; interface implementável, não ilustração.
+- Laranja `#F28C28` é a marca; paleta completa em D-014 / `docs/11`. Regra 70% neutros / 20% quentes / 10% complementares-status.
+- Marca: **Modo Campanha**; símbolo futuro: monograma **MC**. **MC-01** é linguagem de sistema, não marca. **Sem alien.**
+- Player Card com **foto real** (placeholder "FOTO DO EDUARDO" até existir). Sem levels/XP inventados.
+- Pixel font = voz do sistema (títulos, labels, códigos, cartuchos). Fonte moderna = voz do Eduardo (nome, cargo, texto, botões, nav).
+- Referências de imagem do concept não estão no repositório; as regras derivadas estão em `docs/04` e `docs/11`.
 
 ## Quem é Eduardo
 
@@ -40,7 +55,10 @@ Registro da evolução profissional, portfólio, vitrine de projetos, ferramenta
 - Animações que bloqueiam conteúdo ou ignoram `prefers-reduced-motion`.
 - Easter eggs que atrapalham navegação, ou implementar efeitos de easter egg sem aprovação.
 - Publicar no GitHub Pages ou ativar deploy automático sem avisar Eduardo.
-- Usar marcas registradas de consoles (Nintendo, Sega etc.) nos assets.
+- Usar marcas registradas de consoles (Nintendo, Sega etc.) nos assets ou copiar formatos de cartuchos reais.
+- Texto hardcoded em componentes finais: todo texto vem do dicionário de UI ou de conteúdo `Localized` (pt-BR + en).
+- Alien/space invader como símbolo; avatar gerado ou pixel art no lugar da foto do Eduardo; "LV 99" e pontuações de XP sem regra real.
+- Implementar tokens/componentes definitivos do design system antes da aprovação da proposta correspondente em `docs/11`.
 
 ## Documentação (`docs/`)
 
@@ -56,6 +74,7 @@ Registro da evolução profissional, portfólio, vitrine de projetos, ferramenta
 | `08-easter-eggs.md`                 | Secret Area, Konami Code, regras                  |
 | `09-roadmap.md`                     | fases 0–9 e decisões em aberto                    |
 | `10-decisions.md`                   | decision log (D-001...)                           |
+| `11-design-system.md`               | MC Design System: princípios, cores, tipografia, grid, spacing, backlog |
 
 Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atualize os checkboxes.
 
@@ -65,9 +84,10 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 - `src/app/features/<seção>/`: uma pasta por seção da onepage (`<nome>-section.ts`, `<section id="<nome>">`).
 - `src/app/pages/home/home-page.ts`: compõe as seções na ordem de `docs/03`. O teste `home-page.spec.ts` valida a ordem.
 - `src/app/models/`: interfaces (`Project`, `Cartridge`, `Skill`, `SkillGroup`, `Achievement`, `CampaignCheckpoint`, `SocialLink`).
-- `src/app/data/`: conteúdo estático tipado (hoje apenas skills e link do GitHub).
+- `src/app/data/`: conteúdo estático tipado (hoje apenas skills e link do GitHub). Textos humanos migrarão para `Localized<T>` (ver `docs/07`).
+- i18n (D-020): `src/app/core/i18n/`. **A URL é a fonte da verdade** (`/` pt-BR, `/en` en); trocar idioma = navegar. Componentes usam `inject(LocaleService).ui` (dicionário tipado) e `pick()` para conteúdo `Localized`. Todo texto novo entra em `ui.pt-BR.ts` **e** `ui.en.ts`. Sem bibliotecas de i18n; sem localStorage sobrepondo a URL.
 - `src/app/core/`: infraestrutura transversal (boot, konami listener). `src/app/shared/`: componentes reutilizáveis (só criar quando um elemento se repetir).
-- `src/styles/`: SCSS global. Tokens só na FASE 2.
+- `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(display-section)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans ≥ ~14 px; IBM Plex Sans para texto e micro-labels). Escala de spacing fechada. Cores: só após o Sprint 2 ser aprovado.
 - `public/assets/`: imagens, ícones, cartuchos, pixel art (referenciar como `assets/...`).
 - Convenção de nomes do Angular 21: `hero-section.ts` → `HeroSection` (sem sufixo `.component`).
 - Código em inglês; comentários e docs em português.
@@ -86,7 +106,8 @@ Deploy: `.github/workflows/deploy-pages.yml`, **disparo manual** (`workflow_disp
 
 ## Roadmap e fase atual
 
-- **Fase atual: FASE 0 concluída → próxima: FASE 1 — Visual Concept** (Hero, Player Status, início do Project Inventory). Concept primeiro, **sem layout definitivo antes da aprovação**.
+- FASE 0 ✅ · FASE 1 ✅ (Concept 03 híbrido).
+- **Fase atual: FASE 2 — MC Design System.** Sprint 1 (Typography + Grid + Spacing + i18n) ✅ implementado. Sprint 2 (Colors + Borders + Surfaces) em **proposta aguardando aprovação** (`docs/11`). A home final só depois do Design System.
 - Fases: 0 Foundation · 1 Visual Concept · 2 Design System · 3 Core Experience · 4 Career Content · 5 Game Feel · 6 Secrets · 7 Content · 8 Quality · 9 Release. Detalhes em `docs/09-roadmap.md`.
 
 ## Fluxo de trabalho

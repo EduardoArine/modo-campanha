@@ -15,31 +15,60 @@ Legenda: ✅ concluído · 🟡 em andamento · ⬜ não iniciado
 - ✅ Workflow de GitHub Pages preparado (disparo manual, ainda não ativado)
 - ✅ Arquitetura base
 
-## FASE 1 — VISUAL CONCEPT ⬜ ← próxima
+## Backlog de product exploration
 
-- ⬜ Concept da home desktop
-- ⬜ Hero
-- ⬜ Player Status
-- ⬜ Início do Project Inventory (cartuchos)
-- ⬜ Aprovação da direção visual
+- **Campaign XP**: sistema real de pontos do Modo Campanha (D-021). Requer regras verificáveis antes de qualquer número.
 
-> **NÃO desenvolver o layout final antes dessa aprovação.**
+## FASE 1 — VISUAL CONCEPT ✅ (concluída em 2026-10-08)
 
-## FASE 2 — DESIGN SYSTEM ⬜
+**Status: Concept 03 — Approved as Hybrid** (D-011 a D-017)
 
-- ⬜ Cores (tokens, contraste AA)
-- ⬜ Tipografia (pixel/display + leitura)
-- ⬜ Spacing
-- ⬜ Borders
+- ✅ Concept da home desktop
+- ✅ Hero: 70% Concept 03-A + 30% Concept 03-B (D-013)
+- ✅ Player Status: base Concept 03-A (D-012)
+- ✅ Início do Project Inventory: cartuchos do Concept 03-B como base do MC-CART (D-013)
+- ✅ Aprovação da direção visual
+- ✅ Paleta-base aprovada (D-014)
+- ✅ Direção de marca: monograma MC; MC-01 como linguagem de sistema; alien descartado (D-015, D-016)
+- ✅ Nova exigência: site bilíngue pt-BR / en (D-018)
+
+## FASE 2 — MC DESIGN SYSTEM 🟡 ← atual
+
+Especificação completa em `docs/11-design-system.md`. **A home final só é implementada depois do Design System.**
+
+### Sprint 1 ✅ (2026-10-08)
+
+- ✅ Typography: Pixelify Sans + IBM Plex Sans, tokens e fontes self-hosted (D-022, D-023)
+- ✅ Grid: tokens e mixins (D-022)
+- ✅ Spacing: escala fechada + arquitetura de aliases (D-022)
+- ✅ i18n: D-020 aprovada; `LocaleService`, dicionários tipados, rotas `/` e `/en`
+
+### Sprint 2 🟡
+
+- 🟡 Colors + Borders + Surfaces: **proposta em docs/11, aguardando aprovação**
+
+### Próximos sprints ⬜
+
 - ⬜ Icons
-- ⬜ Pixel assets
 - ⬜ Buttons
-- ⬜ Panels (HUD)
-- ⬜ Cartridges
+- ⬜ Labels / Chips
+- ⬜ Status
+- ⬜ Player Card (foto real, D-017)
+- ⬜ MC-CART System (shells preto, creme, grafite, laranja)
 - ⬜ CRT
+- ⬜ XP (XP profissional vs. Campaign XP, D-021)
+- ⬜ Motion
+- ⬜ Easter Egg Language
+- ⬜ Responsive behavior
+- ⬜ Accessibility
+- ⬜ i18n / content behavior (regras de conteúdo; infraestrutura pronta)
+- ⬜ Monograma MC (símbolo, favicon, loading, selo)
+- ⬜ Pixel assets
 
 ## FASE 3 — CORE EXPERIENCE ⬜
 
+- ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
+- ⬜ Header (logo, navegação, seletor de idioma)
 - ⬜ Hero
 - ⬜ Player Status
 - ⬜ Skill Tree (inclui decisão sobre estados das skills)
@@ -74,7 +103,8 @@ Legenda: ✅ concluído · 🟡 em andamento · ⬜ não iniciado
 
 ## FASE 7 — CONTENT ⬜
 
-- ⬜ Textos finais
+- ⬜ Textos finais em pt-BR **e** en
+- ⬜ Foto real do Eduardo para o Player Card
 - ⬜ Projetos reais
 - ⬜ Screenshots
 - ⬜ Links (LinkedIn, email)
@@ -84,8 +114,8 @@ Legenda: ✅ concluído · 🟡 em andamento · ⬜ não iniciado
 
 - ⬜ Responsividade
 - ⬜ Acessibilidade
-- ⬜ SEO
-- ⬜ Metadata (Open Graph, favicon próprio)
+- ⬜ SEO bilíngue (`hreflang`, `<html lang>` dinâmico, avaliar prerender)
+- ⬜ Metadata (Open Graph, favicon próprio a partir do monograma MC)
 - ⬜ Performance
 - ⬜ Lighthouse
 - ⬜ Redução de movimento
@@ -108,8 +138,16 @@ Legenda: ✅ concluído · 🟡 em andamento · ⬜ não iniciado
 | Localização do `???` / Secret Area     | 6    |
 | Estados das skills (uso e critérios)   | 3    |
 | Abordagem de animação                  | 5    |
-| Fontes e paleta definitivas            | 2    |
-| Player Card com foto                   | 1    |
+| ~~Paleta definitiva~~ ✅ D-014         | 1    |
+| ~~Fontes definitivas~~ ✅ D-022        | 2    |
+| ~~Player Card com foto~~ ✅ foto real, D-017 | 1 |
+| ~~Estratégia de i18n~~ ✅ D-020        | 2    |
+| Inventory: 2 cartuchos por linha no mobile? | 3/8 |
+| Composição final do Player Status (4/4/4 vs. 3/4/5) | 3 |
+| Preferência de idioma em localStorage (sem sobrepor a URL) | futuro |
+| Desenho do monograma MC                | 2    |
+| Campaign XP: regras reais de pontuação (product exploration) | futuro |
+| Itens de navegação do header           | 3    |
 | Páginas dedicadas por case (`/projects/:slug`) | 3+ |
 | Upgrade para Angular 22 (requer Node ≥ 22.22.3) | qualquer, antes da 3 |
 | Domínio próprio                        | 9    |

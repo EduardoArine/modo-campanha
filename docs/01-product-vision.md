@@ -27,6 +27,16 @@ Consequências práticas:
 
 A estética de videogame comunica identidade; a experiência de uso segue padrões modernos de produto digital: rápido, legível, responsivo, acessível e fácil de navegar. Proporção aproximada: **30% retro/pixel + 70% produto digital moderno**.
 
+## Voz
+
+> **O sistema fala a linguagem dos videogames; Eduardo fala como pessoa.**
+
+Labels de sistema (PLAYER STATUS, PROJECT INVENTORY, CURRENT QUEST, SAVE, ONLINE...) carregam o universo de jogo, inclusive em inglês dentro da versão pt-BR. O conteúdo humano (quem Eduardo é, o que fez, o que aprendeu) é escrito como uma pessoa fala, sem jargão de jogo.
+
+## Idiomas
+
+O site é **bilíngue: Português (pt-BR, padrão) e Inglês (en)**, com troca em runtime no mesmo site (D-018). Todo conteúdo relevante existe nos dois idiomas: textos, projetos, navegação, mensagens, textos de acessibilidade e metadados.
+
 ## Posicionamento
 
 Um portfólio **autoral**, que não parece template genérico de desenvolvedor. Ele reflete uma combinação específica de repertório:
@@ -50,7 +60,7 @@ O próprio site é uma demonstração dessas competências: produto, engenharia,
 - **Comunidade de games e criadores**, que se conectam com a linguagem e com os projetos pessoais.
 - **O próprio Eduardo**: o projeto também é um registro da evolução e uma ferramenta de aprendizado.
 
-O conteúdo precisa funcionar para quem passa 30 segundos e para quem explora tudo.
+O conteúdo precisa funcionar para quem passa 30 segundos e para quem explora tudo, em português ou em inglês (recrutadores e times internacionais).
 
 ## Motivação
 

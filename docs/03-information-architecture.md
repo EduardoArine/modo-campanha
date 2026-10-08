@@ -20,6 +20,22 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
+## Header (aprovado no Concept 03)
+
+Não é uma seção, é a moldura fixa do site. Base 03-A:
+
+- à esquerda: marca **Modo Campanha** (monograma MC quando existir, D-015);
+- navegação por âncoras (itens exatos a definir na FASE 3; o 03-A usa Início / Jornada / Projetos, o 03-B usa 01 Início / 02 Projetos / 03 Sobre / 04 Contato);
+- à direita: CTA **Currículo** (quando existir) e **seletor de idioma pt-BR / en** (D-018);
+- opcional, do 03-B: chip de sistema discreto (ex.: `MC-01 · ONLINE`). Avaliar no design system; não inventar números de versão.
+
+## Notas da FASE 1 sobre as seções
+
+- **Hero:** visualmente, "MODO CAMPANHA" é o maior texto. Semanticamente, o `h1` deve continuar identificando Eduardo (ex.: `h1` = "Eduardo Arine", com "Modo Campanha" como marca/eyebrow, ou `h1` combinado). Decidir na FASE 3, pensando em SEO e leitores de tela.
+- **Player Status (03-A):** Player Card (foto real) | Origin · XP · Current Campaign | Focus · Sobre a jornada · Estado atual. Grid em `docs/11`.
+- **Project Inventory:** grade de cartuchos MC-CART com nome, tipo, descrição curta e 1–2 tags; detalhes no CRT Viewer.
+- Todas as âncoras (`id`) permanecem iguais nos dois idiomas; só os textos mudam.
+
 ## Racional da ordem
 
 1. **Hero → Player Status**: em segundos o visitante sabe quem é Eduardo.
@@ -34,11 +50,12 @@ A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home
 ## Navegação
 
 - Âncoras com scroll nativo (`withInMemoryScrolling({ anchorScrolling: 'enabled' })`).
-- Uma navegação/HUD fixa é possível no futuro (ex.: indicador de "fase atual" da página), a decidir na FASE 1/2.
+- Header fixo aprovado no Concept 03 (ver acima). Indicador de "fase atual" da página pode ser avaliado no design system.
 - Toda navegação deve funcionar por teclado.
 
 ## Evolução futura possível
 
+- `/en`: versão em inglês da mesma onepage (**implementada**, D-020; pt-BR na raiz). Âncoras iguais nos dois idiomas.
 - `/projects/:slug`: página dedicada por case (compartilhável).
 - `/secret`: área secreta (ver `docs/08-easter-eggs.md`), se fizer sentido.
 - Currículo em PDF linkado.

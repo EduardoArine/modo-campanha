@@ -20,7 +20,7 @@ Visão completa em [docs/01-product-vision.md](docs/01-product-vision.md).
 
 ## Status
 
-🚧 Em desenvolvimento. Fundação concluída; próxima etapa: **FASE 1 — Visual Concept**.
+🚧 Em desenvolvimento. Direção visual aprovada (Concept 03 híbrido); etapa atual: **FASE 2 — MC Design System**.
 
 ## Stack
 
@@ -48,6 +48,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 8. [Easter eggs](docs/08-easter-eggs.md)
 9. [Roadmap](docs/09-roadmap.md)
 10. [Decisões](docs/10-decisions.md)
+11. [MC Design System](docs/11-design-system.md)
 
 ## Rodando localmente
 

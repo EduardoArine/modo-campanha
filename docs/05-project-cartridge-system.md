@@ -1,8 +1,57 @@
 # 05 — Sistema de Cartuchos de Projeto
 
-Os projetos do portfólio são representados como **cartuchos de videogame antigos**. Este documento define o sistema; a implementação visual vem nas FASES 1–3 e a animação na FASE 5.
+Os projetos do portfólio são representados como **cartuchos de videogame antigos**. Este documento define o sistema; a implementação visual vem nas FASES 2–3 e a animação na FASE 5.
 
-## Anatomia do cartucho
+## MC-CART System (direção aprovada, D-013)
+
+Base visual: cartuchos do **Concept 03-B**. Sistema **autoral**: nenhum formato de fabricante real (Nintendo, Sega etc.).
+
+Todo cartucho pertence à mesma família:
+
+```
+MC-CART                 ON-001     ← nomenclatura fixa (topo esquerdo) · serial (topo direito)
+┌─────────────────────────────┐
+│        LABEL ART            │    ← arte do projeto
+│  PROJECT NAME               │    ← nome em pixel font
+│  tagline curta              │
+└─────────────────────────────┘
+TYPE                               ← tipo do projeto
+```
+
+| Pode variar                                 | Deve manter                         |
+| ------------------------------------------- | ----------------------------------- |
+| shell: **preto, creme, grafite, laranja**   | proporções                          |
+| label (arte e cor de fundo)                 | arquitetura visual (corpo, janela do rótulo, ranhuras) |
+| accent color                                | nomenclatura (MC-CART, serial)      |
+| artwork                                     | posição dos metadados               |
+|                                             | linguagem MC                        |
+
+Serial: formato `<COLEÇÃO>-<NNN>` (ex.: `ON-001`, do concept). Regra de prefixos a definir na spec do MC-CART (FASE 2).
+
+### Informação na listagem
+
+Princípio: **coleção primeiro, documentação depois.** Dentro/abaixo do cartucho, apenas:
+
+- nome;
+- tipo;
+- descrição curta (1 linha, ~60 caracteres);
+- 1 ou 2 tags.
+
+Exemplo de formato (texto ilustrativo, não aprovado):
+
+```
+Comunidade On
+Plataforma digital de atendimento e oportunidades.
+[Produto] [Desenvolvimento]
+```
+
+Todo o resto (missão, papel, desafios, resultados...) pertence ao **CRT Project Viewer**. Todos os textos existem em pt-BR e en (D-018).
+
+### Layout da coleção
+
+Grid de 4 por linha no desktop (3 colunas de 12 cada), 2 por linha no tablet e **1 por linha no mobile (baseline)**; mais projetos quebram linha. Testar 2 por linha no mobile depois (D-022). **Sem carrossel** (as setas do 03-B não foram adotadas), pela acessibilidade e por mostrar a coleção inteira.
+
+## Anatomia do cartucho (esboço da FASE 0, substituído pelo MC-CART acima onde houver conflito)
 
 ```
  ┌───────────────────────────┐
@@ -23,7 +72,7 @@ Partes:
 
 1. **Corpo**: cor predominante do projeto.
 2. **Rótulo**: arte + nome curto.
-3. **Serial fictício**: ex. `MC-001` (MC = Modo Campanha). Puramente estético, sequencial.
+3. **Serial fictício**: ~~ex. `MC-001`~~ → formato `<COLEÇÃO>-<NNN>`, ex. `ON-001` (ver MC-CART). Puramente estético, sequencial.
 4. **Ano**.
 5. **Indicador de status** (LED/selo): em andamento, lançado, arquivado, conceito.
 6. **Selo de destaque** para projetos `featured`.
