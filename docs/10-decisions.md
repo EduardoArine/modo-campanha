@@ -313,3 +313,33 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** os screenshots confirmaram que o núcleo funciona e continua pertencendo ao Modo Campanha **mesmo sem CRT, cartuchos ou ambientação**.
 - **Alternativas:** iterar mais o núcleo antes dos componentes autorais.
 - **Status:** Aceita. Próximo: Sprint 4 — Signature Components (Player Card, MC-CART, CRT), avaliados isoladamente no showcase antes da Home.
+
+# Sprint 4 — Signature Components (2026-10-08)
+
+## D-031 — Player Card
+
+- **Data:** 2026-10-08
+- **Decisão:** `mc-player-card` é um perfil profissional lido pela linguagem de um sistema de videogame (não uma carta de RPG): PLAYER 01, foto, nome, CLASS, XP (profissional, real), STATUS. Base 03-A. UI digital: `panel`, moldura `border-subtle`, **cantos de mira exclusivos** em `border-accent`, sem sombra. Foto real com `alt`; até existir, placeholder explícito "FOTO DO EDUARDO" (sem avatar, pessoa fictícia ou pixel art). Semântica `<article>` + `<dl>`. Proibidos LV, HP, MP, atributos, estrelas, rankings ou métricas não reais.
+- **Contexto:** primeiro signature component; representa Eduardo no MC System.
+- **Motivo:** reforça "XP real, sem personagem" e reproduz o 03-A com a linguagem já aprovada.
+- **Alternativas:** carta de RPG com atributos (proibido); moldura toda em laranja (testada: a moldura sutil com acento só nos cantos ficou mais próxima do 03-A e preserva a hierarquia do laranja).
+- **Status:** Implementada, **aguardando aprovação visual**.
+
+## D-032 — MC-CART, Project Summary e material tokens
+
+- **Data:** 2026-10-08
+- **Decisão:** `mc-cart` é um cartucho físico autoral (sem formato de console real): arquitetura fixa (notch, MC-CART + serial, rótulo com faixa de acento, artwork 16:10, nome em até 2 linhas, tipo, sulcos laterais, contatos). Variam `shell` (dark, light, orange, cool), `accent` (warm, cool, special) e artwork. Objeto físico: material + sombra de objeto, sem glow. Exposto como `role="img"` com nome acessível; não clicável nesta fase. O resumo do projeto fica em `mc-project-summary` (nome, descrição curta, até 2 chips, ação futura), separado do objeto. Para os materiais, criados **tokens semânticos de material** (`--mc-material-*`), aliases de cores já existentes (nenhum HEX novo), com tintas e contratos de contraste próprios.
+- **Contexto:** os shells do 03-B precisam de cores de "material" (ex.: creme como superfície), que não cabiam nos tokens de UI sem desvirtuar sua semântica (ex.: usar `text-secondary` como fundo).
+- **Motivo:** separar materiais físicos da UI digital mantém os tokens de UI honestos e o objeto consistente entre variantes.
+- **Alternativas:** reutilizar tokens de texto como fundo (rejeitado); criar cores novas (desnecessário); cartucho com descrição embutida (rejeitado: "coleção primeiro, documentação depois").
+- **Status:** Implementada, **aguardando aprovação visual**. Seriais finais e artwork real ficam para a FASE 7.
+
+## D-033 — CRT Project Viewer (estrutura)
+
+- **Data:** 2026-10-08
+- **Decisão:** `mc-crt` com anatomia shell → bezel → screen → content viewport → identificação MC-01. "CRT na moldura; clareza no conteúdo": vinheta e scanlines muito leves **atrás** do conteúdo, glow quente controlado na tela, tela com mínimo 4:3 que cresce com o conteúdo. Responsivo por container query: em larguras pequenas, moldura mínima e sem efeitos. `role="region"` rotulado; efeitos `aria-hidden`. Sem animações neste sprint.
+- **Contexto:** visualizador dos project cases.
+- **Motivo:** sensação física por fora sem sacrificar leitura de texto e screenshots por dentro.
+- **Alternativas:** scanlines sobre o conteúdo (rejeitado: reduz contraste); proporção fixa com scroll interno (rejeitado: cortava conteúdo, defeito encontrado e corrigido na validação).
+- **Status:** Implementada, **aguardando aprovação visual**.
+

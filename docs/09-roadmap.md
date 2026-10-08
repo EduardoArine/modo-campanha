@@ -56,11 +56,11 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 **MC Design System Core — APPROVED** (D-030, 2026-10-08).
 
-### Sprint 4 🟡 Signature Components
+### Sprint 4 🟡 Signature Components (implementado, aguardando aprovação visual)
 
-- 🟡 Player Card
-- 🟡 MC-CART + Project Summary
-- 🟡 CRT Project Viewer (estrutura, sem animação)
+- 🟡 Player Card (D-031)
+- 🟡 MC-CART + Project Summary + material tokens (D-032)
+- 🟡 CRT Project Viewer, estrutura sem animação (D-033)
 
 ### Próximos sprints ⬜
 

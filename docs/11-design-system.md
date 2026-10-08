@@ -17,9 +17,9 @@
 | 8   | Buttons / Actions        | ✅ Implementado (D-027): `mcAction` primary/secondary/text     |
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
-| 11  | Player Card              | ⬜ backlog (regras de conteúdo em D-017)                       |
-| 12  | MC-CART                  | ⬜ backlog (direção em D-013)                                  |
-| 13  | CRT                      | ⬜ backlog                                                     |
+| 11  | Player Card              | 🟡 Implementado (D-031), aguardando aprovação visual           |
+| 12  | MC-CART                  | 🟡 Implementado + Project Summary + material tokens (D-032)    |
+| 13  | CRT                      | 🟡 Estrutura implementada, sem animação (D-033)                |
 | 14  | XP                       | ⬜ backlog (regras conceituais em D-021)                       |
 | 15  | Motion                   | ⬜ backlog                                                     |
 | 16  | Easter Egg Language      | ⬜ backlog                                                     |
@@ -30,7 +30,7 @@
 - **Sprint 1 (concluído):** Typography + Grid + Spacing + infraestrutura de i18n.
 - **Sprint 2 (concluído):** Colors + Borders + Surfaces + contratos de contraste.
 - **Sprint 3 (concluído):** Icons + Actions + Chips + Status + Section header + showcase dev-only.
-- **Próximo (não iniciado):** Player Card + MC-CART + CRT, após revisão do showcase.
+- **Sprint 4 (implementado, aguardando aprovação):** Signature Components: Player Card, MC-CART + Project Summary, CRT.
 
 ---
 
@@ -513,6 +513,140 @@ Chips, status, actions primary/text e section header já estavam cobertos pelos 
 
 ---
 
-## Próximo checkpoint provável (não iniciado): Player Card + MC-CART + CRT
+## Sprint 4 — Signature Components (implementado, aguardando aprovação visual)
 
-Aguardando revisão do showcase e aprovação. Escopo esperado: especificação e componentes do Player Card (foto real / placeholder "FOTO DO EDUARDO", cantos de mira exclusivos), do MC-CART (anatomia, 4 shells, metadados fixos, sombra de objeto físico) e da moldura CRT (estado vazio `INSERT CARTRIDGE`, glow permitido), ainda sem animações de cartucho.
+Componentes autorais em `src/app/shared/signature/` (barrel `index.ts`), avaliados isoladamente no showcase (`/dev/design-system`, área **SIGNATURE COMPONENTS**) antes de qualquer Home. Testes em `signature.spec.ts`.
+
+### Objeto físico × UI digital
+
+| Tipo            | Componentes                           | Pode usar                                                              | Não usa                       |
+| --------------- | ------------------------------------- | ---------------------------------------------------------------------- | ----------------------------- |
+| **UI digital**  | Player Card, Project Summary, primitivos | superfícies (`panel`...), bordas, tokens de texto                    | sombra de objeto, glow, material |
+| **Objeto físico** | MC-CART, CRT (e futuro console MC-01) | **tokens de material**, `--mc-shadow-object`, relevo (`material-groove` / `material-highlight`); glow só no CRT | glow permanente no MC-CART    |
+
+### 13. Material tokens (D-032)
+
+Aliases semânticos de cores **já existentes** na paleta D-014 (nenhum HEX novo), para objetos físicos. Variação física; **não** significam status nem raridade.
+
+| Token                         | Primitivo         | Tinta (texto impresso)        | Contraste |
+| ----------------------------- | ----------------- | ----------------------------- | --------- |
+| `--mc-material-dark`          | ink-800           | `--mc-material-dark-ink` (cream-100)   | 12.5 |
+| `--mc-material-light`         | cream-300         | `--mc-material-light-ink` (ink-950)    | 11.7 |
+| `--mc-material-orange`        | orange-500        | `--mc-material-orange-ink` (ink-950)   | 7.7  |
+| `--mc-material-cool`          | petrol-800        | `--mc-material-cool-ink` (cream-100)   | 9.9  |
+| `--mc-material-groove`        | ink-950 a 35%     | sulcos, contatos, encaixes, bezel | decorativo |
+| `--mc-material-highlight`     | cream-100 a 14%   | brilho de aresta superior     | decorativo |
+
+Os quatro pares tinta/material entraram nos contratos de contraste.
+
+### 14. Player Card (`mc-player-card`, D-031)
+
+Perfil profissional lido pela linguagem de um sistema de videogame. **Não é carta de RPG.** Base: Concept 03-A.
+
+Anatomia:
+
+```
+┌╴                         ╶┐  ← cantos de mira (2 px, border-accent) — exclusivos do Player Card
+  PLAYER 01                     ← label (dicionário)
+  ┌───────────────────────┐
+  │   FOTO DO EDUARDO     │     ← foto real 4:3 (object-position topo) ou placeholder explícito
+  └───────────────────────┘
+  EDUARDO ARINE                 ← title-m, caixa alta (id → aria-labelledby do <article>)
+  CLASS                         ← <dl>: dt label / dd body-s
+  Desenvolvedor de Produtos Digitais
+  XP
+  10+ anos em tecnologia
+  STATUS
+  ● ACTIVE                      ← <mc-status> projetado
+└╴                         ╶┘
+```
+
+API:
+
+| Input         | Tipo                         | Uso                                                              |
+| ------------- | ---------------------------- | ---------------------------------------------------------------- |
+| `name`        | `string` (obrigatório)       | nome                                                             |
+| `fields`      | `{ label; value }[]`         | linhas reais (CLASS, XP...), já traduzidas                        |
+| `photo`       | `{ src; alt }`               | foto real aprovada; ausente = placeholder "FOTO DO EDUARDO"       |
+| `statusLabel` | `string`                     | label da linha de status; valor = `<mc-status>` projetado        |
+
+- UI digital: `--mc-panel`, moldura `--mc-border-subtle`, cantos de mira `--mc-border-accent` (decorativos). **Sem sombra.** (Ajuste de execução: a cor de acento ficou só nos cantos; a moldura sutil reproduz melhor o 03-A.)
+- Semântica: `<article aria-labelledby>` + `<dl>`; foto real com `alt` traduzido; placeholder e cantos `aria-hidden`.
+- **Proibido:** LV, HP, MP, STR, INT, barras de atributos, estrelas, rankings, qualquer métrica não real.
+- Largura definida pelo layout (4/12 no desktop, 4/8 no tablet, total no mobile). Sem versão compacta: não houve necessidade real.
+
+### 15. MC-CART (`mc-cart`, D-032)
+
+Cartucho físico de um console que nunca existiu. Base visual: Concept 03-B. Sem formatos de NES, SNES, Mega Drive, Game Boy, N64, Atari ou outro cartucho comercial.
+
+Anatomia (fixa):
+
+```
+  ┌──────▀▀▀▀▀▀──────┐        ← encaixe (notch) no topo
+  │ MC-CART   ON-001 │        ← identificação + serial (Plex, tinta do material)
+  │ ┌══════════════┐ │        ← faixa de acento (warm/cool/special)
+ ║│ │PROJECT ARTWORK│ │║       ← sulcos laterais de pega
+ ║│ │   16:10       │ │║
+  │ ├──────────────┤ │
+  │ │ COMUNIDADE ON │ │        ← cart-title, até 2 linhas reservadas (proporção fixa)
+  │ │ DIGITAL PLATF.│ │        ← tipo (label)
+  │ └──────────────┘ │
+  │     ▪▪▪▪▪▪▪▪      │        ← contatos
+  └──────────────────┘
+```
+
+| Input      | Tipo                                      | Regra                                                         |
+| ---------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `serial`   | `string` (obrigatório)                    | `<COLEÇÃO>-<NNN>` (ex.: `ON-001`). Não inventar seriais finais |
+| `title`    | `string` (obrigatório)                    | nome do projeto                                               |
+| `type`     | `string` (obrigatório)                    | tipo traduzido (ex.: `DIGITAL PLATFORM`)                      |
+| `shell`    | `'dark' \| 'light' \| 'orange' \| 'cool'` | material do shell (variação física)                           |
+| `accent`   | `'warm' \| 'cool' \| 'special'`          | faixa de acento do rótulo                                     |
+| `artwork`  | `{ src; alt }`                            | arte aprovada; ausente = placeholder "PROJECT ARTWORK"        |
+
+- **Varia:** shell, accent, label (artwork + nome), artwork. **Preserva:** proporção (largura máx. 22 rem; altura idêntica entre variantes, nome limitado a 2 linhas), arquitetura, posição dos metadados, linguagem MC, comportamento.
+- Objeto físico: material + `--mc-shadow-object` + relevo. Sem glow permanente.
+- Rótulo sempre `--mc-panel` (o "adesivo" é constante entre shells).
+- Acessibilidade: host `role="img"` com nome acessível "MC-CART ON-001: Projeto, TIPO"; conteúdo interno é apresentação. **Não clicável nesta fase.** Se virar interativo, o objeto inteiro recebe a semântica de interação (link/botão), não só um hover.
+- Responsivo: 4 por linha (desktop), 2 (tablet), 1 (mobile), sempre reconhecível.
+
+### 16. Project Summary (`mc-project-summary`, D-032)
+
+Separado do objeto: **o cartucho não carrega a descrição.** Abaixo/ao lado do MC-CART:
+
+| Input         | Tipo                       | Regra                                       |
+| ------------- | -------------------------- | ------------------------------------------- |
+| `title`       | `string`                   | heading h3 (padrão) ou h4 (`level`)         |
+| `description` | `string`                   | descrição curta                             |
+| `chips`       | `{ label; tone }[]`        | **no máximo 2 exibidos**                    |
+| projeção      | `[mcAction]`               | ação futura "ver projeto"                   |
+
+Coleção primeiro, documentação depois: detalhes completos ficam no CRT.
+
+### 17. CRT Project Viewer (`mc-crt`, D-033)
+
+> CRT na moldura; clareza no conteúdo.
+
+Anatomia: **shell** (material dark + sombra de objeto + aresta) → **bezel** (`--mc-bg`, sulco interno) → **screen** (`--mc-surface`, mínimo 4:3, cresce com o conteúdo, glow quente controlado) → **content viewport** (conteúdo projetado, padding 32 px) → **identificação** (`MC-01` + LED decorativo).
+
+| Input   | Tipo                     | Uso                                                             |
+| ------- | ------------------------ | --------------------------------------------------------------- |
+| `state` | `'empty' \| 'content'`  | `empty` mostra "INSERT CARTRIDGE"; `content` exibe a projeção  |
+
+- Efeitos (vinheta + scanlines muito leves) ficam **atrás** do conteúdo (camada `.fx`, `aria-hidden`, `pointer-events: none`), mais fortes nas bordas: nunca sobre texto ou screenshots.
+- A tela **nunca corta conteúdo** (4:3 é mínimo).
+- Responsivo por **container query** (≤ 34 rem): moldura mínima, sem proporção fixa, sem glow nem efeitos. No mobile o conteúdo vem primeiro.
+- Acessibilidade: host `role="region"` com rótulo traduzido; conteúdo semântico projetado (headings, `dl`, imagens com alt); decoração ignorada por tecnologias assistivas.
+- Sem animação: inserção, boot, power-on, no signal e glitch ficam para Motion/Game Feel.
+
+### Validação responsiva e acessibilidade (Sprint 4)
+
+- Larguras 1280, 820 e 390 px (pt-BR e en): **sem scroll horizontal**; cartuchos com altura idêntica por breakpoint; CRT legível.
+- Defeito encontrado e corrigido no `mc-section-header` (Sprint 3): título longo no mobile deixava o marcador ■ sozinho numa linha. O marcador agora é parte do heading (pseudo-elemento alinhado à 1ª linha, com recuo nas seguintes).
+- Pares de contraste novos: tintas sobre os 4 materiais.
+
+---
+
+## Próximo (não iniciado)
+
+Aguardando aprovação visual do Sprint 4. Depois: fundamentos restantes (XP, Motion, Easter Egg Language, responsive/a11y/i18n consolidados) e, então, a Home (FASE 3).

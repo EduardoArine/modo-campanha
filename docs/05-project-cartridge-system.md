@@ -2,7 +2,9 @@
 
 Os projetos do portfólio são representados como **cartuchos de videogame antigos**. Este documento define o sistema; a implementação visual vem nas FASES 2–3 e a animação na FASE 5.
 
-## MC-CART System (direção aprovada, D-013)
+## MC-CART System (direção aprovada, D-013; componente `mc-cart` implementado no Sprint 4, D-032)
+
+> Anatomia, API, shells e regras de acessibilidade do componente: `docs/11-design-system.md` (seção 15). O Project Summary (seção 16) fica separado do objeto.
 
 Base visual: cartuchos do **Concept 03-B**. Sistema **autoral**: nenhum formato de fabricante real (Nintendo, Sega etc.).
 
