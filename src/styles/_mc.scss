@@ -4,3 +4,6 @@
 @forward 'tokens/spacing';
 @forward 'tokens/typography';
 @forward 'tokens/grid';
+@forward 'tokens/surface';
+// Cores não são encaminhadas de propósito: componentes usam só os semânticos via
+// `var(--mc-<token>)` (ex.: `var(--mc-text-secondary)`), nunca primitivos.

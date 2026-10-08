@@ -1,10 +1,42 @@
-// Emite os tokens como CSS custom properties (`--mc-*`) uma única vez, no CSS global.
-// Cores entram no sprint Colors + Borders + Surfaces.
+// Emite os tokens como CSS custom properties (`--mc-*`) uma única vez, no CSS global,
+// e verifica os contratos de contraste (o build falha se algum par suportado for violado).
 @use 'sass:map';
 @use 'sass:meta';
 @use 'mc' as *;
+@use 'tokens/color' as color-tokens;
+@use 'tokens/contrast';
+
+@include contrast.assert-contrast-contracts;
 
 :root {
+  color-scheme: dark;
+
+  // Color: primitivos (uso exclusivo dentro dos tokens)
+  @each $name, $value in color-tokens.$color-primitives {
+    --mc-color-#{$name}: #{$value};
+  }
+
+  // Color: semânticos (os únicos permitidos em componentes)
+  @each $name, $_ in color-tokens.$color-semantic {
+    --mc-#{$name}: #{color-tokens.semantic-css-value($name)};
+  }
+
+  // Borders, radius, foco, sombra e glow
+  @each $name, $value in $border-widths {
+    --mc-border-width-#{$name}: #{$value};
+  }
+
+  @each $name, $value in $radii {
+    --mc-radius-#{$name}: #{$value};
+  }
+
+  --mc-focus-ring-width: #{$focus-ring-width};
+  --mc-focus-ring-offset: #{$focus-ring-offset};
+  // Só objetos físicos (MC-CART, console MC-01, CRT). Painéis de UI não usam sombra.
+  --mc-shadow-object: 0 12px 24px -8px color-mix(in srgb, var(--mc-color-ink-950) 85%, transparent);
+  // Só área visual do Hero, CRT e boot de cartucho. Nunca atrás de texto.
+  --mc-glow-warm: color-mix(in srgb, var(--mc-color-orange-500) 24%, transparent);
+
   // Typography
   --mc-font-display: #{meta.inspect($font-display)};
   --mc-font-text: #{meta.inspect($font-text)};

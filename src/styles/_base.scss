@@ -1,5 +1,4 @@
-// Base mínima. Tipografia e spacing vêm dos tokens (`--mc-*`); cores entram no sprint
-// Colors + Borders + Surfaces (docs/11-design-system.md).
+// Base mínima: tipografia, spacing e cores vêm dos tokens semânticos (`--mc-*`, docs/11).
 @use 'mc' as *;
 
 *,
@@ -13,10 +12,35 @@ html {
   text-size-adjust: 100%;
 }
 
+html {
+  background: var(--mc-bg);
+}
+
 body {
   margin: 0;
   @include type(body);
   font-synthesis: none;
+  background: var(--mc-bg);
+  color: var(--mc-text);
+}
+
+a {
+  color: var(--mc-link);
+  text-underline-offset: 0.2em;
+
+  &:hover {
+    color: var(--mc-link-hover);
+  }
+}
+
+// Contrato de foco por teclado (D-024): anel próprio com offset, só para teclado.
+:focus-visible {
+  @include focus-ring;
+}
+
+::selection {
+  background: var(--mc-accent);
+  color: var(--mc-text-on-accent);
 }
 
 img,

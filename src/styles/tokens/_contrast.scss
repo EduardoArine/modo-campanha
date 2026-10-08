@@ -1,0 +1,144 @@
+// Contratos de contraste do MC Design System (docs/11-design-system.md, Supported color pairs).
+// Lista EXPLÍCITA dos pares que o sistema permite usar. Pares fora da lista não são suportados
+// e não precisam passar. Verificado na compilação do CSS global: par abaixo do mínimo = build falha.
+@use 'sass:color';
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'color' as *;
+
+// Mínimos WCAG 2.x (AA).
+$contrast-minimums: (
+  text: 4.5,
+  // ≥ 24 px, ou ≥ 18.66 px bold
+  large-text: 3,
+  // bordas de controles, foco, indicadores (WCAG 1.4.11)
+  non-text: 3,
+);
+
+// (primeiro plano, fundo, tipo). Fundo pode ser `(token translúcido, superfície de baixo)`.
+$supported-pairs: (
+  // Texto sobre as quatro superfícies
+  (text, bg, text),
+  (text, surface, text),
+  (text, panel, text),
+  (text, elevated, text),
+  (text-secondary, bg, text),
+  (text-secondary, surface, text),
+  (text-secondary, panel, text),
+  (text-secondary, elevated, text),
+  (text-muted, bg, text),
+  (text-muted, surface, text),
+  (text-muted, panel, text),
+  (text-muted, elevated, text),
+  // Acento como texto (MODO CAMPANHA, nav ativa, labels de destaque)
+  (accent, bg, text),
+  (accent, surface, text),
+  (accent, panel, text),
+  (accent, elevated, text),
+  (accent-active, bg, large-text),
+  (accent-active, panel, large-text),
+  // Texto sobre o acento (CTA primário em repouso, hover, pressionado; seleção de texto)
+  (text-on-accent, accent, text),
+  (text-on-accent, accent-hover, text),
+  (text-on-accent, accent-active, text),
+  // Links
+  (link, bg, text),
+  (link, surface, text),
+  (link, panel, text),
+  (link-hover, bg, text),
+  (link-hover, surface, text),
+  (link-hover, panel, text),
+  // Interação neutra (hover/pressionado sobre bg e panel)
+  (text, (interactive-hover, bg), text),
+  (text, (interactive-hover, panel), text),
+  (text, (interactive-active, bg), text),
+  (text, (interactive-active, panel), text),
+  // Desabilitado (isento pela WCAG, mantido legível por decisão do sistema)
+  (disabled-text, (disabled-bg, bg), text),
+  (disabled-text, (disabled-bg, panel), text),
+  // Especial e frios
+  (special, bg, text),
+  (special, panel, text),
+  (text-on-cool, cool-surface, text),
+  (text, cool-surface, text),
+  (cool, bg, text),
+  (cool, panel, text),
+  // Status
+  (status-online, bg, text),
+  (status-online, panel, text),
+  (status-danger, bg, non-text),
+  (status-danger, surface, non-text),
+  (status-danger, panel, non-text),
+  // Foco por teclado (anel com offset, sobre a superfície de trás)
+  (focus-ring, bg, non-text),
+  (focus-ring, surface, non-text),
+  (focus-ring, panel, non-text),
+  (focus-ring, elevated, non-text),
+  (focus-ring, cool-surface, non-text),
+  // Limites de controles interativos
+  (border-default, bg, non-text),
+  (border-default, surface, non-text),
+  (border-default, panel, non-text),
+  (accent, bg, non-text),
+  (accent, panel, non-text)
+);
+
+@function -linear($channel) {
+  $c: math.div($channel, 255);
+  @if $c <= 0.03928 {
+    @return math.div($c, 12.92);
+  }
+  @return math.pow(math.div($c + 0.055, 1.055), 2.4);
+}
+
+@function -luminance($c) {
+  $r: -linear(color.channel($c, 'red', $space: rgb));
+  $g: -linear(color.channel($c, 'green', $space: rgb));
+  $b: -linear(color.channel($c, 'blue', $space: rgb));
+  @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+
+@function contrast-ratio($a, $b) {
+  $la: -luminance($a);
+  $lb: -luminance($b);
+  @return math.div(math.max($la, $lb) + 0.05, math.min($la, $lb) + 0.05);
+}
+
+/// Cor final de um token semântico desenhado sobre `$backdrop` (compõe camadas translúcidas).
+@function resolve($name, $backdrop) {
+  $value: map.get($color-semantic, $name);
+  @if $value == null {
+    @error 'Token semântico desconhecido no contrato de contraste: #{$name}';
+  }
+  @if meta.type-of($value) == list {
+    $base: map.get($color-primitives, list.nth($value, 1));
+    @return color.mix($base, $backdrop, list.nth($value, 2));
+  }
+  @return map.get($color-primitives, $value);
+}
+
+@function -background($spec) {
+  @if meta.type-of($spec) == list {
+    $under: resolve(list.nth($spec, 2), black);
+    @return resolve(list.nth($spec, 1), $under);
+  }
+  @return resolve($spec, black);
+}
+
+/// Falha a compilação se algum par suportado ficar abaixo do mínimo do seu tipo.
+@mixin assert-contrast-contracts {
+  @each $pair in $supported-pairs {
+    $fg-name: list.nth($pair, 1);
+    $bg-spec: list.nth($pair, 2);
+    $kind: list.nth($pair, 3);
+    $bg: -background($bg-spec);
+    $fg: resolve($fg-name, $bg);
+    $ratio: contrast-ratio($fg, $bg);
+    $min: map.get($contrast-minimums, $kind);
+    @if $ratio < $min {
+      @error 'Contrato de contraste violado: #{$fg-name} sobre #{$bg-spec} = #{math.div(math.round($ratio * 100), 100)}:1 (mínimo #{$min}:1 para #{$kind}).';
+    }
+  }
+}

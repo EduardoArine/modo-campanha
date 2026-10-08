@@ -1,0 +1,80 @@
+// Cores do MC Design System (docs/11-design-system.md, Colors). Aprovadas em D-014 e D-024.
+// Duas camadas: primitivos (`--mc-color-*`, só dentro dos tokens) e semânticos (`--mc-*`,
+// os únicos que componentes podem usar). Nenhuma cor nova: tudo deriva da paleta D-014.
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:meta';
+
+$color-primitives: (
+  orange-300: #ffb357,
+  orange-500: #f28c28,
+  orange-700: #c96a1b,
+  gold-400: #f2c14e,
+  ink-950: #14110f,
+  ink-900: #1d1815,
+  ink-850: #231f1c,
+  ink-800: #2b2521,
+  cream-100: #f3e9d2,
+  cream-300: #d7cbb5,
+  cream-500: #a89a86,
+  petrol-800: #1f3a4a,
+  teal-500: #3fa7a3,
+  green-500: #7fb069,
+  red-600: #c44536,
+);
+
+// Valor = nome de primitivo, ou `(primitivo, alpha)` para camadas translúcidas que se
+// adaptam à superfície de baixo (hover, bordas). Regras de uso em docs/11.
+$color-semantic: (
+  // Superfícies (níveis 0–3)
+  bg: ink-950,
+  surface: ink-900,
+  panel: ink-850,
+  elevated: ink-800,
+  // Texto
+  text: cream-100,
+  text-secondary: cream-300,
+  text-muted: cream-500,
+  text-on-accent: ink-950,
+  text-on-cool: cream-300,
+  // Acento (laranja com intenção)
+  accent: orange-500,
+  accent-hover: orange-300,
+  accent-active: orange-700,
+  // Links
+  link: orange-500,
+  link-hover: orange-300,
+  // Foco por teclado: contrato próprio, não reutilização casual do accent
+  focus-ring: orange-300,
+  // Interação neutra (sobreposições translúcidas sobre qualquer superfície)
+  interactive-hover: (cream-100, 6%),
+  interactive-active: (cream-100, 10%),
+  // Desabilitado
+  disabled-bg: (cream-100, 4%),
+  disabled-text: cream-500,
+  disabled-border: (cream-100, 12%),
+  // Especial, frios e status
+  special: gold-400,
+  cool-surface: petrol-800,
+  cool: teal-500,
+  status-online: green-500,
+  status-danger: red-600,
+  // Bordas
+  border-subtle: (cream-100, 12%),
+  border-default: (cream-100, 40%),
+  border-accent: orange-700,
+  border-cool: teal-500
+);
+
+/// Valor CSS de um token semântico, referenciando o primitivo via custom property.
+@function semantic-css-value($name) {
+  $value: map.get($color-semantic, $name);
+  @if meta.type-of($value) == list {
+    @return color-mix(
+      in srgb,
+      var(--mc-color-#{list.nth($value, 1)}) list.nth($value, 2),
+      transparent
+    );
+  }
+  @return var(--mc-color-#{$value});
+}

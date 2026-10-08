@@ -1,7 +1,7 @@
 import { UiDictionary } from './ui.pt-BR';
 
 // Dicionário de UI em inglês. Chave faltando ou sobrando quebra o build.
-// Textos humanos (hero, descrições) são rascunhos de tradução: revisar com Eduardo.
+// Textos humanos: "Real XP. No persona." e "Digital Product Developer" aprovados (refináveis na FASE 7).
 export const UI_EN: UiDictionary = {
   meta: {
     title: 'Modo Campanha — Eduardo Arine',
@@ -15,7 +15,7 @@ export const UI_EN: UiDictionary = {
   hero: {
     name: 'Eduardo Arine',
     role: 'Digital Product Developer',
-    motto: 'Real XP, no character.',
+    motto: 'Real XP. No persona.',
   },
   sections: {
     playerStatus: 'PLAYER STATUS',

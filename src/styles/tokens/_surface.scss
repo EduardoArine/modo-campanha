@@ -1,0 +1,25 @@
+// Borders, radius, sombras e glow do MC Design System (docs/11-design-system.md). D-024.
+// Profundidade da UI vem da luminosidade das superfícies, não de sombra.
+
+$border-widths: (
+  default: 1px,
+  // objetos físicos (MC-CART, moldura CRT) e foco
+  strong: 2px,
+);
+
+$radii: (
+  none: 0,
+  sm: 4px,
+  // só para elementos realmente circulares (indicador de status)
+  round: 50%,
+);
+
+$focus-ring-width: 2px;
+$focus-ring-offset: 2px;
+
+/// Anel de foco padrão. O offset é obrigatório: o anel fica sobre a superfície de trás,
+/// nunca sobre o preenchimento do elemento (contratos de contraste em `_contrast.scss`).
+@mixin focus-ring {
+  outline: var(--mc-focus-ring-width) solid var(--mc-focus-ring);
+  outline-offset: var(--mc-focus-ring-offset);
+}
