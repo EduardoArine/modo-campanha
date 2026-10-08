@@ -101,7 +101,7 @@
       />
       <div class="mc-columns">
         <div class="span-crt-wide">
-          <mc-crt state="content">
+          <mc-crt-project-viewer state="content">
             <article class="crt-demo">
               <p class="demo-flag">{{ d().flag }}</p>
               <h4 class="crt-title">{{ d().title }}</h4>
@@ -122,10 +122,10 @@
               <p class="crt-text">{{ d().text }}</p>
               <div class="crt-shot" role="img" [attr.aria-label]="d().shot">{{ d().shot }}</div>
             </article>
-          </mc-crt>
+          </mc-crt-project-viewer>
         </div>
         <div class="span-crt-narrow">
-          <mc-crt />
+          <mc-crt-project-viewer />
         </div>
       </div>
     </section>

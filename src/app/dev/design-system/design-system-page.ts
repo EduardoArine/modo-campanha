@@ -14,7 +14,13 @@ import {
   McSectionHeader,
   McStatus,
 } from '../../shared/ui';
-import { McCart, McCartShell, McCrt, McPlayerCard, McProjectSummary } from '../../shared/signature';
+import {
+  McCart,
+  McCartShell,
+  McCrtProjectViewer,
+  McPlayerCard,
+  McProjectSummary,
+} from '../../shared/signature';
 
 // Ferramenta interna (dev only). Textos da própria página não passam pelo dicionário;
 // os textos dos componentes de exemplo, sim (para revisar pt-BR e en).
@@ -25,7 +31,7 @@ import { McCart, McCartShell, McCrt, McPlayerCard, McProjectSummary } from '../.
     McAction,
     McCart,
     McChip,
-    McCrt,
+    McCrtProjectViewer,
     McIcon,
     McPlayerCard,
     McProjectSummary,

@@ -1,4 +1,5 @@
-// CRT Project Viewer (docs/11, Signature Components).
+// CRT frame: base visual da família CRT (docs/11, Signature Components, D-037).
+// Presentational e ignorante de contexto: não conhece Project, Hero, estados nem textos.
 // Objeto físico por fora (material, sombra de objeto, glow controlado);
 // conteúdo legível por dentro (efeitos atrás do conteúdo, nunca sobre texto ou screenshots).
 // Profundidade: shell (claro, bisel) → bezel (escuro, espesso, aro interno) → vidro.
@@ -78,13 +79,6 @@
   display: grid;
   min-width: 0;
   padding: space(6);
-}
-
-.empty {
-  place-self: center;
-  margin: 0;
-  @include type(system);
-  color: var(--mc-text-muted);
 }
 
 // Faixa inferior de hardware: MC-01 à esquerda; ventilação discreta; um botão e o LED.

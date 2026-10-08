@@ -3,12 +3,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { McStatus } from '../ui';
 import { McCart } from './cart/cart';
-import { McCrt } from './crt/crt';
+import { McCrtFrame } from './crt-frame/crt-frame';
+import { McCrtProjectViewer } from './crt-project-viewer/crt-project-viewer';
 import { McPlayerCard } from './player-card/player-card';
 import { McProjectSummary } from './project-summary/project-summary';
 
 @Component({
-  imports: [McCart, McCrt, McPlayerCard, McProjectSummary, McStatus],
+  imports: [McCart, McCrtFrame, McCrtProjectViewer, McPlayerCard, McProjectSummary, McStatus],
   template: `
     <mc-player-card
       id="placeholder"
@@ -32,8 +33,11 @@ import { McProjectSummary } from './project-summary/project-summary';
       ]"
     />
 
-    <mc-crt id="empty" />
-    <mc-crt id="content" state="content"><p class="demo">Conteúdo</p></mc-crt>
+    <mc-crt-frame id="frame"><p class="scene">Qualquer conteúdo</p></mc-crt-frame>
+    <mc-crt-project-viewer id="empty" />
+    <mc-crt-project-viewer id="content" state="content"
+      ><p class="demo">Conteúdo</p></mc-crt-project-viewer
+    >
   `,
 })
 class Host {}
@@ -93,5 +97,21 @@ describe('MC signature components', () => {
     expect(empty.querySelector('.fx')?.getAttribute('aria-hidden')).toBe('true');
     expect(content.querySelector('.demo')?.textContent).toBe('Conteúdo');
     expect(content.querySelector('.empty')).toBeNull();
+  });
+
+  it('keeps the CRT frame presentational: no role, no texts of its own, projected content', () => {
+    const frame = render().querySelector('#frame')!;
+
+    expect(frame.getAttribute('role')).toBeNull();
+    expect(frame.getAttribute('aria-label')).toBeNull();
+    expect(frame.querySelector('.viewport .scene')?.textContent).toBe('Qualquer conteúdo');
+    expect(frame.querySelector('.id')).toBeNull();
+    expect(frame.textContent?.trim()).toBe('Qualquer conteúdo');
+  });
+
+  it('builds the project viewer on top of the frame', () => {
+    const viewer = render().querySelector('#empty')!;
+
+    expect(viewer.querySelector('mc-crt-frame .id')?.textContent).toBe('MC-01');
   });
 });
