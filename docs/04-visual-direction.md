@@ -42,7 +42,7 @@ Laranja `#F28C28` como identidade; neutros quentes escuros (`#14110F`, `#1D1815`
 
 ### Tipografia (D-019)
 
-Pixel/display para sistema (MODO CAMPANHA, headings de seção, labels, códigos, cartuchos); moderna para Eduardo (nome, cargo, parágrafos, botões, navegação, conteúdo). Famílias: proposta em `docs/11`.
+Pixelify Sans para brand/game-system display só onde validada (hoje: "MODO CAMPANHA" no Hero; códigos com C não passaram); IBM Plex Sans para todo o resto, inclusive títulos de seção, que ganham caráter de game por caixa alta, peso, tracking, marcador e divider (D-029). O caráter retro não depende só da pixel font. Detalhes em `docs/11`.
 
 ### Voz
 

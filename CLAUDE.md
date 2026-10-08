@@ -21,7 +21,7 @@ Guia para qualquer sessão de IA que trabalhe neste repositório. Leia inteiro a
 - Laranja `#F28C28` é a marca; paleta completa em D-014 / `docs/11`. Regra 70% neutros / 20% quentes / 10% complementares-status.
 - Marca: **Modo Campanha**; símbolo futuro: monograma **MC**. **MC-01** é linguagem de sistema, não marca. **Sem alien.**
 - Player Card com **foto real** (placeholder "FOTO DO EDUARDO" até existir). Sem levels/XP inventados.
-- Pixel font = voz do sistema (títulos, labels, códigos, cartuchos). Fonte moderna = voz do Eduardo (nome, cargo, texto, botões, nav).
+- **Pixelify Sans só em uso visualmente validado** (hoje, apenas "MODO CAMPANHA" no Hero): o "C" maiúsculo vira "O" (até 48 px "MC-01" lê "MO-01"), D-029. Uso novo de Pixelify exige validação visual no tamanho real. **IBM Plex Sans** para todo o resto, inclusive títulos de seção (caixa alta + peso + tracking + marcador). Sem terceira família; sem SVG para headings traduzíveis.
 - Referências de imagem do concept não estão no repositório; as regras derivadas estão em `docs/04` e `docs/11`.
 
 ## Quem é Eduardo
@@ -89,7 +89,7 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 - `src/app/shared/ui/`: primitivos do design system: `mc-icon` (16/20/24; sem `label` = decorativo), `a[mcAction]`/`button[mcAction]` (`primary` no máximo 1 por região, `secondary`, `text`; navegação = `<a>`, ação = `<button>`), `mc-chip` (warm/cool, informativo), `mc-status` (active/in-progress, sempre com texto), `mc-section-header`. Reusar antes de criar.
 - Showcase dev-only: `npm start` → `/dev/design-system` (D-028). Nunca registrar rotas de dev em produção.
 - `src/app/core/`: infraestrutura transversal (boot, konami listener). `src/app/shared/`: componentes reutilizáveis (só criar quando um elemento se repetir).
-- `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(display-section)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans ≥ ~14 px; IBM Plex Sans para texto e micro-labels). Escala de spacing fechada. **Cores: só tokens semânticos** via `var(--mc-<token>)` (`--mc-text`, `--mc-accent`, `--mc-focus-ring`...); primitivos `--mc-color-*` nunca em componentes. Combinação nova de cor = adicionar em `$supported-pairs` (`tokens/_contrast.scss`); o build falha se não passar. Sombra só em objetos físicos; glow só no Hero visual/CRT/boot; header sólido; cantos de mira só no Player Card.
+- `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(section-title)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans só em `display-hero`; IBM Plex Sans no resto, D-029). Escala de spacing fechada. **Cores: só tokens semânticos** via `var(--mc-<token>)` (`--mc-text`, `--mc-accent`, `--mc-focus-ring`...); primitivos `--mc-color-*` nunca em componentes. Combinação nova de cor = adicionar em `$supported-pairs` (`tokens/_contrast.scss`); o build falha se não passar. Sombra só em objetos físicos; glow só no Hero visual/CRT/boot; header sólido; cantos de mira só no Player Card.
 - `public/assets/`: imagens, ícones, cartuchos, pixel art (referenciar como `assets/...`).
 - Convenção de nomes do Angular 21: `hero-section.ts` → `HeroSection` (sem sufixo `.component`).
 - Código em inglês; comentários e docs em português.

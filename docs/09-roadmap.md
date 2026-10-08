@@ -52,7 +52,7 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 - ✅ Icons (`mc-icon`), Actions (`mcAction`), Chips, Status, Section header (D-027)
 - ✅ Design System Showcase dev-only em `/dev/design-system` (D-028)
-- 🟡 Ponto aberto: legibilidade do "C" da Pixelify Sans nos títulos de seção
+- ✅ Legibilidade do "C" da Pixelify: resolvida com nova regra de uso (D-029)
 
 ### Próximo checkpoint ⬜ (aguardando revisão do showcase)
 

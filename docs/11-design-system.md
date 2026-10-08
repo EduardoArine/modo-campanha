@@ -75,7 +75,7 @@ src/styles.scss            # fonts → custom-properties → base → layout
 ```scss
 @use 'mc' as *;
 
-.title { @include type(display-section); }
+.title { @include type(section-title); }
 .layout {
   @include columns;
   gap: space(5);
@@ -128,18 +128,18 @@ Restrições aprovadas (`#C96A1B` nunca como texto pequeno; `#C44536` nunca como
 
 ---
 
-## 2. Typography (APROVADA, D-022)
+## 2. Typography (APROVADA, D-022; regra de uso refinada em D-029)
 
 ### Famílias e arquivos
 
 | Família        | Arquivo                                   | Eixo                | Tamanho  | Uso                                                                 |
 | -------------- | ----------------------------------------- | ------------------- | -------- | ------------------------------------------------------------------- |
-| Pixelify Sans  | `src/styles/fonts/pixelify-sans-latin.woff2` | `wght` 400–700 (variável) | 11.7 kB | voz do sistema, **a partir de ~14 px**                     |
-| IBM Plex Sans  | `src/styles/fonts/ibm-plex-sans-latin.woff2` | `wght` 100–700 (variável) | 44.6 kB | voz do Eduardo + micro-labels de 12–13 px                  |
+| Pixelify Sans  | `src/styles/fonts/pixelify-sans-latin.woff2` | `wght` 400–700 (variável) | 11.7 kB | brand/game-system display, **só em tamanhos grandes validados** (D-029) |
+| IBM Plex Sans  | `src/styles/fonts/ibm-plex-sans-latin.woff2` | `wght` 100–700 (variável) | 44.6 kB | voz do Eduardo, títulos de seção, códigos pequenos, micro-labels |
 
 - Fonte: Google Fonts (SIL OFL), subset **latin** (U+0000–00FF + pontuação): cobre pt-BR e en sem precisar de latin-ext.
 - **Validado** (fontkit): `ã á é í ó ú ç ê ô õ à â` e maiúsculas presentes nas duas famílias. **Ausentes:** `↗ →` (e `↓` na Pixelify) → usar ícones SVG.
-- Cada família é **um único arquivo variável** (o Google não serve estáticos separados); pesos usados de fato: Pixelify 500/700, Plex 400/500/600.
+- Cada família é **um único arquivo variável** (o Google não serve estáticos separados); pesos usados de fato: Pixelify 500/700 (só `display-hero`), Plex 400/500/600.
 - Empacotadas pelo build (`url()` relativo no Sass → `media/<nome>-<hash>.woff2`), o que dá cache longo e funciona com qualquer `base-href`. Sem Google Fonts em runtime e sem pacote npm (D-023).
 - `font-display: swap`; `font-synthesis: none` no `body` (sem negrito/itálico falso).
 
@@ -150,9 +150,25 @@ Fallbacks (`--mc-font-display`, `--mc-font-text`):
 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif
 ```
 
-### Regra de nitidez
+### Regra de uso da Pixelify Sans (D-029, substitui a "regra de nitidez" de D-022)
 
-Pixelify Sans **não** é obrigatória em labels muito pequenos. Abaixo de ~14 px, micro-labels de sistema (ORIGIN, XP, ACTIVE, CLASS) usam **IBM Plex Sans** em caixa alta com tracking. Pixelify fica com títulos, headings de seção, MC-CART, códigos e elementos de sistema ≥ 14 px.
+> O caráter retro não depende exclusivamente de uma pixel font.
+
+**Problema real encontrado (não é característica aceita):** o **"C" maiúsculo da Pixelify Sans tem baixa distinção** em tamanhos pequenos e intermediários. No showcase, "ACTIONS" leu como "AOTIONS", "CURRENT MAIN QUEST" como "OURRENT MAIN QUEST" e "MC-01" como "MO-01". Validação em 1× e 2×, 14–96 px, pesos 400–700:
+
+| Faixa         | Resultado                                                        |
+| ------------- | ---------------------------------------------------------------- |
+| ≤ ~24 px      | C ambíguo em **qualquer** peso (pior em 1×)                       |
+| ~28–48 px     | peso 700 fecha o C; 400/500 distinguíveis (limítrofe em 1×)       |
+| ≥ ~64 px      | C legível em qualquer peso **em palavras** ("CAMPANHA")            |
+| códigos curtos | "MC", "MC-01", "MC-CART" leem "MO" **até 48 px mesmo com peso 500** (sem contexto de palavra) |
+
+**Regra:**
+
+- **Pixelify Sans** = brand/game-system display, apenas em usos **visualmente validados**. Hoje o único validado é **"MODO CAMPANHA"** (Hero, 48–96 px, peso 500 abaixo de md e 700 a partir de md). MC / MC-01 / MC-CART / seriais **não** foram validados em nenhum tamanho testado (até 48 px) e ficam em Plex até nova validação; o monograma MC e o wordmark virão como SVG autoral. Todo uso novo de Pixelify exige validação visual dos caracteres no tamanho real.
+- **IBM Plex Sans** = conteúdo humano **e** títulos de seção (PLAYER STATUS, PROJECT INVENTORY, CURRENT MAIN QUEST...), códigos de sistema pequenos (papel `system`), nomes de projeto no MC-CART (`cart-title`), micro-labels, botões, navegação.
+- Nos títulos de seção, a linguagem de game vem de **caixa alta, peso, tracking, marcador ■, divider, code e status** (composição do `mc-section-header`), não da pixel font.
+- **Sem terceira família** tipográfica. **Sem SVG para headings traduzíveis**; SVG autoral só para o monograma MC e o wordmark MODO CAMPANHA (backlog).
 
 ### Escala (papéis em `$type-roles`)
 
@@ -160,10 +176,10 @@ Fluida entre viewport 360 px e 1200 px (`clamp()` em `rem`). Custom property: `-
 
 | Papel             | Família | Mobile → Desktop | Line-height | Tracking  | Peso | Caixa | Aplicação                                         |
 | ----------------- | ------- | ---------------- | ----------- | --------- | ---- | ----- | ------------------------------------------------- |
-| `display-hero`    | Pixelify | 48 → 96 px      | 0.95        | 0         | 700  | UPPER | MODO CAMPANHA                                     |
-| `display-section` | Pixelify | 28 → 40 px      | 1.1         | 0.02em    | 700  | UPPER | PLAYER STATUS, PROJECT INVENTORY                  |
-| `display-cart`    | Pixelify | 14 → 16 px      | 1.15        | 0.02em    | 700  | UPPER | Nome no rótulo do MC-CART                         |
-| `system`          | Pixelify | 14 px           | 1.3         | 0.06em    | 500  | UPPER | MC-01, MC-CART, ON-001, códigos ≥ 14 px           |
+| `display-hero`    | Pixelify | 48 → 96 px      | 0.95        | 0         | **500 → 700 (md)** | UPPER | Só "MODO CAMPANHA" (único uso validado; 700 só a partir de 768 px, ~71 px+) |
+| `section-title`   | Plex    | 24 → 32 px       | 1.15        | 0.06em    | 600  | UPPER | PLAYER STATUS, PROJECT INVENTORY, CURRENT MAIN QUEST |
+| `cart-title`      | Plex    | 14 → 16 px       | 1.15        | 0.04em    | 600  | UPPER | Nome do projeto no rótulo do MC-CART              |
+| `system`          | Plex    | 14 px            | 1.3         | 0.08em    | 500  | UPPER | MC-01, MC-CART, ON-001 em tamanho pequeno         |
 | `label`           | Plex    | 12 → 13 px       | 1.3         | 0.08em    | 500  | UPPER | Micro-labels: ORIGIN, XP, CLASS, ACTIVE           |
 | `name`            | Plex    | 36 → 56 px       | 1.05        | −0.02em   | 600  | —     | Eduardo Arine                                     |
 | `title-l`         | Plex    | 20 → 24 px       | 1.3         | −0.01em   | 400  | —     | Cargo                                             |
@@ -172,6 +188,8 @@ Fluida entre viewport 360 px e 1200 px (`clamp()` em `rem`). Custom property: `-
 | `body`            | Plex    | 16 px            | 1.6         | 0         | 400  | —     | Parágrafos (padrão do `body`)                     |
 | `body-s`          | Plex    | 14 px            | 1.5         | 0         | 400  | —     | Descrições curtas, valores, navegação             |
 | `caption`         | Plex    | 12 px            | 1.4         | 0.01em    | 500  | —     | Chips/tags, metadados                             |
+
+Histórico: até D-029, `display-section` (28→40 px), `display-cart` e `system` usavam Pixelify (700/700/500). Foram trocados após o teste de legibilidade acima.
 
 Regras: mínimo absoluto 12 px; corpo ≤ 65ch; tracking positivo só em caixa alta; escala é base e pode ser refinada visualmente na FASE 3 (registrar ajustes aqui).
 
@@ -456,7 +474,7 @@ Forma diferente + texto: status nunca é comunicado só por cor. Sem conjunto ge
 
 | Input       | Tipo       | Padrão | Uso                                               |
 | ----------- | ---------- | ------ | ------------------------------------------------- |
-| `heading`   | `string`   | —      | título (`display-section`)                        |
+| `heading`   | `string`   | —      | título (`section-title`, IBM Plex Sans)           |
 | `headingId` | `string`   | —      | id do heading, para `<section aria-labelledby>`   |
 | `level`     | `2 \| 3`   | 2      | nível semântico do heading                        |
 | `code`      | `string`   | —      | código de sistema acima do título (`system`)      |
@@ -490,8 +508,8 @@ Chips, status, actions primary/text e section header já estavam cobertos pelos 
 
 ### Pontos abertos encontrados no Sprint 3
 
-- **"C" da Pixelify Sans:** no desenho da fonte, o C maiúsculo é quase fechado e, nos títulos de seção (28–40 px, peso 700), lê como "O" ("AOTIONS", "OURRENT MAIN QUEST"). Em 96 px (hero) lê bem. Igual em todos os pesos (testado 400–700). Opções em aberto: aceitar como característica; trocar `display-section` para outra família; ou adiantar o wordmark/headings críticos como SVG. **Decisão pendente com Eduardo.**
-- Traduções en novas a revisar: "Explore the campaign", "Résumé".
+- ~~"C" da Pixelify Sans nos títulos de seção~~ → **resolvido em D-029** (títulos e códigos pequenos em Plex). Correção de registro: a primeira análise dizia "igual em todos os pesos"; a validação detalhada mostrou que o peso influi entre ~28–48 px, mas que ≤ ~24 px o C é ambíguo em qualquer peso.
+- Traduções en aprovadas: "Explore the campaign", "Résumé" (ação mais descritiva futura: "View résumé").
 
 ---
 

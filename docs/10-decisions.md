@@ -187,7 +187,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** os concepts misturam pixel e texto moderno; a fronteira precisava ser explícita.
 - **Motivo:** legibilidade e coerência com D-004 e com a regra de voz de D-018.
 - **Alternativas:** pixel font também no nome/cargo.
-- **Status:** Aceita. Famílias específicas: proposta em `docs/11-design-system.md` (aguardando aprovação).
+- **Status:** Aceita. Famílias específicas em D-022. **Refinada por D-029**: títulos de seção e códigos pequenos saíram da pixel font.
 
 ## D-020 — Estratégia de i18n: signals + dicionários tipados (proposta)
 
@@ -229,7 +229,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** proposta do Sprint 1 da FASE 2, comparada em página de especímenes com três pares tipográficos (A: Pixelify + Plex; B: Silkscreen + Inter; C: Jersey 10 + Atkinson Hyperlegible Next).
 - **Motivo:** par A cobre todos os usos de sistema com uma pixel font só e mantém o texto técnico e profissional; grid e spacing reproduzem o Concept 03-A sem posicionamento absoluto.
 - **Alternativas:** pares B e C; Player Status rígido em 4/4/4; Inventory em carrossel; 2 cartuchos por linha no mobile (a testar depois).
-- **Status:** Aceita e implementada (`src/styles/tokens/`, `docs/11-design-system.md`).
+- **Status:** Aceita e implementada (`src/styles/tokens/`, `docs/11-design-system.md`). **Regra de uso da Pixelify refinada por D-029** (a lista "títulos, headings de seção, MC-CART, códigos ≥ 14 px" foi substituída).
 
 ## D-023 — Fontes self-hosted empacotadas pelo build
 
@@ -294,3 +294,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** a rota não é registrada nem empacotada em produção, com mecanismo nativo do Angular CLI e poucos arquivos.
 - **Alternativas:** `isDevMode()` em runtime (código ainda iria para o bundle); projeto/aplicação separada no workspace (complexo demais para uma página interna).
 - **Status:** Aceita e implementada. Verificado: build de produção sem o chunk; build de desenvolvimento com o chunk; guarda do CI testada nos dois casos.
+
+## D-029 — Pixelify Sans restrita a display grande validado; títulos de seção em IBM Plex Sans
+
+- **Data:** 2026-10-08
+- **Decisão:** a Pixelify Sans passa a ser fonte de **brand/game-system display**, usada **somente onde os caracteres foram visualmente validados**. Validado hoje: "MODO CAMPANHA" (Hero). MC / MC-01 / MC-CART / seriais **não** passaram na validação em nenhum tamanho testado (até 48 px, "MC" lê "MO") e ficam em Plex até nova validação ou até o SVG autoral do monograma. Títulos de seção, códigos de sistema pequenos e nomes de projeto no MC-CART usam **IBM Plex Sans** em caixa alta, com peso e tracking. A linguagem de game nos títulos vem da composição do section header (marcador, divider, code, status). Sem terceira família; sem SVG para headings traduzíveis (SVG autoral só para monograma MC e wordmark).
+- **Contexto (problema real, registrado sem atenuar):** no showcase do Sprint 3, o **"C" maiúsculo da Pixelify Sans mostrou baixa distinção** em tamanhos pequenos e intermediários ("AOTIONS", "OURRENT MAIN QUEST", "MO-01"). Validação em 1× e 2×, 14–96 px, pesos 400–700: ≤ ~24 px ambíguo em qualquer peso; ~28–48 px o peso 700 fecha o C; ≥ ~64 px legível em palavras; em códigos curtos sem contexto ("MC-01"), ambíguo até 48 px mesmo com peso 500. Correções de registro: a primeira análise (Sprint 3) dizia "igual em todos os pesos"; uma segunda versão desta decisão chegou a validar códigos "≥ 48 px", o que o print do showcase desmentiu.
+- **Motivo:** a perda de legibilidade não é aceita como característica; o caráter retro não depende exclusivamente da pixel font.
+- **Alternativas:** aceitar o C como característica (rejeitado por Eduardo); SVG para títulos (rejeitado: títulos são traduzíveis); terceira família pixel (rejeitado); manter Pixelify nos códigos de 14 px (rejeitado após validação: "MC-01" lia "MO-01").
+- **Implementação:** `display-section` → `section-title` (Plex 600, 24→32 px, tracking 0.06em); `display-cart` → `cart-title` (Plex 600); `system` → Plex 500, 14 px, tracking 0.08em; `display-hero` mantém Pixelify com peso 500 abaixo de 768 px e 700 a partir de md.
+- **Status:** Aceita e implementada. **Ponto para revisão de Eduardo:** a lista aprovada citava MC / MC-01 / MC-CART / seriais em Pixelify; a validação não aprovou nenhum desses usos, então estão em Plex. Caminhos futuros: monograma MC / wordmark em SVG (já no backlog) ou nova validação num tamanho maior no Sprint 4 (ex.: MC-01 no console).
