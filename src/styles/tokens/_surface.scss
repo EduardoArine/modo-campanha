@@ -1,5 +1,6 @@
 // Borders, radius, sombras e glow do MC Design System (docs/11-design-system.md). D-024.
 // Profundidade da UI vem da luminosidade das superfícies, não de sombra.
+@use 'sass:string';
 
 $border-widths: (
   default: 1px,
@@ -12,6 +13,8 @@ $radii: (
   sm: 4px,
   // só para elementos realmente circulares (indicador de status)
   round: 50%,
+  // Objeto físico: vidro do CRT (levemente elíptico, sugere convexidade). Só no vidro do CRT.
+  glass: string.unquote('20px / 24px'),
 );
 
 $focus-ring-width: 2px;

@@ -27,7 +27,11 @@ export type McCrtState = 'empty' | 'content';
       </div>
       <div class="base">
         <span class="id">{{ ui().crt.identification }}</span>
-        <span class="led" aria-hidden="true"></span>
+        <span class="vents" aria-hidden="true"></span>
+        <span class="controls" aria-hidden="true">
+          <span class="button"></span>
+          <span class="led"></span>
+        </span>
       </div>
     </div>
   `,

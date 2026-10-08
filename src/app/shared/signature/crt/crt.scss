@@ -1,6 +1,7 @@
 // CRT Project Viewer (docs/11, Signature Components).
 // Objeto físico por fora (material, sombra de objeto, glow controlado);
 // conteúdo legível por dentro (efeitos atrás do conteúdo, nunca sobre texto ou screenshots).
+// Profundidade: shell (claro, bisel) → bezel (escuro, espesso, aro interno) → vidro.
 @use 'mc' as *;
 
 :host {
@@ -8,6 +9,7 @@
   container-type: inline-size;
 }
 
+// Shell: material escuro com bisel (aresta clara em cima, sulco embaixo).
 .body {
   display: grid;
   gap: space(3);
@@ -16,28 +18,36 @@
   border-radius: var(--mc-radius-sm);
   box-shadow:
     inset 0 1px 0 var(--mc-material-highlight),
+    inset 0 calc(-1 * var(--mc-border-width-strong)) 0 var(--mc-material-groove),
     var(--mc-shadow-object);
 }
 
+// Bezel: mais escuro e mais espesso que o shell; luz rasante no topo sugere a curvatura.
 .bezel {
-  padding: space(4);
-  background: var(--mc-bg);
+  padding: space(5);
+  background:
+    linear-gradient(to bottom, var(--mc-material-highlight), transparent space(7)), var(--mc-bg);
   border-radius: var(--mc-radius-sm);
   box-shadow: inset 0 0 0 var(--mc-border-width-strong) var(--mc-material-groove);
 }
 
+// Vidro: raio próprio de objeto físico + aro interno (sulco + aresta) + glow quente
+// controlado (D-024). Sem transform, sem blur: o conteúdo nunca é deformado.
 .screen {
   position: relative;
   display: grid;
   // 4:3 é o mínimo; a tela cresce com o conteúdo (nunca corta texto ou screenshots).
   aspect-ratio: 4 / 3;
   background: var(--mc-surface);
-  border-radius: var(--mc-radius-sm);
-  // Glow quente controlado (permitido no CRT, D-024).
-  box-shadow: 0 0 space(7) var(--mc-glow-warm);
+  border-radius: var(--mc-radius-glass);
+  box-shadow:
+    0 0 0 var(--mc-border-width-strong) var(--mc-material-groove),
+    0 0 0 calc(var(--mc-border-width-strong) + 1px) var(--mc-material-highlight),
+    0 0 space(7) var(--mc-glow-warm);
 }
 
-// Vinheta + scanlines muito leves, ATRÁS do conteúdo (z-index 0) e mais fortes nas bordas.
+// Efeitos ATRÁS do conteúdo (z-index 0): vinheta perceptível nas bordas + reflexo suave
+// no topo do vidro; scanlines discretas numa camada própria.
 .fx {
   position: absolute;
   inset: 0;
@@ -45,9 +55,21 @@
   pointer-events: none;
   border-radius: inherit;
   background:
-    radial-gradient(ellipse at center, transparent 55%, var(--mc-material-groove) 100%),
-    repeating-linear-gradient(to bottom, var(--mc-material-groove) 0 1px, transparent 1px 4px);
-  opacity: 0.5;
+    radial-gradient(ellipse 70% 40% at 50% 0%, var(--mc-material-highlight), transparent 70%),
+    radial-gradient(ellipse at center, transparent 50%, var(--mc-material-groove) 100%);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--mc-material-groove) 0 1px,
+      transparent 1px 4px
+    );
+    opacity: 0.45;
+  }
 }
 
 .viewport {
@@ -65,16 +87,45 @@
   color: var(--mc-text-muted);
 }
 
+// Faixa inferior de hardware: MC-01 à esquerda; ventilação discreta; um botão e o LED.
 .base {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: space(4);
   padding-inline: space(1);
 }
 
 .id {
   @include type(system);
   color: var(--mc-material-dark-ink);
+}
+
+// Ranhuras de ventilação (decorativas).
+.vents {
+  flex: 0 1 space(9);
+  height: space(2);
+  margin-inline-start: auto;
+  background: repeating-linear-gradient(
+    to right,
+    var(--mc-material-groove) 0 space(3),
+    transparent space(3) space(4)
+  );
+  border-radius: var(--mc-radius-sm);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: space(3);
+}
+
+// Botão físico único (decorativo, não interativo).
+.button {
+  width: space(5);
+  height: space(3);
+  background: var(--mc-material-groove);
+  border-radius: var(--mc-radius-sm);
+  box-shadow: inset 0 1px 0 var(--mc-material-highlight);
 }
 
 // LED decorativo do aparelho (não indica estado).
@@ -85,27 +136,35 @@
   background: var(--mc-accent);
 }
 
-// Mobile: prioriza o conteúdo. Moldura mínima, sem proporção fixa, sem efeitos.
+// Mobile: prioriza o conteúdo. Moldura mínima, sem proporção fixa, sem efeitos nem detalhes.
 @container (max-width: 34rem) {
   .body {
-    padding: space(2) space(2) space(2);
+    padding: space(2);
   }
 
   .bezel {
     padding: space(2);
+    background: var(--mc-bg);
   }
 
   .screen {
     aspect-ratio: auto;
     min-height: 12rem;
+    border-radius: var(--mc-radius-sm);
     box-shadow: none;
   }
 
-  .fx {
+  .fx,
+  .vents,
+  .button {
     display: none;
   }
 
   .viewport {
     padding: space(4);
+  }
+
+  .base {
+    justify-content: space-between;
   }
 }
