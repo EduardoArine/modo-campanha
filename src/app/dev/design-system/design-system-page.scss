@@ -1,0 +1,323 @@
+// Showcase interno (dev only). Usa os mesmos tokens semânticos dos componentes.
+@use 'sass:map';
+@use 'mc' as *;
+
+.page {
+  padding-block: space(8) space(9);
+}
+
+.intro {
+  display: grid;
+  gap: space(3);
+  margin-bottom: space(8);
+
+  h1 {
+    margin: 0;
+    @include type(name);
+  }
+}
+
+.dev-badge {
+  margin: 0;
+  @include type(system);
+  color: var(--mc-accent);
+}
+
+.question {
+  margin: 0;
+  max-width: 60ch;
+  @include type(body-l);
+  color: var(--mc-text-secondary);
+}
+
+.locale-switch {
+  display: flex;
+  gap: space(4);
+
+  [aria-current='page'] {
+    color: var(--mc-accent);
+  }
+}
+
+.block {
+  display: grid;
+  gap: space(6);
+  padding-block: space(7);
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.stack {
+  display: grid;
+  gap: space(7);
+}
+
+.token {
+  font-family: ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  font-size: 0.8125rem;
+  color: var(--mc-text-muted);
+}
+
+.group-title {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Typography
+.type-list {
+  display: grid;
+  gap: space(5);
+  margin: 0;
+}
+
+.type-row {
+  display: grid;
+  gap: space(2);
+
+  @include mq(md) {
+    grid-template-columns: 10rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+
+  dd {
+    margin: 0;
+    min-width: 0;
+  }
+}
+
+@each $role, $_ in $type-roles {
+  .t-#{$role} {
+    @include type($role);
+  }
+}
+
+.t-display-hero {
+  color: var(--mc-accent);
+}
+
+.t-body-l,
+.t-body,
+.t-body-s {
+  color: var(--mc-text-secondary);
+}
+
+.t-label {
+  color: var(--mc-text-muted);
+}
+
+// Colors
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: space(4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatch {
+  display: flex;
+  align-items: center;
+  gap: space(3);
+}
+
+.chip-color {
+  width: space(7);
+  height: space(7);
+  flex: none;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+// Surfaces
+.surfaces {
+  display: grid;
+  gap: space(5);
+
+  @include mq(lg) {
+    grid-template-columns: 2fr 1fr;
+  }
+}
+
+.level {
+  display: grid;
+  gap: space(3);
+  padding: space(5);
+}
+
+.level-bg {
+  background: var(--mc-bg);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.level-surface {
+  background: var(--mc-surface);
+}
+
+.level-panel {
+  background: var(--mc-panel);
+}
+
+.level-elevated {
+  background: var(--mc-elevated);
+}
+
+.physical {
+  display: grid;
+  gap: space(5);
+}
+
+.object,
+.glow {
+  display: grid;
+  place-items: center;
+  min-height: 7rem;
+  padding: space(4);
+  text-align: center;
+}
+
+.object {
+  background: var(--mc-elevated);
+  box-shadow: var(--mc-shadow-object);
+}
+
+.glow {
+  background: radial-gradient(60% 60% at 50% 50%, var(--mc-glow-warm), transparent 70%);
+}
+
+// Borders
+.borders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  gap: space(4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.border-sample {
+  padding: space(5) space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+}
+
+.b-subtle {
+  border-color: var(--mc-border-subtle);
+}
+
+.b-accent {
+  border-color: var(--mc-border-accent);
+}
+
+.b-cool {
+  border-color: var(--mc-border-cool);
+}
+
+.b-strong {
+  border-width: var(--mc-border-width-strong);
+}
+
+.b-radius {
+  border-radius: var(--mc-radius-sm);
+}
+
+// Icons
+.icons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: space(4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-cell {
+  display: grid;
+  gap: space(3);
+  padding: space(4);
+  background: var(--mc-panel);
+}
+
+.icon-sizes {
+  display: flex;
+  align-items: flex-end;
+  gap: space(4);
+}
+
+// Actions
+.states {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: space(3) space(4) space(3) 0;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th {
+    @include type(label);
+    color: var(--mc-text-muted);
+  }
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(4) space(5);
+}
+
+// Chips + status
+.on-surfaces {
+  display: grid;
+  gap: space(4);
+
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.on {
+  display: grid;
+  gap: space(4);
+  padding: space(5);
+}
+
+.on-bg {
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.on-panel {
+  background: var(--mc-panel);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(2) space(4);
+}
+
+// i18n
+.dictionary {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: space(2) space(5) space(2) 0;
+    text-align: left;
+    border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  }
+
+  thead th {
+    @include type(label);
+    color: var(--mc-text-muted);
+  }
+
+  td {
+    color: var(--mc-text-secondary);
+  }
+}

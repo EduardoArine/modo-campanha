@@ -34,6 +34,9 @@ jobs:
 
       - run: npm run build:gh-pages
 
+      # Guarda: o showcase do design system (dev only) nunca pode ir para produção.
+      - run: "! grep -rl 'design-system-page' dist/modo-campanha/browser"
+
       # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
       # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).
       - run: |

@@ -1,0 +1,299 @@
+<div class="mc-page-grid page">
+  <header class="intro">
+    <p class="dev-badge">MC Design System · dev only · {{ locale.locale() }}</p>
+    <h1>Showcase</h1>
+    <p class="question">
+      Se retirarmos os elementos temáticos grandes, os componentes ainda parecem pertencer ao Modo
+      Campanha?
+    </p>
+    <nav class="locale-switch" aria-label="Idioma do showcase">
+      <a
+        mcAction="text"
+        routerLink="/dev/design-system"
+        [attr.aria-current]="locale.locale() === 'pt-BR' ? 'page' : null"
+        lang="pt-BR"
+        >Português</a
+      >
+      <a
+        mcAction="text"
+        routerLink="/en/dev/design-system"
+        [attr.aria-current]="locale.locale() === 'en' ? 'page' : null"
+        lang="en"
+        >English</a
+      >
+    </nav>
+  </header>
+
+  <!-- Section headers -->
+  <section class="block" aria-labelledby="ds-headers">
+    <mc-section-header heading="Section headers" headingId="ds-headers" code="DS-01" />
+    <div class="stack">
+      <mc-section-header [heading]="ui().sections.playerStatus" [level]="3">
+        <mc-status state="active">{{ ui().status.active }}</mc-status>
+      </mc-section-header>
+      <mc-section-header
+        [heading]="ui().sections.projectInventory"
+        [subtitle]="ui().inventory.subtitle"
+        [level]="3"
+      />
+      <mc-section-header
+        [heading]="ui().sections.currentQuest"
+        code="MC-01"
+        [divider]="false"
+        [level]="3"
+      >
+        <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
+      </mc-section-header>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section class="block" aria-labelledby="ds-type">
+    <mc-section-header heading="Typography" headingId="ds-type" code="DS-02" />
+    <dl class="type-list">
+      @for (item of typeRoles; track item.role) {
+        <div class="type-row">
+          <dt class="token">{{ item.role }}</dt>
+          <dd class="t-{{ item.role }}">{{ item.sample }}</dd>
+        </div>
+      }
+    </dl>
+  </section>
+
+  <!-- Colors -->
+  <section class="block" aria-labelledby="ds-colors">
+    <mc-section-header
+      heading="Semantic colors"
+      headingId="ds-colors"
+      code="DS-03"
+      subtitle="Só tokens semânticos. Primitivos não aparecem em componentes."
+    />
+    @for (group of colorGroups; track group.name) {
+      <h3 class="group-title">{{ group.name }}</h3>
+      <ul class="swatches">
+        @for (token of group.tokens; track token) {
+          <li class="swatch">
+            <span class="chip-color" [style.background]="'var(--mc-' + token + ')'"></span>
+            <code class="token">--mc-{{ token }}</code>
+          </li>
+        }
+      </ul>
+    }
+  </section>
+
+  <!-- Surfaces -->
+  <section class="block" aria-labelledby="ds-surfaces">
+    <mc-section-header
+      heading="Surfaces"
+      headingId="ds-surfaces"
+      code="DS-04"
+      subtitle="Profundidade por luminosidade. Máximo de dois níveis aninhados na UI real."
+    />
+    <div class="surfaces">
+      <div class="level level-bg">
+        <span class="token">bg · 0</span>
+        <div class="level level-surface">
+          <span class="token">surface · 1</span>
+          <div class="level level-panel">
+            <span class="token">panel · 2</span>
+            <div class="level level-elevated"><span class="token">elevated · 3</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="physical">
+        <div class="object"><span class="token">objeto físico · shadow-object</span></div>
+        <div class="glow"><span class="token">glow-warm (só Hero visual / CRT)</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Borders -->
+  <section class="block" aria-labelledby="ds-borders">
+    <mc-section-header heading="Borders" headingId="ds-borders" code="DS-05" />
+    <ul class="borders">
+      <li class="border-sample b-subtle"><code class="token">border-subtle · 1px</code></li>
+      <li class="border-sample b-default"><code class="token">border-default · 1px</code></li>
+      <li class="border-sample b-accent"><code class="token">border-accent · 1px</code></li>
+      <li class="border-sample b-cool"><code class="token">border-cool · 1px</code></li>
+      <li class="border-sample b-strong"><code class="token">width-strong · 2px</code></li>
+      <li class="border-sample b-radius"><code class="token">radius-sm · 4px</code></li>
+    </ul>
+  </section>
+
+  <!-- Icons -->
+  <section class="block" aria-labelledby="ds-icons">
+    <mc-section-header
+      heading="Icons"
+      headingId="ds-icons"
+      code="DS-06"
+      subtitle="MC system icons (grade 16 px) e brand icons oficiais. Tamanhos: 16, 20, 24."
+    />
+    <ul class="icons">
+      @for (name of iconNames; track name) {
+        <li class="icon-cell">
+          <span class="icon-sizes">
+            @for (size of iconSizes; track size) {
+              <mc-icon [name]="name" [size]="size" />
+            }
+          </span>
+          <code class="token">{{ name }}</code>
+        </li>
+      }
+    </ul>
+  </section>
+
+  <!-- Actions -->
+  <section class="block" aria-labelledby="ds-actions">
+    <mc-section-header
+      heading="Actions"
+      headingId="ds-actions"
+      code="DS-07"
+      subtitle="Navegação = <a>, ação = <button>. Alvo mínimo 44 × 44 px. Estados forçados só nesta página."
+    />
+    <table class="states">
+      <thead>
+        <tr>
+          <th scope="col">variante</th>
+          @for (state of previewStates; track state) {
+            <th scope="col">{{ state }}</th>
+          }
+          <th scope="col">disabled</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">primary</th>
+          @for (state of previewStates; track state) {
+            <td>
+              <button mcAction="primary" [attr.data-mc-preview]="state">
+                {{ ui().cta.explore }} <mc-icon name="arrow-down" />
+              </button>
+            </td>
+          }
+          <td>
+            <button mcAction="primary" disabled>{{ ui().cta.explore }}</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">secondary</th>
+          @for (state of previewStates; track state) {
+            <td>
+              <button mcAction="secondary" [attr.data-mc-preview]="state">
+                <mc-icon name="document" /> {{ ui().cta.resume }}
+              </button>
+            </td>
+          }
+          <td>
+            <button mcAction="secondary" disabled>{{ ui().cta.resume }}</button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">text</th>
+          @for (state of previewStates; track state) {
+            <td>
+              <a
+                mcAction="text"
+                href="https://github.com/EduardoArine"
+                [attr.data-mc-preview]="state"
+              >
+                {{ ui().cta.github }} <mc-icon name="external" />
+              </a>
+            </td>
+          }
+          <td><span class="token">n/a (link)</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="group-title">Composição de exemplo (CTAs do Hero, 03-A)</h3>
+    <div class="cta-row">
+      <a mcAction href="#ds-actions">{{ ui().cta.explore }} <mc-icon name="arrow-down" /></a>
+      <a mcAction="text" href="https://github.com/EduardoArine"
+        ><mc-icon name="github" /> {{ ui().cta.github }} <mc-icon name="external"
+      /></a>
+      <a mcAction="text" href="#ds-actions"
+        ><mc-icon name="linkedin" /> {{ ui().cta.linkedin }} <mc-icon name="external"
+      /></a>
+      <a mcAction="secondary" href="#ds-actions"
+        ><mc-icon name="document" /> {{ ui().cta.resume }}</a
+      >
+    </div>
+  </section>
+
+  <!-- Chips + status -->
+  <section class="block" aria-labelledby="ds-chips">
+    <mc-section-header
+      heading="Chips & status"
+      headingId="ds-chips"
+      code="DS-08"
+      subtitle="Chips são informativos: cor = categorização, não importância. Status = indicador + texto."
+    />
+    <div class="on-surfaces">
+      <div class="on on-bg">
+        <span class="token">sobre bg</span>
+        <span class="chips"><mc-chip>Produto</mc-chip><mc-chip tone="cool">Educação</mc-chip></span>
+        <span class="chips">
+          <mc-status state="active">{{ ui().status.active }}</mc-status>
+          <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
+        </span>
+      </div>
+      <div class="on on-panel">
+        <span class="token">sobre panel</span>
+        <span class="chips"
+          ><mc-chip>Desenvolvimento</mc-chip><mc-chip tone="cool">Gamificação</mc-chip></span
+        >
+        <span class="chips">
+          <mc-status state="active">{{ ui().status.active }}</mc-status>
+          <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Focus -->
+  <section class="block" aria-labelledby="ds-focus">
+    <mc-section-header
+      heading="Focus visible"
+      headingId="ds-focus"
+      code="DS-09"
+      subtitle="Contrato do sistema: anel 2 px focus-ring + offset 2 px, só por teclado. Use Tab nesta página."
+    />
+    <div class="on on-panel">
+      <div class="cta-row">
+        <button mcAction data-mc-preview="focus">{{ ui().cta.explore }}</button>
+        <button mcAction="secondary" data-mc-preview="focus">{{ ui().cta.resume }}</button>
+        <a mcAction="text" href="#ds-focus" data-mc-preview="focus">{{ ui().cta.github }}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- i18n -->
+  <section class="block" aria-labelledby="ds-i18n">
+    <mc-section-header
+      heading="PT-BR / EN"
+      headingId="ds-i18n"
+      code="DS-10"
+      subtitle="Todos os textos dos componentes acima vêm do dicionário. Troque o idioma no topo."
+    />
+    <table class="dictionary">
+      <thead>
+        <tr>
+          <th scope="col">chave</th>
+          <th scope="col" lang="pt-BR">pt-BR</th>
+          <th scope="col" lang="en">en</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of dictionaryRows; track row.key) {
+          <tr>
+            <th scope="row">
+              <code class="token">{{ row.key }}</code>
+            </th>
+            <td lang="pt-BR">{{ row.pt }}</td>
+            <td lang="en">{{ row.en }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </section>
+</div>
