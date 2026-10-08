@@ -19,18 +19,30 @@
   row-gap: space(2);
 }
 
-.marker {
-  width: 12px;
-  height: 12px;
-  flex: none;
-  background: var(--mc-accent);
-}
+// Marcador ■ preso ao título (alinhado à 1ª linha, recuo nas seguintes): títulos longos
+// quebram sem deixar o marcador sozinho numa linha.
+$marker: 12px;
+$marker-gap: space(4);
 
 .heading {
+  flex: 0 1 auto;
+  min-width: 0;
   margin: 0;
+  padding-inline-start: calc(#{$marker} + #{$marker-gap});
+  text-indent: calc(-1 * (#{$marker} + #{$marker-gap}));
   @include type(section-title);
   color: var(--mc-text);
   text-wrap: balance;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: $marker;
+    height: $marker;
+    margin-inline-end: $marker-gap;
+    vertical-align: 0.12em;
+    background: var(--mc-accent);
+  }
 }
 
 .rule {

@@ -12,7 +12,6 @@ import { booleanAttribute, ChangeDetectionStrategy, Component, input } from '@an
       <p class="code">{{ code() }}</p>
     }
     <div class="row">
-      <span class="marker" aria-hidden="true"></span>
       @if (level() === 3) {
         <h3 class="heading" [attr.id]="headingId() || null">{{ heading() }}</h3>
       } @else {
