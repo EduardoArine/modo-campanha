@@ -1,0 +1,41 @@
+<header class="header mc-page-grid">
+  <div class="bar">
+    <!-- Marca PROVISÓRIA: substituir pelo monograma MC / wordmark SVG quando existirem. -->
+    <a class="brand" [routerLink]="locale.homePath()" [attr.aria-label]="ui().brand.homeLabel">
+      <span class="monogram" aria-hidden="true">{{ ui().brand.monogram }}</span>
+      <span class="wordmark" aria-hidden="true">{{ ui().brand.name }}</span>
+    </a>
+
+    <nav class="nav" [attr.aria-label]="ui().nav.label">
+      <ul>
+        @for (item of navItems(); track item.fragment) {
+          <li>
+            <a [routerLink]="locale.homePath()" [fragment]="item.fragment">{{ item.label }}</a>
+          </li>
+        }
+      </ul>
+    </nav>
+
+    <div class="tools">
+      <ul class="languages" [attr.aria-label]="ui().language.switcherLabel">
+        @for (language of languages(); track language.locale) {
+          <li>
+            <a
+              [routerLink]="language.link"
+              [attr.lang]="language.locale"
+              [attr.hreflang]="language.locale"
+              [attr.aria-current]="language.current ? 'true' : null"
+              >{{ language.short }}<span class="mc-visually-hidden"> · {{ language.name }}</span></a
+            >
+          </li>
+        }
+      </ul>
+
+      @if (resume; as link) {
+        <a mcAction="secondary" class="resume" [href]="link.url">
+          <mc-icon name="document" /> {{ ui().cta.resume }}
+        </a>
+      }
+    </div>
+  </div>
+</header>

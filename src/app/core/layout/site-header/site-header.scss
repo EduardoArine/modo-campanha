@@ -1,0 +1,132 @@
+// SiteHeader (docs/12-home-slice-01.md, §7). UI digital: superfície sólida, sem blur/vidro.
+@use 'mc' as *;
+
+:host {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: block;
+}
+
+.header {
+  background: var(--mc-surface);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: space(6);
+  min-height: var(--mc-header-height);
+}
+
+// Marca provisória: caixa "MC" + "MODO CAMPANHA" (Plex: Pixelify não validada em tamanho pequeno).
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: space(3);
+  min-height: 44px;
+  color: var(--mc-text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--mc-text);
+  }
+}
+
+.monogram {
+  display: grid;
+  place-items: center;
+  width: space(6);
+  height: space(6);
+  border: var(--mc-border-width-strong) solid var(--mc-accent);
+  @include type(system);
+  font-weight: 600;
+  letter-spacing: 0;
+  color: var(--mc-text);
+}
+
+.wordmark {
+  @include type(system);
+  font-weight: 600;
+}
+
+ul {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Navegação: ausente abaixo de md no Slice 01 (temporário, não define o mobile final).
+.nav {
+  display: none;
+  margin-inline-start: auto;
+
+  @include mq(md) {
+    display: block;
+  }
+
+  ul {
+    gap: space(5);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    @include type(body-s);
+    font-weight: 500;
+    color: var(--mc-text-secondary);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--mc-text);
+      text-decoration: underline;
+      text-decoration-color: var(--mc-accent);
+      text-underline-offset: 6px;
+    }
+  }
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: space(5);
+  margin-inline-start: auto;
+
+  @include mq(md) {
+    margin-inline-start: 0;
+  }
+}
+
+// PT / EN: idioma ativo em accent, com aria-current.
+.languages {
+  gap: space(1);
+
+  li + li::before {
+    content: '/';
+    margin-inline-end: space(1);
+    color: var(--mc-text-muted);
+  }
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    @include type(label);
+    color: var(--mc-text-muted);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--mc-text);
+    }
+
+    &[aria-current='true'] {
+      color: var(--mc-accent);
+    }
+  }
+}
