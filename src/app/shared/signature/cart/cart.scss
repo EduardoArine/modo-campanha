@@ -1,74 +1,121 @@
 // MC-CART (docs/11, Signature Components). Objeto físico: materiais + sombra de objeto.
 // Arquitetura fixa; variam shell, accent, label e artwork.
+// Fisicalidade pela construção (Sprint 4.2): silhueta recortada (ombros, encaixe no topo,
+// língua de conexão, entalhe-chave), espessura (segunda camada), rótulo rebaixado,
+// pegas em relevo, trilho e contatos. Tudo frontal, só CSS, sem perspectiva.
 @use 'mc' as *;
 
 :host {
-  // Tinta e material do shell (tokens de material, D-032).
-  --cart-material: var(--mc-material-dark);
-  --cart-ink: var(--mc-material-dark-ink);
+  // Material (--m) e tinta (--i) do shell (tokens de material, D-032); --a = acento do rótulo.
+  --m: var(--mc-material-dark);
+  --i: var(--mc-material-dark-ink);
   display: block;
   width: 100%;
   max-width: 22rem;
 }
 
 :host(.mc-cart--light) {
-  --cart-material: var(--mc-material-light);
-  --cart-ink: var(--mc-material-light-ink);
+  --m: var(--mc-material-light);
+  --i: var(--mc-material-light-ink);
 }
 
 :host(.mc-cart--orange) {
-  --cart-material: var(--mc-material-orange);
-  --cart-ink: var(--mc-material-orange-ink);
+  --m: var(--mc-material-orange);
+  --i: var(--mc-material-orange-ink);
 }
 
 :host(.mc-cart--cool) {
-  --cart-material: var(--mc-material-cool);
-  --cart-ink: var(--mc-material-cool-ink);
+  --m: var(--mc-material-cool);
+  --i: var(--mc-material-cool-ink);
+}
+
+// Geometria do objeto (igual para os 4 shells: mesma família). Nomes curtos para caber no
+// orçamento de CSS: ch = chanfro dos ombros, nd = profundidade do encaixe do topo,
+// th = altura da língua de conexão, ti = recuo da língua, kd/kl/kh = entalhe-chave
+// (profundidade, início, fim), tk = espessura, sil = silhueta.
+.cart {
+  --ch: #{space(4)};
+  --nd: #{space(1)};
+  --th: #{space(4)};
+  --ti: 9%;
+  --kd: #{space(1)};
+  --kl: calc(var(--th) + #{space(6)});
+  --kh: calc(var(--th) + #{space(7)});
+  --tk: #{space(1)};
+
+  // Silhueta: ombros chanfrados, rebaixo de encaixe no topo, língua de conexão na base e
+  // entalhe-chave só no lado esquerdo (assimetria controlada).
+  --sil: polygon(
+    var(--ch) 0,
+    34% 0,
+    34% var(--nd),
+    66% var(--nd),
+    66% 0,
+    calc(100% - var(--ch)) 0,
+    100% var(--ch),
+    100% calc(100% - var(--th)),
+    calc(100% - var(--ti)) calc(100% - var(--th)),
+    calc(100% - var(--ti)) 100%,
+    var(--ti) 100%,
+    var(--ti) calc(100% - var(--th)),
+    0 calc(100% - var(--th)),
+    0 calc(100% - var(--kl)),
+    var(--kd) calc(100% - var(--kl)),
+    var(--kd) calc(100% - var(--kh)),
+    0 calc(100% - var(--kh)),
+    0 var(--ch)
+  );
+
+  position: relative;
+  padding-bottom: var(--tk);
+}
+
+// Sombra de objeto num retângulo interno (o recorte da silhueta cortaria box-shadow).
+.shadow {
+  position: absolute;
+  inset: space(2) 8% var(--th);
+  box-shadow: var(--mc-shadow-object);
+}
+
+// Espessura: segunda camada do shell, mais escura, deslocada para baixo.
+.edge {
+  position: absolute;
+  inset: var(--tk) 0 0;
+  clip-path: var(--sil);
+  background: linear-gradient(var(--mc-material-groove), var(--mc-material-groove)), var(--m);
 }
 
 .shell {
   position: relative;
   display: grid;
   gap: space(2);
-  padding: space(3) space(5) space(5);
-  background: var(--cart-material);
-  color: var(--cart-ink);
-  border-radius: var(--mc-radius-sm);
-  box-shadow:
-    inset 0 1px 0 var(--mc-material-highlight),
-    var(--mc-shadow-object);
+  padding: space(4) space(6) calc(var(--th) + #{space(6)});
+  clip-path: var(--sil);
+  background: var(--m);
+  color: var(--i);
+  box-shadow: inset 0 1px 0 var(--mc-material-highlight);
 }
 
-// Encaixe no topo (chave do slot do console MC-01).
-.notch {
+// Pegas laterais em relevo (sulco + aresta clara), parte do plástico.
+.grip {
   position: absolute;
-  top: 0;
-  left: 50%;
-  width: 28%;
-  height: space(1);
-  translate: -50% 0;
-  background: var(--mc-material-groove);
-}
-
-// Sulcos laterais de pega.
-.ribs {
-  position: absolute;
-  top: 34%;
-  bottom: 22%;
+  top: 32%;
+  bottom: calc(var(--th) + #{space(9)});
   width: space(2);
   background: repeating-linear-gradient(
     to bottom,
     var(--mc-material-groove) 0 2px,
-    transparent 2px 6px
+    var(--mc-material-highlight) 2px 3px,
+    transparent 3px 7px
   );
 }
 
-.ribs--left {
-  left: space(2);
+.grip--left {
+  left: space(3);
 }
 
-.ribs--right {
-  right: space(2);
+.grip--right {
+  right: space(3);
 }
 
 .top {
@@ -76,24 +123,33 @@
   justify-content: space-between;
   gap: space(3);
   @include type(label);
-  color: var(--cart-ink);
+  color: var(--i);
+}
+
+// Rebaixo do rótulo: moldura escura com sulco em cima e aresta clara embaixo.
+.recess {
+  padding: space(1);
+  background: var(--mc-material-groove);
+  border-radius: var(--mc-radius-sm);
+  box-shadow:
+    inset 0 2px 0 var(--mc-material-groove),
+    inset 0 -1px 0 var(--mc-material-highlight);
 }
 
 .label {
-  --label-accent: var(--mc-accent);
+  --a: var(--mc-accent);
   display: grid;
   overflow: hidden;
   background: var(--mc-panel);
-  border: var(--mc-border-width-strong) solid var(--mc-material-groove);
-  border-top: space(1) solid var(--label-accent);
+  border-top: space(1) solid var(--a);
 }
 
 .label--cool {
-  --label-accent: var(--mc-cool);
+  --a: var(--mc-cool);
 }
 
 .label--special {
-  --label-accent: var(--mc-special);
+  --a: var(--mc-special);
 }
 
 .art {
@@ -115,8 +171,6 @@
 .art-placeholder {
   padding: space(1) space(2);
   background: var(--mc-bg);
-  @include type(label);
-  color: var(--mc-text-muted);
 }
 
 .band {
@@ -139,18 +193,45 @@
   color: var(--mc-text);
 }
 
+// Placeholder da arte e tipo do projeto: mesmo papel tipográfico e cor.
+.art-placeholder,
 .type {
   @include type(label);
   color: var(--mc-text-muted);
 }
 
-// Contatos na base (borda que entra no console).
+// Sulcos técnicos (slot e trilho) compartilham o acabamento.
+.slot,
+.rail {
+  background: var(--mc-material-groove);
+  box-shadow: 0 1px 0 var(--mc-material-highlight);
+}
+
+// Slot técnico, só à direita (assimetria controlada).
+.slot {
+  position: absolute;
+  right: space(6);
+  bottom: calc(var(--th) + #{space(4)});
+  width: space(5);
+  height: space(1);
+}
+
+// Trilho: emenda horizontal acima da área de conexão.
+.rail {
+  position: absolute;
+  right: space(3);
+  bottom: calc(var(--th) + #{space(2)});
+  left: space(3);
+  height: 2px;
+}
+
+// Contatos na língua de conexão (a parte que entra no console MC-01).
 .contacts {
   position: absolute;
-  bottom: space(2);
+  bottom: space(1);
   left: 50%;
-  width: 40%;
-  height: space(1);
+  width: 58%;
+  height: space(2);
   translate: -50% 0;
   background: repeating-linear-gradient(
     to right,
