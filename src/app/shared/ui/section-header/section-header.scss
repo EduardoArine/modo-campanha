@@ -1,0 +1,56 @@
+@use 'mc' as *;
+
+:host {
+  display: grid;
+  gap: space(2);
+}
+
+.code {
+  margin: 0;
+  @include type(system);
+  color: var(--mc-text-muted);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: space(4);
+  row-gap: space(2);
+}
+
+.marker {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  background: var(--mc-accent);
+}
+
+.heading {
+  margin: 0;
+  @include type(display-section);
+  color: var(--mc-text);
+  text-wrap: balance;
+}
+
+.rule {
+  flex: 1 1 space(6);
+  height: var(--mc-border-width-default);
+  background: var(--mc-border-subtle);
+}
+
+// Sem divider, o status continua alinhado à direita.
+.status {
+  display: inline-flex;
+  margin-inline-start: auto;
+}
+
+.status:empty {
+  display: none;
+}
+
+.subtitle {
+  margin: 0;
+  @include type(body);
+  color: var(--mc-text-secondary);
+}

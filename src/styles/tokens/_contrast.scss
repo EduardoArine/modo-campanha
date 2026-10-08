@@ -55,9 +55,13 @@ $supported-pairs: (
   (text, (interactive-hover, panel), text),
   (text, (interactive-active, bg), text),
   (text, (interactive-active, panel), text),
+  // Sprint 3: action secondary no header (surface)
+  (text, (interactive-hover, surface), text),
+  (text, (interactive-active, surface), text),
   // Desabilitado (isento pela WCAG, mantido legível por decisão do sistema)
   (disabled-text, (disabled-bg, bg), text),
   (disabled-text, (disabled-bg, panel), text),
+  (disabled-text, (disabled-bg, surface), text),
   // Especial e frios
   (special, bg, text),
   (special, panel, text),

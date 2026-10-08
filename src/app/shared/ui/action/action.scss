@@ -1,0 +1,110 @@
+// Actions do MC Design System (docs/11-design-system.md, Buttons / Actions).
+// Só tokens semânticos. `data-mc-preview` força hover/active na página de showcase (dev).
+@use 'mc' as *;
+
+$enabled: ':not(:disabled):not([aria-disabled="true"])';
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: space(2);
+  min-height: 44px;
+  min-width: 44px;
+  margin: 0;
+  border: var(--mc-border-width-default) solid transparent;
+  border-radius: var(--mc-radius-sm);
+  background: none;
+  color: var(--mc-text);
+  font-family: var(--mc-font-text);
+  font-size: var(--mc-font-size-body);
+  font-weight: 500;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color 120ms ease-out,
+    border-color 120ms ease-out,
+    color 120ms ease-out;
+}
+
+// Primary: CTA principal.
+:host(.mc-action--primary) {
+  padding: space(3) space(5);
+  background: var(--mc-accent);
+  color: var(--mc-text-on-accent);
+}
+
+:host(.mc-action--primary:hover#{$enabled}),
+:host(.mc-action--primary[data-mc-preview='hover']) {
+  background: var(--mc-accent-hover);
+  color: var(--mc-text-on-accent);
+}
+
+:host(.mc-action--primary:active#{$enabled}),
+:host(.mc-action--primary[data-mc-preview='active']) {
+  background: var(--mc-accent-active);
+  color: var(--mc-text-on-accent);
+}
+
+// Secondary / outline: ações secundárias importantes (ex.: Currículo).
+:host(.mc-action--secondary) {
+  padding: space(3) space(5);
+  border-color: var(--mc-border-default);
+}
+
+:host(.mc-action--secondary:hover#{$enabled}),
+:host(.mc-action--secondary[data-mc-preview='hover']) {
+  background: var(--mc-interactive-hover);
+  color: var(--mc-text);
+}
+
+:host(.mc-action--secondary:active#{$enabled}),
+:host(.mc-action--secondary[data-mc-preview='active']) {
+  background: var(--mc-interactive-active);
+  color: var(--mc-text);
+}
+
+// Text action: baixa ênfase (ex.: GitHub, LinkedIn). Sublinhado discreto em accent (03-A).
+:host(.mc-action--text) {
+  padding: 0 space(1);
+  font-size: var(--mc-font-size-body-s);
+  text-decoration: underline;
+  text-decoration-color: var(--mc-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+:host(.mc-action--text:hover#{$enabled}),
+:host(.mc-action--text[data-mc-preview='hover']) {
+  color: var(--mc-link-hover);
+  text-decoration-color: var(--mc-link-hover);
+}
+
+:host(.mc-action--text:active#{$enabled}),
+:host(.mc-action--text[data-mc-preview='active']) {
+  color: var(--mc-link);
+}
+
+// Disabled (só <button>; links não têm estado desabilitado).
+:host(.mc-action:disabled),
+:host(.mc-action[aria-disabled='true']) {
+  background: var(--mc-disabled-bg);
+  border-color: var(--mc-disabled-border);
+  color: var(--mc-disabled-text);
+  cursor: not-allowed;
+}
+
+:host(.mc-action--text:disabled),
+:host(.mc-action--text[aria-disabled='true']) {
+  background: none;
+  border-color: transparent;
+  text-decoration-color: var(--mc-disabled-border);
+}
+
+// Showcase: anel de foco estático para revisão visual.
+:host([data-mc-preview='focus']) {
+  @include focus-ring;
+}

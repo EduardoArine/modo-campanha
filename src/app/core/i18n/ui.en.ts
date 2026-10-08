@@ -17,6 +17,16 @@ export const UI_EN: UiDictionary = {
     role: 'Digital Product Developer',
     motto: 'Real XP. No persona.',
   },
+  cta: {
+    explore: 'Explore the campaign',
+    resume: 'Résumé',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+  },
+  status: {
+    active: 'ACTIVE',
+    inProgress: 'IN PROGRESS',
+  },
   sections: {
     playerStatus: 'PLAYER STATUS',
     skillTree: 'SKILL TREE',

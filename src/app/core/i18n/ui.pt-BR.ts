@@ -16,6 +16,16 @@ export const UI_PT_BR = {
     role: 'Desenvolvedor de Produtos Digitais',
     motto: 'XP real, sem personagem.',
   },
+  cta: {
+    explore: 'Explorar campanha',
+    resume: 'Currículo',
+    github: 'GitHub',
+    linkedin: 'LinkedIn',
+  },
+  status: {
+    active: 'ACTIVE',
+    inProgress: 'IN PROGRESS',
+  },
   sections: {
     playerStatus: 'PLAYER STATUS',
     skillTree: 'SKILL TREE',
