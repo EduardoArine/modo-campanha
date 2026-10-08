@@ -341,5 +341,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** visualizador dos project cases.
 - **Motivo:** sensação física por fora sem sacrificar leitura de texto e screenshots por dentro.
 - **Alternativas:** scanlines sobre o conteúdo (rejeitado: reduz contraste); proporção fixa com scroll interno (rejeitado: cortava conteúdo, defeito encontrado e corrigido na validação).
-- **Status:** Arquitetura e conteúdo **aprovados** (2026-10-08). Refinamento físico do desktop (≈15–20% mais sensação de objeto) implementado sem mudar a arquitetura: vidro com `--mc-radius-glass` e aro, vinheta e reflexo atrás do conteúdo, bezel mais distinto, faixa inferior com ranhuras, um botão e LED. Novo raio `--mc-radius-glass` restrito ao vidro do CRT (objeto físico). **Aguardando aprovação visual** do refinamento.
+- **Status:** Arquitetura e conteúdo **aprovados** (2026-10-08). Refinamento físico do desktop (≈15–20% mais sensação de objeto) implementado sem mudar a arquitetura: vidro com `--mc-radius-glass` e aro, vinheta e reflexo atrás do conteúdo, bezel mais distinto, faixa inferior com ranhuras, um botão e LED. Novo raio `--mc-radius-glass` restrito ao vidro do CRT (objeto físico). **Refinamento aprovado** (desktop e mobile; glass, bezel, faixa inferior, LED e MC-01); `--mc-radius-glass` aprovado como token exclusivo de objeto físico.
 
+## D-034 — MC-CART: construção física (Sprint 4.2)
+
+- **Data:** 2026-10-08
+- **Decisão:** sem redesenhar o MC-CART, aumentar a leitura de objeto físico encaixável pela **construção**: silhueta recortada por `clip-path` (ombros chanfrados, rebaixo de encaixe no topo, língua de conexão na base), espessura por segunda camada deslocada, rótulo rebaixado, pegas laterais em relevo, trilho + contatos na área de conexão e duas assimetrias controladas (entalhe-chave à esquerda, slot à direita), iguais em todos os shells. Sombra de objeto mantida (aplicada num retângulo interno, porque o recorte cortaria `box-shadow`). Conteúdo, variantes, proporção e Project Summary inalterados.
+- **Contexto:** o cartucho aprovado ainda podia ser lido como um card grosso.
+- **Motivo:** teste de silhueta: sem texto e artwork, a forma precisa ler como hardware; mantendo silhueta autoral (sem formatos comerciais) e implementável em CSS frontal.
+- **Alternativas:** perspectiva 3D (rejeitado: pesado, menos responsivo); ornamentos (parafusos, badges, glow) (rejeitado: fisicalidade deve vir da construção).
+- **Nota técnica:** o CSS do componente passou do orçamento de aviso de 4 kB por componente (`angular.json`). Em vez de aumentar o orçamento, o SCSS foi enxugado (nomes curtos de custom properties documentados no arquivo, regras compartilhadas), sem mudança visual.
+- **Status:** Implementada, **aguardando aprovação visual**.

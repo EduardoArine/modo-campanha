@@ -18,8 +18,8 @@
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
 | 11  | Player Card              | ✅ Aprovado (D-031)                                            |
-| 12  | MC-CART                  | ✅ Aprovado + Project Summary + material tokens (D-032)        |
-| 13  | CRT                      | 🟡 Arquitetura aprovada; refinamento físico aguardando aprovação (D-033) |
+| 12  | MC-CART                  | ✅ Aprovado (D-032); refinamento físico 4.2 aguardando aprovação (D-034) |
+| 13  | CRT                      | ✅ Aprovado, incluindo refinamento físico e `--mc-radius-glass` (D-033) |
 | 14  | XP                       | ⬜ backlog (regras conceituais em D-021)                       |
 | 15  | Motion                   | ⬜ backlog                                                     |
 | 16  | Easter Egg Language      | ⬜ backlog                                                     |
@@ -613,6 +613,20 @@ Anatomia (fixa):
 | `shell`    | `'dark' \| 'light' \| 'orange' \| 'cool'` | material do shell (variação física)                           |
 | `accent`   | `'warm' \| 'cool' \| 'special'`          | faixa de acento do rótulo                                     |
 | `artwork`  | `{ src; alt }`                            | arte aprovada; ausente = placeholder "PROJECT ARTWORK"        |
+
+**Construção física (Sprint 4.2):** a fisicalidade vem da construção do objeto, não de ornamentos.
+
+| Elemento              | Implementação (frontal, só CSS, sem perspectiva)                                              |
+| --------------------- | --------------------------------------------------------------------------------------------- |
+| Silhueta              | `clip-path`: ombros chanfrados (16 px), rebaixo de encaixe no topo (34–66%, 4 px), língua de conexão na base (inset 9%, 16 px) |
+| Espessura             | segunda camada do shell (`.edge`), mesma silhueta, mais escura, deslocada 4 px para baixo       |
+| Sombra de objeto      | num retângulo interno (`.shadow`), porque o recorte cortaria `box-shadow`                       |
+| Rótulo rebaixado      | `.recess`: moldura `material-groove` com sulco em cima e aresta clara embaixo                 |
+| Pegas laterais        | relevos (sulco + aresta clara) nas laterais                                                   |
+| Conexão               | trilho (emenda) acima da base + contatos na língua de conexão                                  |
+| Assimetria controlada | 2 detalhes, iguais em todos os shells: entalhe-chave só à esquerda; slot técnico só à direita  |
+
+Teste de aprovação: escondendo texto e artwork, **a silhueta sozinha lê como cartucho/hardware**, não como card; os 4 shells continuam da mesma família. Sem badges, estrelas, raridade, QR code, estatísticas, parafusos, glow, animação, hover ou perspectiva 3D.
 
 - **Varia:** shell, accent, label (artwork + nome), artwork. **Preserva:** proporção (largura máx. 22 rem; altura idêntica entre variantes, nome limitado a 2 linhas), arquitetura, posição dos metadados, linguagem MC, comportamento.
 - Objeto físico: material + `--mc-shadow-object` + relevo. Sem glow permanente.

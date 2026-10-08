@@ -60,7 +60,8 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 - ✅ Player Card (D-031)
 - ✅ MC-CART + Project Summary + material tokens (D-032)
-- 🟡 CRT Project Viewer: arquitetura aprovada; refinamento físico aguardando aprovação (D-033)
+- ✅ CRT Project Viewer, incluindo refinamento físico (D-033)
+- 🟡 Sprint 4.2 — MC-CART physical refinement (D-034), aguardando aprovação visual
 - ⬜ Ao aprovar: marcar **Sprint 4 — Signature Components: APPROVED** e planejar a primeira implementação real da Home
 
 ### Próximos sprints ⬜
