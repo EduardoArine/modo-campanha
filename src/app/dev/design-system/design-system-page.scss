@@ -46,6 +46,119 @@
   border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
 }
 
+.area {
+  display: grid;
+  gap: space(6);
+  padding-bottom: space(8);
+}
+
+// Player Card na largura do Player Status (4 de 12 colunas no desktop).
+.span-player {
+  grid-column: 1 / -1;
+
+  @include mq(md) {
+    grid-column: span 4;
+  }
+
+  @include mq(lg) {
+    grid-column: span 4;
+  }
+}
+
+// MC-CART: 4 por linha (desktop), 2 (tablet), 1 (mobile).
+.cart-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: space(7) var(--mc-gutter);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mq(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.cart-item {
+  display: grid;
+  gap: space(4);
+  align-content: start;
+  justify-items: start;
+}
+
+// CRT: largo (8/12) + estreito (4/12) para mostrar a simplificação responsiva.
+.span-crt-wide,
+.span-crt-narrow {
+  grid-column: 1 / -1;
+}
+
+@include mq(lg) {
+  .span-crt-wide {
+    grid-column: span 8;
+  }
+
+  .span-crt-narrow {
+    grid-column: span 4;
+  }
+}
+
+.crt-demo {
+  display: grid;
+  gap: space(4);
+  align-content: start;
+}
+
+.demo-flag {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.crt-title {
+  margin: 0;
+  @include type(section-title);
+  color: var(--mc-text);
+}
+
+.crt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(3) space(6);
+  margin: 0;
+
+  dt {
+    @include type(label);
+    color: var(--mc-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    @include type(body-s);
+    color: var(--mc-text);
+  }
+}
+
+.crt-text {
+  margin: 0;
+  max-width: 60ch;
+  @include type(body);
+  color: var(--mc-text-secondary);
+}
+
+.crt-shot {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  background: var(--mc-bg);
+  border: var(--mc-border-width-default) dashed var(--mc-border-default);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
 .stack {
   display: grid;
   gap: space(7);

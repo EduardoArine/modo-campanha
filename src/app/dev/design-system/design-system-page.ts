@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { LocaleService } from '../../core/i18n';
@@ -14,12 +14,24 @@ import {
   McSectionHeader,
   McStatus,
 } from '../../shared/ui';
+import { McCart, McCartShell, McCrt, McPlayerCard, McProjectSummary } from '../../shared/signature';
 
 // Ferramenta interna (dev only). Textos da própria página não passam pelo dicionário;
 // os textos dos componentes de exemplo, sim (para revisar pt-BR e en).
 @Component({
   selector: 'app-design-system-page',
-  imports: [RouterLink, McAction, McChip, McIcon, McSectionHeader, McStatus],
+  imports: [
+    RouterLink,
+    McAction,
+    McCart,
+    McChip,
+    McCrt,
+    McIcon,
+    McPlayerCard,
+    McProjectSummary,
+    McSectionHeader,
+    McStatus,
+  ],
   templateUrl: './design-system-page.html',
   styleUrl: './design-system-page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,6 +39,12 @@ import {
 export class DesignSystemPage {
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
+
+  // Player Card: valores reais já aprovados (cargo, XP profissional), via dicionário.
+  protected readonly playerFields = computed(() => [
+    { label: this.ui().playerCard.classLabel, value: this.ui().hero.role },
+    { label: this.ui().playerCard.xpLabel, value: this.ui().profile.xp },
+  ]);
 
   protected readonly typeRoles = [
     { role: 'display-hero', sample: 'Modo Campanha' },
@@ -72,6 +90,53 @@ export class DesignSystemPage {
       tokens: ['border-subtle', 'border-default', 'border-accent', 'border-cool'],
     },
   ];
+
+  // Dados de DEMONSTRAÇÃO (fictícios, só para o showcase). Nunca usar como conteúdo real.
+  private readonly demo = {
+    'pt-BR': {
+      title: 'Projeto demo',
+      longTitle: 'Projeto de demonstração com nome longo',
+      type: 'PLATAFORMA DIGITAL',
+      description: 'Descrição curta de demonstração (conteúdo fictício).',
+      chips: ['Produto', 'Desenvolvimento', 'Terceiro chip (oculto)'],
+      flag: 'DEMO · CONTEÚDO FICTÍCIO',
+      role: 'Papel de exemplo',
+      stack: 'Angular · TypeScript · .NET',
+      text: 'Texto de demonstração para avaliar a leitura dentro da tela do CRT. O conteúdo real dos projetos entra na FASE 7.',
+      shot: 'SCREENSHOT (DEMO)',
+      labels: { type: 'TYPE', role: 'ROLE', stack: 'STACK' },
+    },
+    en: {
+      title: 'Demo project',
+      longTitle: 'Demonstration project with a long name',
+      type: 'DIGITAL PLATFORM',
+      description: 'Short demo description (fictional content).',
+      chips: ['Product', 'Development', 'Third chip (hidden)'],
+      flag: 'DEMO · FICTIONAL CONTENT',
+      role: 'Sample role',
+      stack: 'Angular · TypeScript · .NET',
+      text: 'Demo text to evaluate readability inside the CRT screen. Real project content arrives in PHASE 7.',
+      shot: 'SCREENSHOT (DEMO)',
+      labels: { type: 'TYPE', role: 'ROLE', stack: 'STACK' },
+    },
+  };
+  protected readonly d = computed(() => this.demo[this.locale.locale()]);
+
+  protected readonly carts = computed(() => {
+    const d = this.d();
+    const items: {
+      serial: string;
+      shell: McCartShell;
+      accent: 'warm' | 'cool' | 'special';
+      title: string;
+    }[] = [
+      { serial: 'ON-001', shell: 'dark', accent: 'warm', title: d.title },
+      { serial: 'ON-002', shell: 'light', accent: 'cool', title: d.title },
+      { serial: 'ON-003', shell: 'orange', accent: 'special', title: d.longTitle },
+      { serial: 'ON-004', shell: 'cool', accent: 'warm', title: d.title },
+    ];
+    return items;
+  });
 
   protected readonly iconNames = Object.keys(MC_ICONS) as McIconName[];
   protected readonly iconSizes: McIconSize[] = [16, 20, 24];
