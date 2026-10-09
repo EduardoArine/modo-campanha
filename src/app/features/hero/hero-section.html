@@ -13,12 +13,14 @@
         <a mcAction [routerLink]="locale.homePath()" fragment="player-status">
           {{ ui().cta.explore }} <mc-icon name="arrow-down" />
         </a>
-        @for (link of socialLinks; track link.kind) {
-          <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
-            {{ link.label }} <mc-icon name="external" />
-            <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
-          </a>
-        }
+        <div class="links">
+          @for (link of socialLinks; track link.kind) {
+            <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              {{ link.label }} <mc-icon name="external" />
+              <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+            </a>
+          }
+        </div>
       </div>
     </div>
 

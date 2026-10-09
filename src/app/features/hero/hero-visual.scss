@@ -6,27 +6,49 @@
   display: block;
 }
 
+// Tamanho da cena por breakpoint (01-D): mobile só CRT compacto; tablet menor que desktop.
+// O CRT precisa de ≥ 28rem de largura para manter a moldura física (container query do frame).
 .scene {
   position: relative;
   isolation: isolate;
   display: grid;
   justify-items: center;
   width: 100%;
-  max-width: 34rem;
+  max-width: 20rem;
   margin-inline: auto;
+
+  @include mq(md) {
+    max-width: 31rem;
+  }
+
+  @include mq(lg) {
+    max-width: 34rem;
+  }
 
   // Luz quente difusa atrás da cena (permitido só na área visual do Hero, D-024).
   &::before {
     content: '';
     position: absolute;
-    inset: -20% -30% -10%;
+    inset: -10% -15% -5%;
+
+    @include mq(md) {
+      inset: -20% -30% -10%;
+    }
     z-index: -1;
     background: radial-gradient(closest-side, var(--mc-glow-warm), transparent);
   }
 }
 
 .crt {
-  width: 88%;
+  width: 100%;
+
+  @include mq(md) {
+    width: 92%;
+  }
+
+  @include mq(lg) {
+    width: 88%;
+  }
 }
 
 .screen-message {
@@ -38,7 +60,13 @@
 
 // Console MC-01 (CSS local): corpo baixo sob o CRT, slot de cartucho, etiqueta, LED.
 .console {
-  display: flex;
+  // Mobile: sem console (prioridade é o conteúdo; o CRT compacto basta).
+  display: none;
+
+  @include mq(md) {
+    display: flex;
+  }
+
   align-items: center;
   gap: space(4);
   width: 100%;
@@ -52,6 +80,7 @@
 }
 
 .console-label {
+  white-space: nowrap;
   @include type(system);
   color: var(--mc-material-dark-ink);
 }

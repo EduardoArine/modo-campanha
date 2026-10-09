@@ -89,3 +89,10 @@
   gap: space(4) space(5);
   margin-top: space(6);
 }
+
+// GitHub e LinkedIn ficam juntos (no mobile, numa linha abaixo do CTA principal).
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(5);
+}
