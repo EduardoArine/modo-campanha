@@ -162,4 +162,9 @@
   .base {
     justify-content: space-between;
   }
+
+  // Sem label impresso, o LED continua à direita.
+  .controls {
+    margin-inline-start: auto;
+  }
 }
