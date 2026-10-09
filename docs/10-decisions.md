@@ -521,4 +521,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **não compartilham obrigatoriamente:** horizonte, prédios, checkpoints, composição, cenário.
 - **Produção:** MC-001 tem `publication: 'approved'` e artwork aprovado, então aparece em desenvolvimento, produção e no build do GitHub Pages. A política conservadora não mudou: projeto sem artwork aprovado continua fora da versão pública.
 - **MC-002:** sem mudança (fora do runtime, `review` em `docs/14`).
-- **Status:** **02-C — APPROVED** e **02-C.5 — APPROVED** (2026-10-09). 02-D não iniciado.
+- **Status:** **02-C — PROJECT INVENTORY FOUNDATION: APPROVED** e **02-C.5 — MC-001 PROJECT ARTWORK: APPROVED** (2026-10-09, `origin/main` `c204995`). Integração conferida contra o artwork aprovado.
+- **Freeze:** MC-001 (artwork, crop, escala, shell, accent, conteúdo, summary, tags), MC-CART e Project Inventory congelados. Composição aprovada: primeiro projeto no primeiro slot natural, alinhado à esquerda, sem centralização nem aumento por haver um só projeto, sem slots vazios nem placeholders; o espaço vazio à direita no desktop é aceito (a coleção cresce organicamente).
+- **Interação:** o MC-CART continua não clicável e não vira link para o GitHub. Semântica futura: MC-CART → seleção do projeto → CRT → Project Case; o GitHub será uma ação explícita dentro do case.
+- **Roadmap:** **02-D** (Inventory) absorvido por 02-C / 02-C.5; **02-E** (responsivo) absorvido por 02-B / 02-C / 02-C.5. Sem trabalho artificial para cumprir nomes de etapas antigas. Próxima etapa: **02-F — Integrated Slice Review** (sem feature nova). GitHub Pages: sem deploy até a aprovação do Slice 02 completo.
