@@ -14,7 +14,7 @@ export const PLAYER_PROFILE: PlayerProfile = {
   summary: {
     'pt-BR':
       'Construo produtos digitais conectando desenvolvimento, produto, IA e experiência — com mais de 10 anos em tecnologia e formação em Jogos Digitais.',
-    en: 'I build digital products connecting development, product, AI, and experience — backed by 10+ years in tech and a degree in Digital Games.',
+    en: 'I build digital products connecting development, product, AI, and experience — backed by 10+ years in tech and a degree in Digital Games Technology.',
   },
   motto: {
     'pt-BR': 'XP real, sem personagem.',
