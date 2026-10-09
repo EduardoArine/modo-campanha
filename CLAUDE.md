@@ -113,7 +113,7 @@ Deploy: `.github/workflows/deploy-pages.yml`, **disparo manual** (`workflow_disp
 
 - FASE 0 ✅ · FASE 1 ✅ (Concept 03 híbrido).
 - FASE 2 ✅: MC Design System Core (D-030) e **Sprint 4 — Signature Components: APPROVED** (D-036).
-- **Fase atual: FASE 3 — Core Experience.** Home Slice 01 (`docs/12-home-slice-01.md`, D-037): Hero desktop aprovado (D-038); implementado até **01-F**, aguardando aprovação do Slice 01 completo. **Não iniciar o Slice 02 sem aprovação.** Player Status: status só no Player Card (variante B); sem "Sobre a jornada" até haver texto aprovado. Âncoras: offset do header no `ViewportScroller` (`app.config.ts`).
+- **Fase atual: FASE 3 — Core Experience.** Home Slice 01 (`docs/12-home-slice-01.md`, D-037): **HOME SLICE 01 — APPROVED** (D-039). **Não modificar Header, Hero ou Player Status aprovados sem regressão justificada e relatada.** Slice 02 (Skill Tree + Project Inventory) em planejamento: não implementar sem aprovação. Player Status: STATUS só no Player Card, nunca no Section Header (D-039); sem "Sobre a jornada" até haver texto aprovado. Âncoras: offset do header no `ViewportScroller` (`app.config.ts`).
 - Conteúdo humano em `src/app/data/profile.data.ts` (`PlayerProfile`, `Localized`); o dicionário de UI guarda só rótulos. Header em `src/app/core/layout/site-header/`; Hero em `src/app/features/hero/` (cena em `hero-visual`, console MC-01 é CSS local).
 - Fases: 0 Foundation · 1 Visual Concept · 2 Design System · 3 Core Experience · 4 Career Content · 5 Game Feel · 6 Secrets · 7 Content · 8 Quality · 9 Release. Detalhes em `docs/09-roadmap.md`.
 

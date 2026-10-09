@@ -1,6 +1,6 @@
 # 12 — Home Slice 01 (plano)
 
-> Status: **01-C aprovado (D-038). Implementado até 01-F, aguardando aprovação visual do Slice 01 completo.**
+> Status: **HOME SLICE 01 — APPROVED (D-039).**
 > Escopo: **Header**, **Hero** e **entrada do Player Status**: o primeiro vertical slice real da página.
 > Objetivo: validar se o MC Design System e os Signature Components reproduzem o espírito do **Concept 03 — Approved as Hybrid** numa página real.
 
@@ -225,7 +225,7 @@ Cada sub-slice termina com build/test/typecheck/Prettier, contratos de contraste
 | 01-C | ✅ ◆ | cena: CRT + console MC-01 + luz quente; **APPROVED** |
 | 01-D | ✅ | tablet: cena 31rem com console; mobile: só CRT compacto, ações agrupadas |
 | 01-E | ✅ | Player Card 1–4 + dados 6–12; status só no card (variante B); sem "Sobre a jornada" |
-| 01-F | ✅ ◆ | revisão pt/en em 1440, 820 e 390; âncoras validadas com cliques reais; aguardando aprovação |
+| 01-F | ✅ ◆ | revisão pt/en em 1440, 820 e 390; âncoras validadas com cliques reais; **APPROVED** |
 
 Desvios do plano: ver D-037 (limite do CRT 34rem → 28rem; cabeçalho do Player Status como referência de ritmo; padding inferior do Hero). Bundle inicial de produção passou de ~209 kB para ~253 kB (69 kB transferidos), porque o header vive no shell do app; abaixo do orçamento de 500 kB.
 

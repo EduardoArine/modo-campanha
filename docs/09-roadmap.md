@@ -81,16 +81,19 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 ## FASE 3 — CORE EXPERIENCE 🟡 ← atual (planejamento)
 
-### Home Slice 01 🟡 (plano aprovado, D-037; `docs/12-home-slice-01.md`)
+### Home Slice 01 ✅ APPROVED (D-039; `docs/12-home-slice-01.md`)
 
 - ✅ 01-0 preparação · ✅ 01-A header · ✅ 01-B Hero content · ✅ 01-C Hero desktop (**APPROVED**)
-- ✅ 01-D tablet + mobile · ✅ 01-E Player Status · ✅ 01-F revisão (◆ aguardando aprovação do Slice 01)
+- ✅ 01-D tablet + mobile · ✅ 01-E Player Status · ✅ 01-F revisão
 
 Backlog:
 
 - ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
-- ⬜ Navegação mobile real (quando as seções de destino existirem)
+- ⬜ **Mobile Navigation**: definir quando as seções reais de destino existirem (a ausência atual não é o comportamento final)
+- ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
+
+### Home Slice 02 🟡 (planejamento; Skill Tree + Project Inventory)
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)

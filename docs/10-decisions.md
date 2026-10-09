@@ -405,4 +405,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Âncoras:** o `ViewportScroller` do Angular ignora `scroll-margin-top`; o offset do header fixo passou a ser configurado no `ViewportScroller` (altura real do header + 16 px). Validado com cliques reais: CTA, link repetido, navegação e troca PT/EN preservando o hash param a seção 81 px abaixo do topo (header 65 + 16). Scroll instantâneo (sem motion).
   - **Histórico Git:** o commit de refactor do CRT dependia do commit seguinte. Como os commits eram locais, a sequência foi recriada a partir de `origin/main`: o refactor ficou só com o rename no showcase e o uso do `PlayerProfile` foi para o commit do perfil. Árvore final idêntica à original; todos os commits intermediários compilam e passam nos testes. Backup local: `backup/slice01-pre-rewrite`.
 - **Desvios do plano:** LED do CRT compacto empurrado para a direita quando não há label (sem efeito no Project Viewer aprovado: diff 0 px); cena do tablet limitada a 31rem pela regra de 28rem do frame.
-- **Status:** Implementado até **01-F**, aguardando aprovação visual do Slice 01 completo. Slice 02 não iniciado.
+- **Status:** **Aprovado** (2026-10-09, ver D-039).
+
+## D-039 — HOME SLICE 01 — APPROVED
+
+- **Data:** 2026-10-09
+- **Decisão:** **HOME SLICE 01 — APPROVED.** Aprovados: Site Header; Hero desktop, tablet e mobile; CRT + console no desktop; CRT compacto no mobile; conteúdo do Hero pt-BR/en; hierarquia; ações; Player Status e sua versão responsiva; variante B de STATUS; comportamento das âncoras; responsividade geral.
+- **STATUS no Player Status (decisão final):** aparece **somente dentro do Player Card** (`STATUS · ● ATIVO`), nunca no Section Header. No card existe contexto (o rótulo STATUS); no cabeçalho o indicador fica semanticamente ambíguo e repete a mesma informação.
+- **Aceitos como estado provisório (não definitivo):** ausência de navegação mobile (definir quando as seções de destino existirem); "INSERT CARTRIDGE" na tela do CRT do Hero (a arte futura é um asset; a composição não muda para compensar a ausência dele); tamanho do Player Card no mobile (não reduzir por causa do placeholder).
+- **Backlog:** Mobile Navigation; Hero CRT Screen Artwork; revisar o equilíbrio visual do Player Card após a entrada da fotografia real (o placeholder tem peso visual diferente de uma foto).
+- **Status:** Aceita. Próximo: planejamento do **Home Slice 02** (Skill Tree + Project Inventory), sem implementação antes de aprovação.
