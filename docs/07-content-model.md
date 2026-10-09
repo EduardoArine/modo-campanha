@@ -130,6 +130,8 @@ interface CampaignCheckpoint {
 
 Dados: `src/app/data/campaign-log.data.ts` (vazio).
 
+> **Planejado (D-048, implementação na 03-A):** `CampaignCheckpoint` será substituído por `CampaignLogEntry { id; kind: 'origin' | 'checkpoint' | 'current'; period: { start; end? }; title; context?; summary; publication? }`, com textos `Localized`. Ver `docs/15-home-slice-03.md`.
+
 ## SocialLink
 
 `src/app/models/social-link.model.ts`

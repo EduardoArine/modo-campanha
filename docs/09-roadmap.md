@@ -79,7 +79,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 - ⬜ Monograma MC (símbolo, favicon, loading, selo)
 - ⬜ Pixel assets
 
-## FASE 3 — CORE EXPERIENCE 🟡 ← atual (planejamento)
+## FASE 3 — CORE EXPERIENCE ✅ (encerrada, D-048)
 
 ### Home Slice 01 ✅ APPROVED (D-039; `docs/12-home-slice-01.md`)
 
@@ -97,19 +97,29 @@ Backlog:
 
 - ✅ 02-0 content inventory (D-041, D-042) · ✅ 02-A Skill Loadout data · ✅ 02-B Skill Loadout visual (**APPROVED**) · ✅ 02-C Project model (**APPROVED**, D-044) · ✅ 02-C.5 MC-001 artwork (**System Horizon Refined APPROVED**, D-045, D-046) · ✅ 02-D Inventory (absorvido por 02-C / 02-C.5) · ✅ 02-E Responsive (absorvido por 02-B / 02-C / 02-C.5) · ✅ 02-F Integrated Slice Review (**APPROVED**, D-047)
 
+### Checklist da fase (estado real no encerramento)
+
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
-- ⬜ Header (logo, navegação, seletor de idioma)
-- ⬜ Wordmark MODO CAMPANHA + monograma MC em SVG (Pixelify não imita o logo do concept)
-- ⬜ Hero (H1 semântico = Eduardo Arine, D-026)
-- ⬜ Papel tipográfico `stat-value` para números reais (ex.: `10+`)
-- ⬜ Player Status
-- ⬜ Skill Tree (inclui decisão sobre estados das skills)
-- ⬜ Project Inventory
-- ⬜ CRT Viewer
+- ✅ Header (marca provisória, navegação, seletor de idioma) — Slice 01; nav só com destinos existentes (D-047)
+- ✅ Hero (H1 semântico = Eduardo Arine, D-026) — Slice 01
+- ✅ Player Status — Slice 01
+- ✅ Skill Loadout (antes "Skill Tree"; sem estados/graduação, D-040) — Slice 02
+- ✅ Project Inventory (MC-001 com artwork aprovado) — Slice 02
+- ➡️ CRT Project Viewer na experiência da Home → **FASE 5** (o componente visual `mc-crt-project-viewer` existe no design system desde a FASE 2)
+- ➡️ Wordmark MODO CAMPANHA + monograma MC em SVG → backlog do design system (não implementado; ver "Monograma MC" na FASE 2)
+- ➡️ Papel tipográfico `stat-value` → backlog do design system (não implementado; o XP usa texto, `docs/11`)
 
-## FASE 4 — CAREER CONTENT ⬜
+### Transferido para a FASE 5 (D-048)
 
-- ⬜ Campaign Log
+CRT Project Viewer completo na Home · seleção de cartucho · inserção no console · transição cartucho → CRT · motion relacionado.
+
+## FASE 4 — CAREER CONTENT 🟡 ← atual
+
+### Home Slice 03 — Campaign Log 🟡 (plano aprovado, D-048; `docs/15-home-slice-03.md`)
+
+- 🟡 03-0 content inventory (◆ aguardando histórico do Eduardo) · ⬜ 03-A model + data · ⬜ 03-B visual · ⬜ 03-C integrated review
+
+- 🟡 Campaign Log (Slice 03)
 - ⬜ Achievements
 - ⬜ Current Quest
 - ⬜ Side Quests
@@ -117,8 +127,11 @@ Backlog:
 
 ## FASE 5 — GAME FEEL ⬜
 
+- ⬜ CRT Project Viewer completo na experiência da Home (vindo da FASE 3, D-048)
+- ⬜ Seleção de cartucho (MC-CART → seleção → CRT → Project Case; GitHub como ação explícita no case)
+- ⬜ Transição cartucho → CRT
 - ⬜ Microinterações
-- ⬜ Cartridge insert (500–800 ms)
+- ⬜ Cartridge insert / inserção no console (500–800 ms)
 - ⬜ CRT boot
 - ⬜ Boot / Intro (≤ 1 s)
 - ⬜ Progress
@@ -164,22 +177,22 @@ Backlog:
 
 ## Decisões futuras em aberto
 
-| Tema                                   | Fase |
-| -------------------------------------- | ---- |
-| Efeito do Konami Code                  | 6    |
-| Localização do `???` / Secret Area     | 6    |
-| Estados das skills (uso e critérios)   | 3    |
-| Abordagem de animação                  | 5    |
-| ~~Paleta definitiva~~ ✅ D-014         | 1    |
-| ~~Fontes definitivas~~ ✅ D-022        | 2    |
-| ~~Player Card com foto~~ ✅ foto real, D-017 | 1 |
-| ~~Estratégia de i18n~~ ✅ D-020        | 2    |
-| Inventory: 2 cartuchos por linha no mobile? | 3/8 |
-| Composição final do Player Status (4/4/4 vs. 3/4/5) | 3 |
-| Preferência de idioma em localStorage (sem sobrepor a URL) | futuro |
-| Desenho do monograma MC                | 2    |
-| Campaign XP: regras reais de pontuação (product exploration) | futuro |
-| Itens de navegação do header           | 3    |
-| Páginas dedicadas por case (`/projects/:slug`) | 3+ |
-| Upgrade para Angular 22 (requer Node ≥ 22.22.3) | qualquer, antes da 3 |
-| Domínio próprio                        | 9    |
+| Tema                                                                                                                          | Fase     |
+| ----------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Efeito do Konami Code                                                                                                         | 6        |
+| Localização do `???` / Secret Area                                                                                            | 6        |
+| ~~Estados das skills~~ ✅ sem estados/graduação, D-040                                                                        | 3        |
+| Abordagem de animação                                                                                                         | 5        |
+| ~~Paleta definitiva~~ ✅ D-014                                                                                                | 1        |
+| ~~Fontes definitivas~~ ✅ D-022                                                                                               | 2        |
+| ~~Player Card com foto~~ ✅ foto real, D-017                                                                                  | 1        |
+| ~~Estratégia de i18n~~ ✅ D-020                                                                                               | 2        |
+| ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                                                                 | 3        |
+| ~~Composição final do Player Status~~ ✅ Slice 01, D-039                                                                      | 3        |
+| Preferência de idioma em localStorage (sem sobrepor a URL)                                                                    | futuro   |
+| Desenho do monograma MC                                                                                                       | 2        |
+| Campaign XP: regras reais de pontuação (product exploration)                                                                  | futuro   |
+| Itens de navegação do header: Sobre / Projetos hoje (D-047); Jornada volta com o Campaign Log, Contato com o Final Checkpoint | 4        |
+| Páginas dedicadas por case (`/projects/:slug`)                                                                                | 5+       |
+| Upgrade para Angular 22 (requer Node ≥ 22.22.3; pendente, D-009)                                                              | qualquer |
+| Domínio próprio                                                                                                               | 9        |

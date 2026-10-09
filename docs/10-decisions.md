@@ -537,3 +537,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Freeze:** Skill Loadout, Project Inventory, MC-001 e o artwork System Horizon Refined congelados.
 - **GitHub Pages:** código em estado publicável; a primeira publicação será decidida separadamente (sem deploy).
 - **Status:** **02-F — APPROVED.** Home Slice 02 encerrado.
+
+## D-048 — Home Slice 03 (Campaign Log): plano aprovado; FASE 3 encerrada
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **Plano do Home Slice 03 — Campaign Log aprovado** (`docs/15-home-slice-03.md`). Direção visual **A + C — Checkpoint Log Editorial**: linha vertical discreta, markers quadrados, coluna de período, system label, título, summary curto, context só quando útil e aprovado. Sem cards pesados, objeto físico, shadow, alternância esquerda/direita ou mapa de fases.
+  - **Modelo:** `CampaignLogKind = 'origin' | 'checkpoint' | 'current'` (semântica do dado). O rótulo temático é apresentação, no dicionário de UI: origin → NEW GAME; checkpoint → CHECKPOINT; current → CAMPANHA ATUAL / CURRENT CAMPAIGN. Não usar `'new-game'` no modelo. Estrutura simples: `CampaignLogPeriod { start; end? }` e `CampaignLogEntry { id; kind; period; title; context?; summary; publication? }` (publication só se a política de conteúdo exigir). Fora: technologies, highlights, results, location, tags, XP, levels, métricas, achievements artificiais.
+  - **Conteúdo:** fatos disponíveis registrados (formação em Tecnologia em Jogos Digitais pela **FATEC Americana**; 10+ anos em tecnologia; Desenvolvedor de Produtos Digitais; desenvolvimento + produto + IA + gamificação; campanha atual Comunidade On). **Sem dados para cronologia; nenhuma data inferida.** Eduardo fornece o histórico bruto; os 4–6 checkpoints são propostos a partir dele pelo princípio de seleção (mudança significativa sustentada pelo histórico). O Campaign Log é uma seleção: lacunas não são preenchidas. Entrada atual curta, sem descrever o projeto Comunidade On.
+  - **Fases:** **FASE 3 — Core Experience encerrada.** Itens que dependem da experiência de interação vão para a **FASE 5 — Game Feel**: CRT Project Viewer completo na experiência da Home, seleção de cartucho, inserção no console, transição cartucho → CRT e motion relacionado. O Slice 03 abre a **FASE 4 — Career Content**.
+  - Roadmap da FASE 3 corrigido conforme o estado real (itens concluídos marcados; pendentes não concluídos transferidos e indicados).
+- **Status:** Aceita. Etapa atual: **03-0 — Content inventory**, aguardando o histórico do Eduardo. 03-A/03-B/03-C não iniciados; nenhum runtime data do Campaign Log.

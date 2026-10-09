@@ -149,14 +149,13 @@ Substitui a timeline tradicional da carreira.
 CAMPAIGN LOG
 ```
 
-Checkpoints profissionais importantes, com tipos conceituais:
+Uma **seleção de 4–6 checkpoints** da trajetória (não um currículo), cada um registrando o que mudou. Tipos (semântica do dado → rótulo de sistema, D-048):
 
-- `NEW GAME`: início de uma jornada
-- `CHECKPOINT`: marco relevante
-- `SKILL UNLOCKED`: nova competência
-- `MAIN QUEST`: projeto/missão principal
+- `origin` → **NEW GAME**: origem da jornada
+- `checkpoint` → **CHECKPOINT**: mudança significativa
+- `current` → **CAMPANHA ATUAL / CURRENT CAMPAIGN**: momento atual (curto)
 
-Sem datas ou experiências inventadas. Estrutura pronta em `src/app/models/campaign-checkpoint.model.ts`.
+"SKILL UNLOCKED" e "MAIN QUEST" saíram (proibição de "unlocked"; Main Quest é seção própria). Sem datas ou experiências inventadas. Plano em `docs/15-home-slice-03.md`.
 
 ---
 
@@ -164,13 +163,13 @@ Sem datas ou experiências inventadas. Estrutura pronta em `src/app/models/campa
 
 Conquistas profissionais como **badges**. Exemplos conceituais (a validar):
 
-| Badge           | Fato                                                   |
-| --------------- | ------------------------------------------------------ |
-| 10 YEARS XP     | Mais de uma década em tecnologia.                      |
-| GAME DEV ORIGIN | Formação em Tecnologia em Jogos Digitais.              |
-| ZERO TO PRODUCT | Participação na construção de produtos desde as bases. |
-| AI ADOPTER      | IA aplicada ao fluxo de desenvolvimento.               |
-| PRODUCT THINKING| Tecnologia além do código.                             |
+| Badge            | Fato                                                   |
+| ---------------- | ------------------------------------------------------ |
+| 10 YEARS XP      | Mais de uma década em tecnologia.                      |
+| GAME DEV ORIGIN  | Formação em Tecnologia em Jogos Digitais.              |
+| ZERO TO PRODUCT  | Participação na construção de produtos desde as bases. |
+| AI ADOPTER       | IA aplicada ao fluxo de desenvolvimento.               |
+| PRODUCT THINKING | Tecnologia além do código.                             |
 
 Regras:
 
