@@ -1,6 +1,6 @@
 # 16 — Home Slice 04: Achievements
 
-> Status: **plano aprovado (D-051).** Direção **A + B — Achievement Record Panel** aprovada para exploração. **04-A e 04-B implementados com conteúdo MOCK, aguardando revisão visual.** 04-0 (fatos reais) pendente; 04-C não iniciado.
+> Status: **plano aprovado (D-051).** Direção **A + B — Achievement Record Panel** aprovada para exploração. **04-B — ACHIEVEMENTS VISUAL: APPROVED e FROZEN** (D-051, inclui 04-B.1). Estado: STRUCTURE / VISUAL approved · **EDITORIAL CONTENT pending factual review**. 04-0 (fatos reais) pendente; 04-C não iniciado.
 >
 > ⚠️ **ACHIEVEMENTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os itens em `src/app/data/achievements.data.development.ts` são textos genéricos e deliberadamente fictícios. Só existem em desenvolvimento e testes; a produção usa `achievements.data.ts` (vazio) e não renderiza a seção.
 
@@ -101,11 +101,11 @@ Sem impacto: Achievements não tem item de navegação.
 
 ## 13. Etapas
 
-| Etapa                   | Conteúdo                                                                       | Parada                  |
-| ----------------------- | ------------------------------------------------------------------------------ | ----------------------- |
-| **04-0 Content intake** | fatos novos do Eduardo → critérios → 2–5 achievements com evidência            | ◆ aprovação do conteúdo |
-| **04-A Model + data**   | `Achievement`, regra ≥ 2, dados vazios em produção, MOCK em dev, guard, testes | ✅ (MOCK)               |
-| **04-B Visual**         | Record Panel 1440 / 820 / 390, pt-BR e en; ritmo Log → Achievements            | ◆ revisão visual        |
-| **04-C Editorial**      | MOCK → fatos aprovados; liberação para produção                                | ◆ aprovação final       |
+| Etapa                   | Conteúdo                                                                       | Parada                   |
+| ----------------------- | ------------------------------------------------------------------------------ | ------------------------ |
+| **04-0 Content intake** | fatos novos do Eduardo → critérios → 2–5 achievements com evidência            | ◆ aprovação do conteúdo  |
+| **04-A Model + data**   | `Achievement`, regra ≥ 2, dados vazios em produção, MOCK em dev, guard, testes | ✅ (MOCK)                |
+| **04-B Visual**         | Record Panel 1440 / 820 / 390, pt-BR e en; ritmo Log → Achievements            | ✅ **APPROVED / FROZEN** |
+| **04-C Editorial**      | MOCK → fatos aprovados; liberação para produção                                | ◆ aprovação final        |
 
 A 04-C não bloqueia as próximas partes da Home.

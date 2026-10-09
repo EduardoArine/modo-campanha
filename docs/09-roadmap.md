@@ -124,7 +124,7 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 ### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
 
-- 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · 🟡 04-B visual (MOCK, ◆ aguardando revisão) · ⬜ 04-C editorial
+- 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · ✅ 04-B visual (**APPROVED / FROZEN**, D-051) · ⬜ 04-C editorial (pendente de fatos reais; não bloqueia o resto da Home)
 - ⬜ Current Quest
 - ⬜ Side Quests
 - ⬜ Final Checkpoint
