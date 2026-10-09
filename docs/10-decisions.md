@@ -473,3 +473,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Breakpoint `xl` (1200 px) aprovado** como token do sistema; motivação: os 4 módulos do Skill Loadout só ficam confortáveis a partir de ~1200 px. Componentes aprovados não adotam `xl` sem necessidade própria.
 - **Ritmo:** o respiro maior entre Player Status e Skill Loadout no desktop está aprovado; não reduzir só para ocupar menos altura.
 - **Status:** **HOME SLICE 02-B — SKILL LOADOUT: APPROVED** (2026-10-09). Skill Loadout **congelado** salvo regressão: colunas (4 / 2×2 / 1), tipografia, marcadores, spacing, códigos, cores e section header.
+
+## D-044 — Project model + Inventory foundation (Home Slice 02-C)
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - `Project` reescrito conforme D-042 (ver `docs/07`): serial `MC-NNN`, `origin` separado, `publication` opcional e conservadora, conteúdo `Localized`, até 2 `TagId` (garantido pelo tipo), `cartridge: { shell, accent, artwork? }` embutido. Campos legados removidos.
+  - Catálogo `TAGS` (`src/app/data/tags.data.ts`): product (warm), gamification (cool), game-design (warm), prototyping (cool).
+  - Filtros puros: `isPublished` / `publishedProjects` (só `approved`) e `inventoryProjects(allowArtworkPlaceholder)` (fora de dev, exige artwork aprovado).
+  - Dados: MC-001 Modo Campanha (`approved`, orange/special, link só do repositório). **O runtime contém somente projetos aprovados**: MC-002 Paco (`review`) fica documentado em `docs/14` e entra no runtime só quando aprovado. Filtro testado com fixtures neutros.
+  - Inventory: `mc-section-header` sem subtítulo; `ul role="list"` com MC-CART + Project Summary por item (o item tem `max-width: 22rem`, a mesma medida do MC-CART, para o resumo não ficar mais largo que o cartucho); colunas 1 / 2 (≥ 768) / 4 (≥ 1200, `xl`), itens nos primeiros slots naturais, sem slots vazios. Sem CRT, sem "INSERT CARTRIDGE", sem link no cartucho. Placeholder feature `features/crt-project-viewer` removido (o signature `mc-crt-project-viewer` continua no design system).
+- **Produção:** sem artwork, o MC-001 não aparece em produção (o Inventory ficaria só com o header). Sem workaround temporário: **a 02-C não é enviada sozinha**; 02-C + 02-C.5 (artwork aprovado) sobem juntos, e o `origin/main` nunca tem o Inventory vazio.
+- **Learnings en do MC-001 aprovados:** "Validate typography at actual usage sizes." · "Separate the visual language of digital interfaces from that of physical objects." Learning candidato do case completo registrado em `docs/14` (fora do runtime).
+- **Status:** **02-C APPROVED** (2026-10-09) com os refinamentos acima; commits locais até o 02-C.5. 02-D não iniciado.

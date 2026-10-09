@@ -21,16 +21,16 @@
 | Technologies | Angular · TypeScript · SCSS · Vitest · GitHub Actions / Pages | |
 | Tags | Produto | Product |
 | | Gamificação | Gamification |
-| Learnings (aprovados) | Validar tipografia no tamanho real de uso. | Validate typography at its real usage size. |
-| | Separar linguagem de interface digital da linguagem de objetos físicos. | Separate digital interface language from physical object language. |
-| Learning candidato (case completo) | Construir e validar o Design System antes da Home reduziu retrabalho e ajudou a preservar a direção do concept na implementação. | Building and validating the Design System before the Home reduced rework and helped preserve the concept's direction during implementation. |
+| Learnings (aprovados) | Validar tipografia no tamanho real de uso. | Validate typography at actual usage sizes. |
+| | Separar linguagem de interface digital da linguagem de objetos físicos. | Separate the visual language of digital interfaces from that of physical objects. |
+| Learning candidato (case completo) | Construir e validar o Design System antes da Home reduziu retrabalho e ajudou a preservar a direção do concept na implementação. | Building and validating the Design System before the Home reduced rework and helped preserve the concept direction during implementation. |
 | Public links | Repositório: `https://github.com/EduardoArine/modo-campanha` | idem |
 | Site link | **não mostrar** enquanto o GitHub Pages não estiver publicado | |
 | Cartucho | shell `orange` · accent `special` | |
 | Artwork | 16:10, mín. 640 × 400, sem texto embutido, universo Modo Campanha, sem repetir o nome. **Checkpoint 02-C.5** antes do primeiro Inventory público; "PROJECT ARTWORK" não vai para a versão pública final | |
 | Restrictions | nenhuma conhecida; nenhum link de site enquanto ele não existir | |
 
-Traduções en dos learnings e do learning candidato: **rascunho** (as versões pt-BR foram as aprovadas; confirmar o inglês).
+Traduções en dos learnings e do learning candidato: **aprovadas** (2026-10-09). O learning candidato fica fora do runtime até o case completo.
 
 Campos de case ainda **não aprovados** (ficam fora do data até o case completo): contexto e contribuição (rascunhos da versão anterior desta ficha).
 

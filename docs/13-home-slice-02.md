@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). Etapa atual: **02-C — Project model + Inventory foundation**. Nenhuma implementação.
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044), local até o 02-C.5 (enviados juntos). Etapa atual: **02-C.5 — MC-001 Project Artwork** (direções A/B/C em avaliação). 02-D não iniciado.
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 
@@ -69,7 +69,7 @@ O Skill Loadout é visualmente **mais silencioso** que o Project Inventory: sem 
 
 ### 2.2 Publicação: conservadora por padrão
 
-Um projeto **só aparece publicamente com `publication: 'approved'` explícito.** Ausência do campo, `draft`, `review` ou `blocked` → **não renderiza**. A regra terá testes automatizados quando o modelo for implementado (02-C).
+Um projeto **só aparece publicamente com `publication: 'approved'` explícito.** Ausência do campo, `draft`, `review` ou `blocked` → **não renderiza**. A regra tem testes automatizados (`projects.data.spec.ts`, D-044).
 
 ### 2.3 Classificação inicial
 
