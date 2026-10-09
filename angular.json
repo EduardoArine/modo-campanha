@@ -62,6 +62,10 @@
                 {
                   "replace": "src/app/data/campaign-log.data.ts",
                   "with": "src/app/data/campaign-log.data.development.ts"
+                },
+                {
+                  "replace": "src/app/data/achievements.data.ts",
+                  "with": "src/app/data/achievements.data.development.ts"
                 }
               ]
             }

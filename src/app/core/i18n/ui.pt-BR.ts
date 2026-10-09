@@ -74,6 +74,10 @@ export const UI_PT_BR = {
     present: 'ATUAL',
     since: 'DESDE',
   },
+  achievements: {
+    code: 'ACH',
+    evidence: 'EVIDÊNCIA',
+  },
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',

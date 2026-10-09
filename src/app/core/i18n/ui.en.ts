@@ -75,6 +75,10 @@ export const UI_EN: UiDictionary = {
     present: 'PRESENT',
     since: 'SINCE',
   },
+  achievements: {
+    code: 'ACH',
+    evidence: 'EVIDENCE',
+  },
   crt: {
     regionLabel: 'Project viewer',
     empty: 'INSERT CARTRIDGE',
