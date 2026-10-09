@@ -70,7 +70,7 @@ Regras:
 - **Sem campos editoriais:** nada de aprovador, revisão ou confidencialidade no runtime (repositório público, D-042).
 - **Removidos:** `ProjectType`, `ProjectStatus`/`status`, `featured`, `subtitle`, `summary` (→ `description`), `stack` (→ `technologies`), `mission`, `responsibilities`, `challenges`, `solution`, `results`, `screenshots`, link `video`, entidade `Cartridge` com `label`/`art`/`color`/`serial` (serial subiu para o projeto). Campos de case voltam só quando o CRT/case existir e houver conteúdo aprovado.
 
-Dados: `src/app/data/projects.data.ts`: **MC-001 Modo Campanha** (`approved`, orange/special, sem artwork até 02-C.5). **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (MC-002 Paco) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
+Dados: `src/app/data/projects.data.ts`: **MC-001 Modo Campanha** (`approved`, orange/special, artwork `assets/cartridges/mc-001-modo-campanha.png`, D-046). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (MC-002 Paco) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
 
 ## Skill / SkillGroup (Skill Loadout, D-042)
 

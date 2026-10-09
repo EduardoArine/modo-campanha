@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044), local até o 02-C.5 (enviados juntos). Etapa atual: **02-C.5 — MC-001 Project Artwork**: direção **B — System Horizon APPROVED** (D-045), refinamento **B2** em revisão visual; nada integrado ao app. 02-D não iniciado.
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044). 02-C.5 **APPROVED** (D-045, D-046): artwork System Horizon Refined integrado ao MC-001; Inventory público com o MC-001. Próxima etapa: **02-D** (aguardando autorização).
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 

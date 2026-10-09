@@ -27,7 +27,8 @@
 | Public links | Repositório: `https://github.com/EduardoArine/modo-campanha` | idem |
 | Site link | **não mostrar** enquanto o GitHub Pages não estiver publicado | |
 | Cartucho | shell `orange` · accent `special` | |
-| Artwork | 16:10, mín. 640 × 400, sem texto embutido, universo Modo Campanha, sem repetir o nome. **Checkpoint 02-C.5** antes do primeiro Inventory público; "PROJECT ARTWORK" não vai para a versão pública final | |
+| Artwork | **System Horizon Refined (aprovado, D-046)**: `assets/cartridges/mc-001-modo-campanha.png`, 640 × 400 (16:10) | |
+| Artwork alt | Paisagem em pixel art de um sistema em construção, com módulos crescentes e um caminho segmentado levando a uma passagem iluminada. | Pixel-art landscape of a system under construction, with growing modules and a segmented path leading to an illuminated gateway. |
 | Restrictions | nenhuma conhecida; nenhum link de site enquanto ele não existir | |
 
 Traduções en dos learnings e do learning candidato: **aprovadas** (2026-10-09). O learning candidato fica fora do runtime até o case completo.
@@ -128,4 +129,4 @@ Ideia futura (não implementar): **Visto em / Seen in**, skill → serial de pro
 | Tags | catálogo tipado (`TagDefinition`: id, label, tone); projeto guarda até 2 ids |
 | Skills | grupos `build/product/ai/game-dna`; `state` removido; nomes `Localized`; só aprovadas no runtime |
 | Seção `skill-tree` | renomear para `skill-loadout` no 02-B |
-| MC-001 artwork | checkpoint 02-C.5; sem placeholder no Inventory público |
+| MC-001 artwork | aprovado e integrado (D-046); sem placeholder no Inventory público |

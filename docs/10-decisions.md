@@ -504,4 +504,21 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - pixel language controlada;
   - sem texto embutido, sem logos, sem UI literal.
 - **Paco (MC-002):** sem artwork agora; poderá ter linguagem de cenário/gameplay própria. O compartilhado é a gramática visual, não o conteúdo da cena.
-- **Status:** B2 em revisão visual. Nada integrado ao app (sem artwork em `projects.data.ts`, sem asset em `public/assets`).
+- **Status:** direção aprovada; B2 aprovada como artwork final (D-046).
+
+## D-046 — MC-001 artwork final: System Horizon Refined (Home Slice 02-C.5)
+
+- **Data:** 2026-10-09
+- **Decisão:** **MC-001 ARTWORK — SYSTEM HORIZON REFINED: APPROVED.** A B2 é o artwork final, mantida exatamente como apresentada (estruturas, proporção, céu, horizonte, caminho segmentado, três marcos, passagem iluminada, módulo suspenso, distribuição de cores e **espaço negativo**, que faz parte da composição). Sem B3; não adicionar detalhes só para ocupar espaço.
+- **Asset:** `public/assets/cartridges/mc-001-modo-campanha.png`: grade de 160 × 100 px exportada em 640 × 400 (16:10), cada pixel ampliado 4× sem interpolação; 2,8 KB, sem otimização adicional necessária. Nome estável, sem rótulo de exploração. No MC-CART, a arte ocupa 210 px de largura no desktop (4 colunas) e 280 px até 1199 px; o `object-fit: cover` não corta porque a proporção é a mesma do slot.
+- **Alt (no modelo, `cartridge.artwork.alt`):**
+  - pt-BR: "Paisagem em pixel art de um sistema em construção, com módulos crescentes e um caminho segmentado levando a uma passagem iluminada."
+  - en: "Pixel-art landscape of a system under construction, with growing modules and a segmented path leading to an illuminated gateway."
+- **Acessibilidade:** o MC-CART já é **um único objeto `role="img"`** com nome acessível ("MC-CART MC-001: Modo Campanha, PORTFÓLIO INTERATIVO"). A imagem interna é **decorativa** (`alt=""`, filho apresentacional do `role="img"`), para não haver dois anúncios do mesmo cartucho. O alt localizado fica guardado para usos em que o artwork for apresentado sozinho (ex.: case/CRT). Nenhuma mudança no `mc-cart`.
+- **Identidade da coleção:** a artwork individual não precisa carregar sozinha toda a identidade do Modo Campanha. A coleção é formada por **MC-CART + shell + serial + artwork + label/conteúdo do projeto**. A artwork representa o universo do projeto; não repetir artificialmente os mesmos símbolos em todos os projetos.
+- **Gramática da família de artworks (inicial, refina D-045):**
+  - **compartilham:** cena própria do projeto; transformação, progressão ou construção quando pertinente; poucos sinais de sistema; pixel language controlada; paleta coerente com o MC Design System; leitura forte em tamanho pequeno; nenhum texto ou logo embutido;
+  - **não compartilham obrigatoriamente:** horizonte, prédios, checkpoints, composição, cenário.
+- **Produção:** MC-001 tem `publication: 'approved'` e artwork aprovado, então aparece em desenvolvimento, produção e no build do GitHub Pages. A política conservadora não mudou: projeto sem artwork aprovado continua fora da versão pública.
+- **MC-002:** sem mudança (fora do runtime, `review` em `docs/14`).
+- **Status:** **02-C — APPROVED** e **02-C.5 — APPROVED** (2026-10-09). 02-D não iniciado.
