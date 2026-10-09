@@ -1,19 +1,20 @@
-export type SkillGroupId = 'engineering' | 'product' | 'ai' | 'game-design';
+import { Localized } from '../core/i18n';
+
+/** Grupos do Skill Loadout (D-040, D-042). */
+export type SkillGroupId = 'build' | 'product' | 'ai' | 'game-dna';
 
 /**
- * Estado da skill na árvore. Nunca usar percentuais de proficiência (docs/10-decisions.md).
- * Uso dos estados ainda a definir na FASE 3.
+ * Skill publicada no Skill Loadout. Sem percentual, rating, level, estrelas,
+ * rótulo de proficiência ou XP individual (D-040). O runtime só recebe skills aprovadas;
+ * a autoria (candidate/approved) vive em docs/14-content-inventory.md (D-042).
  */
-export type SkillState = 'unlocked' | 'evolving' | 'core' | 'exploring';
-
 export interface Skill {
   id: string;
-  name: string;
-  state?: SkillState;
+  name: Localized;
 }
 
 export interface SkillGroup {
   id: SkillGroupId;
-  title: string;
-  skills: Skill[];
+  title: Localized;
+  skills: readonly Skill[];
 }
