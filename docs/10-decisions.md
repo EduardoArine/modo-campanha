@@ -415,3 +415,23 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Aceitos como estado provisório (não definitivo):** ausência de navegação mobile (definir quando as seções de destino existirem); "INSERT CARTRIDGE" na tela do CRT do Hero (a arte futura é um asset; a composição não muda para compensar a ausência dele); tamanho do Player Card no mobile (não reduzir por causa do placeholder).
 - **Backlog:** Mobile Navigation; Hero CRT Screen Artwork; revisar o equilíbrio visual do Player Card após a entrada da fotografia real (o placeholder tem peso visual diferente de uma foto).
 - **Status:** Aceita. Próximo: planejamento do **Home Slice 02** (Skill Tree + Project Inventory), sem implementação antes de aprovação.
+
+## D-040 — Home Slice 02: plano aprovado com refinamentos
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **SKILL TREE → SKILL LOADOUT.** "Tree" sugere progressão, níveis, unlocks e graduação; "Loadout" representa as capacidades, conhecimentos e ferramentas que Eduardo leva para os projetos. A navegação pública pode usar "Skills".
+  - **Visual:** alternativa A (Loadout) aprovada: 4 áreas modulares abertas (code · title · divider · items), não necessariamente cards fechados; visualmente **mais silencioso que o Inventory** ("Loadout informa. Inventory impressiona.").
+  - **Grupos aprovados:** BUILD · PRODUCT · AI · GAME DNA. Itens: lista candidata, validados um a um.
+  - **Regra de publicação de skill:** só publica se Eduardo puder explicar o que significa, como usa e dar ao menos um exemplo real; não validado = `candidate`, não aparece no site.
+  - **Proficiência continua proibida:** porcentagem, estrelas, levels, XP por skill, beginner/intermediate/expert, unlocked/evolving/core/exploring, qualquer graduação subjetiva.
+  - **Evidência futura:** "Visto em / Seen in" ligando skills a cartuchos reais (não implementar ainda).
+  - **Classificação inicial:** MC-001 Modo Campanha = PUBLIC / APPROVED; MC-002 Paco = PUBLIC / OWNER REVIEW (condicionado a direitos, ausência de restrição de colaborador/parceiro e materiais já públicos; nem todo concept/lore/material é publicável); Comunidade On, ON Learning e Mural do Parceiro = INTERNAL / NEEDS EXPLICIT APPROVAL; Dashboard Operacional = INTERNAL / HIGH REVIEW. Nenhum interno publicado.
+  - **Aprovação interna:** não há evidência de qual cargo/pessoa aprova na On Tech & Co; **nenhum aprovador é presumido**. Cada case interno terá um pacote exato (texto, assets, dados, nomes, links, tecnologias) para quem tiver autoridade sobre o produto/material; arquitetura, integrações, métricas, operação, segurança e parceiro/cliente pedem revisão específica. O modelo guarda quem aprovou e quando.
+  - **Serial global:** MC-001, MC-002, MC-003… ("MC" = coleção do Modo Campanha). **Substitui** a proposta `ON-` (D-032 citava `ON-001` como exemplo do concept). Origem num campo separado (`origin: personal | on-tech | other`). Serial não indica propriedade, empresa nem importância.
+  - **Publicação conservadora:** um projeto só aparece com `publication: 'approved'` explícito; ausência, `draft`, `review` ou `blocked` não renderizam. Testes obrigatórios quando o modelo existir.
+  - **Inventory v1 sem slots falsos:** mostra só os aprovados; até 4 / 2 / 1 por linha.
+  - **02-0 começa só com MC-001 e MC-002**, com fichas completas para aprovação antes de qualquer cartucho.
+  - **Roteamento do case:** pendente entre `#project-<slug>` e `/projects/<slug>`, com preferência arquitetural futura por rota própria; decidir com o primeiro case real.
+  - **Artwork:** 16:10, mínimo 640 × 400, sem texto obrigatório, sem screenshots internos sem aprovação; produção em etapa própria.
+- **Status:** Aceita. Plano em `docs/13-home-slice-02.md`; etapa atual 02-0 (content inventory).

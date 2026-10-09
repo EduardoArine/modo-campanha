@@ -93,9 +93,9 @@ Backlog:
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
 
-### Home Slice 02 🟡 (planejamento aguardando aprovação; `docs/13-home-slice-02.md`)
+### Home Slice 02 🟡 (plano aprovado, D-040; `docs/13-home-slice-02.md`)
 
-- ⬜ 02-0 content inventory · 02-A/B Skill Tree · 02-C/D/E Project Inventory · 02-F revisão
+- 🟡 02-0 content inventory (MC-001, MC-002, Skill Loadout) · ⬜ 02-A/B Skill Loadout · ⬜ 02-C/D/E Project Inventory · ⬜ 02-F revisão
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)
