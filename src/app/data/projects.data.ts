@@ -36,8 +36,20 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['product', 'gamification'],
-    // Artwork: checkpoint 02-C.5. Sem artwork, o cartucho só aparece em desenvolvimento.
-    cartridge: { shell: 'orange', accent: 'special' },
+    // Artwork aprovado (02-C.5, D-046): System Horizon, pixel art 160 × 100 exportada em 640 × 400.
+    // O alt fica guardado para usos independentes; dentro do MC-CART a arte é decorativa.
+    cartridge: {
+      shell: 'orange',
+      accent: 'special',
+      artwork: {
+        src: 'assets/cartridges/mc-001-modo-campanha.png',
+        alt: {
+          'pt-BR':
+            'Paisagem em pixel art de um sistema em construção, com módulos crescentes e um caminho segmentado levando a uma passagem iluminada.',
+          en: 'Pixel-art landscape of a system under construction, with growing modules and a segmented path leading to an illuminated gateway.',
+        },
+      },
+    },
     links: [
       {
         kind: 'repository',

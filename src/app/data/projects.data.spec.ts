@@ -67,7 +67,8 @@ describe('PROJECTS (runtime data)', () => {
   it('configures each cartridge with an allowed shell and accent', () => {
     expect(PROJECTS.every((p) => SHELLS.includes(p.cartridge.shell))).toBe(true);
     expect(PROJECTS.every((p) => ACCENTS.includes(p.cartridge.accent))).toBe(true);
-    expect(PROJECTS[0].cartridge).toEqual({ shell: 'orange', accent: 'special' });
+    expect(PROJECTS[0].cartridge.shell).toBe('orange');
+    expect(PROJECTS[0].cartridge.accent).toBe('special');
   });
 
   it('has bilingual content for every human text', () => {
@@ -86,6 +87,18 @@ describe('PROJECTS (runtime data)', () => {
       expect(keys.filter((key) => LEGACY_FIELDS.includes(key))).toEqual([]);
     }
     expect(JSON.stringify(PROJECTS)).not.toMatch(/approver|aprovador|confidencial|internal/i);
+  });
+
+  it('gives MC-001 its approved artwork with a bilingual alt', () => {
+    const artwork = PROJECTS[0].cartridge.artwork!;
+
+    expect(artwork.src).toBe('assets/cartridges/mc-001-modo-campanha.png');
+    expect(artwork.alt['pt-BR']).toMatch(/^Paisagem em pixel art de um sistema em construção/);
+    expect(artwork.alt.en).toMatch(/^Pixel-art landscape of a system under construction/);
+  });
+
+  it('publishes MC-001 in production (approved + approved artwork)', () => {
+    expect(inventoryProjects(false).map((p) => p.serial)).toEqual(['MC-001']);
   });
 
   it('links MC-001 only to its repository', () => {

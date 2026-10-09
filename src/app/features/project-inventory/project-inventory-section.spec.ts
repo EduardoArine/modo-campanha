@@ -41,10 +41,14 @@ describe('ProjectInventorySection', () => {
     expect(el.textContent).not.toMatch(/MC-002|Paco/);
   });
 
-  it('shows the artwork placeholder (tests run in dev mode)', async () => {
-    const el = await renderAt('/');
+  it('shows the approved artwork as decoration inside the single cartridge image', async () => {
+    const cart = (await renderAt('/')).querySelector('mc-cart')!;
+    const img = cart.querySelector('img')!;
 
-    expect(el.querySelector('.art-placeholder')?.textContent).toBe('PROJECT ARTWORK');
+    expect(cart.getAttribute('role')).toBe('img');
+    expect(img.getAttribute('src')).toBe('assets/cartridges/mc-001-modo-campanha.png');
+    expect(img.getAttribute('alt')).toBe('');
+    expect(cart.textContent).not.toContain('PROJECT ARTWORK');
   });
 
   it('keeps the cartridge non-interactive', async () => {
