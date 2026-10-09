@@ -25,11 +25,11 @@ export class SiteHeader {
 
   protected readonly navItems = computed(() => {
     const nav = this.ui().nav;
+    // Só destinos que existem na Home. Jornada (#campaign-log) e Contato (#final-checkpoint)
+    // voltam quando essas seções forem construídas (rótulos mantidos no dicionário).
     return [
       { label: nav.about, fragment: 'player-status' },
       { label: nav.projects, fragment: 'project-inventory' },
-      { label: nav.journey, fragment: 'campaign-log' },
-      { label: nav.contact, fragment: 'final-checkpoint' },
     ];
   });
 

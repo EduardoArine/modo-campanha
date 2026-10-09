@@ -22,8 +22,11 @@ describe('SiteHeader', () => {
     expect(el.querySelector('.brand')?.getAttribute('aria-label')).toBe(
       'Modo Campanha, voltar ao topo',
     );
-    expect(navLinks).toEqual(['Sobre', 'Projetos', 'Jornada', 'Contato']);
-    expect(el.querySelector('nav a')?.getAttribute('href')).toBe('/#player-status');
+    expect(navLinks).toEqual(['Sobre', 'Projetos']);
+    expect(Array.from(el.querySelectorAll('nav a')).map((a) => a.getAttribute('href'))).toEqual([
+      '/#player-status',
+      '/#project-inventory',
+    ]);
     expect(el.textContent).not.toMatch(/ONLINE|BUILD|VERSION|MC-01/);
   });
 
@@ -32,7 +35,7 @@ describe('SiteHeader', () => {
     const navLinks = Array.from(el.querySelectorAll('nav a')).map((a) => a.textContent?.trim());
     const current = el.querySelector('.languages [aria-current="true"]')!;
 
-    expect(navLinks).toEqual(['About', 'Projects', 'Journey', 'Contact']);
+    expect(navLinks).toEqual(['About', 'Projects']);
     expect(el.querySelector('nav a')?.getAttribute('href')).toBe('/en#player-status');
     expect(current.getAttribute('lang')).toBe('en');
     expect(current.textContent).toContain('EN');

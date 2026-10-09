@@ -6,7 +6,7 @@ import { routes } from '../../app.routes';
 import { HomePage } from './home-page';
 
 describe('HomePage', () => {
-  it('should render every onepage section in order', async () => {
+  it('should render only the built sections, in order', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const fixture = TestBed.createComponent(HomePage);
     await fixture.whenStable();
@@ -14,17 +14,21 @@ describe('HomePage', () => {
       (fixture.nativeElement as HTMLElement).querySelectorAll('main > * > section'),
     ).map((section) => section.id);
 
-    expect(ids).toEqual([
-      'hero',
-      'player-status',
-      'skill-loadout',
-      'project-inventory',
-      'campaign-log',
-      'achievements',
-      'current-quest',
-      'side-quests',
-      'final-checkpoint',
-    ]);
+    expect(ids).toEqual(['hero', 'player-status', 'skill-loadout', 'project-inventory']);
+  });
+
+  it('should end after the Project Inventory, with no raw placeholder titles', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    const fixture = TestBed.createComponent(HomePage);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+
+    expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
+      'APP-PROJECT-INVENTORY-SECTION',
+    );
+    expect(el.textContent).not.toMatch(
+      /CAMPAIGN LOG|ACHIEVEMENTS|CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/,
+    );
   });
 
   it('should render texts in the locale of the URL', async () => {
