@@ -74,23 +74,16 @@ Inclui espaço para um **pequeno texto humano de apresentação**, escrito em pr
 
 ---
 
-## Skill Tree
+## Skill Loadout (antes "Skill Tree", D-040)
 
-Competências representadas como uma árvore de habilidades, em quatro grupos iniciais:
+As capacidades, conhecimentos e ferramentas que Eduardo leva para os projetos: **quatro módulos de capacidades, não quatro cards**. "Tree" foi abandonado porque sugeria progressão, níveis e unlocks.
 
-- **ENGINEERING**: Angular, TypeScript, C#, .NET / ASP.NET Core, APIs REST, PostgreSQL, SQL Server, Docker, Git
-- **PRODUCT**: produtos digitais, UX, interfaces, regras de negócio, jornadas, experiência do usuário
-- **AI**: IA aplicada ao desenvolvimento, AI-assisted development, prompting, análise, documentação, automação
-- **GAME DESIGN**: gamificação, progressão, feedback, recompensa, engagement loops, experiência inspirada por games
-
-Sem porcentagens. Estados possíveis no futuro (a definir):
-
-- `unlocked`: habilidade adquirida
-- `evolving`: em evolução ativa
-- `core`: habilidade central
-- `exploring`: em exploração / estudo
-
-Dados já estruturados em `src/app/data/skills.data.ts`.
+- Grupos: **BUILD · PRODUCT · AI · GAME DNA** (códigos decorativos BLD · PRD · AI · GDN, sem numeração).
+- Conteúdo: Skill Loadout v1 aprovado (D-041), bilíngue, em `src/app/data/skills.data.ts` (`SKILL_LOADOUT`).
+- **Sem nenhuma graduação:** porcentagem, barras, estrelas, levels, XP por skill, rótulos de proficiência, ranking ou os antigos estados unlocked/evolving/core/exploring.
+- Itens são conteúdo informativo (texto em lista), nunca chips, botões ou filtros.
+- "Loadout informa. Inventory impressiona.": a seção é mais silenciosa que o Project Inventory.
+- Futuro: "Visto em / Seen in" ligando skills a cartuchos reais.
 
 ---
 

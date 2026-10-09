@@ -203,6 +203,7 @@ Regras: mínimo absoluto 12 px; corpo ≤ 65ch; tracking positivo só em caixa a
 | `--mc-page-margin`    | `clamp(16px, 4vw, 48px)` (via `--mc-space-4`/`--mc-space-7`) |
 | `--mc-gutter`         | 16 px (base) · 24 px (≥ 768 px)             |
 | `--mc-columns`        | 4 (base) · 8 (≥ 768 px) · 12 (≥ 1024 px)    |
+| Breakpoint `xl`       | 1200 px (D-043): composições que pedem 4 módulos confortáveis; não altera colunas |
 
 - `@include page-grid` / `.mc-page-grid`: linhas nomeadas `full` e `content`; filhos em `content`; sangria com `grid-column: full` ou `content-start / full-end`.
 - `@include columns` / `.mc-columns`: `repeat(var(--mc-columns), minmax(0, 1fr))` com `gap: var(--mc-gutter)`.

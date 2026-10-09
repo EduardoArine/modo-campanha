@@ -459,3 +459,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Skills:** grupos `build / product / ai / game-dna`; `state` (unlocked/evolving/core/exploring) removido; autoria (`candidate`/`approved`) só nos docs; runtime com **apenas skills aprovadas**.
   - **Seção:** Skill Tree → Skill Loadout (componente, âncora, i18n, teste de ordem e docs no 02-B).
 - **Status:** Aceita. Próxima etapa autorizada: **02-A — Skill Loadout data/content**.
+
+## D-043 — Skill Loadout visual (Home Slice 02-B)
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - Seção renomeada: `features/skill-tree` → `features/skill-loadout`, `#skill-tree` → `#skill-loadout` (sem alias: o site não foi lançado), `sections.skillTree` → `sections.skillLoadout`, teste de ordem da Home atualizado. Título **SKILL LOADOUT** nos dois idiomas, sem subtítulo.
+  - **Quatro módulos de capacidades, não quatro cards:** código · título (h3) · divisor sutil · lista (`ul role="list"`), sem surface própria e sem caixa por grupo; itens como texto com marcador discreto (sem chip, botão, hover, pointer, tabindex ou role de interação).
+  - **Códigos decorativos** (`aria-hidden`): BLD · PRD · AI · GDN, sem numeração; único laranja da seção além do marcador do header. Títulos BUILD / PRODUCT / AI / GAME DNA iguais nos dois idiomas. IBM Plex Sans em tudo.
+  - **Layout:** ≥ 1200 px: 4 módulos (3/12); 768–1199 px: 2 × 2; < 768 px: 1 por linha com espaçamento de bloco. Alturas diferentes aceitas (BUILD tem 6 itens, os demais 4).
+  - **Novo breakpoint `xl: 1200px`** no mapa de breakpoints: o grid só tinha `md` (768) e `lg` (1024), e os 4 módulos confortáveis começam em ~1200. Nenhum componente aprovado usa o `xl`.
+- **Observação:** no grupo AI o código "AI" repete o título "AI" (sem problema de largura; apenas redundância). Mantido; nenhuma nova abreviação inventada.
+- **Status:** Implementado, **aguardando aprovação visual** (checkpoint 02-B). 02-C não iniciado.

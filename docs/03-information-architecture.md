@@ -9,7 +9,7 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 | 0   | Boot / Intro       | (sem âncora)         | futuro, em `core/`          | Entrada de ≤ 1 s. Nunca bloqueia o conteúdo.                                                |
 | 1   | Player Profile     | `#hero`              | `HeroSection`               | Quem é Eduardo, em uma tela. Nome, classe, foco, frase central e CTAs.                      |
 | 2   | Player Status      | `#player-status`     | `PlayerStatusSection`       | "Sobre mim" em formato de ficha de personagem + texto humano curto.                         |
-| 3   | Skill Tree         | `#skill-tree`        | `SkillTreeSection`          | Competências em quatro grupos, sem percentuais.                                             |
+| 3   | Skill Loadout      | `#skill-loadout`     | `SkillLoadoutSection`       | Capacidades em quatro módulos (BUILD, PRODUCT, AI, GAME DNA), sem graduação (D-040).        |
 | 4   | Project Inventory  | `#project-inventory` | `ProjectInventorySection`   | Projetos como cartuchos. Seleção abre o case no CRT Viewer.                                 |
 | 4a  | CRT Project Viewer | (dentro do #4)       | `CrtProjectViewer`          | Exibe o case do cartucho selecionado. Componente interno, não é seção própria.              |
 | 5   | Campaign Log       | `#campaign-log`      | `CampaignLogSection`        | Trajetória profissional em checkpoints.                                                     |
@@ -39,13 +39,13 @@ Não é uma seção, é a moldura fixa do site. Base 03-A:
 ## Racional da ordem
 
 1. **Hero → Player Status**: em segundos o visitante sabe quem é Eduardo.
-2. **Skill Tree antes dos projetos**: dá contexto de repertório antes da prova.
+2. **Skill Loadout antes dos projetos**: dá contexto de repertório antes da prova ("Loadout informa. Inventory impressiona.").
 3. **Project Inventory no meio da página**: é o coração do portfólio; fica cedo o suficiente para quem tem pressa.
 4. **Campaign Log → Achievements → Current Quest**: a história e os marcos, culminando no presente.
 5. **Side Quests**: o lado autoral/pessoal, depois do profissional.
 6. **Final Checkpoint**: contato.
 
-> A posição exata de Skill Tree vs. Project Inventory pode ser revista na FASE 1. Registrar em `docs/10-decisions.md` se mudar.
+> Skill Tree foi renomeado para Skill Loadout (D-040); a âncora `#skill-tree` não tem alias (o site ainda não foi lançado).
 
 ## Navegação
 
