@@ -51,6 +51,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 11. [MC Design System](docs/11-design-system.md)
 12. [Home Slice 01](docs/12-home-slice-01.md)
 13. [Home Slice 02 (plano)](docs/13-home-slice-02.md)
+14. [Content inventory (rascunho)](docs/14-content-inventory.md)
 
 ## Rodando localmente
 

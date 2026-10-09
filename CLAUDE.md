@@ -77,6 +77,7 @@ Registro da evolução profissional, portfólio, vitrine de projetos, ferramenta
 | `11-design-system.md`               | MC Design System: princípios, cores, tipografia, grid, spacing, backlog |
 | `12-home-slice-01.md`               | Plano do primeiro vertical slice da Home (Header, Hero, Player Status) |
 | `13-home-slice-02.md`               | Plano do Slice 02 (Skill Loadout + Project Inventory), publicação e confidencialidade |
+| `14-content-inventory.md`           | Fichas de conteúdo (MC-001, MC-002) e validação do Skill Loadout (02-0), rascunho |
 
 Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atualize os checkboxes.
 
