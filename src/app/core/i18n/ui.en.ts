@@ -66,6 +66,14 @@ export const UI_EN: UiDictionary = {
   inventory: {
     subtitle: 'Cartridges collected along the campaign.',
   },
+  campaignLog: {
+    kind: {
+      origin: 'NEW GAME',
+      checkpoint: 'CHECKPOINT',
+      current: 'CURRENT CAMPAIGN',
+    },
+    present: 'PRESENT',
+  },
   crt: {
     regionLabel: 'Project viewer',
     empty: 'INSERT CARTRIDGE',

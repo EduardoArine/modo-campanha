@@ -65,6 +65,14 @@ export const UI_PT_BR = {
   inventory: {
     subtitle: 'Cartuchos coletados durante a campanha.',
   },
+  campaignLog: {
+    kind: {
+      origin: 'NEW GAME',
+      checkpoint: 'CHECKPOINT',
+      current: 'CAMPANHA ATUAL',
+    },
+    present: 'ATUAL',
+  },
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',

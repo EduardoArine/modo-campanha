@@ -58,6 +58,10 @@
                 {
                   "replace": "src/app/dev/dev.routes.ts",
                   "with": "src/app/dev/dev.routes.development.ts"
+                },
+                {
+                  "replace": "src/app/data/campaign-log.data.ts",
+                  "with": "src/app/data/campaign-log.data.development.ts"
                 }
               ]
             }

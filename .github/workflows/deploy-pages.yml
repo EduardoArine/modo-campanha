@@ -37,6 +37,9 @@ jobs:
       # Guarda: o showcase do design system (dev only) nunca pode ir para produção.
       - run: "! grep -rl 'design-system-page' dist/modo-campanha/browser"
 
+      # Guarda: o conteúdo MOCK do Campaign Log (D-049) nunca pode ir para produção.
+      - run: "! grep -rl 'mock-campaign-log' dist/modo-campanha/browser"
+
       # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
       # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).
       - run: |
