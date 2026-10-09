@@ -1,0 +1,43 @@
+// Project Inventory (docs/13-home-slice-02.md, 02-C). Grade de cartuchos: até 4 por linha
+// (≥ 1200), 2 (768–1199), 1 (mobile). Sem slots vazios: os itens ocupam os primeiros slots
+// naturais e o restante da linha fica livre.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.grid {
+  @include columns;
+  row-gap: space(7);
+  margin: var(--mc-space-section-head) 0 0;
+  padding: 0;
+  list-style: none;
+  align-items: start;
+}
+
+// Cartucho + Project Summary = uma unidade: o resumo não passa da largura do MC-CART
+// (mesma medida do max-width do host em cart.scss).
+.item {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(4);
+  justify-items: start;
+  max-width: 22rem;
+
+  @include mq(md) {
+    grid-column: span 4;
+  }
+
+  @include mq(lg) {
+    grid-column: span 6;
+  }
+
+  @include mq(xl) {
+    grid-column: span 3;
+  }
+}

@@ -31,13 +31,9 @@ describe('HomePage', () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/en', HomePage);
-    expect(harness.routeNativeElement?.textContent).toContain(
-      'Cartridges collected along the campaign.',
-    );
+    expect(harness.routeNativeElement?.textContent).toContain('MC-01 / PROFESSIONAL PORTFOLIO');
 
     await harness.navigateByUrl('/');
-    expect(harness.routeNativeElement?.textContent).toContain(
-      'Cartuchos coletados durante a campanha.',
-    );
+    expect(harness.routeNativeElement?.textContent).toContain('MC-01 / PORTFÓLIO PROFISSIONAL');
   });
 });

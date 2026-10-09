@@ -1,0 +1,32 @@
+<section
+  id="project-inventory"
+  class="mc-page-grid section"
+  aria-labelledby="project-inventory-title"
+>
+  <mc-section-header
+    [heading]="ui().sections.projectInventory"
+    headingId="project-inventory-title"
+  />
+
+  @if (items().length) {
+    <ul class="grid" role="list">
+      @for (item of items(); track item.id) {
+        <li class="item">
+          <mc-cart
+            [serial]="item.serial"
+            [title]="item.title"
+            [type]="item.type"
+            [shell]="item.shell"
+            [accent]="item.accent"
+            [artwork]="item.artwork"
+          />
+          <mc-project-summary
+            [title]="item.title"
+            [description]="item.description"
+            [chips]="item.chips"
+          />
+        </li>
+      }
+    </ul>
+  }
+</section>
