@@ -5,6 +5,8 @@
 $breakpoints: (
   md: 768px,
   lg: 1024px,
+  // Desktop largo: composições que precisam de 4 módulos confortáveis (ex.: Skill Loadout).
+  xl: 1200px,
 );
 
 /// Aplica estilos a partir do breakpoint informado (`md` ou `lg`).
