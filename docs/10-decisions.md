@@ -427,7 +427,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Proficiência continua proibida:** porcentagem, estrelas, levels, XP por skill, beginner/intermediate/expert, unlocked/evolving/core/exploring, qualquer graduação subjetiva.
   - **Evidência futura:** "Visto em / Seen in" ligando skills a cartuchos reais (não implementar ainda).
   - **Classificação inicial:** MC-001 Modo Campanha = PUBLIC / APPROVED; MC-002 Paco = PUBLIC / OWNER REVIEW (condicionado a direitos, ausência de restrição de colaborador/parceiro e materiais já públicos; nem todo concept/lore/material é publicável); Comunidade On, ON Learning e Mural do Parceiro = INTERNAL / NEEDS EXPLICIT APPROVAL; Dashboard Operacional = INTERNAL / HIGH REVIEW. Nenhum interno publicado.
-  - **Aprovação interna:** não há evidência de qual cargo/pessoa aprova na On Tech & Co; **nenhum aprovador é presumido**. Cada case interno terá um pacote exato (texto, assets, dados, nomes, links, tecnologias) para quem tiver autoridade sobre o produto/material; arquitetura, integrações, métricas, operação, segurança e parceiro/cliente pedem revisão específica. O modelo guarda quem aprovou e quando.
+  - **Aprovação interna:** não há evidência de qual cargo/pessoa aprova na On Tech & Co; **nenhum aprovador é presumido**. Cada case interno terá um pacote exato (texto, assets, dados, nomes, links, tecnologias) para quem tiver autoridade sobre o produto/material; arquitetura, integrações, métricas, operação, segurança e parceiro/cliente pedem revisão específica. O modelo guarda quem aprovou e quando. *(Refinado por D-042: quem aprovou e quando fica no processo privado, fora do repositório público.)*
   - **Serial global:** MC-001, MC-002, MC-003… ("MC" = coleção do Modo Campanha). **Substitui** a proposta `ON-` (D-032 citava `ON-001` como exemplo do concept). Origem num campo separado (`origin: personal | on-tech | other`). Serial não indica propriedade, empresa nem importância.
   - **Publicação conservadora:** um projeto só aparece com `publication: 'approved'` explícito; ausência, `draft`, `review` ou `blocked` não renderizam. Testes obrigatórios quando o modelo existir.
   - **Inventory v1 sem slots falsos:** mostra só os aprovados; até 4 / 2 / 1 por linha.
@@ -446,3 +446,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - Nenhuma skill tem percentual, rating, level, estrelas, rótulo de proficiência ou XP individual. "Visto em / Seen in" segue como ideia futura.
 - **Pendências registradas:** tom (warm/cool) das tags; artwork do MC-001 (publicar com placeholder ou produzir antes); shell/accent do Paco; traduções en dos aprendizados do MC-001 (rascunho).
 - **Status:** Aceita. Fichas em `docs/14-content-inventory.md`. Implementação visual do Slice 02 não iniciada.
+
+## D-042 — Modelos do Slice 02, catálogo de tags, artwork e privacidade do repositório
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **Tags:** o tom pertence à identidade da tag, nunca à posição, e é estável entre projetos: Produto/Product `warm`, Gamificação/Gamification `cool`, Game Design `warm`, Prototipagem/Prototyping `cool`. Catálogo tipado (`TagDefinition`: id, label localizado, tone); projetos guardam até 2 ids, sem duplicar tone.
+  - **MC-001 artwork:** "PROJECT ARTWORK" **não** vai para a versão pública final do Inventory (só showcase, dev local e estados explícitos de dev). Novo checkpoint **02-C.5 — MC-001 Project Artwork**, aprovado antes do primeiro Inventory público (16:10, mín. 640 × 400, sem texto embutido, universo Modo Campanha, sem repetir o nome).
+  - **Paco:** shell `dark`, accent `warm` (contraste com o MC-001, atmosfera noturna, diálogo futuro com vela/cempasúchil; sem significado de status/raridade; revisável com artwork real).
+  - **Project:** `origin` (personal / on-tech / other) separado do serial; `type` bilíngue descritivo; `status` removido sem substituto (`stage` só com caso real); `year` opcional; `featured` removido; `publication` conservadora (só `approved` renderiza, com teste); configuração do MC-CART embutida (`cartridge: { shell, accent, artwork? }`), sem entidade `Cartridge` independente; `label` e `color` livre removidos.
+  - **Privacidade (repositório público):** runtime e arquivos públicos sabem só se o conteúdo está autorizado. Nomes de aprovadores, fluxos internos, observações confidenciais, justificativas privadas e dados de revisão ficam fora do repositório. Refina D-040 (que previa guardar quem aprovou no modelo).
+  - **Skills:** grupos `build / product / ai / game-dna`; `state` (unlocked/evolving/core/exploring) removido; autoria (`candidate`/`approved`) só nos docs; runtime com **apenas skills aprovadas**.
+  - **Seção:** Skill Tree → Skill Loadout (componente, âncora, i18n, teste de ordem e docs no 02-B).
+- **Status:** Aceita. Próxima etapa autorizada: **02-A — Skill Loadout data/content**.

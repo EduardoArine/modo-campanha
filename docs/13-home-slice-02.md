@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040).** Etapa atual: **02-0 — Content Inventory**. Nenhuma implementação.
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). Etapa atual: **02-A — Skill Loadout data/content**. Nenhuma implementação.
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 
@@ -95,52 +95,57 @@ Esta documentação **não tem evidência** de qual cargo ou pessoa da On Tech &
 - links;
 - tecnologias mencionadas.
 
-A aprovação vem de quem tiver autoridade sobre o produto/material na empresa. Se o case envolver **arquitetura, integrações, métricas, informação operacional, segurança ou parceiro/cliente**, marcar também a revisão específica apropriada. O modelo guarda **quem aprovou e quando**, quando essa informação existir.
+A aprovação vem de quem tiver autoridade sobre o produto/material na empresa. Se o case envolver **arquitetura, integrações, métricas, informação operacional, segurança ou parceiro/cliente**, marcar também a revisão específica apropriada. **Quem aprovou e quando fica no processo privado de revisão, fora do repositório público** (D-042); o runtime só recebe `publication: approved`.
 
 ### 2.5 Serial
 
 Serial **global do inventário**: `MC-001`, `MC-002`, `MC-003`… "MC" é a coleção do Modo Campanha, não empresa nem origem. Origem fica num campo separado (`origin: 'personal' | 'on-tech' | 'other'`). O serial não representa propriedade, empresa ou importância; é a ordem de entrada na coleção. (Substitui a ideia `ON-` do plano anterior e dos concepts.)
 
-### 2.6 Modelo de dados proposto
+### 2.6 Modelo de dados (D-042)
+
+Regra de privacidade: **o repositório é público.** O runtime e os arquivos públicos sabem só **se** um conteúdo está autorizado. Nomes de aprovadores, fluxos internos, observações confidenciais, justificativas privadas e dados de revisão ficam num processo privado, **fora do repositório**. Classificação, quando existir, é genérica (ex.: "pessoal / público").
 
 ```ts
 type Publication = 'approved' | 'draft' | 'review' | 'blocked'; // só 'approved' renderiza
-type ProjectOrigin = 'personal' | 'on-tech' | 'other';
-type Classification =
-  | 'public-approved' | 'public-owner-review'
-  | 'internal-needs-approval' | 'internal-high-review';
+type ProjectOrigin = 'personal' | 'on-tech' | 'other';       // origem/contexto; nunca no serial
 
-interface PublicationApproval {
-  by: string;          // quem aprovou (nunca presumido)
-  at: string;          // data ISO
-  scope?: string;      // o que foi aprovado (texto, assets...)
-}
+// Catálogo de tags: o tom pertence à identidade da tag (não à posição), sem duplicar por projeto.
+type TagId = 'product' | 'gamification' | 'game-design' | 'prototyping';
+interface TagDefinition { id: TagId; label: Localized; tone: McChipTone }
 
 interface Project {
   id: string;
   slug: string;
-  serial: string;                      // MC-NNN
+  serial: string;                         // MC-NNN (ordem de entrada na coleção)
   origin: ProjectOrigin;
-  classification: Classification;
-  publication?: Publication;           // ausente = não publica
-  approvals?: PublicationApproval[];
+  publication?: Publication;              // ausente = não publica
   title: Localized;
-  type: Localized;                     // impresso no cartucho
-  summary: Localized;                  // descrição curta (Project Summary)
-  tags: { label: Localized; tone: McChipTone }[]; // até 2 exibidas
-  cartridge: { shell: McCartShell; accent: McCartAccent; artwork?: { src: string; alt: Localized } };
+  type: Localized;                        // texto impresso no cartucho (ex.: PORTFÓLIO INTERATIVO)
+  summary: Localized;                     // descrição curta (Project Summary)
+  tags: readonly TagId[];                 // até 2
+  cartridge: {                            // configuração visual 1:1 do MC-CART (sem entidade própria)
+    shell: McCartShell;
+    accent: McCartAccent;
+    artwork?: { src: string; alt: Localized };
+  };
+  year?: number;                          // opcional; nunca inventado
   role?: Localized;
-  stack?: string[];
+  stack?: readonly string[];
   context?: Localized;
   contribution?: Localized;
-  results?: Localized<string[]>;
   learnings?: Localized<string[]>;
   links?: { label: Localized; url: string; kind: 'live' | 'repository' | 'case-study' | 'other' }[];
-  restrictions?: Localized;            // o que NÃO pode aparecer
 }
+```
 
-interface Skill { id: string; name: Localized; status: 'candidate' | 'approved' } // só 'approved' renderiza
-interface SkillGroup { id: 'build' | 'product' | 'ai' | 'game-dna'; code: string; title: Localized; skills: Skill[] }
+Removido do modelo atual: `status` (misturava estágio com publicação; se um dia houver caso real, avaliar um campo `stage` separado), `featured` (sem comportamento), entidade `Cartridge` independente com `label` e `color` livre (relação 1:1; sem segundo caso de uso), `approvals` e `classification` no runtime (privacidade).
+
+Skills (D-042): **autoria × runtime.** `candidate` / `approved` vivem só no content inventory (docs); o runtime carrega **apenas skills aprovadas**, sem campo de status.
+
+```ts
+type SkillGroupId = 'build' | 'product' | 'ai' | 'game-dna';
+interface Skill { id: string; name: Localized }
+interface SkillGroup { id: SkillGroupId; title: Localized; skills: readonly Skill[] }
 ```
 
 ### 2.7 Artwork
@@ -151,7 +156,8 @@ interface SkillGroup { id: 'build' | 'product' | 'ai' | 'game-dna'; code: string
 | Resolução | **mínimo 640 × 400** (2×); WebP/AVIF |
 | Texto | não obrigatório dentro da arte (o nome está no rótulo) |
 | Conteúdo | nada de screenshots internos sem aprovação, logos de terceiros sem permissão ou dados reais |
-| Produção | etapa própria, posterior; até lá, placeholder "PROJECT ARTWORK" |
+| Produção | etapa própria; **"PROJECT ARTWORK" nunca na versão pública final do Inventory** (permitido só no showcase, em desenvolvimento local e em estados explícitos de dev). MC-001: checkpoint **02-C.5** |
+| Nome | não repetir desnecessariamente o nome do projeto (o rótulo do MC-CART já o contém) |
 
 ### 2.8 Layout
 
@@ -184,9 +190,10 @@ Ordem da Home: Player Status → **Skill Loadout** → **Project Inventory**.
 | Etapa | Entrega | Gate |
 |---|---|---|
 | **02-0 Content inventory** | fichas de **MC-001** e **MC-002** + validação item a item do Skill Loadout | ◆ aprovação de conteúdo (atual) |
-| **02-A Skill Loadout content model** | `SkillGroup`/`Skill` com `status`; renomear seção para Skill Loadout; só `approved` renderiza (com teste) | |
-| **02-B Skill Loadout visual** | alternativa A aberta e silenciosa | ◆ revisão visual |
-| **02-C Project model + layout** | `Project` evoluído (§2.6); regra de publicação conservadora com testes | |
-| **02-D Inventory** | MC-CART + Project Summary dos projetos aprovados, artwork placeholder | |
+| **02-A Skill Loadout data/content** | models novos (`build/product/ai/game-dna`, `Localized`, sem `state`); dados bilíngues só com skills aprovadas; testes | |
+| **02-B Skill Loadout visual** | alternativa A aberta e silenciosa; renomear seção `skill-tree` → `skill-loadout` (componente, âncora, i18n, teste de ordem, docs) | ◆ revisão visual |
+| **02-C Project model + layout** | `Project` evoluído (§2.6); catálogo de tags; regra de publicação conservadora com testes | |
+| **02-C.5 MC-001 Project Artwork** | artwork do MC-001 (16:10, mín. 640 × 400, sem texto embutido, universo Modo Campanha, sem repetir o nome) | ◆ **aprovação do artwork** (bloqueia o Inventory público) |
+| **02-D Inventory** | MC-CART + Project Summary dos projetos aprovados, com artwork aprovado (placeholder só em dev/showcase) | |
 | **02-E Responsive** | até 4 / 2 / 1, sem overflow | |
 | **02-F Revisão** | pt-BR/en × 1440/820/390, acessibilidade, contraste, âncoras, regressão do Slice 01 | ◆ aprovação final |
