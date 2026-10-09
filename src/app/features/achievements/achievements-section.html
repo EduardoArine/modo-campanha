@@ -1,0 +1,17 @@
+<section id="achievements" class="mc-page-grid section" aria-labelledby="achievements-title">
+  <mc-section-header [heading]="ui().sections.achievements" headingId="achievements-title" />
+
+  <ul class="panel" role="list" [style.--n]="achievements.length">
+    @for (achievement of achievements; track achievement.id; let i = $index) {
+      <li class="record">
+        <p class="code" aria-hidden="true"><span class="marker"></span>{{ code(i) }}</p>
+        <h3 class="title">{{ locale.pick(achievement.title) }}</h3>
+        <p class="description">{{ locale.pick(achievement.description) }}</p>
+        <p class="evidence">
+          <span class="evidence-label">{{ ui().achievements.evidence }}:</span>
+          {{ locale.pick(achievement.evidence) }}
+        </p>
+      </li>
+    }
+  </ul>
+</section>

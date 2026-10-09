@@ -3,12 +3,13 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
-import { CAMPAIGN_LOG } from '../../data';
+import { ACHIEVEMENTS, CAMPAIGN_LOG, shouldRenderAchievements } from '../../data';
 import { HomePage } from './home-page';
 
-// Os testes rodam na configuração `development`: o Campaign Log usa o MOCK (D-049). Em
-// produção a lista publicada é vazia e a seção não é renderizada.
+// Os testes rodam na configuração `development`: Campaign Log (D-049) e Achievements (D-051)
+// usam MOCK. Em produção as listas publicadas são vazias e as seções não são renderizadas.
 const hasCampaignLog = CAMPAIGN_LOG.length > 0;
+const hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
 
 describe('HomePage', () => {
   it('should render only the built sections, in order', async () => {
@@ -25,6 +26,7 @@ describe('HomePage', () => {
       'skill-loadout',
       'project-inventory',
       ...(hasCampaignLog ? ['campaign-log'] : []),
+      ...(hasAchievements ? ['achievements'] : []),
     ]);
   });
 
@@ -34,12 +36,13 @@ describe('HomePage', () => {
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
 
-    expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
-      hasCampaignLog ? 'APP-CAMPAIGN-LOG-SECTION' : 'APP-PROJECT-INVENTORY-SECTION',
-    );
-    expect(el.textContent).not.toMatch(
-      /ACHIEVEMENTS|CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/,
-    );
+    const last = hasAchievements
+      ? 'APP-ACHIEVEMENTS-SECTION'
+      : hasCampaignLog
+        ? 'APP-CAMPAIGN-LOG-SECTION'
+        : 'APP-PROJECT-INVENTORY-SECTION';
+    expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(last);
+    expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/);
   });
 
   it('should render texts in the locale of the URL', async () => {

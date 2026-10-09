@@ -1,0 +1,103 @@
+// Achievements (docs/16-home-slice-04.md, A + B — Achievement Record Panel). Um único painel
+// digital (UI, sem sombra nem material físico): as réguas entre células são o `gap` de 1 px
+// mostrando o fundo do painel. Laranja só no marker e no código; sem teal/verde (nenhuma
+// categoria ou estado real). ≥ 1200: N células numa linha (--n = quantidade, 2–5);
+// 768–1199: 2 por linha, ímpar final ocupa a linha; < 768: 1 por linha.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--mc-border-width-default);
+  margin: var(--mc-space-section-head) 0 0;
+  padding: 0;
+  list-style: none;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-border-subtle);
+  // Réguas internas e borda externa com a mesma intensidade (o fundo não passa sob a borda).
+  background-clip: padding-box;
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include mq(xl) {
+    grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  }
+}
+
+.record {
+  display: flex;
+  flex-direction: column;
+  gap: space(2);
+  min-width: 0;
+  padding: space(4) space(5);
+  background: var(--mc-panel);
+
+  @include mq(md) {
+    padding: space(6) space(5);
+
+    // Ímpar final ocupa a linha inteira no 2 × N (nunca um slot vazio).
+    &:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @include mq(xl) {
+    &:last-child:nth-child(odd) {
+      grid-column: auto;
+    }
+  }
+}
+
+p,
+h3 {
+  margin: 0;
+}
+
+.code {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.marker {
+  width: space(2);
+  height: space(2);
+  background: var(--mc-accent);
+}
+
+.title {
+  margin-top: space(1);
+  @include type(title-m);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--mc-text);
+}
+
+.description {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+// Evidência no pé da célula: alinha entre células de uma mesma linha.
+.evidence {
+  margin-top: auto;
+  padding-top: space(3);
+  @include type(caption);
+  color: var(--mc-text-muted);
+}
+
+.evidence-label {
+  @include type(label);
+}
