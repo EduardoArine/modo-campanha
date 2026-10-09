@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B implementado (D-043), **aguardando revisão visual**. 02-C não iniciado. Nenhuma implementação.
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). Etapa atual: **02-C — Project model + Inventory foundation**. Nenhuma implementação.
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 

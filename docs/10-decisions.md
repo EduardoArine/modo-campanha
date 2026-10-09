@@ -469,5 +469,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Códigos decorativos** (`aria-hidden`): BLD · PRD · AI · GDN, sem numeração; único laranja da seção além do marcador do header. Títulos BUILD / PRODUCT / AI / GAME DNA iguais nos dois idiomas. IBM Plex Sans em tudo.
   - **Layout:** ≥ 1200 px: 4 módulos (3/12); 768–1199 px: 2 × 2; < 768 px: 1 por linha com espaçamento de bloco. Alturas diferentes aceitas (BUILD tem 6 itens, os demais 4).
   - **Novo breakpoint `xl: 1200px`** no mapa de breakpoints: o grid só tinha `md` (768) e `lg` (1024), e os 4 módulos confortáveis começam em ~1200. Nenhum componente aprovado usa o `xl`.
-- **Observação:** no grupo AI o código "AI" repete o título "AI" (sem problema de largura; apenas redundância). Mantido; nenhuma nova abreviação inventada.
-- **Status:** Implementado, **aguardando aprovação visual** (checkpoint 02-B). 02-C não iniciado.
+- **Código AI:** o código "AI" repete o título "AI"; a redundância é **aceita** (o código é a camada de sistema, o título a camada legível). Não inventar AID/AIX/AIM ou outra sigla.
+- **Breakpoint `xl` (1200 px) aprovado** como token do sistema; motivação: os 4 módulos do Skill Loadout só ficam confortáveis a partir de ~1200 px. Componentes aprovados não adotam `xl` sem necessidade própria.
+- **Ritmo:** o respiro maior entre Player Status e Skill Loadout no desktop está aprovado; não reduzir só para ocupar menos altura.
+- **Status:** **HOME SLICE 02-B — SKILL LOADOUT: APPROVED** (2026-10-09). Skill Loadout **congelado** salvo regressão: colunas (4 / 2×2 / 1), tipografia, marcadores, spacing, códigos, cores e section header.
