@@ -41,12 +41,17 @@ describe('CampaignLogSection', () => {
     ]);
   });
 
-  it('renders real time elements for periods, with present as text', async () => {
+  it('renders real time elements; the open current entry reads "since"', async () => {
     const el = await renderAt('/');
     const periods = texts(el, '.period');
 
-    expect(periods[0]).toBe('2013 — 2017');
-    expect(periods[4]).toBe('2025 — ATUAL');
+    expect(periods.slice(0, 4)).toEqual([
+      '2013 — 2017',
+      '2014 — 2018',
+      '2019 — 2022',
+      '2023 — 2025',
+    ]);
+    expect(periods[4]).toBe('DESDE 2025');
     expect(el.querySelector('.period time')?.getAttribute('datetime')).toBe('2013');
     expect(el.querySelectorAll('li:last-child .period time').length).toBe(1);
   });
@@ -73,7 +78,8 @@ describe('CampaignLogSection', () => {
     const el = await renderAt('/en');
 
     expect(texts(el, '.kind').at(-1)).toBe('CURRENT CAMPAIGN');
-    expect(texts(el, '.period').at(-1)).toBe('2025 — PRESENT');
+    expect(texts(el, '.period').at(-1)).toBe('SINCE 2025');
+    expect(texts(el, '.period')[0]).toBe('2013 — 2017');
     expect(texts(el, 'h3').at(-1)).toBe('Building products end to end');
   });
 });

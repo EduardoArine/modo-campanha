@@ -73,6 +73,7 @@ export const UI_EN: UiDictionary = {
       current: 'CURRENT CAMPAIGN',
     },
     present: 'PRESENT',
+    since: 'SINCE',
   },
   crt: {
     regionLabel: 'Project viewer',

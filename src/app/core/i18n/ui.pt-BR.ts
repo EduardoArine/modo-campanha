@@ -72,6 +72,7 @@ export const UI_PT_BR = {
       current: 'CAMPANHA ATUAL',
     },
     present: 'ATUAL',
+    since: 'DESDE',
   },
   crt: {
     regionLabel: 'Visualizador de projetos',

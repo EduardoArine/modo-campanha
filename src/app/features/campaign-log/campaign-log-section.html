@@ -5,14 +5,21 @@
     @for (entry of entries; track entry.id) {
       <li [class]="'entry entry--' + entry.kind">
         <span class="marker" aria-hidden="true"></span>
+        <!-- Entrada atual em aberto: "DESDE 2025" evita repetir "ATUAL" no label (D-050). -->
+        @let since = entry.kind === 'current' && entry.period.end === 'present';
         <p class="period">
-          <time [attr.datetime]="entry.period.start">{{ entry.period.start }}</time>
-          @if (entry.period.end; as end) {
-            —
-            @if (end === 'present') {
-              {{ ui().campaignLog.present }}
-            } @else {
-              <time [attr.datetime]="end">{{ end }}</time>
+          @if (since) {
+            {{ ui().campaignLog.since }}
+            <time [attr.datetime]="entry.period.start">{{ entry.period.start }}</time>
+          } @else {
+            <time [attr.datetime]="entry.period.start">{{ entry.period.start }}</time>
+            @if (entry.period.end; as end) {
+              —
+              @if (end === 'present') {
+                {{ ui().campaignLog.present }}
+              } @else {
+                <time [attr.datetime]="end">{{ end }}</time>
+              }
             }
           }
         </p>
