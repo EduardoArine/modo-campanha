@@ -10,6 +10,7 @@ const same = (text: string): Localized => ({ 'pt-BR': text, en: text });
 export const SKILL_LOADOUT: readonly SkillGroup[] = [
   {
     id: 'build',
+    code: 'BLD',
     title: same('BUILD'),
     skills: [
       { id: 'angular', name: same('Angular') },
@@ -22,6 +23,7 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'product',
+    code: 'PRD',
     title: same('PRODUCT'),
     skills: [
       {
@@ -41,6 +43,7 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'ai',
+    code: 'AI',
     title: same('AI'),
     skills: [
       {
@@ -60,6 +63,7 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'game-dna',
+    code: 'GDN',
     title: same('GAME DNA'),
     skills: [
       { id: 'game-systems', name: { 'pt-BR': 'Sistemas de jogo', en: 'Game systems' } },

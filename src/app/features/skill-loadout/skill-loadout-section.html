@@ -1,0 +1,17 @@
+<section id="skill-loadout" class="mc-page-grid section" aria-labelledby="skill-loadout-title">
+  <mc-section-header [heading]="ui().sections.skillLoadout" headingId="skill-loadout-title" />
+
+  <div class="modules">
+    @for (group of groups; track group.id) {
+      <div class="module">
+        <p class="code" aria-hidden="true">{{ group.code }}</p>
+        <h3 class="title" [id]="'skill-group-' + group.id">{{ locale.pick(group.title) }}</h3>
+        <ul class="skills" role="list" [attr.aria-labelledby]="'skill-group-' + group.id">
+          @for (skill of group.skills; track skill.id) {
+            <li>{{ locale.pick(skill.name) }}</li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>

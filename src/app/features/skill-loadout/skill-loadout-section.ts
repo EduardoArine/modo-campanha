@@ -1,17 +1,23 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
+import { SKILL_LOADOUT } from '../../data';
+import { McSectionHeader } from '../../shared/ui';
 
-// Placeholder estrutural. Layout e conteúdo definitivos vêm na FASE 3 (docs/09-roadmap.md).
+/**
+ * Skill Loadout (Home Slice 02-B, D-040/D-042). Quatro módulos de capacidades, não quatro
+ * cards: código · título · divisor · lista, em composição aberta. Informativo, sem nenhuma
+ * graduação de proficiência e sem semântica de interação. "Loadout informa. Inventory impressiona."
+ */
 @Component({
-  selector: 'app-skill-tree-section',
-  template: `
-    <section id="skill-tree" aria-labelledby="skill-tree-title">
-      <h2 id="skill-tree-title">{{ ui().sections.skillTree }}</h2>
-    </section>
-  `,
+  selector: 'app-skill-loadout-section',
+  imports: [McSectionHeader],
+  templateUrl: './skill-loadout-section.html',
+  styleUrl: './skill-loadout-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SkillTreeSection {
-  protected readonly ui = inject(LocaleService).ui;
+export class SkillLoadoutSection {
+  protected readonly locale = inject(LocaleService);
+  protected readonly ui = this.locale.ui;
+  protected readonly groups = SKILL_LOADOUT;
 }

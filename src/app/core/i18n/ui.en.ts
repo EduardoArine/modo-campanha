@@ -55,7 +55,7 @@ export const UI_EN: UiDictionary = {
   },
   sections: {
     playerStatus: 'PLAYER STATUS',
-    skillTree: 'SKILL TREE',
+    skillLoadout: 'SKILL LOADOUT',
     projectInventory: 'PROJECT INVENTORY',
     campaignLog: 'CAMPAIGN LOG',
     achievements: 'ACHIEVEMENTS',

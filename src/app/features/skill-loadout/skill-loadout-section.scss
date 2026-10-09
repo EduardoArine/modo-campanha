@@ -1,0 +1,86 @@
+// Skill Loadout (docs/13-home-slice-02.md, §1.5). Composição aberta e silenciosa:
+// sem surface, sem cards, sem objetos físicos; laranja só no código de cada módulo.
+// Desktop (≥ 1200): 4 módulos (3/12). 768–1199: 2 × 2. Mobile: 1 por linha.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.modules {
+  @include columns;
+  row-gap: space(6);
+  margin-top: var(--mc-space-section-head);
+  // Alturas diferentes são esperadas (BUILD tem 6 itens): nada é esticado.
+  align-items: start;
+
+  @include mq(md) {
+    row-gap: space(7);
+  }
+}
+
+.module {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(2);
+
+  @include mq(md) {
+    grid-column: span 4;
+  }
+
+  @include mq(lg) {
+    grid-column: span 6;
+  }
+
+  @include mq(xl) {
+    grid-column: span 3;
+  }
+}
+
+// Código de sistema decorativo (aria-hidden): único laranja da seção, além do marcador do header.
+.code {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+// Título do módulo + divisor sutil.
+.title {
+  margin: 0;
+  padding-bottom: space(3);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  @include type(title-m);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mc-text);
+}
+
+// Itens informativos: texto em lista, marcador discreto; sem hover, pointer ou foco.
+.skills {
+  display: grid;
+  gap: space(2);
+  margin: space(2) 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-inline-start: space(4);
+    @include type(body);
+    color: var(--mc-text-secondary);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.7em;
+      left: 0;
+      width: space(1);
+      height: space(1);
+      background: var(--mc-border-default);
+    }
+  }
+}

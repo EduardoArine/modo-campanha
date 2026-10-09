@@ -8,6 +8,7 @@ const names = (locale: 'pt-BR' | 'en') =>
 describe('SKILL_LOADOUT (runtime data)', () => {
   it('has exactly the four approved groups, in order', () => {
     expect(SKILL_LOADOUT.map((group) => group.id)).toEqual(['build', 'product', 'ai', 'game-dna']);
+    expect(SKILL_LOADOUT.map((group) => group.code)).toEqual(['BLD', 'PRD', 'AI', 'GDN']);
     expect(SKILL_LOADOUT.map((group) => group.title.en)).toEqual([
       'BUILD',
       'PRODUCT',
@@ -88,7 +89,7 @@ describe('SKILL_LOADOUT (runtime data)', () => {
 
   it('carries no proficiency or authoring fields at runtime', () => {
     for (const group of SKILL_LOADOUT) {
-      expect(Object.keys(group).sort()).toEqual(['id', 'skills', 'title']);
+      expect(Object.keys(group).sort()).toEqual(['code', 'id', 'skills', 'title']);
       for (const skill of group.skills) {
         expect(Object.keys(skill).sort()).toEqual(['id', 'name']);
       }

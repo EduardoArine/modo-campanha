@@ -8,7 +8,7 @@ import { HeroSection } from '../../features/hero/hero-section';
 import { PlayerStatusSection } from '../../features/player-status/player-status-section';
 import { ProjectInventorySection } from '../../features/project-inventory/project-inventory-section';
 import { SideQuestsSection } from '../../features/side-quests/side-quests-section';
-import { SkillTreeSection } from '../../features/skill-tree/skill-tree-section';
+import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-section';
 
 // Ordem das seções segue docs/03-information-architecture.md.
 @Component({
@@ -16,7 +16,7 @@ import { SkillTreeSection } from '../../features/skill-tree/skill-tree-section';
   imports: [
     HeroSection,
     PlayerStatusSection,
-    SkillTreeSection,
+    SkillLoadoutSection,
     ProjectInventorySection,
     CampaignLogSection,
     AchievementsSection,
@@ -28,7 +28,7 @@ import { SkillTreeSection } from '../../features/skill-tree/skill-tree-section';
     <main>
       <app-hero-section />
       <app-player-status-section />
-      <app-skill-tree-section />
+      <app-skill-loadout-section />
       <app-project-inventory-section />
       <app-campaign-log-section />
       <app-achievements-section />

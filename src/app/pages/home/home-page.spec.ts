@@ -17,7 +17,7 @@ describe('HomePage', () => {
     expect(ids).toEqual([
       'hero',
       'player-status',
-      'skill-tree',
+      'skill-loadout',
       'project-inventory',
       'campaign-log',
       'achievements',

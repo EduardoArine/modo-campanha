@@ -54,7 +54,7 @@ export const UI_PT_BR = {
   },
   sections: {
     playerStatus: 'PLAYER STATUS',
-    skillTree: 'SKILL TREE',
+    skillLoadout: 'SKILL LOADOUT',
     projectInventory: 'PROJECT INVENTORY',
     campaignLog: 'CAMPAIGN LOG',
     achievements: 'ACHIEVEMENTS',
