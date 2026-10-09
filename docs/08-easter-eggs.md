@@ -58,7 +58,7 @@ Backlog de ideias (nenhuma aprovada):
 
 - desbloquear a Secret Area;
 - mudar temporariamente o tema;
-- liberar uma conquista secreta (`Achievement.secret = true`);
+- liberar uma conquista secreta (o campo `secret` saiu do modelo `Achievement` no Slice 04, D-051; volta quando a FASE 6 for implementada);
 - mostrar uma tela escondida;
 - desbloquear conteúdo bônus.
 

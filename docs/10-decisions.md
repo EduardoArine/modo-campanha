@@ -574,3 +574,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Produção inalterada:** desenvolvimento com MOCK; produção e GitHub Pages sem Campaign Log e sem MOCK no bundle; deploy guard mantido. Jornada / Journey só volta ao header quando o conteúdo factual substituir o MOCK e o Campaign Log for liberado para produção.
   - **Etapas:** 03-0 = MOCK content for development; 03-A = model/data infrastructure done; 03-B = visual approved; **03-C = editorial content pending**. A 03-C não bloqueia o desenvolvimento das próximas partes da Home.
 - **Status:** Aceita.
+
+## D-051 — Home Slice 04 (Achievements): plano, Record Panel e conteúdo MOCK
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **Plano aprovado** (`docs/16-home-slice-04.md`). Achievements mostra **evidências concretas** da trajetória; a linguagem de jogo é só enquadramento. Critério: fonte factual aprovada + concreto + **novo** (não repetir Player Status, Skill Loadout, Inventory ou Campaign Log). Comunidade On não vira achievement (Current Main Quest).
+  - **Regra pública:** 0 ou 1 achievement aprovado → não renderiza; **2–5 → renderiza**. Com 2 bons, publicar 2. Nunca slot vazio nem repetição para completar 3–4. `MIN_ACHIEVEMENTS = 2` em `achievements.rules.ts`.
+  - **Modelo:** `Achievement { id; title; description; evidence; year? }` (`Localized`), **`evidence` obrigatório** (contrato de base factual). `ACH-0N` derivado da ordem, decorativo e `aria-hidden`. Fora: kind, icon, secret (volta na FASE 6), score, XP, rarity, level, unlocked, progress. Substitui o `Achievement` da FASE 0.
+  - **Visual: A + B — Achievement Record Panel:** um único painel digital (`--mc-panel`, sem sombra/objeto físico) com células separadas por réguas de 1 px; célula = marker + ACH-0N (laranja) · manchete Plex em caixa alta · descrição · EVIDÊNCIA no pé. ≥ 1200: N células (`--n`); 768–1199: 2 por linha, ímpar final ocupa a linha; < 768: 1 por linha. Sem teal/verde, badge, medalha, estrela, raridade, glow, hover ou motion. Orçamento editorial: description ~80–110 caracteres, evidence até ~60, sem line-clamp.
+  - **ACHIEVEMENTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** 4 itens genéricos e fictícios ("MARCO DE EXEMPLO A…"), sem derivar do MOCK do Campaign Log e sem fatos reais. Mesmo mecanismo do D-049: `achievements.data.ts` vazio em produção; `achievements.data.development.ts` (ids `mock-achievement-*`) só em dev/testes via `fileReplacements`; deploy guard agora procura `mock-campaign-log|mock-achievement`.
+- **Status:** 04-A e 04-B implementados com MOCK, **aguardando revisão visual**. Commits locais. 04-0 (fatos reais) pendente; 04-C não iniciado.

@@ -161,21 +161,17 @@ Uma **seleção de 4–6 checkpoints** da trajetória (não um currículo), cada
 
 ## Achievements
 
-Conquistas profissionais como **badges**. Exemplos conceituais (a validar):
-
-| Badge            | Fato                                                   |
-| ---------------- | ------------------------------------------------------ |
-| 10 YEARS XP      | Mais de uma década em tecnologia.                      |
-| GAME DEV ORIGIN  | Formação em Tecnologia em Jogos Digitais.              |
-| ZERO TO PRODUCT  | Participação na construção de produtos desde as bases. |
-| AI ADOPTER       | IA aplicada ao fluxo de desenvolvimento.               |
-| PRODUCT THINKING | Tecnologia além do código.                             |
+**Evidências concretas** da trajetória, não badges (D-051). A linguagem de jogo é só enquadramento (código `ACH-0N`, painel de registros).
 
 Regras:
 
-- cada conquista ligada a um **fato concreto**;
-- nada de autopromoção exagerada;
-- conquistas secretas possíveis via easter eggs (`docs/08-easter-eggs.md`).
+- cada achievement nasce de um **fato verificável e aprovado**, com `evidence` obrigatório;
+- precisa acrescentar algo **novo**: não repete Player Status, Skill Loadout, Inventory ou Campaign Log;
+- sem medalhas, troféus, estrelas, raridade, score, XP, percentuais, streak, ranking ou "unlocked";
+- 2–5 itens públicos (0 ou 1 → seção não aparece); nada de autopromoção exagerada;
+- conquistas secretas possíveis via easter eggs na FASE 6 (`docs/08-easter-eggs.md`).
+
+Os exemplos conceituais antigos (10 YEARS XP, GAME DEV ORIGIN, AI ADOPTER…) foram descartados: repetiam outras seções ou usavam linguagem de badge. Plano em `docs/16-home-slice-04.md`.
 
 ---
 

@@ -120,7 +120,11 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 - 🟡 03-0 MOCK content for development (histórico real pendente) · ✅ 03-A model / data infrastructure (D-049) · ✅ 03-B visual (**APPROVED**, congelado, D-050) · ⬜ 03-C editorial content (pendente de revisão factual; não bloqueia o resto da Home)
 
 - 🟡 Campaign Log (Slice 03)
-- ⬜ Achievements
+- 🟡 Achievements (Slice 04)
+
+### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
+
+- 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · 🟡 04-B visual (MOCK, ◆ aguardando revisão) · ⬜ 04-C editorial
 - ⬜ Current Quest
 - ⬜ Side Quests
 - ⬜ Final Checkpoint

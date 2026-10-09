@@ -95,21 +95,29 @@ interface SkillGroup {
 
 Dados: `src/app/data/skills.data.ts` exporta `SKILL_LOADOUT` (Skill Loadout v1, D-041). Testes em `skills.data.spec.ts` garantem o conteúdo exato nos dois idiomas, a ausência dos itens removidos e de campos de proficiência/autoria.
 
-## Achievement
+## Achievement (Home Slice 04, D-051)
 
 `src/app/models/achievement.model.ts`
 
 ```ts
 interface Achievement {
   id: string;
-  title: string; // ex.: 'GAME DEV ORIGIN'
-  description: string; // fato concreto
-  icon?: string;
-  secret?: boolean; // desbloqueada por easter egg
+  title: Localized; // manchete curta
+  description: Localized; // 1 frase, ~80–110 caracteres
+  evidence: Localized; // obrigatório: fonte factual curta (até ~60 caracteres)
+  year?: number; // só com data real
 }
 ```
 
-Dados: `src/app/data/achievements.data.ts` (vazio; ideias em `docs/02-experience-concept.md`).
+- `evidence` obrigatório: nenhum achievement sem base factual.
+- `ACH-0N` é derivado da ordem de apresentação (decorativo); não fica no dado.
+- Fora: kind, icon, secret (volta na FASE 6, `docs/08`), score, XP, rarity, level, unlocked, progress.
+- Regra pública: renderiza só com **≥ 2** itens (`MIN_ACHIEVEMENTS`, `src/app/data/achievements.rules.ts`).
+
+Dados:
+
+- `src/app/data/achievements.data.ts`: **publicado** (produção). Vazio até haver fatos aprovados.
+- `src/app/data/achievements.data.development.ts`: **MOCK de desenvolvimento visual** (D-051), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
 ## CampaignLogEntry (Home Slice 03, D-048/D-049)
 
