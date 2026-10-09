@@ -117,7 +117,7 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 ### Home Slice 03 — Campaign Log 🟡 (plano aprovado, D-048; `docs/15-home-slice-03.md`)
 
-- 🟡 03-0 content inventory (◆ aguardando histórico do Eduardo) · ✅ 03-A model + data (**MOCK**, D-049) · 🟡 03-B visual (MOCK, ◆ aguardando revisão) · ⬜ 03-C integrated review
+- 🟡 03-0 MOCK content for development (histórico real pendente) · ✅ 03-A model / data infrastructure (D-049) · ✅ 03-B visual (**APPROVED**, congelado, D-050) · ⬜ 03-C editorial content (pendente de revisão factual; não bloqueia o resto da Home)
 
 - 🟡 Campaign Log (Slice 03)
 - ⬜ Achievements

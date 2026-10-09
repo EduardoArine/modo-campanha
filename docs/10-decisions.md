@@ -561,4 +561,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Labels de sistema na UI** (`campaignLog.kind`): origin → NEW GAME; checkpoint → CHECKPOINT; current → CAMPANHA ATUAL / CURRENT CAMPAIGN; "ATUAL" / "PRESENT" para períodos em aberto.
   - **Visual (A + C):** `ol` com `h3` por checkpoint; ≥ 768 px período em coluna própria à esquerda do eixo (colunas 1–2), conteúdo a partir da coluna 3 (até a 9 no desktop); < 768 px período no fluxo, acima do label. Linha de 1 px (`--mc-border-subtle`); markers quadrados de 8 px: origin em `--mc-accent-active`, checkpoint vazado em `--mc-border-default`, current em `--mc-status-online`. Sem cards, fundos, sombras, objeto físico, ícones ou métricas. IBM Plex Sans.
   - **Navegação:** Jornada / Journey continua fora do header até conteúdo real + seção aprovada + liberação para produção.
-- **Status:** 03-A e 03-B (checkpoint visual) implementados com MOCK, **aguardando revisão visual**. Commits locais. 03-C não iniciado.
+- **Status:** 03-A e 03-B implementados com MOCK; 03-B aprovado (D-050).
+
+## D-050 — Campaign Log: visual aprovado e congelado; conteúdo factual pendente (03-B)
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **03-B — CAMPAIGN LOG VISUAL: APPROVED.** Direção **A + C — Checkpoint Log Editorial** congelada: estrutura desktop/tablet/mobile, linha vertical, markers (origin warm, checkpoints vazados, current verde), coluna de período, tipografia, spacing e system labels. Não redesenhar, compactar nem reduzir fonte; `mc-section-header` intocado.
+  - **Período da entrada atual (apresentação, sem mudar o modelo):** `kind: 'current'` com `end: 'present'` é exibido como **DESDE 2025** / **SINCE 2025** (evita repetir "ATUAL" com o label CAMPANHA ATUAL). O dado continua `{ start: 2025, end: 'present' }`. Origin/checkpoint seguem `YYYY — YYYY`.
+  - **Orçamento editorial do summary:** ~**120–140 caracteres** (≈ 2–3 linhas no desktop, 3–4 no mobile). Limite editorial, **não técnico**: sem truncation CSS nem line-clamp. O MOCK pode continuar maior até ser substituído.
+  - **Estado separado:** Campaign Log — **STRUCTURE / VISUAL: APPROVED**; Campaign Log — **EDITORIAL CONTENT: PENDING FACTUAL REVIEW**. Todos os períodos e textos atuais continuam **MOCK** (inclusive a entry com FATEC Americana) e não vão para `docs/14`, README, SEO, metadata, CLAUDE.md (como fatos) ou perfil.
+  - **Produção inalterada:** desenvolvimento com MOCK; produção e GitHub Pages sem Campaign Log e sem MOCK no bundle; deploy guard mantido. Jornada / Journey só volta ao header quando o conteúdo factual substituir o MOCK e o Campaign Log for liberado para produção.
+  - **Etapas:** 03-0 = MOCK content for development; 03-A = model/data infrastructure done; 03-B = visual approved; **03-C = editorial content pending**. A 03-C não bloqueia o desenvolvimento das próximas partes da Home.
+- **Status:** Aceita.

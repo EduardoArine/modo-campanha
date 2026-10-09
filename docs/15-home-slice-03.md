@@ -1,6 +1,13 @@
 # 15 — Home Slice 03: Campaign Log
 
-> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. **03-A e 03-B implementados com conteúdo MOCK (D-049), aguardando revisão visual.** 03-0 (histórico real) continua pendente; 03-C não iniciado.
+> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. **03-B — CAMPAIGN LOG VISUAL: APPROVED** e congelado (D-050). Estado: **STRUCTURE / VISUAL: APPROVED** · **EDITORIAL CONTENT: PENDING FACTUAL REVIEW**.
+>
+> | Etapa | Estado                                                              |
+> | ----- | ------------------------------------------------------------------- |
+> | 03-0  | MOCK content for development (histórico real pendente)              |
+> | 03-A  | model / data infrastructure done                                    |
+> | 03-B  | visual approved (frozen)                                            |
+> | 03-C  | editorial content pending (não bloqueia as próximas partes da Home) |
 >
 > ⚠️ **CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os entries em `src/app/data/campaign-log.data.development.ts` não são fatos sobre o Eduardo. Só existem em desenvolvimento e testes; a produção usa `campaign-log.data.ts` (vazio) e não renderiza a seção.
 
@@ -114,6 +121,11 @@ A linguagem de jogo vem da composição e da nomenclatura, não de dados inventa
 | Mobile (< 768)    | linha na borda esquerda; período na linha do label (`■ CHECKPOINT · 2017–2020`), depois título e summary                       |
 
 Sem scroll horizontal, zoom, hover, alternância esquerda/direita ou conectores cruzando a tela. A ordem cronológica se preserva naturalmente.
+
+### Regras de conteúdo e apresentação (D-050)
+
+- **Summary:** ~120–140 caracteres (≈ 2–3 linhas no desktop, 3–4 no mobile). Regra **editorial**: sem truncation CSS nem line-clamp.
+- **Período da entrada atual:** `current` + `end: 'present'` → **DESDE 2025** / **SINCE 2025** (só apresentação; o modelo não muda). Origin/checkpoint: `YYYY — YYYY`.
 
 ## 6. Acessibilidade
 
