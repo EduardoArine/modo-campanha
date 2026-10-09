@@ -71,22 +71,21 @@ Notas:
 
 Dados: `src/app/data/projects.data.ts` (vazio).
 
-## Skill / SkillGroup
+## Skill / SkillGroup (Skill Loadout, D-042)
 
 `src/app/models/skill.model.ts`
 
 ```ts
-type SkillGroupId = 'engineering' | 'product' | 'ai' | 'game-design';
-type SkillState = 'unlocked' | 'evolving' | 'core' | 'exploring';
+type SkillGroupId = 'build' | 'product' | 'ai' | 'game-dna';
 
-interface Skill { id: string; name: string; state?: SkillState; }
-interface SkillGroup { id: SkillGroupId; title: string; skills: Skill[]; }
+interface Skill { id: string; name: Localized; }
+interface SkillGroup { id: SkillGroupId; title: Localized; skills: readonly Skill[]; }
 ```
 
-- **Nunca** adicionar campo de percentual / nível numérico.
-- `state` ainda não atribuído a nenhuma skill: decisão da FASE 3.
+- **Proibido** no model: percentual, rating, level, estrelas, rótulo de proficiência, XP individual e os antigos `state` (unlocked/evolving/core/exploring), removidos.
+- **Autoria × runtime:** `candidate`/`approved` vivem só em `docs/14-content-inventory.md`; o runtime carrega **apenas skills aprovadas**, sem campo de status.
 
-Dados: `src/app/data/skills.data.ts` (quatro grupos preenchidos com as skills listadas por Eduardo).
+Dados: `src/app/data/skills.data.ts` exporta `SKILL_LOADOUT` (Skill Loadout v1, D-041). Testes em `skills.data.spec.ts` garantem o conteúdo exato nos dois idiomas, a ausência dos itens removidos e de campos de proficiência/autoria.
 
 ## Achievement
 
