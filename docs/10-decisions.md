@@ -486,3 +486,22 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Produção:** sem artwork, o MC-001 não aparece em produção (o Inventory ficaria só com o header). Sem workaround temporário: **a 02-C não é enviada sozinha**; 02-C + 02-C.5 (artwork aprovado) sobem juntos, e o `origin/main` nunca tem o Inventory vazio.
 - **Learnings en do MC-001 aprovados:** "Validate typography at actual usage sizes." · "Separate the visual language of digital interfaces from that of physical objects." Learning candidato do case completo registrado em `docs/14` (fora do runtime).
 - **Status:** **02-C APPROVED** (2026-10-09) com os refinamentos acima; commits locais até o 02-C.5. 02-D não iniciado.
+
+## D-045 — MC-001 artwork direction: System Horizon (Home Slice 02-C.5)
+
+- **Data:** 2026-10-09
+- **Contexto:** três direções exploratórias para o artwork do MC-001 (16:10, pixel art 160 × 100 exportada em 640 × 400), avaliadas dentro do MC-CART real: **A — Campaign Map**, **B — System Horizon**, **C — Cartridge World**.
+- **Decisão:** **MC-001 ARTWORK DIRECTION — SYSTEM HORIZON: APPROVED.** A etapa exploratória está encerrada; não criar quarta direção.
+  - **Por que B:** maior maturidade profissional, menor risco de parecer jogo literal, bom equilíbrio retro/moderno, forte compatibilidade com o shell orange/special e melhor capacidade de gerar linguagem para artworks futuras.
+  - **A** lê melhor pequena, mas parece seleção de fase/mapa de níveis. **C** é interessante, mas cria autorreferência (cartucho dentro de cartucho).
+  - **Refinamento B2:** massas construídas mais largas, céu simplificado, horizonte mais alto, caminho abstrato (path + system diagram, não estrada), 2–3 marcos discretos de progressão, módulo em construção mantido, luz de destino sem "sunset synthwave". Laranja para construção/caminho/destaques; teal só em poucos sinais; o shell continua o maior bloco cromático do cartucho.
+- **Princípios da família de artworks (regra inicial):** cada projeto tem sua própria cena; **"System Horizon" não é template obrigatório**. A família é construída por princípios compartilhados:
+  - uma cena principal;
+  - leitura forte em miniatura (≈ 282 px de largura no MC-CART);
+  - sentido de progressão ou transformação;
+  - poucos sinais de sistema;
+  - paleta derivada do MC Design System;
+  - pixel language controlada;
+  - sem texto embutido, sem logos, sem UI literal.
+- **Paco (MC-002):** sem artwork agora; poderá ter linguagem de cenário/gameplay própria. O compartilhado é a gramática visual, não o conteúdo da cena.
+- **Status:** B2 em revisão visual. Nada integrado ao app (sem artwork em `projects.data.ts`, sem asset em `public/assets`).

@@ -95,7 +95,7 @@ Backlog:
 
 ### Home Slice 02 🟡 (plano aprovado, D-040; `docs/13-home-slice-02.md`)
 
-- ✅ 02-0 content inventory (D-041, D-042) · ✅ 02-A Skill Loadout data · ✅ 02-B Skill Loadout visual (**APPROVED**) · ✅ 02-C Project model (**APPROVED**, local até o 02-C.5) · ⬜ 02-C.5 MC-001 artwork ◆ · ⬜ 02-D/E Inventory · ⬜ 02-F revisão
+- ✅ 02-0 content inventory (D-041, D-042) · ✅ 02-A Skill Loadout data · ✅ 02-B Skill Loadout visual (**APPROVED**) · ✅ 02-C Project model (**APPROVED**, local até o 02-C.5) · 🟡 02-C.5 MC-001 artwork (direção **System Horizon APPROVED**, D-045; B2 ◆ em revisão) · ⬜ 02-D/E Inventory · ⬜ 02-F revisão
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)
