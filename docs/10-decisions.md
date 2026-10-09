@@ -548,3 +548,17 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Fases:** **FASE 3 — Core Experience encerrada.** Itens que dependem da experiência de interação vão para a **FASE 5 — Game Feel**: CRT Project Viewer completo na experiência da Home, seleção de cartucho, inserção no console, transição cartucho → CRT e motion relacionado. O Slice 03 abre a **FASE 4 — Career Content**.
   - Roadmap da FASE 3 corrigido conforme o estado real (itens concluídos marcados; pendentes não concluídos transferidos e indicados).
 - **Status:** Aceita. Etapa atual: **03-0 — Content inventory**, aguardando o histórico do Eduardo. 03-A/03-B/03-C não iniciados; nenhum runtime data do Campaign Log.
+
+## D-049 — Campaign Log com conteúdo MOCK para desenvolvimento visual (03-A / 03-B)
+
+- **Data:** 2026-10-09
+- **Contexto:** o histórico real do Eduardo (03-0) ainda não existe. Para destravar modelo, composição, hierarquia, ritmo e responsividade, o Slice 03 avança com conteúdo **MOCK**.
+- **Decisão:**
+  - **CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os 5 entries (períodos, títulos, contextos, textos) **não são fatos sobre o Eduardo** e não entram em CLAUDE.md, perfil, `docs/14`, README, metadata ou SEO. Serão substituídos pelo histórico real.
+  - **Modelo implementado:** `CampaignLogKind = 'origin' | 'checkpoint' | 'current'`, `CampaignLogPeriod { start; end?: number | 'present' }`, `CampaignLogEntry { id; kind; period; title; context?; summary }` com `Localized`. Sem `publication` por enquanto: a política "runtime só com conteúdo aprovado" é garantida pelo arquivo de dados publicado. `CampaignCheckpoint` (FASE 0) removido.
+  - **Segurança de produção (mecanismo já existente, sem feature flag):** `src/app/data/campaign-log.data.ts` (o que vai para produção) é uma **lista vazia**; em desenvolvimento, build de desenvolvimento e testes ele é trocado por `campaign-log.data.development.ts` (MOCK) via `fileReplacements` no angular.json, o mesmo padrão do showcase (D-028). A Home só renderiza o Campaign Log quando há entradas: em produção e no GitHub Pages a seção não existe e o MOCK nem entra no bundle. Os ids do MOCK começam com `mock-campaign-log-` e o workflow de deploy falha se essa string aparecer no build.
+  - **Quando o conteúdo real for aprovado:** as entradas aprovadas vão para `campaign-log.data.ts`; o arquivo `.development.ts` e o `fileReplacements` correspondente são removidos.
+  - **Labels de sistema na UI** (`campaignLog.kind`): origin → NEW GAME; checkpoint → CHECKPOINT; current → CAMPANHA ATUAL / CURRENT CAMPAIGN; "ATUAL" / "PRESENT" para períodos em aberto.
+  - **Visual (A + C):** `ol` com `h3` por checkpoint; ≥ 768 px período em coluna própria à esquerda do eixo (colunas 1–2), conteúdo a partir da coluna 3 (até a 9 no desktop); < 768 px período no fluxo, acima do label. Linha de 1 px (`--mc-border-subtle`); markers quadrados de 8 px: origin em `--mc-accent-active`, checkpoint vazado em `--mc-border-default`, current em `--mc-status-online`. Sem cards, fundos, sombras, objeto físico, ícones ou métricas. IBM Plex Sans.
+  - **Navegação:** Jornada / Journey continua fora do header até conteúdo real + seção aprovada + liberação para produção.
+- **Status:** 03-A e 03-B (checkpoint visual) implementados com MOCK, **aguardando revisão visual**. Commits locais. 03-C não iniciado.

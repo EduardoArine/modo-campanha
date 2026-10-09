@@ -7,7 +7,7 @@ Fonte da verdade: `src/app/models/`. Este documento explica a intenção de cada
 As interfaces atuais são da FASE 0. Ao aprovar D-020 (i18n) e especificar o MC-CART, elas evoluem assim:
 
 1. **Bilíngue (D-018, D-020):** todo campo de texto humano passa de `string` para `Localized<string>` (`{ 'pt-BR': string; en: string }`), e listas para `Localized<string[]>`. O tipo já existe em `src/app/core/i18n/locale.ts`; resolver no idioma ativo com `LocaleService.pick()`. Textos de UI (labels, navegação, mensagens, aria) não são conteúdo: ficam nos dicionários `core/i18n/ui.*.ts`. Campos neutros (ids, slug, ano, stack, URLs, serial) continuam simples.
-   - Ex.: `title`, `subtitle`, `role`, `summary`, `mission`, `responsibilities`, `challenges`, `solution`, `results`, `learnings`, `ProjectScreenshot.alt/caption`, `ProjectLink.label`, `Skill.name`, `SkillGroup.title`, `Achievement.title/description`, `CampaignCheckpoint.title/period/description`, `SocialLink.label`.
+   - Ex.: `title`, `subtitle`, `role`, `summary`, `mission`, `responsibilities`, `challenges`, `solution`, `results`, `learnings`, `ProjectScreenshot.alt/caption`, `ProjectLink.label`, `Skill.name`, `SkillGroup.title`, `Achievement.title/description`, `CampaignLogEntry.title/context/summary`, `SocialLink.label`.
    - Nomes próprios (ex.: "Comunidade On") também usam `Localized` por consistência; podem repetir o mesmo valor.
 2. ✅ **Implementado no 02-C (D-044), ver seção Project.** Plano original, MC-CART (D-013): `Cartridge` ganha `shell` (`'black' | 'cream' | 'graphite' | 'orange'`), `accent` (token de cor) e `serial` no formato `<COLEÇÃO>-<NNN>` (ex.: `ON-001`, como no concept). A regra de prefixos será definida na spec do MC-CART. `color` será substituído por `shell` + `accent`.
 3. ✅ **Implementado no 02-C** (catálogo `TAGS`, ids em vez de strings). Plano original, **listagem enxuta:** `Project` ganha `tags` (1–2, `Localized<string>[]`) para a vitrine; detalhes completos ficam para o CRT Viewer ("coleção primeiro, documentação depois").
@@ -111,26 +111,36 @@ interface Achievement {
 
 Dados: `src/app/data/achievements.data.ts` (vazio; ideias em `docs/02-experience-concept.md`).
 
-## CampaignCheckpoint
+## CampaignLogEntry (Home Slice 03, D-048/D-049)
 
-`src/app/models/campaign-checkpoint.model.ts`
+`src/app/models/campaign-log.model.ts`
 
 ```ts
-type CheckpointKind = 'new-game' | 'checkpoint' | 'skill-unlocked' | 'main-quest';
+type CampaignLogKind = 'origin' | 'checkpoint' | 'current';
 
-interface CampaignCheckpoint {
+interface CampaignLogPeriod {
+  start: number; // ano real
+  end?: number | 'present'; // ausente = ano único
+}
+
+interface CampaignLogEntry {
   id: string;
-  kind: CheckpointKind;
-  title: string;
-  period: string; // ex.: '2015' ou '2019 — atual'
-  description: string;
-  tags?: string[];
+  kind: CampaignLogKind;
+  period: CampaignLogPeriod;
+  title: Localized;
+  context?: Localized; // organização/ambiente, só quando útil e aprovado
+  summary: Localized; // 1–2 frases: o que mudou
 }
 ```
 
-Dados: `src/app/data/campaign-log.data.ts` (vazio).
+- `kind` é semântica; o rótulo (NEW GAME / CHECKPOINT / CAMPANHA ATUAL) vem do dicionário de UI (`campaignLog.kind`).
+- Fora do modelo: technologies, tags, highlights, results, XP, progress, level, logos, métricas.
+- Substitui `CampaignCheckpoint` (FASE 0).
 
-> **Planejado (D-048, implementação na 03-A):** `CampaignCheckpoint` será substituído por `CampaignLogEntry { id; kind: 'origin' | 'checkpoint' | 'current'; period: { start; end? }; title; context?; summary; publication? }`, com textos `Localized`. Ver `docs/15-home-slice-03.md`.
+Dados:
+
+- `src/app/data/campaign-log.data.ts`: **publicado** (produção). Vazio até o histórico real ser aprovado; vazio = seção não renderizada.
+- `src/app/data/campaign-log.data.development.ts`: **MOCK de desenvolvimento visual** (D-049), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
 ## SocialLink
 

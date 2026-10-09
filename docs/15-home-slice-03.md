@@ -1,6 +1,8 @@
 # 15 — Home Slice 03: Campaign Log
 
-> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. Etapa atual: **03-0 — Content inventory**, aguardando o histórico real do Eduardo. 03-A, 03-B e 03-C não iniciados. Nenhum runtime data do Campaign Log existe ainda.
+> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. **03-A e 03-B implementados com conteúdo MOCK (D-049), aguardando revisão visual.** 03-0 (histórico real) continua pendente; 03-C não iniciado.
+>
+> ⚠️ **CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os entries em `src/app/data/campaign-log.data.development.ts` não são fatos sobre o Eduardo. Só existem em desenvolvimento e testes; a produção usa `campaign-log.data.ts` (vazio) e não renderiza a seção.
 
 Abre a **FASE 4 — Career Content**.
 
