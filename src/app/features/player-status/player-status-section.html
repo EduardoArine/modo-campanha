@@ -1,0 +1,23 @@
+<section id="player-status" class="mc-page-grid section" aria-labelledby="player-status-title">
+  <mc-section-header [heading]="ui().sections.playerStatus" headingId="player-status-title" />
+
+  <div class="layout">
+    <mc-player-card
+      class="card"
+      [name]="profile.name"
+      [fields]="cardFields()"
+      [statusLabel]="locale.pick(profile.status.state.label)"
+    >
+      <mc-status state="active">{{ locale.pick(profile.status.state.value) }}</mc-status>
+    </mc-player-card>
+
+    <dl class="facts">
+      @for (fact of facts(); track fact.label) {
+        <div class="fact">
+          <dt>{{ fact.label }}</dt>
+          <dd>{{ fact.value }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>

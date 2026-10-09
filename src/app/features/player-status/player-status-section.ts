@@ -1,32 +1,42 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
 import { PLAYER_PROFILE } from '../../data';
+import { McPlayerCard } from '../../shared/signature';
 import { McSectionHeader, McStatus } from '../../shared/ui';
 
-// PROVISÓRIO: só a linha de cabeçalho, como referência de ritmo Hero → Player Status
-// (checkpoint 01-C). A seção real é o Home Slice 01-E (docs/12-home-slice-01.md).
+/**
+ * Player Status (Home Slice 01-E, D-038). Base Concept 03-A: Player Card + dados
+ * profissionais em lista aberta (espaço, linhas, tipografia; nada vira card).
+ * Só conteúdo aprovado: sem bloco "Sobre a jornada" até existir texto aprovado.
+ */
 @Component({
   selector: 'app-player-status-section',
-  imports: [McSectionHeader, McStatus],
-  template: `
-    <section id="player-status" class="mc-page-grid section" aria-labelledby="player-status-title">
-      <mc-section-header [heading]="ui().sections.playerStatus" headingId="player-status-title">
-        <mc-status state="active">{{ locale.pick(profile.status.state.value) }}</mc-status>
-      </mc-section-header>
-    </section>
-  `,
-  styles: `
-    @use 'mc' as *;
-
-    .section {
-      padding-block: var(--mc-space-section);
-    }
-  `,
+  imports: [McPlayerCard, McSectionHeader, McStatus],
+  templateUrl: './player-status-section.html',
+  styleUrl: './player-status-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerStatusSection {
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
   protected readonly profile = PLAYER_PROFILE;
+
+  /** Linhas do Player Card: CLASS e XP (STATUS entra como mc-status). */
+  protected readonly cardFields = computed(() => [
+    { label: this.ui().playerCard.classLabel, value: this.locale.pick(PLAYER_PROFILE.role) },
+    {
+      label: this.locale.pick(PLAYER_PROFILE.status.xp.label),
+      value: this.locale.pick(PLAYER_PROFILE.status.xp.value),
+    },
+  ]);
+
+  /** Dados complementares (fora do card). */
+  protected readonly facts = computed(() => {
+    const { origin, currentCampaign, focus } = PLAYER_PROFILE.status;
+    return [origin, currentCampaign, focus].map((field) => ({
+      label: this.locale.pick(field.label),
+      value: this.locale.pick(field.value),
+    }));
+  });
 }

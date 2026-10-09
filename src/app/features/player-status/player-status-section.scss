@@ -1,0 +1,70 @@
+// Player Status (docs/12-home-slice-01.md, §10; D-038). 03-A: aberto, poucas caixas.
+// Desktop: Player Card 1–4 + dados 6–12 (coluna 5 vazia como respiro; o grid não obriga simetria).
+// Tablet: card 1–3 + dados 4–8. Mobile: empilhado, card primeiro.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.layout {
+  @include columns;
+  row-gap: space(7);
+  margin-top: var(--mc-space-section-head);
+}
+
+.card {
+  grid-column: 1 / -1;
+  max-width: 24rem;
+
+  @include mq(md) {
+    grid-column: 1 / 4;
+    max-width: none;
+  }
+
+  @include mq(lg) {
+    grid-column: 1 / 5;
+  }
+}
+
+// Dados abertos: separados por linhas e espaço, não por caixas.
+.facts {
+  grid-column: 1 / -1;
+  display: grid;
+  align-content: start;
+  margin: 0;
+
+  @include mq(md) {
+    grid-column: 4 / -1;
+  }
+
+  @include mq(lg) {
+    grid-column: 6 / -1;
+  }
+}
+
+.fact {
+  display: grid;
+  gap: space(2);
+  padding-block: space(5);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+
+  &:first-child {
+    padding-top: 0;
+  }
+
+  dt {
+    @include type(label);
+    color: var(--mc-text-muted);
+  }
+
+  dd {
+    margin: 0;
+    @include type(title-l);
+    color: var(--mc-text);
+  }
+}
