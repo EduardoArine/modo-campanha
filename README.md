@@ -49,7 +49,8 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 9. [Roadmap](docs/09-roadmap.md)
 10. [Decisões](docs/10-decisions.md)
 11. [MC Design System](docs/11-design-system.md)
-12. [Home Slice 01 (plano)](docs/12-home-slice-01.md)
+12. [Home Slice 01](docs/12-home-slice-01.md)
+13. [Home Slice 02 (plano)](docs/13-home-slice-02.md)
 
 ## Rodando localmente
 
