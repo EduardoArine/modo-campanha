@@ -1,0 +1,134 @@
+// Campaign Log (docs/15-home-slice-03.md, A + C — Checkpoint Log Editorial). Timeline vertical
+// aberta: sem cards, fundos, sombras ou objeto físico. A linha e os markers só organizam a
+// cronologia. ≥ 768: período em coluna própria (2 colunas), à esquerda do eixo; < 768: período
+// entra no fluxo, acima do label. Nomes curtos locais: --mk = tamanho do marker, --my = topo do
+// marker (centro da 1ª linha de label), --in = recuo do texto em relação ao eixo.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.log {
+  @include columns;
+  row-gap: 0;
+  margin: var(--mc-space-section-head) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.entry {
+  --mk: #{space(2)};
+  --my: #{space(1)};
+  --in: #{space(5)};
+  position: relative;
+  grid-column: 1 / -1;
+  padding: 0 0 space(7) var(--in);
+
+  @include mq(md) {
+    grid-column: 3 / -1;
+  }
+
+  @include mq(lg) {
+    grid-column: 3 / span 7;
+  }
+
+  // Eixo: liga os markers; começa no primeiro e termina no último.
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(var(--mk) / 2);
+    width: var(--mc-border-width-default);
+    background: var(--mc-border-subtle);
+  }
+
+  &:first-child::before {
+    top: var(--my);
+  }
+
+  &:last-child {
+    padding-bottom: 0;
+
+    &::before {
+      bottom: auto;
+      height: var(--my);
+    }
+  }
+}
+
+// Markers quadrados: origin warm discreto, checkpoint estrutural neutro, current active.
+.marker {
+  position: absolute;
+  z-index: 1;
+  top: var(--my);
+  left: 0;
+  box-sizing: border-box;
+  width: var(--mk);
+  height: var(--mk);
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  background: var(--mc-bg);
+}
+
+.entry--origin .marker {
+  border-color: var(--mc-accent-active);
+  background: var(--mc-accent-active);
+}
+
+.entry--current .marker {
+  border-color: var(--mc-status-online);
+  background: var(--mc-status-online);
+}
+
+p,
+h3 {
+  margin: 0;
+}
+
+.period {
+  @include type(label);
+  color: var(--mc-text);
+
+  // Coluna de período à esquerda do eixo (alinhada ao label do checkpoint).
+  @include mq(md) {
+    position: absolute;
+    top: 0;
+    right: calc(100% + var(--mc-gutter));
+    white-space: nowrap;
+    text-align: right;
+  }
+}
+
+.kind {
+  margin-top: space(1);
+  @include type(label);
+  color: var(--mc-text-muted);
+
+  @include mq(md) {
+    margin-top: 0;
+  }
+}
+
+.title {
+  margin-top: space(2);
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.context {
+  margin-top: space(1);
+  @include type(body-s);
+  color: var(--mc-text-muted);
+}
+
+.summary {
+  max-width: 62ch;
+  margin-top: space(2);
+  @include type(body);
+  color: var(--mc-text-secondary);
+}

@@ -1,0 +1,28 @@
+<section id="campaign-log" class="mc-page-grid section" aria-labelledby="campaign-log-title">
+  <mc-section-header [heading]="ui().sections.campaignLog" headingId="campaign-log-title" />
+
+  <ol class="log" role="list">
+    @for (entry of entries; track entry.id) {
+      <li [class]="'entry entry--' + entry.kind">
+        <span class="marker" aria-hidden="true"></span>
+        <p class="period">
+          <time [attr.datetime]="entry.period.start">{{ entry.period.start }}</time>
+          @if (entry.period.end; as end) {
+            —
+            @if (end === 'present') {
+              {{ ui().campaignLog.present }}
+            } @else {
+              <time [attr.datetime]="end">{{ end }}</time>
+            }
+          }
+        </p>
+        <p class="kind">{{ ui().campaignLog.kind[entry.kind] }}</p>
+        <h3 class="title">{{ locale.pick(entry.title) }}</h3>
+        @if (entry.context; as context) {
+          <p class="context">{{ locale.pick(context) }}</p>
+        }
+        <p class="summary">{{ locale.pick(entry.summary) }}</p>
+      </li>
+    }
+  </ol>
+</section>

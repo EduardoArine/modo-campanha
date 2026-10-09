@@ -3,7 +3,12 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
+import { CAMPAIGN_LOG } from '../../data';
 import { HomePage } from './home-page';
+
+// Os testes rodam na configuração `development`: o Campaign Log usa o MOCK (D-049). Em
+// produção a lista publicada é vazia e a seção não é renderizada.
+const hasCampaignLog = CAMPAIGN_LOG.length > 0;
 
 describe('HomePage', () => {
   it('should render only the built sections, in order', async () => {
@@ -14,20 +19,26 @@ describe('HomePage', () => {
       (fixture.nativeElement as HTMLElement).querySelectorAll('main > * > section'),
     ).map((section) => section.id);
 
-    expect(ids).toEqual(['hero', 'player-status', 'skill-loadout', 'project-inventory']);
+    expect(ids).toEqual([
+      'hero',
+      'player-status',
+      'skill-loadout',
+      'project-inventory',
+      ...(hasCampaignLog ? ['campaign-log'] : []),
+    ]);
   });
 
-  it('should end after the Project Inventory, with no raw placeholder titles', async () => {
+  it('should end after the last built section, with no raw placeholder titles', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const fixture = TestBed.createComponent(HomePage);
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
 
     expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
-      'APP-PROJECT-INVENTORY-SECTION',
+      hasCampaignLog ? 'APP-CAMPAIGN-LOG-SECTION' : 'APP-PROJECT-INVENTORY-SECTION',
     );
     expect(el.textContent).not.toMatch(
-      /CAMPAIGN LOG|ACHIEVEMENTS|CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/,
+      /ACHIEVEMENTS|CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/,
     );
   });
 
