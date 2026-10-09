@@ -31,6 +31,12 @@
 
   @include mq(xl) {
     grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+
+    // 04-B.1: com exatamente 2 itens, o painel ocupa 8/12 colunas, alinhado à esquerda. As
+    // 2 células dividem o painel; o restante é espaço negativo da página, não um slot vazio.
+    &:has(> :nth-child(2):last-child) {
+      max-width: calc((100% - 11 * var(--mc-gutter)) * 8 / 12 + 7 * var(--mc-gutter));
+    }
   }
 }
 

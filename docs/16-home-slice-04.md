@@ -69,11 +69,11 @@ Peso visual: mais visual que o Campaign Log, menos que o Project Inventory; cont
 
 ### Responsivo
 
-| Faixa    | Comportamento                                                  |
-| -------- | -------------------------------------------------------------- |
-| ≥ 1200   | N células numa linha (`--n` = quantidade): 4 → 4, 3 → 3, 2 → 2 |
-| 768–1199 | 2 por linha; ímpar final ocupa a linha inteira                 |
-| < 768    | 1 por linha, réguas horizontais; nunca 2 colunas               |
+| Faixa    | Comportamento                                                                                                                                                                                               |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ≥ 1200   | N células numa linha (`--n` = quantidade): 4 → 4, 3 → 3; **2 → painel em 8/12 colunas, alinhado à esquerda** (04-B.1), cada célula metade do painel; o restante é espaço negativo da página, não slot vazio |
+| 768–1199 | 2 por linha; ímpar final ocupa a linha inteira                                                                                                                                                              |
+| < 768    | 1 por linha, réguas horizontais; nunca 2 colunas                                                                                                                                                            |
 
 ### Orçamento editorial
 
