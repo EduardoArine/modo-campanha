@@ -95,7 +95,7 @@ Backlog:
 
 ### Home Slice 02 🟡 (plano aprovado, D-040; `docs/13-home-slice-02.md`)
 
-- 🟡 02-0 content inventory (MC-001, MC-002, Skill Loadout) · ⬜ 02-A/B Skill Loadout · ⬜ 02-C/D/E Project Inventory · ⬜ 02-F revisão
+- ✅ 02-0 content inventory (D-041: MC-001 approved, MC-002 review, Skill Loadout v1) · ⬜ 02-A/B Skill Loadout · ⬜ 02-C/D/E Project Inventory · ⬜ 02-F revisão
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)

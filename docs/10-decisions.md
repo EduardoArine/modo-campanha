@@ -435,3 +435,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Roteamento do case:** pendente entre `#project-<slug>` e `/projects/<slug>`, com preferência arquitetural futura por rota própria; decidir com o primeiro case real.
   - **Artwork:** 16:10, mínimo 640 × 400, sem texto obrigatório, sem screenshots internos sem aprovação; produção em etapa própria.
 - **Status:** Aceita. Plano em `docs/13-home-slice-02.md`; etapa atual 02-0 (content inventory).
+
+## D-041 — Content inventory 02-0: MC-001 aprovado, MC-002 em revisão, Skill Loadout v1
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **MC-001 Modo Campanha:** ficha aprovada por Eduardo (descrição, tipo, papel, tecnologias, tags Produto/Gamificação, shell `orange` / accent `special`, dois aprendizados); **`publication: approved`**. Único link público: repositório GitHub; nenhum link de site enquanto o GitHub Pages não estiver publicado.
+  - **MC-002 Paco:** título único nos dois idiomas (sem tradução oficial); descrição, tipo, papel, pipeline, tags Game Design/Prototipagem, contexto, contribuição e aprendizado aprovados; **`publication: review`** até confirmar equipe, links, direito de publicação dos assets e lista exata de material.
+  - **Skill Loadout v1:** BUILD (Angular, TypeScript, C# / .NET, REST APIs, PostgreSQL / SQL Server, Docker), PRODUCT (Pensamento de produto, Colaboração UX/UI, Prototipação e iteração, Design systems), AI (Desenvolvimento assistido por IA, Agentes de desenvolvimento, Design de prompts e workflows, Automação de workflows), GAME DNA (Sistemas de jogo, Gamificação, Design de interação, Prototipação de jogos), bilíngue. Fora da v1: Application architecture, Product modeling, AI prototyping, Progression & feedback.
+  - Nenhuma skill tem percentual, rating, level, estrelas, rótulo de proficiência ou XP individual. "Visto em / Seen in" segue como ideia futura.
+- **Pendências registradas:** tom (warm/cool) das tags; artwork do MC-001 (publicar com placeholder ou produzir antes); shell/accent do Paco; traduções en dos aprendizados do MC-001 (rascunho).
+- **Status:** Aceita. Fichas em `docs/14-content-inventory.md`. Implementação visual do Slice 02 não iniciada.
