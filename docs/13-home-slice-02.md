@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044). 02-C.5 **APPROVED** (D-045, D-046): artwork System Horizon Refined integrado ao MC-001; Inventory público com o MC-001. 02-D absorvido por 02-C / 02-C.5; 02-E absorvido por 02-B / 02-C / 02-C.5. Etapa atual: **02-F — Integrated Slice Review** (em revisão; sem feature nova).
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044). 02-C.5 **APPROVED** (D-045, D-046): artwork System Horizon Refined integrado ao MC-001; Inventory público com o MC-001. 02-D absorvido por 02-C / 02-C.5; 02-E absorvido por 02-B / 02-C / 02-C.5. 02-F **APPROVED** (D-047). **HOME SLICE 02 — APPROVED.** Seções não construídas não são renderizadas; a navegação só expõe destinos existentes.
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 
@@ -196,4 +196,4 @@ Ordem da Home: Player Status → **Skill Loadout** → **Project Inventory**.
 | **02-C.5 MC-001 Project Artwork** | artwork do MC-001 (16:10, mín. 640 × 400, sem texto embutido, universo Modo Campanha, sem repetir o nome) | ◆ **aprovação do artwork** (bloqueia o Inventory público) |
 | **02-D Inventory** | MC-CART + Project Summary dos projetos aprovados, com artwork aprovado (placeholder só em dev/showcase) | ✅ absorvido por 02-C / 02-C.5 |
 | **02-E Responsive** | até 4 / 2 / 1, sem overflow | ✅ absorvido por 02-B / 02-C / 02-C.5 |
-| **02-F Integrated Slice Review** | Home integrada (Header → Hero → Player Status → Skill Loadout → Project Inventory), pt-BR/en × 1440/820/390, acessibilidade, contraste, âncoras, regressão do Slice 01; sem feature nova | ◆ aprovação final (em revisão) |
+| **02-F Integrated Slice Review** | Home integrada (Header → Hero → Player Status → Skill Loadout → Project Inventory), pt-BR/en × 1440/820/390, acessibilidade, contraste, âncoras, regressão do Slice 01; sem feature nova | ✅ **APPROVED** (D-047) |

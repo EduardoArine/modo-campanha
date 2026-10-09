@@ -525,3 +525,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Freeze:** MC-001 (artwork, crop, escala, shell, accent, conteúdo, summary, tags), MC-CART e Project Inventory congelados. Composição aprovada: primeiro projeto no primeiro slot natural, alinhado à esquerda, sem centralização nem aumento por haver um só projeto, sem slots vazios nem placeholders; o espaço vazio à direita no desktop é aceito (a coleção cresce organicamente).
 - **Interação:** o MC-CART continua não clicável e não vira link para o GitHub. Semântica futura: MC-CART → seleção do projeto → CRT → Project Case; o GitHub será uma ação explícita dentro do case.
 - **Roadmap:** **02-D** (Inventory) absorvido por 02-C / 02-C.5; **02-E** (responsivo) absorvido por 02-B / 02-C / 02-C.5. Sem trabalho artificial para cumprir nomes de etapas antigas. Próxima etapa: **02-F — Integrated Slice Review** (sem feature nova). GitHub Pages: sem deploy até a aprovação do Slice 02 completo.
+
+## D-047 — Home Slice 02 aprovado; Home pública só com seções construídas (02-F)
+
+- **Data:** 2026-10-09
+- **Decisão:** **HOME SLICE 02 — APPROVED.** Narrativa aprovada: Hero → Player Status → Skill Loadout → Project Inventory. Sem refinamentos adicionais nessas quatro áreas.
+  - **Seções não construídas não são renderizadas** até seus slices reais existirem: Campaign Log, Achievements, Current Main Quest, Side Quests e Final Checkpoint saíram do template da Home (`home-page.ts`). Os componentes continuam no código como estrutura reservada. Nada de "coming soon", cards vazios, headers temporários, conteúdo fictício ou estilo provisório, e nenhuma feature flag.
+  - **A navegação só expõe destinos que existem:** header com **Sobre / Projetos** (en: **About / Projects**) + PT / EN; **Jornada** e **Contato** removidos temporariamente (rótulos mantidos no dicionário; voltam com as seções reais; Contato não vira LinkedIn). Âncoras: Sobre/About → `#player-status`, Projetos/Projects → `#project-inventory`.
+  - Navegação mobile continua no backlog (sem menu nesta etapa).
+  - Testes: a ordem da Home cobre só as seções renderizadas; a Home termina no Project Inventory, sem títulos crus; o header só aponta para ids existentes.
+- **Freeze:** Skill Loadout, Project Inventory, MC-001 e o artwork System Horizon Refined congelados.
+- **GitHub Pages:** código em estado publicável; a primeira publicação será decidida separadamente (sem deploy).
+- **Status:** **02-F — APPROVED.** Home Slice 02 encerrado.

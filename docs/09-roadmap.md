@@ -93,9 +93,9 @@ Backlog:
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
 
-### Home Slice 02 🟡 (plano aprovado, D-040; `docs/13-home-slice-02.md`)
+### Home Slice 02 ✅ (**APPROVED**, D-047; `docs/13-home-slice-02.md`)
 
-- ✅ 02-0 content inventory (D-041, D-042) · ✅ 02-A Skill Loadout data · ✅ 02-B Skill Loadout visual (**APPROVED**) · ✅ 02-C Project model (**APPROVED**, D-044) · ✅ 02-C.5 MC-001 artwork (**System Horizon Refined APPROVED**, D-045, D-046) · ✅ 02-D Inventory (absorvido por 02-C / 02-C.5) · ✅ 02-E Responsive (absorvido por 02-B / 02-C / 02-C.5) · 🟡 02-F Integrated Slice Review (◆ em revisão)
+- ✅ 02-0 content inventory (D-041, D-042) · ✅ 02-A Skill Loadout data · ✅ 02-B Skill Loadout visual (**APPROVED**) · ✅ 02-C Project model (**APPROVED**, D-044) · ✅ 02-C.5 MC-001 artwork (**System Horizon Refined APPROVED**, D-045, D-046) · ✅ 02-D Inventory (absorvido por 02-C / 02-C.5) · ✅ 02-E Responsive (absorvido por 02-B / 02-C / 02-C.5) · ✅ 02-F Integrated Slice Review (**APPROVED**, D-047)
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)

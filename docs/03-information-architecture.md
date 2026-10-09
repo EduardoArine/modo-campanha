@@ -20,6 +20,8 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
+> **Hoje a Home renderiza só as seções construídas (#0–#4: Hero, Player Status, Skill Loadout, Project Inventory), D-047.** As seções #5–#9 entram quando seus slices reais existirem; até lá não há placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos** (en: About / Projects); Jornada e Contato voltam com Campaign Log e Final Checkpoint.
+
 ## Header (aprovado no Concept 03)
 
 Não é uma seção, é a moldura fixa do site. Base 03-A:
