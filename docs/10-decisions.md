@@ -391,3 +391,18 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** primeiro vertical slice real da Home (docs/12).
 - **Motivo:** validar o design system e os signature components numa página real antes das demais seções.
 - **Status:** Implementado até **01-C**, aguardando revisão visual. Tablet/mobile definitivos (01-D), Player Status (01-E) e revisão final (01-F) não iniciados.
+
+## D-038 — Home Slice 01: Hero desktop aprovado; tablet, mobile e Player Status
+
+- **Data:** 2026-10-09
+- **Decisão:**
+  - **Home Slice 01-C — Hero Desktop: APPROVED.** Composição preservada (sem nova rodada desktop, sem perseguir o Concept pixel a pixel); tamanho máximo de "MODO CAMPANHA" mantido como identidade; cena só com CRT + console MC-01 + luz quente; CRT com "INSERT CARTRIDGE". GitHub e LinkedIn sem ícones de marca.
+  - **Copy en do Hero:** "…and a degree in Digital Games Technology."
+  - **01-D Tablet (~820 px):** conteúdo primeiro, cena depois e menor (largura máx. 31rem contra 34rem no desktop), mantendo moldura física e console. Limite: o CRT precisa de ≥ 28rem para não cair na moldura simplificada, por isso a cena do tablet não fica menor que isso.
+  - **01-D Mobile (~390 px):** conteúdo primeiro; só o CRT compacto (moldura simplificada, glow menor); **sem console** (prejudicava altura e ritmo; a etiqueta "MC-01" quebrava). Navegação principal segue oculta temporariamente; isso não define a navegação mobile final. GitHub e LinkedIn agrupados abaixo do CTA principal.
+  - **01-E Player Status:** Player Card (colunas 1–4) + dados complementares em lista aberta com linhas (colunas 6–12; coluna 5 vazia como respiro, D-022). Tablet: card 1–3 + dados 4–8. Mobile: empilhado, card primeiro. Card: CLASS, XP, STATUS; dados: ORIGEM/ORIGIN, CAMPANHA ATUAL/CURRENT CAMPAIGN, FOCO/FOCUS. Foto: placeholder "FOTO DO EDUARDO". **Sem bloco "Sobre a jornada"** (não há texto aprovado; espaço negativo no lugar de texto genérico).
+  - **Duplicação de ATIVO:** testadas 3 variantes (A: cabeçalho + card; B: só card; C: só cabeçalho). Escolhida **B**: no card o status tem o rótulo STATUS e contexto; no cabeçalho ficava solto e repetido a poucos centímetros. O cabeçalho mantém marcador, título e linha.
+  - **Âncoras:** o `ViewportScroller` do Angular ignora `scroll-margin-top`; o offset do header fixo passou a ser configurado no `ViewportScroller` (altura real do header + 16 px). Validado com cliques reais: CTA, link repetido, navegação e troca PT/EN preservando o hash param a seção 81 px abaixo do topo (header 65 + 16). Scroll instantâneo (sem motion).
+  - **Histórico Git:** o commit de refactor do CRT dependia do commit seguinte. Como os commits eram locais, a sequência foi recriada a partir de `origin/main`: o refactor ficou só com o rename no showcase e o uso do `PlayerProfile` foi para o commit do perfil. Árvore final idêntica à original; todos os commits intermediários compilam e passam nos testes. Backup local: `backup/slice01-pre-rewrite`.
+- **Desvios do plano:** LED do CRT compacto empurrado para a direita quando não há label (sem efeito no Project Viewer aprovado: diff 0 px); cena do tablet limitada a 31rem pela regra de 28rem do frame.
+- **Status:** Implementado até **01-F**, aguardando aprovação visual do Slice 01 completo. Slice 02 não iniciado.

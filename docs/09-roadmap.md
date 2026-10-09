@@ -83,8 +83,14 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 ### Home Slice 01 🟡 (plano aprovado, D-037; `docs/12-home-slice-01.md`)
 
-- ✅ 01-0 preparação · ✅ 01-A header · ✅ 01-B Hero content · ✅ 01-C Hero visual (◆ aguardando revisão)
-- ⬜ 01-D Hero responsive · ⬜ 01-E entrada do Player Status · ⬜ 01-F revisão pt/en + a11y
+- ✅ 01-0 preparação · ✅ 01-A header · ✅ 01-B Hero content · ✅ 01-C Hero desktop (**APPROVED**)
+- ✅ 01-D tablet + mobile · ✅ 01-E Player Status · ✅ 01-F revisão (◆ aguardando aprovação do Slice 01)
+
+Backlog:
+
+- ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- ⬜ Navegação mobile real (quando as seções de destino existirem)
+- ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
 
 - ✅ Infraestrutura de i18n (pt-BR / en, troca em runtime) — adiantada na FASE 2
 - ⬜ Header (logo, navegação, seletor de idioma)
