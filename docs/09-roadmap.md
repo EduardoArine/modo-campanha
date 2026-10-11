@@ -214,5 +214,5 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 | Campaign XP: regras reais de pontuação (product exploration)                                                        | futuro   |
 | Itens de navegação do header: Sobre / Projetos / Contato (D-054); Jornada volta com o conteúdo real do Campaign Log | 4        |
 | Páginas dedicadas por case (`/projects/:slug`)                                                                      | 5+       |
-| Upgrade para Angular 22 (requer Node ≥ 22.22.3; pendente, D-009)                                                    | qualquer |
+| ~~Upgrade para Angular 22~~ ✅ Angular 22.2 + TypeScript 6.0, Node 24 (D-061)                                       | qualquer |
 | Domínio próprio                                                                                                     | 9        |

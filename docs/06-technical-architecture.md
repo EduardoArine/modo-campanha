@@ -4,14 +4,14 @@
 
 | Item            | Versão / escolha                                   |
 | --------------- | -------------------------------------------------- |
-| Angular         | 21.2 (ver decisão D-009 sobre Angular 22)          |
-| TypeScript      | 5.9                                                |
+| Angular         | 22.2 (upgrade em D-061; histórico em D-009)        |
+| TypeScript      | 6.0                                                |
 | Estilos         | SCSS                                               |
-| Testes          | Vitest (padrão do Angular 21, via `ng test`)       |
+| Testes          | Vitest (padrão do Angular, via `ng test`)          |
 | Formatação      | Prettier (`.prettierrc` gerado pelo CLI)           |
 | Builder         | `@angular/build:application` (esbuild)             |
 | Gerenciador     | npm                                                |
-| Node.js local   | 22.14                                              |
+| Node.js         | 24 (local 24.21; CI `node-version: 24`)            |
 | Hospedagem      | GitHub Pages via GitHub Actions                    |
 | Idiomas         | pt-BR (padrão) + en, troca em runtime (D-018)      |
 | i18n            | solução própria com signals, URL como fonte da verdade (D-020) |
@@ -60,11 +60,11 @@ public/
 
 ### Observação sobre `assets`
 
-O Angular 21 usa a pasta `public/` (copiada para a raiz do build) no lugar do antigo `src/assets/`. Por isso os assets ficam em `public/assets/...` e são referenciados como `assets/...` (caminho relativo, compatível com o `base-href`).
+O Angular (desde o 17/18) usa a pasta `public/` (copiada para a raiz do build) no lugar do antigo `src/assets/`. Por isso os assets ficam em `public/assets/...` e são referenciados como `assets/...` (caminho relativo, compatível com o `base-href`).
 
 ### Convenções
 
-- Arquivos sem sufixo de tipo, conforme o estilo do Angular 21: `hero-section.ts` → classe `HeroSection`.
+- Arquivos sem sufixo de tipo, conforme o estilo do Angular 20+: `hero-section.ts` → classe `HeroSection`.
 - Seções: `<nome>-section.ts`, seletor `app-<nome>-section`, `<section id="<nome>">` com `aria-labelledby`.
 - Templates e estilos inline enquanto pequenos; extrair para `.html`/`.scss` quando crescerem.
 - Barrel files (`index.ts`) apenas em `models/` e `data/`.

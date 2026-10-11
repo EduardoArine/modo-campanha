@@ -24,7 +24,7 @@ Visão completa em [docs/01-product-vision.md](docs/01-product-vision.md).
 
 ## Stack
 
-- Angular 21 (standalone components, signals)
+- Angular 22 (standalone components, signals)
 - TypeScript
 - SCSS
 - Vitest
@@ -61,7 +61,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 
 ## Rodando localmente
 
-Pré-requisitos: Node.js 22.12+ e npm.
+Pré-requisitos: Node.js 24 (ou 22.22.3+) e npm.
 
 ```bash
 git clone https://github.com/EduardoArine/modo-campanha.git

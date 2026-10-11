@@ -86,7 +86,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Motivo:** Angular 21 ainda tem suporte, é compatível com o Node atual e já traz standalone por padrão, signals, zoneless, Vitest e builder esbuild. A migração para o 22 é feita com `ng update`.
 - **Alternativas:** atualizar o Node e usar Angular 22 (preferível no médio prazo); forçar Angular 22 em Node incompatível (rejeitado).
 - **Próximo passo:** instalar Node 24 LTS (ou ≥ 22.22.3), rodar `npx ng update @angular/core@22 @angular/cli@22` e atualizar `node-version` no workflow, se necessário. Ideal antes da FASE 3.
-- **Status:** Aceita (temporária)
+- **Status:** Aceita (temporária). **Substituída por D-061** (upgrade para Angular 22 feito com Node 24).
 
 ## D-010 — Assets em `public/assets/`
 
@@ -681,3 +681,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Performance:** Lighthouse (build de produção, mediana de 3): mobile 87 / 100 / 100 / 100 (performance / a11y / best practices / SEO), FCP ≈ 2,8 s, LCP ≈ 3,4 s, CLS 0, TBT ≈ 30 ms; desktop 100 / 100 / 100 / 100. Testado e **revertido** carregar a Home sem lazy loading (89 em mobile, ganho marginal; o lazy de `docs/06` fica). A alavanca real para FCP/LCP mobile é **prerender estático** (`@angular/ssr` só em build), que é dependência nova: **decisão do Eduardo**. Preload da fonte do Hero continua pendente (nome com hash, D-023).
   - **Redução de movimento:** auditada nas FASES 5/8 (boot do Hero e do CRT pulados; transições zeradas pela regra global).
 - **Status:** Aceita (REVIEWER). FASE 8 concluída no escopo implementável; pendentes: prerender (decisão), `og:image`/favicon (monograma MC), preload de fonte.
+
+## D-061 — Upgrade para Angular 22 (fecha D-009)
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053):** projeto atualizado com `ng update @angular/core@22 @angular/cli@22`: **Angular 22.2.2** e **TypeScript 6.0.3**. O bloqueio do D-009 (Node 22.14 incompatível) não existe mais: a máquina tem Node 24.21 (Angular 22 exige `^22.22.3 || ^24.15.0 || >=26`). CI do deploy passa para `node-version: 24`.
+  - Migração oficial aplicada: `tsconfig.app.json` suprime os diagnósticos estendidos `nullishCoalescingNotNullable` e `optionalChainNotNullable` (preserva o comportamento pré-v22). As migrações opcionais (Karma → Vitest, application builder) não se aplicam: o projeto já usa os dois.
+  - **Verificação:** 108/108 testes, typecheck, builds prod / GitHub Pages / dev sem warnings, guards OK; páginas de produção **idênticas pixel a pixel** antes e depois (1440 / 820 / 390, pt-BR e en); inserção de cartucho, foco e boot do Hero conferidos no build novo.
+- **Status:** Aceita (REVIEWER). Substitui D-009.

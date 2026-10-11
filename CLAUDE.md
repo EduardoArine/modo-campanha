@@ -89,7 +89,7 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 
 ## Arquitetura (resumo)
 
-- Angular 21.2, standalone, signals, `OnPush`, control flow nativo, SCSS, Vitest. Sem SSR. Node local 22.14 (upgrade para Angular 22 pendente, ver D-009).
+- Angular 22.2 + TypeScript 6.0, standalone, signals, `OnPush`, control flow nativo, SCSS, Vitest. Sem SSR. Node 24 (local e CI; upgrade em D-061).
 - `src/app/features/<seção>/`: uma pasta por seção da onepage (`<nome>-section.ts`, `<section id="<nome>">`).
 - `src/app/pages/home/home-page.ts`: compõe as seções **construídas** na ordem de `docs/03` (D-047). O teste `home-page.spec.ts` valida a ordem e que não há placeholders.
 - `src/app/models/`: interfaces (`Achievement` [D-051: evidence obrigatório, sem badge/secret], `CampaignLogEntry` [D-049], `Project` [D-044: serial MC-NNN, publication, tags `TagId`, cartridge embutido], `Skill`, `SkillGroup` [Skill Loadout, sem proficiência], `PlayerProfile`, `SocialLink`).
@@ -102,7 +102,7 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 - `src/app/core/`: infraestrutura transversal (boot, konami listener). `src/app/shared/`: componentes reutilizáveis (só criar quando um elemento se repetir).
 - `src/styles/`: tokens em `tokens/` (typography, grid, spacing, breakpoints), emitidos como `--mc-*`. Em componentes: `@use 'mc' as *;` → `@include type(section-title)`, `space(5)`, `@include columns`, `@include mq(lg)`. Fontes em `src/styles/fonts/` (Pixelify Sans só em `display-hero`; IBM Plex Sans no resto, D-029). Escala de spacing fechada. **Cores: só tokens semânticos** via `var(--mc-<token>)` (`--mc-text`, `--mc-accent`, `--mc-focus-ring`...); primitivos `--mc-color-*` nunca em componentes. Combinação nova de cor = adicionar em `$supported-pairs` (`tokens/_contrast.scss`); o build falha se não passar. Sombra só em objetos físicos; glow só no Hero visual/CRT/boot; header sólido; cantos de mira só no Player Card.
 - `public/assets/`: imagens, ícones, cartuchos, pixel art (referenciar como `assets/...`).
-- Convenção de nomes do Angular 21: `hero-section.ts` → `HeroSection` (sem sufixo `.component`).
+- Convenção de nomes do Angular 20+: `hero-section.ts` → `HeroSection` (sem sufixo `.component`).
 - Código em inglês; comentários e docs em português.
 
 ## Comandos
