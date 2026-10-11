@@ -82,6 +82,9 @@ export const UI_EN: UiDictionary = {
   finalCheckpoint: {
     save: 'SAVE COMPLETE',
   },
+  footer: {
+    siteName: 'Modo Campanha',
+  },
   crt: {
     regionLabel: 'Project viewer',
     empty: 'INSERT CARTRIDGE',

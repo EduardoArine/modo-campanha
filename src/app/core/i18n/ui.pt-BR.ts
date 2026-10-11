@@ -82,6 +82,10 @@ export const UI_PT_BR = {
   finalCheckpoint: {
     save: 'SAVE COMPLETE',
   },
+  // Footer da Home (05-C): nome do site no copyright, em caixa normal (a marca do header é caixa alta).
+  footer: {
+    siteName: 'Modo Campanha',
+  },
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',

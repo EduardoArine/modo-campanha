@@ -44,6 +44,19 @@ describe('HomePage', () => {
     expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST|SIDE QUESTS/);
   });
 
+  it('should close the page with the footer right after main, outside it', async () => {
+    TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
+    const fixture = TestBed.createComponent(HomePage);
+    await fixture.whenStable();
+    const el = fixture.nativeElement as HTMLElement;
+    const main = el.querySelector('main')!;
+
+    expect(main.nextElementSibling?.tagName).toBe('APP-SITE-FOOTER');
+    expect(el.lastElementChild?.tagName).toBe('APP-SITE-FOOTER');
+    expect(main.querySelector('footer')).toBeNull();
+    expect(el.querySelectorAll('footer').length).toBe(1);
+  });
+
   it('should render texts in the locale of the URL', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const harness = await RouterTestingHarness.create();

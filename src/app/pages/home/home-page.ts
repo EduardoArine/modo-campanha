@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
+import { SiteFooter } from '../../core/layout/site-footer/site-footer';
 import { ACHIEVEMENTS, CAMPAIGN_LOG, shouldRenderAchievements } from '../../data';
 import { AchievementsSection } from '../../features/achievements/achievements-section';
 import { CampaignLogSection } from '../../features/campaign-log/campaign-log-section';
@@ -14,7 +15,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
 // publicada está vazia até o histórico real ser aprovado; em desenvolvimento entra o MOCK
 // (D-049). Achievements só com >= 2 itens (D-051), pelo mesmo mecanismo. O Final Checkpoint
 // é sempre a última seção (D-052). Current Main Quest e Side Quests entram com seus slices
-// reais, antes dele.
+// reais, antes dele. O footer vem logo depois do </main> (só na Home, D-052).
 @Component({
   selector: 'app-home-page',
   imports: [
@@ -25,6 +26,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
     CampaignLogSection,
     AchievementsSection,
     FinalCheckpointSection,
+    SiteFooter,
   ],
   template: `
     <main>
@@ -40,6 +42,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
       }
       <app-final-checkpoint-section />
     </main>
+    <app-site-footer />
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

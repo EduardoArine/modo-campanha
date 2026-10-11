@@ -1,0 +1,38 @@
+// SiteFooter (docs/17-home-slice-05.md, 05-C). Rodapé, não seção: mesmo fundo da página,
+// uma régua de 1 px no container, sem superfície, sombra ou glow. Desktop/tablet: motto à
+// esquerda, copyright à direita. Mobile: empilhado, motto primeiro, com safe area no fim.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  gap: space(1);
+  padding-block: space(5) calc(#{space(6)} + env(safe-area-inset-bottom));
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+
+  @include mq(md) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: space(2) space(5);
+  }
+}
+
+p {
+  margin: 0;
+}
+
+.motto {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+.copyright small {
+  @include type(caption);
+  color: var(--mc-text-muted);
+}
