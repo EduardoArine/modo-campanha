@@ -36,7 +36,7 @@ describe('HeroVisual', () => {
     expect(message(el)).toBeUndefined();
     expect(tag(el)).toBe('MC-001 · Modo Campanha');
     expect(el.querySelector('.screen-art img')?.getAttribute('src')).toBe(
-      'assets/cartridges/mc-001-modo-campanha.png',
+      'assets/cartridges/mc-001/system-horizon.webp',
     );
   });
 
@@ -62,7 +62,7 @@ describe('HeroVisual', () => {
 
     expect(el.getAttribute('aria-hidden')).toBe('true');
     expect(svg.querySelector('.cart image')?.getAttribute('href')).toBe(
-      'assets/cartridges/mc-001-modo-campanha.png',
+      'assets/cartridges/mc-001/system-horizon.webp',
     );
     expect(svg.querySelector('.controller')).not.toBeNull();
     expect(svg.textContent).toContain('MC-001');

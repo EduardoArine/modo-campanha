@@ -18,6 +18,7 @@ import { Project } from '../../models';
 import {
   McCart,
   McCartArtwork,
+  McCartRender,
   McCrtProjectViewer,
   McProjectSummary,
   McSummaryChip,
@@ -34,6 +35,8 @@ interface InventoryItem {
   shell: Project['cartridge']['shell'];
   accent: Project['cartridge']['accent'];
   artwork?: McCartArtwork;
+  /** Render frontal oficial (D-065): quando existe, é o objeto mostrado no grid. */
+  render?: McCartRender;
   chips: McSummaryChip[];
 }
 
@@ -96,6 +99,7 @@ export class ProjectInventorySection {
         src: p.cartridge.artwork.src,
         alt: pick(p.cartridge.artwork.alt),
       },
+      render: p.cartridge.renders?.front,
       chips: p.tags.map((id) => ({ label: pick(TAGS[id].label), tone: TAGS[id].tone })),
     }));
   });

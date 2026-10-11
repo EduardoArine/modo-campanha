@@ -1,5 +1,5 @@
-// Project Inventory (docs/13-home-slice-02.md, 02-C). Grade de cartuchos: até 4 por linha
-// (≥ 1200), 2 (768–1199), 1 (mobile). Sem slots vazios: os itens ocupam os primeiros slots
+// Project Inventory (docs/13-home-slice-02.md, 02-C; escala D-065). Grade de cartuchos: até 3 por
+// linha (≥ 1200), 2 (768–1199), 1 (mobile). Sem slots vazios: os itens ocupam os primeiros slots
 // naturais e o restante da linha fica livre.
 @use 'mc' as *;
 
@@ -20,14 +20,14 @@
   align-items: start;
 }
 
-// Cartucho + Project Summary = uma unidade: o resumo não passa da largura do MC-CART
-// (mesma medida do max-width do host em cart.scss).
+// Cartucho + Project Summary = uma unidade: o resumo não passa da largura do MC-CART.
+// Com o render oficial (D-065), o cartucho é o segundo grande objeto físico do site (24rem).
 .item {
   grid-column: 1 / -1;
   display: grid;
   gap: space(4);
   justify-items: start;
-  max-width: 22rem;
+  max-width: 24rem;
 
   @include mq(md) {
     grid-column: span 4;
@@ -38,7 +38,7 @@
   }
 
   @include mq(xl) {
-    grid-column: span 3;
+    grid-column: span 4;
   }
 }
 
@@ -49,6 +49,12 @@
 .cart {
   cursor: pointer;
   transition: transform 150ms ease-out;
+}
+
+// Render oficial (D-065): ocupa a largura do item; sombra de contato discreta (não é card).
+.mc-cart--render {
+  max-width: none;
+  filter: drop-shadow(0 space(3) space(3) var(--mc-material-groove));
 }
 
 .item:has(.cart:hover, .insert:hover, .insert:focus-visible) .cart {

@@ -52,13 +52,19 @@ describe('ProjectInventorySection', () => {
     expect(el.textContent).not.toMatch(/MC-002|Paco/);
   });
 
-  it('shows the approved artwork as decoration inside the single cartridge image', async () => {
+  it('shows the official front render as the cartridge itself, without a CSS shell (D-065)', async () => {
     const cart = (await renderAt('/')).querySelector('mc-cart')!;
     const img = cart.querySelector('img')!;
 
     expect(cart.getAttribute('role')).toBe('img');
-    expect(img.getAttribute('src')).toBe('assets/cartridges/mc-001-modo-campanha.png');
+    expect(cart.classList).toContain('mc-cart--render');
+    expect(cart.querySelectorAll('img').length).toBe(1);
+    expect(img.classList).toContain('render');
+    expect(img.getAttribute('src')).toBe('assets/cartridges/mc-001/front.webp');
     expect(img.getAttribute('alt')).toBe('');
+    expect([img.getAttribute('width'), img.getAttribute('height')]).toEqual(['960', '690']);
+    // Nada da construção em CSS por cima do render (casca, grips, sombra interna).
+    expect(cart.querySelector('.cart, .shell, .grip, .shadow')).toBeNull();
     expect(cart.textContent).not.toContain('PROJECT ARTWORK');
   });
 

@@ -36,17 +36,28 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['product', 'gamification'],
-    // Artwork aprovado (02-C.5, D-046): System Horizon, pixel art 160 × 100 exportada em 640 × 400.
+    // MC-CART oficial (D-065): shell grafite com acentos laranja queimado; artwork SYSTEM HORIZON
+    // (substitui a v1 de D-046). Renders em assets/cartridges/mc-001/ (fontes em design/source/).
     // O alt fica guardado para usos independentes; dentro do MC-CART a arte é decorativa.
     cartridge: {
-      shell: 'orange',
-      accent: 'special',
+      shell: 'dark',
+      accent: 'warm',
       artwork: {
-        src: 'assets/cartridges/mc-001-modo-campanha.png',
+        src: 'assets/cartridges/mc-001/system-horizon.webp',
+        width: 960,
+        height: 720,
         alt: {
           'pt-BR':
-            'Paisagem em pixel art de um sistema em construção, com módulos crescentes e um caminho segmentado levando a uma passagem iluminada.',
-          en: 'Pixel-art landscape of a system under construction, with growing modules and a segmented path leading to an illuminated gateway.',
+            'Paisagem em pixel art ao pôr do sol: um caminho entre pedras e pinheiros desce até um lago cercado de montanhas, com o sol no horizonte.',
+          en: 'Pixel-art landscape at sunset: a path between rocks and pine trees leads down to a lake surrounded by mountains, with the sun on the horizon.',
+        },
+      },
+      renders: {
+        front: { src: 'assets/cartridges/mc-001/front.webp', width: 960, height: 690 },
+        threeQuarter: {
+          src: 'assets/cartridges/mc-001/three-quarter.webp',
+          width: 1244,
+          height: 1017,
         },
       },
     },

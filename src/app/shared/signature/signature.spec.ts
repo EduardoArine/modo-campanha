@@ -22,6 +22,13 @@ import { McProjectSummary } from './project-summary/project-summary';
     <mc-player-card id="photo" name="Eduardo Arine" [photo]="{ src: 'x.jpg', alt: 'Foto real' }" />
 
     <mc-cart serial="ON-001" title="Projeto" type="PLATAFORMA" shell="light" />
+    <mc-cart
+      id="render"
+      serial="MC-001"
+      title="Projeto"
+      type="PORTFÓLIO"
+      [render]="{ src: 'front.webp', width: 960, height: 690 }"
+    />
 
     <mc-project-summary
       title="Projeto"
@@ -77,6 +84,20 @@ describe('MC signature components', () => {
     expect(cart.classList).toContain('mc-cart--light');
     expect(cart.getAttribute('tabindex')).toBeNull();
     expect(cart.querySelector('.art-placeholder')?.textContent).toBe('PROJECT ARTWORK');
+  });
+
+  it('uses the CSS construction as fallback and the official render as the object (D-065)', () => {
+    const el = render();
+    const fallback = el.querySelector('mc-cart:not(#render)')!;
+    const rendered = el.querySelector('mc-cart#render')!;
+
+    expect(fallback.querySelector('.cart .shell')).not.toBeNull();
+    expect(fallback.classList).not.toContain('mc-cart--render');
+    expect(rendered.classList).toContain('mc-cart--render');
+    expect(rendered.getAttribute('role')).toBe('img');
+    expect(rendered.getAttribute('aria-label')).toBe('MC-CART MC-001: Projeto, PORTFÓLIO');
+    expect(rendered.querySelector('.cart')).toBeNull();
+    expect(rendered.querySelector('img.render')?.getAttribute('alt')).toBe('');
   });
 
   it('shows at most two chips in the project summary', () => {

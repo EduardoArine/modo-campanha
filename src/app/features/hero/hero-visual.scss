@@ -84,7 +84,6 @@
     height: 100%;
     object-fit: cover;
     object-position: 50% 60%;
-    image-rendering: pixelated;
   }
 }
 
@@ -263,10 +262,6 @@
 
 .cart-accent {
   fill: var(--mc-special);
-}
-
-.cart-art {
-  image-rendering: pixelated;
 }
 
 .ctl-dpad {

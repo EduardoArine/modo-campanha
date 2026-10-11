@@ -14,6 +14,12 @@
   max-width: 22rem;
 }
 
+// Render oficial (D-065): a imagem já é o objeto. Largura pelo max-width global de img (o render
+// é maior que qualquer coluna); proporção pelos atributos width/height. Sombra de contato: quem usa.
+.render {
+  height: auto;
+}
+
 :host(.mc-cart--light) {
   --m: var(--mc-material-light);
   --i: var(--mc-material-light-ink);
@@ -118,12 +124,12 @@
   right: space(3);
 }
 
+// Cor herdada do .shell (--i).
 .top {
   display: flex;
   justify-content: space-between;
   gap: space(3);
   @include type(label);
-  color: var(--i);
 }
 
 // Rebaixo do rótulo: moldura escura com sulco em cima e aresta clara embaixo.

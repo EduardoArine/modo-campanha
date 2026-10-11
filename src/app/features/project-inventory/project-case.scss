@@ -43,13 +43,12 @@ ul {
   }
 }
 
-// Pixel art (160 × 100) ampliada 2× sem interpolação; 16:10 como no rótulo do MC-CART.
+// SYSTEM HORIZON (D-065): 4:3, alta resolução reduzida com suavização (sem nearest-neighbor).
 .artwork {
   width: 100%;
   max-width: 20rem;
   height: auto;
-  aspect-ratio: 16 / 10;
-  image-rendering: pixelated;
+  aspect-ratio: 4 / 3;
   border-radius: var(--mc-radius-sm);
 }
 
