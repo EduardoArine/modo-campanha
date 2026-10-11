@@ -16,6 +16,8 @@ export interface PlayerProfile {
   /** Texto humano curto do Hero. */
   summary: Localized;
   motto: Localized;
+  /** Frase de encerramento do Final Checkpoint (D-052). */
+  closing: Localized;
   /** Dados do Player Status (usados a partir do Slice 01-E). */
   status: {
     origin: ProfileField;

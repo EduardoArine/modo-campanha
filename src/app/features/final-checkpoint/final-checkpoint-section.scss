@@ -1,0 +1,38 @@
+// Final Checkpoint (docs/17-home-slice-05.md, A — Save Point Editorial). Encerramento aberto:
+// sem painel, sombra ou objeto físico. Frase nas colunas 1–7 (o restante da linha é espaço
+// negativo); GitHub e LinkedIn em linha, como ações equivalentes.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+// Base menor que a de seção: o footer da Home fecha a página logo abaixo (05-C).
+.section {
+  padding-block: var(--mc-space-section) space(8);
+}
+
+.body {
+  @include columns;
+  row-gap: space(6);
+  margin-top: var(--mc-space-section-head);
+}
+
+.closing {
+  grid-column: 1 / -1;
+  margin: 0;
+  @include type(title-l);
+  color: var(--mc-text);
+  text-wrap: pretty;
+
+  @include mq(md) {
+    grid-column: 1 / span 7;
+  }
+}
+
+.actions {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(4);
+}

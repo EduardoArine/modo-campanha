@@ -1,0 +1,24 @@
+<section
+  id="final-checkpoint"
+  class="mc-page-grid section"
+  aria-labelledby="final-checkpoint-title"
+>
+  <mc-section-header
+    [heading]="ui().sections.finalCheckpoint"
+    headingId="final-checkpoint-title"
+    [code]="ui().finalCheckpoint.save"
+  />
+
+  <div class="body">
+    <p class="closing">{{ locale.pick(profile.closing) }}</p>
+
+    <div class="actions">
+      @for (link of links; track link.kind) {
+        <a mcAction="secondary" [href]="link.url" target="_blank" rel="noopener noreferrer">
+          {{ link.label }} <mc-icon name="external" />
+          <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+        </a>
+      }
+    </div>
+  </div>
+</section>

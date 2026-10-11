@@ -79,6 +79,9 @@ export const UI_EN: UiDictionary = {
     code: 'ACH',
     evidence: 'EVIDENCE',
   },
+  finalCheckpoint: {
+    save: 'SAVE COMPLETE',
+  },
   crt: {
     regionLabel: 'Project viewer',
     empty: 'INSERT CARTRIDGE',

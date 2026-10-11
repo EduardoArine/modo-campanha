@@ -78,6 +78,10 @@ export const UI_PT_BR = {
     code: 'ACH',
     evidence: 'EVIDÊNCIA',
   },
+  // Único detalhe MC-01 do encerramento (D-052).
+  finalCheckpoint: {
+    save: 'SAVE COMPLETE',
+  },
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',

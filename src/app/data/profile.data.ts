@@ -20,6 +20,12 @@ export const PLAYER_PROFILE: PlayerProfile = {
     'pt-BR': 'XP real, sem personagem.',
     en: 'Real XP. No persona.',
   },
+  // Final Checkpoint (Home Slice 05, D-052). Aprovado por Eduardo em 2026-10-11.
+  closing: {
+    'pt-BR':
+      'Se quiser construir algo comigo ou trocar ideias sobre produto, IA, desenvolvimento ou games, estes são os melhores lugares para me encontrar.',
+    en: "If you'd like to build something together or exchange ideas about product, AI, development, or games, these are the best places to find me.",
+  },
   status: {
     origin: {
       label: { 'pt-BR': 'ORIGEM', en: 'ORIGIN' },

@@ -27,22 +27,21 @@ describe('HomePage', () => {
       'project-inventory',
       ...(hasCampaignLog ? ['campaign-log'] : []),
       ...(hasAchievements ? ['achievements'] : []),
+      'final-checkpoint',
     ]);
   });
 
-  it('should end after the last built section, with no raw placeholder titles', async () => {
+  it('should end with the Final Checkpoint, with no raw placeholder titles', async () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const fixture = TestBed.createComponent(HomePage);
     await fixture.whenStable();
     const el = fixture.nativeElement as HTMLElement;
 
-    const last = hasAchievements
-      ? 'APP-ACHIEVEMENTS-SECTION'
-      : hasCampaignLog
-        ? 'APP-CAMPAIGN-LOG-SECTION'
-        : 'APP-PROJECT-INVENTORY-SECTION';
-    expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(last);
-    expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST|SIDE QUESTS|CAMPAIGN CONTINUES/);
+    // O Final Checkpoint é sempre a última seção da Home (D-052).
+    expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
+      'APP-FINAL-CHECKPOINT-SECTION',
+    );
+    expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST|SIDE QUESTS/);
   });
 
   it('should render texts in the locale of the URL', async () => {

@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ACHIEVEMENTS, CAMPAIGN_LOG, shouldRenderAchievements } from '../../data';
 import { AchievementsSection } from '../../features/achievements/achievements-section';
 import { CampaignLogSection } from '../../features/campaign-log/campaign-log-section';
+import { FinalCheckpointSection } from '../../features/final-checkpoint/final-checkpoint-section';
 import { HeroSection } from '../../features/hero/hero-section';
 import { PlayerStatusSection } from '../../features/player-status/player-status-section';
 import { ProjectInventorySection } from '../../features/project-inventory/project-inventory-section';
@@ -11,8 +12,9 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
 // Ordem das seções segue docs/03-information-architecture.md. Só seções construídas são
 // renderizadas (D-047). O Campaign Log só aparece quando há entradas: em produção a lista
 // publicada está vazia até o histórico real ser aprovado; em desenvolvimento entra o MOCK
-// (D-049). Achievements só com >= 2 itens (D-051), pelo mesmo mecanismo. Current Main Quest,
-// Side Quests e Final Checkpoint entram com seus slices reais.
+// (D-049). Achievements só com >= 2 itens (D-051), pelo mesmo mecanismo. O Final Checkpoint
+// é sempre a última seção (D-052). Current Main Quest e Side Quests entram com seus slices
+// reais, antes dele.
 @Component({
   selector: 'app-home-page',
   imports: [
@@ -22,6 +24,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
     ProjectInventorySection,
     CampaignLogSection,
     AchievementsSection,
+    FinalCheckpointSection,
   ],
   template: `
     <main>
@@ -35,6 +38,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
       @if (hasAchievements) {
         <app-achievements-section />
       }
+      <app-final-checkpoint-section />
     </main>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
