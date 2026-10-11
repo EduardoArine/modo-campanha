@@ -689,3 +689,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - Migração oficial aplicada: `tsconfig.app.json` suprime os diagnósticos estendidos `nullishCoalescingNotNullable` e `optionalChainNotNullable` (preserva o comportamento pré-v22). As migrações opcionais (Karma → Vitest, application builder) não se aplicam: o projeto já usa os dois.
   - **Verificação:** 108/108 testes, typecheck, builds prod / GitHub Pages / dev sem warnings, guards OK; páginas de produção **idênticas pixel a pixel** antes e depois (1440 / 820 / 390, pt-BR e en); inserção de cartucho, foco e boot do Hero conferidos no build novo.
 - **Status:** Aceita (REVIEWER). Substitui D-009.
+
+## D-062 — Fim da rodada autônoma: estado do produto e decisões pendentes
+
+- **Data:** 2026-10-11
+- **Estado (branch `feat/autonomous-site-completion`, sem merge em `main`, sem deploy):**
+  - **Concluído e aprovado pelo REVIEWER (D-053):** Home Slice 05 (Final Checkpoint + footer, D-052/D-054); Slice 06 Current Main Quest (D-055) e Slice 07 Side Quests (D-056) em estrutura/visual; revisão integrada da FASE 4 e nav mobile (D-057); FASE 5 — cartucho → CRT, boot do CRT e do Hero (D-058, D-059); FASE 8 — teclado, foco, SEO bilíngue, Lighthouse (D-060); Angular 22 (D-061).
+  - **Produção (público):** Hero → Player Status → Skill Loadout → Project Inventory (com inserção no CRT) → Final Checkpoint → footer. **Sem MOCK** (guard do deploy cobre `mock-campaign-log|mock-achievement|mock-current-quest|mock-side-quest`).
+  - **Só em desenvolvimento (MOCK):** Campaign Log, Achievements, Current Main Quest, Side Quests.
+- **Pendente de decisão / conteúdo do Eduardo:**
+  1. Conteúdo factual: histórico real do Campaign Log (03-0/03-C), 2–5 achievements com evidência (04-0/04-C), texto público da Current Main Quest (06-C), side quests reais (07-C), Paco (MC-002) para `approved`, foto real, "Sobre a jornada", currículo e email (se existirem).
+  2. FASE 6 (Secrets): efeito do Konami Code, conteúdo e local da Secret Area.
+  3. "Progress" (FASE 5): definir ou descartar.
+  4. Prerender estático (`@angular/ssr` só em build) para FCP/LCP mobile e HTML por idioma.
+  5. Monograma MC / wordmark (favicon, `og:image`) e artes (ex.: Hero CRT Screen Artwork).
+  6. Revisão do que foi decidido em modo autônomo e toca áreas aprovadas: header mobile em 2 linhas (D-057), botão "Inserir cartucho" e hover no Inventory (D-058), boot na tela do CRT do Hero (D-059).
+  7. Publicação (FASE 9): merge em `main` e primeiro deploy no GitHub Pages; o projeto agora exige Node 24 (ou 22.22.3+).
+  8. **XP / Campaign XP** (D-021): só com regras reais e verificáveis.
+  9. Direções visuais escolhidas em modo autônomo para as seções novas: **Quest Briefing** (Current Main Quest, D-055) e **Side Quest Log** (Side Quests, D-056).
+- **Pendências técnicas (não dependem do Eduardo, adiadas):** preload da fonte do Hero (D-023/D-060: exige rever a fonte com hash ou um passo pós-build); documentar Motion, Responsive e Accessibility como fundamentos no `docs/11` (aprovação como DS definitivo é do Eduardo).
+- ⚠️ **Alerta permanente:** o MOCK do Campaign Log (D-049, só em dev/testes) tem períodos e nomes **plausíveis** ("2013 — 2017", FATEC Americana, Comunidade On). Capturas do ambiente de desenvolvimento **nunca** devem circular como fato sobre o Eduardo. Os MOCKs de Achievements, Current Main Quest e Side Quests são explicitamente "de exemplo".
+- **Status:** Aceita (REVIEWER).

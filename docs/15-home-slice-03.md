@@ -9,6 +9,8 @@
 > | 03-B  | visual approved (frozen)                                            |
 > | 03-C  | editorial content pending (não bloqueia as próximas partes da Home) |
 >
+> ⚠️ **Capturas do ambiente de desenvolvimento nunca devem circular como fato**: este MOCK tem períodos e nomes plausíveis (D-062).
+>
 > ⚠️ **CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os entries em `src/app/data/campaign-log.data.development.ts` não são fatos sobre o Eduardo. Só existem em desenvolvimento e testes; a produção usa `campaign-log.data.ts` (vazio) e não renderiza a seção.
 
 Abre a **FASE 4 — Career Content**.

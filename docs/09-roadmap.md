@@ -65,19 +65,19 @@ Especificação completa em `docs/11-design-system.md`. **A home final só é im
 
 Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consolidação responsive/a11y/i18n) seguem para as fases onde são usados.
 
-### Próximos sprints ⬜
+### Fundamentos restantes (estado em 2026-10-11)
 
-- ⬜ Player Card (foto real, D-017)
-- ⬜ MC-CART System (shells preto, creme, grafite, laranja)
-- ⬜ CRT
-- ⬜ XP (XP profissional vs. Campaign XP, D-021)
-- ⬜ Motion
-- ⬜ Easter Egg Language
-- ⬜ Responsive behavior
-- ⬜ Accessibility
-- ⬜ i18n / content behavior (regras de conteúdo; infraestrutura pronta)
-- ⬜ Monograma MC (símbolo, favicon, loading, selo)
-- ⬜ Pixel assets
+- ✅ Player Card (D-031; foto real aguarda o Eduardo, D-017)
+- ✅ MC-CART System (D-032, D-034)
+- ✅ CRT (D-033; uso na Home em D-058)
+- ⏸ XP (XP profissional vs. Campaign XP, D-021): Campaign XP exige regras reais (decisão do Eduardo)
+- 🟡 Motion: aplicado na FASE 5 (D-058, D-059), CSS + reduced motion; fundamento/tokens ainda não documentados no `docs/11`
+- ⏸ Easter Egg Language (FASE 6, efeitos exigem aprovação do Eduardo)
+- 🟡 Responsive behavior: validado nas FASES 4–8 (1440 → 360); sem seção própria no `docs/11`
+- 🟡 Accessibility: D-025 + D-060 aplicados; sem seção própria no `docs/11`
+- ✅ i18n / content behavior (D-020; todos os textos novos pt-BR + en)
+- ⏸ Monograma MC (símbolo, favicon, loading, selo): desenho da marca, decisão do Eduardo (D-015)
+- ⏸ Pixel assets (ex.: Hero CRT Screen Artwork): produção de arte com aprovação do Eduardo
 
 ## FASE 3 — CORE EXPERIENCE ✅ (encerrada, D-048)
 
@@ -157,14 +157,14 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
 
-## FASE 6 — SECRETS ⬜
+## FASE 6 — SECRETS ⏸ (bloqueada: efeitos exigem aprovação do Eduardo, `docs/08`)
 
 - ⬜ `???`
 - ⬜ Secret Area
 - ⬜ Konami Code. **Decisão pendente: qual o efeito?**
 - ⬜ Achievement secreto
 
-## FASE 7 — CONTENT ⬜
+## FASE 7 — CONTENT ⏸ (conteúdo real do Eduardo; ver relatório da branch `feat/autonomous-site-completion`)
 
 - ⬜ Textos finais em pt-BR **e** en
 - ⬜ Foto real do Eduardo para o Player Card
@@ -186,7 +186,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Teclado (ordem de foco, skip link, foco nunca sob o header)
 - ✅ Offset de âncora/foco em CSS acompanha a altura real do header (D-060)
 
-## FASE 9 — RELEASE ⬜
+## FASE 9 — RELEASE ⏸ (deploy público só com o Eduardo)
 
 - ⬜ GitHub Pages (ativar e publicar)
 - ⬜ Domínio opcional no futuro
@@ -202,7 +202,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 | Efeito do Konami Code                                                                                               | 6        |
 | Localização do `???` / Secret Area                                                                                  | 6        |
 | ~~Estados das skills~~ ✅ sem estados/graduação, D-040                                                              | 3        |
-| Abordagem de animação                                                                                               | 5        |
+| ~~Abordagem de animação~~ ✅ CSS, D-058                                                                             | 5        |
 | ~~Paleta definitiva~~ ✅ D-014                                                                                      | 1        |
 | ~~Fontes definitivas~~ ✅ D-022                                                                                     | 2        |
 | ~~Player Card com foto~~ ✅ foto real, D-017                                                                        | 1        |

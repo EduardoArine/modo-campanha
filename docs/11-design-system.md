@@ -20,11 +20,11 @@
 | 11  | Player Card              | ✅ Aprovado (D-031)                                            |
 | 12  | MC-CART                  | ✅ Aprovado, incluindo construção física 4.2 (D-032, D-034)    |
 | 13  | CRT                      | ✅ Aprovado, incluindo refinamento físico e `--mc-radius-glass` (D-033) |
-| 14  | XP                       | ⬜ backlog (regras conceituais em D-021)                       |
-| 15  | Motion                   | ⬜ backlog                                                     |
-| 16  | Easter Egg Language      | ⬜ backlog                                                     |
-| 17  | Responsive behavior      | ⬜ backlog (base definida em Grid)                             |
-| 18  | Accessibility            | 🟡 parcial: contratos de contraste e foco implementados (D-025) |
+| 14  | XP                       | ⏸ regras conceituais em D-021; Campaign XP exige regras reais  |
+| 15  | Motion                   | 🟡 aplicado na FASE 5 (D-058/D-059): CSS + reduced motion; sem fundamento/tokens documentados |
+| 16  | Easter Egg Language      | ⏸ FASE 6 (efeitos exigem aprovação do Eduardo)                |
+| 17  | Responsive behavior      | 🟡 validado 1440 → 360 nas FASES 4–8 (sem seção própria no DS) |
+| 18  | Accessibility            | 🟡 contraste e foco (D-025) + skip link, scroll-padding (D-060); sem seção própria no DS |
 | 19  | i18n / content behavior  | ✅ Arquitetura aprovada e implementada (D-020)                 |
 
 - **Sprint 1 (concluído):** Typography + Grid + Spacing + infraestrutura de i18n.
