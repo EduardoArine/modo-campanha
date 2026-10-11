@@ -1,13 +1,13 @@
 # 17 — Home Slice 05: Final Checkpoint
 
-> Status: **plano aprovado (D-052).** Direção **A — Save Point Editorial** aprovada. Etapa atual: **05-B — visual** (checkpoint de revisão). 05-C (footer) e 05-D (revisão integrada) não iniciados.
+> Status: **plano aprovado (D-052).** Direção **A — Save Point Editorial** aprovada. **05-B — FINAL CHECKPOINT VISUAL: APPROVED e FROZEN** (2026-10-11): nenhum ajuste de espaçamento, tipografia, colunas ou ações para encaixar o footer. Etapa atual: **05-C — footer** (checkpoint de revisão). 05-D (revisão integrada) não iniciada.
 >
 > | Etapa | Estado                                |
 > | ----- | ------------------------------------- |
 > | 05-0  | decisões e conteúdo aprovados (D-052) |
-> | 05-A  | estrutura + dados                     |
-> | 05-B  | visual (◆ revisão)                    |
-> | 05-C  | footer (não iniciado)                 |
+> | 05-A  | estrutura + dados ✅                  |
+> | 05-B  | visual ✅ **APPROVED / FROZEN**       |
+> | 05-C  | footer (◆ revisão)                    |
 > | 05-D  | revisão integrada (não iniciado)      |
 
 ## 1. Ordem de construção × ordem da página

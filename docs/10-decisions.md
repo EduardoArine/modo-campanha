@@ -601,4 +601,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Contexto:** já existe conteúdo público real suficiente para o encerramento (links aprovados, motto, nome); Current Main Quest e Side Quests dependem de conteúdo ainda não aprovado.
 - **Motivo:** aproximar a Home de uma primeira versão publicável sem placeholder nem conteúdo inventado.
 - **Alternativas:** seguir a ordem da página (Current Main Quest primeiro); footer no shell da app (apareceria no showcase dev ou exigiria condição de rota).
-- **Status:** Aceita. Etapas 05-A e 05-B em andamento.
+- **05-B — FINAL CHECKPOINT VISUAL: APPROVED e FROZEN** (2026-10-11): validado em 1440 / 820 / 390, pt-BR e en, em produção (depois do Project Inventory) e em desenvolvimento (depois dos Achievements MOCK). Nenhum ajuste no Final Checkpoint salvo regressão; o footer (05-C) se ajusta sozinho, sem mexer no espaçamento da seção.
+- **Status:** Aceita. 05-A e 05-B concluídas; 05-C (footer) em andamento.

@@ -130,7 +130,7 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 Construído antes de Current Quest e Side Quests; continua sendo a última seção da Home (D-052).
 
-- ✅ 05-0 decisões e conteúdo · 🟡 05-A estrutura + dados · 🟡 05-B visual · ⬜ 05-C footer · ⬜ 05-D revisão integrada
+- ✅ 05-0 decisões e conteúdo · ✅ 05-A estrutura + dados · ✅ 05-B visual (**APPROVED / FROZEN**) · 🟡 05-C footer · ⬜ 05-D revisão integrada
 - 🟡 Final Checkpoint (Slice 05)
 - ⬜ Current Quest (depois do Slice 05)
 - ⬜ Side Quests
