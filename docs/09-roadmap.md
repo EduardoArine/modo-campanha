@@ -173,17 +173,18 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ⬜ Links (LinkedIn, email)
 - ⬜ Currículo
 
-## FASE 8 — QUALITY ⬜
+## FASE 8 — QUALITY ✅ (D-060; pendentes dependem de decisão/asset)
 
-- ⬜ Responsividade
-- ⬜ Acessibilidade
-- ⬜ SEO bilíngue (`hreflang`, `<html lang>` dinâmico, avaliar prerender)
-- ⬜ Metadata (Open Graph, favicon próprio a partir do monograma MC)
-- ⬜ Performance
-- ⬜ Lighthouse
-- ⬜ Redução de movimento
-- ⬜ Teclado
-- ⬜ Offset de âncora/foco em CSS acompanhar a altura real do header (mobile 117 px, D-057): `scroll-margin` / `scroll-padding-top` (WCAG 2.4.11)
+- ✅ Responsividade (1440 / 1024 / 820 / 768 / 390 / 360 validados nas FASES 4–8)
+- ✅ Acessibilidade (Lighthouse a11y 100; skip link; foco visível; status de carregamento; `aria-hidden` em decoração)
+- ✅ SEO bilíngue: `hreflang` + canonical + `<html lang>` dinâmicos (D-060)
+- ⏸ Prerender estático das duas versões (`@angular/ssr` só em build): dependência nova, **decisão do Eduardo**
+- 🟡 Metadata: Open Graph por idioma ✅; `og:image` e favicon próprio aguardam o monograma MC
+- 🟡 Performance: mobile 87 / desktop 100 (Lighthouse); preload da fonte do Hero pendente (D-023)
+- ✅ Lighthouse: a11y / best practices / SEO 100 em mobile e desktop
+- ✅ Redução de movimento
+- ✅ Teclado (ordem de foco, skip link, foco nunca sob o header)
+- ✅ Offset de âncora/foco em CSS acompanha a altura real do header (D-060)
 
 ## FASE 9 — RELEASE ⬜
 

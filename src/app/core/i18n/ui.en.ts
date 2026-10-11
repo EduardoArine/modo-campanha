@@ -35,6 +35,7 @@ export const UI_EN: UiDictionary = {
   },
   a11y: {
     newTab: '(opens in a new tab)',
+    skipToContent: 'Skip to content',
   },
   cta: {
     explore: 'Explore the campaign',

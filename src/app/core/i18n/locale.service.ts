@@ -5,15 +5,19 @@ import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map } from 'rxjs';
 
-import { Locale, localeFromUrl, Localized, localizedUrl } from './locale';
+import { DEFAULT_LOCALE, Locale, localeFromUrl, Localized, localizedUrl, LOCALES } from './locale';
 import { UI_EN } from './ui.en';
 import { UI_PT_BR, UiDictionary } from './ui.pt-BR';
 
 const UI_DICTIONARIES: Record<Locale, UiDictionary> = { 'pt-BR': UI_PT_BR, en: UI_EN };
 
+/** Formato de idioma do Open Graph. */
+const OG_LOCALE: Record<Locale, string> = { 'pt-BR': 'pt_BR', en: 'en_US' };
+
 /**
  * Idioma ativo derivado da URL (fonte da verdade, D-020). Trocar de idioma = navegar.
- * Mantém `<html lang>`, título e description em sincronia com o idioma.
+ * Mantém `<html lang>`, título, description, Open Graph, `hreflang` e canonical em sincronia com o
+ * idioma (SEO bilíngue, FASE 8, D-060). URLs absolutas a partir do `<base href>`.
  */
 @Injectable({ providedIn: 'root' })
 export class LocaleService {
@@ -42,6 +46,19 @@ export class LocaleService {
       this.document.documentElement.lang = this.locale();
       this.title.setTitle(ui.meta.title);
       this.meta.updateTag({ name: 'description', content: ui.meta.description });
+      // Open Graph por idioma (sem og:image até existir o monograma MC).
+      const locale = this.locale();
+      this.meta.updateTag({ property: 'og:title', content: ui.meta.title });
+      this.meta.updateTag({ property: 'og:description', content: ui.meta.description });
+      this.meta.updateTag({ property: 'og:locale', content: OG_LOCALE[locale] });
+      const other = LOCALES.find((candidate) => candidate !== locale) ?? DEFAULT_LOCALE;
+      this.meta.updateTag({ property: 'og:locale:alternate', content: OG_LOCALE[other] });
+      this.meta.updateTag({ property: 'og:url', content: this.absoluteUrl(locale) });
+      for (const alternate of LOCALES) {
+        this.setLink('alternate', this.absoluteUrl(alternate), alternate);
+      }
+      this.setLink('alternate', this.absoluteUrl(DEFAULT_LOCALE), 'x-default');
+      this.setLink('canonical', this.absoluteUrl(locale));
     });
   }
 
@@ -62,5 +79,23 @@ export class LocaleService {
 
   switchTo(target: Locale): Promise<boolean> {
     return this.router.navigateByUrl(this.urlFor(target));
+  }
+
+  /** URL absoluta da página atual no idioma informado, sem query nem fragmento. */
+  private absoluteUrl(target: Locale): string {
+    const path = localizedUrl(this.url().split(/[?#]/)[0], target).slice(1);
+    return new URL(path, this.document.baseURI).href;
+  }
+
+  private setLink(rel: 'alternate' | 'canonical', href: string, hreflang?: string): void {
+    const selector = `link[rel="${rel}"]` + (hreflang ? `[hreflang="${hreflang}"]` : '');
+    let link = this.document.head.querySelector<HTMLLinkElement>(selector);
+    if (!link) {
+      link = this.document.createElement('link');
+      link.rel = rel;
+      if (hreflang) link.hreflang = hreflang;
+      this.document.head.appendChild(link);
+    }
+    link.href = href;
   }
 }

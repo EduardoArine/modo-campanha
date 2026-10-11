@@ -35,6 +35,7 @@ export const UI_PT_BR = {
   },
   a11y: {
     newTab: '(abre em nova aba)',
+    skipToContent: 'Pular para o conteúdo',
   },
   cta: {
     explore: 'Explorar campanha',

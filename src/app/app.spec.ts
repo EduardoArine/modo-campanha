@@ -17,6 +17,23 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  // Link "pular para o conteúdo" (D-060): primeiro foco da página, leva ao <main> sem mudar a URL.
+  it('skips to the main content without changing the URL', async () => {
+    const fixture = TestBed.createComponent(App);
+    const router = TestBed.inject(Router);
+    await router.navigateByUrl('/en');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const skip = el.querySelector<HTMLAnchorElement>('a.skip-link')!;
+
+    expect(el.firstElementChild).toBe(skip);
+    expect(skip.textContent?.trim()).toBe('Skip to content');
+    skip.click();
+    expect(document.activeElement?.id).toBe('main-content');
+    expect(router.url).toBe('/en');
+  });
+
   // A navegação só expõe destinos que existem (D-047).
   it('points every header nav item to a section rendered on the Home', async () => {
     const fixture = TestBed.createComponent(App);

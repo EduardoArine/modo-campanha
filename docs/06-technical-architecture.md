@@ -159,7 +159,7 @@ src/app/core/i18n/
 
 - pt-BR em `/modo-campanha/`, en em `/modo-campanha/en`.
 - O workflow de deploy copia `index.html` para `en/index.html` (resposta 200 em vez do 404 do fallback).
-- **FASE 8:** prerender estático das duas versões (avaliar `@angular/ssr` só em build), `hreflang`, Open Graph por idioma. Até lá, o HTML estático inicial é pt-BR.
+- **FASE 8 (D-060):** `hreflang`, canonical e Open Graph por idioma implementados no `LocaleService`; Open Graph estático pt-BR no `index.html`; `robots.txt`. **Prerender** estático das duas versões (`@angular/ssr` só em build) continua pendente de decisão: até lá, o HTML estático inicial é pt-BR.
 
 ## Performance
 
@@ -167,7 +167,7 @@ src/app/core/i18n/
 - Budgets do `angular.json` mantidos (500 kB warning / 1 MB erro inicial).
 - Imagens otimizadas (WebP/AVIF), `NgOptimizedImage` quando houver screenshots.
 - Fontes self-hosted (`src/styles/fonts/`, WOFF2 variável, subset latin, ~57 kB no total), empacotadas com hash pelo build (D-023), `font-display: swap`. Preload da fonte do Hero na FASE 8. Sem Google Fonts em runtime e sem pacote npm de fontes.
-- Meta Lighthouse ≥ 90 em todas as categorias (FASE 8).
+- Meta Lighthouse ≥ 90 em todas as categorias (FASE 8). Medido (D-060): desktop 100 em tudo; mobile performance 87 (FCP ≈ 2,8 s em 4G simulado, limite de SPA sem prerender), a11y / best practices / SEO 100.
 
 ## GitHub Pages
 

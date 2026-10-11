@@ -670,3 +670,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Microinterações:** cobertas pelos estados do cartucho (hover/foco, inserido), boot do CRT e do Hero (D-058, D-059). Nenhuma microinteração decorativa constante.
   - **"Progress" (roadmap FASE 5):** sem definição nos docs; **não implementado** para não inventar feature. Fica como decisão do Eduardo (ex.: indicador de seção atual na nav, `docs/03`).
 - **Status:** Aceita (REVIEWER). **FASE 5 — GAME FEEL: concluída** no escopo implementável (Progress pendente de definição).
+
+## D-060 — FASE 8 / Quality: teclado, foco, SEO bilíngue e medição
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053):**
+  - **Teclado:** link "Pular para o conteúdo / Skip to content" como primeiro foco da página (shell), visível só com foco; leva o foco ao `<main id="main-content" tabindex="-1">` da Home sem mudar a URL (um `href="#…"` navegaria a partir do `<base href>`). Auditoria real (Tab em 1440 e 390 px, produção): 13 paradas em ordem lógica, todas com anel de foco, nenhuma sob o header.
+  - **Foco/âncora sob o header (WCAG 2.4.11):** o header publica a altura real (`ResizeObserver` → `--mc-header-block`); `html { scroll-padding-top }` usa esse valor (+16 px). Substitui o `scroll-margin-top` fixo de 64 px nas seções, que falhava no header mobile de 117 px (D-057). O `ViewportScroller` continua com o offset medido em runtime.
+  - **SEO bilíngue:** o `LocaleService` mantém `<link rel="alternate" hreflang>` (pt-BR, en, x-default), `<link rel="canonical">` e Open Graph (`og:title`, `og:description`, `og:locale`, `og:url`) por idioma, com URLs absolutas a partir do `<base href>` (funciona em `/` e em `/modo-campanha/`). `index.html` ganha Open Graph estático em pt-BR (crawlers sociais não executam JS). `public/robots.txt` (allow all; **só vale na raiz do host**: no GitHub Pages de projeto, `/modo-campanha/robots.txt` é ignorado pelos crawlers, então passa a valer com domínio próprio, FASE 9). `og:locale:alternate` acompanha o idioma. **Sem `og:image`** e sem favicon próprio até existir o monograma MC.
+  - **Performance:** Lighthouse (build de produção, mediana de 3): mobile 87 / 100 / 100 / 100 (performance / a11y / best practices / SEO), FCP ≈ 2,8 s, LCP ≈ 3,4 s, CLS 0, TBT ≈ 30 ms; desktop 100 / 100 / 100 / 100. Testado e **revertido** carregar a Home sem lazy loading (89 em mobile, ganho marginal; o lazy de `docs/06` fica). A alavanca real para FCP/LCP mobile é **prerender estático** (`@angular/ssr` só em build), que é dependência nova: **decisão do Eduardo**. Preload da fonte do Hero continua pendente (nome com hash, D-023).
+  - **Redução de movimento:** auditada nas FASES 5/8 (boot do Hero e do CRT pulados; transições zeradas pela regra global).
+- **Status:** Aceita (REVIEWER). FASE 8 concluída no escopo implementável; pendentes: prerender (decisão), `og:image`/favicon (monograma MC), preload de fonte.

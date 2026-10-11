@@ -39,7 +39,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
     SiteFooter,
   ],
   template: `
-    <main>
+    <main id="main-content" tabindex="-1">
       <app-hero-section />
       <app-player-status-section />
       <app-skill-loadout-section />
@@ -60,6 +60,8 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
     </main>
     <app-site-footer />
   `,
+  // Alvo do link "pular para o conteúdo" (D-060): recebe foco, sem anel em volta da página toda.
+  styles: 'main:focus { outline: none; }',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {

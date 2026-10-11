@@ -1,4 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import {
+  afterNextRender,
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  DestroyRef,
+  ElementRef,
+  inject,
+} from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
 import { LOCALES, LocaleService } from '../../i18n';
@@ -44,6 +53,25 @@ export class SiteHeader {
       current: this.locale.locale() === locale,
     })),
   );
+
+  constructor() {
+    // Altura real do header (65 px no desktop, maior no mobile com a nav em 2ª linha, D-057)
+    // publicada como --mc-header-block: base do scroll-padding de âncoras e foco (D-060).
+    const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
+    const root = inject(DOCUMENT).documentElement;
+    const destroyRef = inject(DestroyRef);
+    afterNextRender(() => {
+      if (typeof ResizeObserver === 'undefined') return;
+      const observer = new ResizeObserver(([entry]) =>
+        root.style.setProperty(
+          '--mc-header-block',
+          `${Math.round(entry.borderBoxSize[0].blockSize)}px`,
+        ),
+      );
+      observer.observe(host);
+      destroyRef.onDestroy(() => observer.disconnect());
+    });
+  }
 
   /** Currículo: só com URL real (nenhum href placeholder). */
   protected readonly resume = SOCIAL_LINKS.find((link) => link.kind === 'resume');
