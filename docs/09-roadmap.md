@@ -143,18 +143,18 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ 07-A modelo / dados (**MOCK**, produção vazia) · ✅ 07-B visual (**APPROVED**, Side Quest Log) · ⬜ 07-C editorial (conteúdo real do Eduardo; não bloqueia o resto da Home)
 - 🟡 Side Quests (Slice 07)
 
-## FASE 5 — GAME FEEL ⬜
+## FASE 5 — GAME FEEL ✅ (D-058, D-059; Progress pendente de definição)
 
 - ✅ CRT Project Viewer completo na experiência da Home (D-058)
 - ✅ Seleção de cartucho (MC-CART → seleção → CRT → Project Case; GitHub como ação explícita no case) (D-058)
 - ✅ Transição cartucho → CRT (D-058)
-- ⬜ Microinterações
+- ✅ Microinterações (estados do cartucho, boot do CRT e do Hero, D-058/D-059)
 - ✅ Cartridge insert (~600 ms, versão "encaixe + boot", D-058)
 - ✅ CRT boot (`LOADING CARTRIDGE...`, D-058)
-- ⬜ Boot / Intro (≤ 1 s)
-- ⬜ Progress
+- ✅ Boot / Intro (≤ 1 s, na tela do CRT do Hero, D-059)
+- ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
-- ⬜ Transitions
+- ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
 
 ## FASE 6 — SECRETS ⬜

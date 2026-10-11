@@ -19,8 +19,8 @@ Em seguida, entra o Hero.
 
 - Duração alvo: **≤ 1 segundo**.
 - Nunca bloquear o conteúdo; deve poder ser pulada ou simplesmente não existir para quem prefere movimento reduzido.
-- Não repetir de forma intrusiva em visitas seguintes (decisão futura).
-- **Não implementado nesta fase.**
+- Não repetir de forma intrusiva em visitas seguintes: **uma vez por sessão**.
+- **Implementado (D-059)** na tela do CRT do Hero (`INITIALIZING CAMPAIGN...` → `PLAYER FOUND` → `INSERT CARTRIDGE`, ≤ 840 ms), sem overlay, sem bloquear nada e sem acontecer com `prefers-reduced-motion`.
 
 ---
 

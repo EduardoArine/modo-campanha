@@ -28,6 +28,11 @@ export const UI_PT_BR = {
   hero: {
     eyebrow: 'MC-01 / PORTFÓLIO PROFISSIONAL',
   },
+  // Boot / Intro na tela do CRT do Hero (FASE 5, D-059): linguagem de sistema.
+  boot: {
+    initializing: 'INITIALIZING CAMPAIGN...',
+    playerFound: 'PLAYER FOUND',
+  },
   a11y: {
     newTab: '(abre em nova aba)',
   },

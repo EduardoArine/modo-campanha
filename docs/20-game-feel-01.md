@@ -34,6 +34,10 @@ Só campos **aprovados** do `Project` (`docs/14`): serial + tipo, nome, artwork 
 
 Continua **na própria Home** (sem rota). `/projects/:slug` segue como decisão futura (roadmap, "Páginas dedicadas por case").
 
-## 5. Acessibilidade
+## 5. Boot / Intro (D-059)
+
+Na primeira visita da sessão, a tela do CRT do Hero mostra `INITIALIZING CAMPAIGN...` → `PLAYER FOUND` → `INSERT CARTRIDGE` (≤ 840 ms). Sem overlay, sem bloquear nada, cena `aria-hidden`, layout inalterado; não repete na sessão e não acontece com `prefers-reduced-motion`.
+
+## 6. Acessibilidade
 
 Botão nativo com o projeto no nome acessível e `aria-controls`; região rotulada (`role="region"`, "Visualizador de projetos"); status de carregamento; foco no título do case ao terminar; foco devolvido ao ejetar; links externos com aviso de nova aba; nada depende de hover.

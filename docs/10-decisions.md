@@ -660,3 +660,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Roteamento:** case na própria Home; `/projects/:slug` continua futuro.
   - Atualiza o D-046 ("MC-CART continua não clicável"): a interação chegou como previsto, sem transformar o objeto em link.
 - **Status:** Aceita (REVIEWER).
+
+## D-059 — FASE 5: Boot / Intro na tela do CRT do Hero; fechamento da FASE 5
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053):**
+  - **Boot / Intro (≤ 1 s, `docs/02`):** na primeira visita da sessão, a tela do CRT do Hero mostra `INITIALIZING CAMPAIGN...` → `PLAYER FOUND` (420 ms cada) antes do estado aprovado `INSERT CARTRIDGE`. Não é overlay nem tela de entrada: nada é coberto ou bloqueado, o layout do Hero não muda e a cena continua `aria-hidden`. Não repete na mesma sessão (`sessionStorage`, com fallback sem storage = não repetir); não acontece com `prefers-reduced-motion`. Só texto de sistema no dicionário de UI (`boot.*`).
+  - Mudança no Hero aprovado (D-039) limitada ao texto da tela durante ≤ 840 ms; composição, cena e estado final idênticos. Motivo: item do roadmap (FASE 5) e a forma menos intrusiva de cumprir "nunca bloquear o conteúdo".
+  - **Microinterações:** cobertas pelos estados do cartucho (hover/foco, inserido), boot do CRT e do Hero (D-058, D-059). Nenhuma microinteração decorativa constante.
+  - **"Progress" (roadmap FASE 5):** sem definição nos docs; **não implementado** para não inventar feature. Fica como decisão do Eduardo (ex.: indicador de seção atual na nav, `docs/03`).
+- **Status:** Aceita (REVIEWER). **FASE 5 — GAME FEEL: concluída** no escopo implementável (Progress pendente de definição).
