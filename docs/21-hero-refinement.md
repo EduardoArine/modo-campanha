@@ -1,6 +1,6 @@
 # 21 — Hero: refinamento com foco em fidelidade à referência
 
-> Status: **rodada 1 implementada, aguardando revisão do Eduardo** (D-063). Escopo: **só a Hero**. Referência de direção: concept 03-B ("Referencia – Portfólio Modo Campanha Retro-Tech"), interpretado, não copiado.
+> Status: **rodada 2 implementada, aguardando revisão visual do Eduardo** (D-066, §6). Rodada 1 (D-063, §1–§5) é histórico: a cena vetorial foi substituída pelos renders oficiais; texto e ações continuam. Escopo: **só a Hero**. Referência de direção: concept 03-B ("Referencia – Portfólio Modo Campanha Retro-Tech"), interpretado, não copiado.
 
 ## 1. Diagnóstico (Hero aprovada no Slice 01)
 
@@ -24,7 +24,7 @@
 - **Texto:** eyebrow vira etiqueta de sistema (`MC-01` em tag laranja + PORTFÓLIO PROFISSIONAL); "MODO CAMPANHA" ganha gradiente laranja (sem glow); motto com marcador ▶ em laranja; GitHub / LinkedIn passam a **ações secondary** (presença equivalente, sem competir com o CTA).
 - **Sem:** alien, ONLINE/versão, LV, ™, pôster/plantas/pilhas de cartuchos inventados, textos novos na tela, cyberpunk/neon, motion além do boot já aprovado.
 
-## 3. Assets dedicados (fidelidade de render)
+## 3. Assets dedicados (rodada 1, histórico: atendidos pelos renders oficiais em §6)
 
 A versão implementada é **vetorial (SVG + CSS)**: leve, responsiva e com tokens. A riqueza de materiais/luz de um key visual renderizado (como na referência) depende de assets. A Hero já aceita substituí-los sem mudar o layout (`HERO_SCENE_ASSETS`, `features/hero/hero-scene.assets.ts`).
 
@@ -35,7 +35,7 @@ A versão implementada é **vetorial (SVG + CSS)**: leve, responsiva e com token
 | `hero-screen-mc-001.png`                             | tela do CRT com o cartucho em execução | 4:3, pixel art 160 × 120 exportada 4×                                           | mesma gramática do System Horizon (D-046), sem texto embutido                              | média      |
 | `mc-cart-*-spine.webp` (variações)                   | futuros cartuchos visíveis na cena     | só quando houver projetos aprovados                                             | família MC-CART (D-032)                                                                    | baixa      |
 
-## 4. Responsivo
+## 4. Responsivo (rodada 1, histórico: ver §6)
 
 | Faixa             | Comportamento                                                               |
 | ----------------- | --------------------------------------------------------------------------- |
@@ -46,3 +46,45 @@ A versão implementada é **vetorial (SVG + CSS)**: leve, responsiva e com token
 ## 5. Acessibilidade
 
 Cena inteira `aria-hidden` (decorativa; nada informativo só nela). Contraste do texto preservado (lado esquerdo escuro). Boot e qualquer movimento seguem `prefers-reduced-motion` (D-059). Ações secundárias mantêm `(abre em nova aba)`.
+
+## 6. Rodada 2: renders oficiais do ecossistema MC-01 (D-066)
+
+**Alvo de direção:** "Estação Retro ao Pôr do Sol" (`design/source/hero/hero-reference-setup.png`). Interpretado: o texto, a marca, a hierarquia e as ações continuam do Modo Campanha; a referência define composição, escala relativa, luz e profundidade.
+
+### 6.1 Composição (1440 primeiro)
+
+- **Plano 1, texto (esquerda, colunas 1–6):** sobre a parte escura do palco; nada da cena atrás das letras.
+- **Plano 2, hardware:** console MC-01 com cartucho no slot (centro), MC-CART MC-001 3/4 na mesa à esquerda do console, controle à frente e à direita (deitado por perspectiva).
+- **Plano 3, CRT + ambiente:** CRT atrás/acima do console; ambiente desfocado (janela, pôr do sol, luminária, mesa) revelado da esquerda para a direita (máscara de 34% a 64% do palco; o cartucho deitado da imagem de setup fica no escuro).
+- **Técnica:** um palco com a proporção do ambiente (1672 × 941); cada objeto em `--x`/`--y`/`--w` (%) tirados da referência, então o render nítido cobre o objeto desfocado do ambiente (sem "fantasmas"). Ordem do DOM = profundidade. O CSS só posiciona, escala, sombreia e integra.
+
+### 6.2 Assets
+
+| Runtime (`public/assets/hero/`) | Origem                                             | Larguras (KB)        |
+| ------------------------------- | -------------------------------------------------- | -------------------- |
+| `ambient-1280.webp`             | `hero-reference-setup.png`, desfocado e escurecido | 1280 (27)            |
+| `crt-*.webp`                    | `mc-01-crt.png`, recorte do alfa                   | 480 (33), 900 (95)   |
+| `console-*.webp`                | `mc-01-console.png` (com cartucho no slot)         | 640 (48), 1040 (110) |
+| `controller-*.webp`             | `mc-01-controller.png`                             | 360 (20), 680 (49)   |
+| `cart-*.webp`                   | render 3/4 oficial do MC-001 (D-065)               | 160 (10), 300 (27)   |
+| `screen-440.webp`               | SYSTEM HORIZON (D-065), para a tela do CRT         | 440 (38)             |
+
+Fontes PNG em `design/source/hero/` (o 3/4 e o SYSTEM HORIZON ficam em `design/source/mc-cart/`). Todas as imagens com `srcset`/`sizes`, `alt=""`, `loading="lazy"`, `decoding="async"`; sem preload (o LCP é texto). A tela do CRT recorta o SYSTEM HORIZON no vidro do render (`CRT_GLASS`, `hero-scene.assets.ts`).
+
+### 6.3 Responsivo
+
+| Faixa                        | Comportamento                                                                                         |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Desktop (≥ 1200)             | palco absoluto à direita, altura da Hero = `min(56.25vw, 100svh − header)`; composição única na dobra |
+| Desktop compacto (1024–1199) | cena nas colunas 7–12: mesmo palco, recortado em 40% → 100%, borda esquerda dissolvida                |
+| Tablet (768–1023)            | cena abaixo do texto: mesmo palco (140%), recortado à esquerda, sangrando até as bordas               |
+| Mobile (< 768)               | CRT + console + controle, sem ambiente nem MC-CART; luz quente da Hero; identidade e texto primeiro   |
+
+### 6.4 Performance (Lighthouse 12, mediana de 3, build de produção)
+
+| Servidor       | Mobile antes → depois     | Desktop antes → depois  |
+| -------------- | ------------------------- | ----------------------- |
+| HTTP/2 + TLS   | 84 → 86 (LCP 3930 → 3630) | 99 → 99 (LCP 750 → 750) |
+| HTTP/1.1 local | 83 → 81 (LCP 3820 → 4120) | 99 → 99 (LCP 759 → 840) |
+
+No HTTP/1.1 o LCP simulado piora porque há 3 requisições a mais na fila de 6 conexões, embora o total transferido caia (806 → 726 KB); no HTTP/2 (GitHub Pages) melhora. `@defer (on idle)` na cena foi testado e piorou o LCP (descartado).
