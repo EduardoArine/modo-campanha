@@ -1,5 +1,5 @@
-// Hero (docs/12 §8; refinamento D-063, docs/21). Desktop: conteúdo 1–6, cena 7–12 com sangria
-// até a borda da página. Tablet/mobile: conteúdo primeiro, cena depois.
+// Hero (docs/12 §8; refinamento D-066, docs/21 §6). Desktop: conteúdo 1–6 sobre a área escura da
+// cena (palco absoluto à direita). Desktop compacto: cena 7–12. Tablet/mobile: conteúdo, depois cena.
 @use 'mc' as *;
 
 :host {
@@ -8,15 +8,22 @@
 
 .hero {
   position: relative;
-  // A luz e a mesa da cena podem passar da coluna; nunca criam scroll horizontal.
+  isolation: isolate;
+  // A cena pode passar da coluna; nunca cria scroll horizontal.
   overflow-x: clip;
   // Base menor: a seção seguinte já traz o próprio espaço de seção (ritmo 03-A).
   padding-block: space(8) space(6);
+
+  // Desktop (D-066): composição única na primeira dobra, na proporção do ambiente (16:9),
+  // limitada à altura útil da janela; o conteúdo centraliza na área escura da esquerda.
+  @include mq(xl) {
+    min-height: min(56.25vw, calc(100svh - var(--mc-header-height)));
+    grid-template-rows: 1fr;
+  }
 }
 
-// Ambiente (atrás de toda a Hero): parede com painéis muito sutis e luz quente do lado da cena;
-// o lado do texto fica escuro (legibilidade); a base dissolve no fundo da página.
-// Um render dedicado (--backdrop-image, docs/21 §3) entra por baixo das mesmas camadas.
+// Luz quente atrás da cena (tablet/mobile); a base dissolve no fundo da página. No desktop o
+// ambiente fotográfico da cena faz esse papel.
 .backdrop {
   grid-column: full;
   grid-row: 1;
@@ -24,37 +31,10 @@
   pointer-events: none;
   background:
     linear-gradient(to bottom, transparent 75%, var(--mc-bg)),
-    radial-gradient(70% 60% at 50% 72%, var(--mc-glow-warm), transparent 70%),
-    var(--backdrop-image, none) center / cover no-repeat,
-    var(--mc-bg);
+    radial-gradient(70% 45% at 50% 80%, var(--mc-glow-warm), transparent 70%);
 
-  @include mq(lg) {
-    background:
-      linear-gradient(to bottom, transparent 72%, var(--mc-bg)),
-      linear-gradient(to right, var(--mc-bg) 32%, transparent 62%),
-      radial-gradient(55% 70% at 74% 40%, var(--mc-glow-warm), transparent 72%),
-      var(--backdrop-image, none) center / cover no-repeat,
-      var(--mc-bg);
-  }
-}
-
-// Painéis da parede só onde a luz quente bate (em volta da cena), nunca atrás do texto.
-.backdrop {
-  @include mq(lg) {
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        to right,
-        var(--mc-material-highlight) 0 1px,
-        transparent 1px space(10)
-      );
-      mask-image: radial-gradient(38% 55% at 74% 42%, var(--mc-bg), transparent);
-      opacity: 0.6;
-    }
+  @include mq(xl) {
+    display: none;
   }
 }
 
@@ -62,12 +42,19 @@
   grid-row: 1;
   position: relative;
   z-index: 1;
+
+  // Desktop: o palco absoluto da cena se posiciona pela Hero inteira, não pela coluna.
+  @include mq(xl) {
+    position: static;
+  }
+
   @include columns;
   align-items: center;
-  row-gap: space(8);
+  align-self: center;
+  row-gap: space(7);
 }
 
-// O texto fica acima da cena: a mesa e a luz podem passar por trás, nunca por cima.
+// O texto fica sempre acima da cena.
 .content {
   position: relative;
   z-index: 1;
@@ -80,13 +67,31 @@
   }
 }
 
-// Desktop: a cena avança até a borda da página (presença do objeto principal, 03-B).
+// Tablet/mobile: a cena vem depois do conteúdo, na largura da coluna. Desktop: palco absoluto
+// ancorado à direita, com a altura da Hero e a proporção do ambiente (as posições dos objetos são
+// relativas a ele); o lado esquerdo do palco fica sob o texto, escuro.
 .visual {
   grid-column: 1 / -1;
 
+  // Tablet: a cena sangra até as bordas da janela (sem corte reto na coluna).
+  @include mq(md) {
+    margin-inline: calc(-1 * var(--mc-page-margin));
+  }
+
+  // Desktop compacto: lado a lado com o texto (colunas 7–12), sangrando só à direita.
   @include mq(lg) {
     grid-column: 7 / -1;
-    margin-inline-end: calc(-1 * var(--mc-page-margin));
+    margin-inline: 0 calc(-1 * var(--mc-page-margin));
+  }
+
+  @include mq(xl) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    aspect-ratio: 1672 / 941;
+    margin-inline: 0;
   }
 }
 

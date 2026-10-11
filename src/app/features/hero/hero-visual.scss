@@ -1,269 +1,231 @@
-// Cena do Hero (D-063, docs/21): CRT + console MC-01 com cartucho + controle, sobre uma mesa.
-// Objetos físicos: tokens de material + sombra de objeto. Glow quente só aqui (D-024).
-// "A ambientação apoia o conteúdo. Nunca compete com ele."
+// Cena do Hero (D-066, docs/21 §6). Renders oficiais posicionados num palco (stage) com posições em
+// % (--x/--y/--w) por breakpoint; o CSS só posiciona, escala, ilumina e integra (nenhum objeto é
+// redesenhado). Desktop (≥ 1200): o palco tem a proporção do ambiente aprovado (1672 × 941) e as
+// posições seguem a composição da referência, de modo que os objetos nítidos cobrem os do ambiente
+// desfocado (três planos: texto · hardware · CRT + ambiente). Tablet (768–1023, abaixo do texto) e
+// desktop compacto (1024–1199, ao lado do texto): a MESMA cena, recortada à direita (o lado esquerdo
+// do palco fica fora); as coordenadas são as mesmas, então os objetos continuam cobrindo os do
+// ambiente. Mobile: CRT + console + controle, sem ambiente.
 @use 'mc' as *;
 
 :host {
   display: block;
+
+  // Tablet: recorta o lado esquerdo do palco (texto fica acima, fora da cena).
+  @include mq(md) {
+    overflow: hidden;
+  }
+
+  @include mq(xl) {
+    overflow: visible;
+  }
 }
 
-// Mobile: cena compacta; tablet centralizada; desktop ocupa a coluna (com sangria, no Hero).
-.scene {
+.stage {
   position: relative;
   isolation: isolate;
-  display: grid;
-  justify-items: center;
-  width: 100%;
-  max-width: 24rem;
-  margin-inline: auto;
+  aspect-ratio: 1 / 1.05;
 
+  // Tablet: proporção do ambiente; 140% da largura, ancorado à direita (mostra de ~29% em diante,
+  // onde a máscara do ambiente ainda é transparente: a borda esquerda some).
   @include mq(md) {
-    max-width: 34rem;
+    width: 140%;
+    margin-left: -40%;
+    aspect-ratio: 1672 / 941;
   }
 
+  // Desktop compacto: só a parte do palco com o hardware (40% → 100%) na coluna da cena.
   @include mq(lg) {
-    max-width: 40rem;
+    width: calc(100% / 0.6);
+    margin-left: calc(-100% * 0.4 / 0.6);
   }
 
-  // Luz quente da tela/luminária derramando na parede atrás do CRT.
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -8% -20% 10%;
-    z-index: -1;
-    background: radial-gradient(closest-side, var(--mc-glow-warm), transparent);
+  @include mq(xl) {
+    width: auto;
+    height: 100%;
+    margin-left: 0;
   }
-}
 
-// CRT atrás do console. Abaixo de 28rem o frame simplifica sozinho (container query).
-// Mobile: CRT compacto (moldura simplificada, D-038). A partir de md, > 28rem mantém a moldura
-// física do frame (a container query simplifica em ≤ 28rem, D-037).
-.crt {
-  width: 80%;
-
-  @include mq(md) {
-    width: max(72%, 30rem);
-    max-width: 100%;
-  }
-}
-
-.screen-message {
-  place-self: center;
-  margin: 0;
-  @include type(system);
-  color: var(--mc-text-muted);
-}
-
-// Cartucho em execução: o artwork preenche o vidro (anula o padding do viewport do frame).
-// Acoplado ao padding de `.viewport` em crt-frame.scss (space(6); space(4) em ≤ 28rem):
-// se o frame mudar esse padding, ajustar --pad aqui.
-.screen-art {
-  --pad: #{space(6)};
-  position: relative;
-  aspect-ratio: 4 / 3;
-  margin: calc(-1 * var(--pad));
-  overflow: hidden;
-  border-radius: var(--mc-radius-glass);
-
-  // Scanlines muito leves sobre a arte decorativa (não há texto informativo aqui).
+  // Luz ambiente quente (luminária + tela), localizada e suave: luz, não glow gamer.
   &::after {
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      to bottom,
-      transparent 0 2px,
-      var(--mc-material-groove) 2px 3px
-    );
-    opacity: 0.35;
+    z-index: 5;
     pointer-events: none;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: 50% 60%;
+    background: radial-gradient(40% 45% at 62% 46%, var(--mc-glow-warm), transparent 70%);
+    mix-blend-mode: screen;
+    opacity: 0.4;
   }
 }
 
-@container (max-width: 28rem) {
-  .screen-art {
-    --pad: #{space(4)};
-    border-radius: var(--mc-radius-sm);
-  }
-}
-
-.screen-tag {
+// Ambiente (plano 3): desfocado e escurecido na origem; some nas bordas, nunca vira retângulo.
+.ambient {
+  display: none;
   position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--ambient) center / cover no-repeat;
+  opacity: 0.85;
+  // Esquerda (texto) limpa e escura; o ambiente aparece aos poucos (a partir do console: o cartucho
+  // deitado do ambiente fica no escuro) e se dissolve em cima e embaixo.
+  --fade-x: 34%;
+  --fade-y: 22%;
+  mask-image:
+    linear-gradient(to right, transparent var(--fade-x), var(--mc-bg) calc(var(--fade-x) + 30%)),
+    linear-gradient(to bottom, transparent, var(--mc-bg) var(--fade-y) 72%, transparent);
+  mask-composite: intersect;
+
+  @include mq(md) {
+    display: block;
+  }
+
+  // Desktop compacto: o recorte começa em 40% do palco; o ambiente nasce depois dele (sem borda) e
+  // o topo, num palco baixo, pede degradê mais longo.
+  @include mq(lg) {
+    --fade-x: 42%;
+    --fade-y: 30%;
+  }
+
+  @include mq(xl) {
+    --fade-x: 34%;
+    --fade-y: 10%;
+  }
+}
+
+.obj {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  height: auto;
+}
+
+// Contato com a mesa: sombra de objeto discreta (sem glow, sem contorno).
+.console,
+.cart,
+.controller {
+  filter: drop-shadow(0 space(3) space(3) var(--mc-material-groove));
+}
+
+// Mobile: CRT + console em primeiro plano (o cartucho do slot cobre a base do CRT: o console fica
+// à frente, não empilhado), controle menor; MC-CART fica no Inventory.
+.crt {
+  --x: 19%;
+  --y: 1%;
+  --w: 62%;
   z-index: 1;
-  left: space(3);
-  bottom: space(3);
-  margin: 0;
-  padding: space(1) space(2);
-  @include type(label);
-  color: var(--mc-text);
-  background: var(--mc-bg);
 }
 
-// Hardware na frente do CRT: sobe sobre a base da TV (margem em % da largura da cena).
-.rig {
-  position: relative;
-  width: 100%;
-  // O cartucho encosta na base da TV, sem cobrir o vidro.
-  margin-top: -11%;
+.console {
+  --x: 4%;
+  --y: 43%;
+  --w: 84%;
+  z-index: 2;
 }
 
-// Mesa: plano escuro com aresta clara, saindo da cena para a direita (o Hero corta o excesso).
-.desk {
-  position: absolute;
-  pointer-events: none;
-  z-index: -1;
-  top: 72%;
-  left: -70%;
-  right: -60%;
-  bottom: -28%;
-  // Reflexo quente da TV na mesa, sob o hardware.
-  background:
-    radial-gradient(28% 55% at 62% 0%, var(--mc-glow-warm), transparent),
-    linear-gradient(to bottom, var(--mc-material-dark), var(--mc-bg) 85%);
-  border-top: var(--mc-border-width-default) solid var(--mc-material-highlight);
-  // Máscara usa só o alfa: qualquer token opaco serve.
-  mask-image: linear-gradient(to right, transparent 5%, var(--mc-bg) 45%);
+.cart {
+  display: none;
+  --x: 8%;
+  --y: 52%;
+  --w: 13%;
+  z-index: 3;
 }
 
-.hardware {
+// Render frontal do controle deitado na mesa: perspectiva leve e giro sutil.
+.controller {
+  --x: 56%;
+  --y: 72%;
+  --w: 40%;
+  z-index: 4;
+  transform: perspective(60em) rotateX(42deg) rotate(-7deg);
+  transform-origin: 50% 100%;
+}
+
+// Tablet e desktop: coordenadas da referência (1672 × 941).
+@include mq(md) {
+  .cart {
+    display: block;
+  }
+
+  .crt {
+    --x: 66.1%;
+    --y: 9%;
+    --w: 26.5%;
+  }
+
+  .console {
+    --x: 47.5%;
+    --y: 36.5%;
+    --w: 33%;
+  }
+
+  .cart {
+    --x: 45%;
+    --y: 60.5%;
+    --w: 9.5%;
+  }
+
+  // A perspectiva desloca o controle para baixo: --y compensa para cobrir o do ambiente.
+  .controller {
+    --x: 71%;
+    --y: 50.5%;
+    --w: 25.5%;
+  }
+}
+
+.crt img,
+.screen {
   display: block;
   width: 100%;
   height: auto;
 }
 
-// SVG: só tokens (stop-color e fill via classe).
-.s-highlight {
-  stop-color: var(--mc-material-highlight);
-}
-
-.s-groove {
-  stop-color: var(--mc-material-groove);
+// Tela sobre o vidro do render (mesmo sistema de coordenadas do recorte).
+.screen {
+  position: absolute;
+  inset: 0;
 }
 
 .s-clear {
   stop-color: transparent;
 }
 
-.hw-shadow {
-  fill: var(--mc-material-groove);
-  filter: blur(6px);
+.s-groove {
+  stop-color: var(--mc-material-groove);
 }
 
-.hw-body,
-.ctl-body {
-  fill: var(--mc-material-dark);
+.screen-art {
+  opacity: 0.94;
 }
 
-.hw-overlay {
-  pointer-events: none;
+.screen-message,
+.screen-tag {
+  font-family: var(--mc-font-text);
+  font-weight: 600;
+  letter-spacing: 0.1em;
 }
 
-.hw-edge {
-  stroke: var(--mc-material-highlight);
-  stroke-width: 1.5;
+.screen-message {
+  font-size: 30px;
+  fill: var(--mc-text-muted);
 }
 
-.hw-groove,
-.ctl-well {
-  fill: var(--mc-material-groove);
+.screen-tag {
+  font-size: 32px;
+  fill: var(--mc-text);
 }
 
-.hw-groove-line,
-.hw-vents,
-.cart-grip {
-  fill: none;
-  stroke: var(--mc-material-groove);
-  stroke-linecap: round;
-}
-
-.hw-groove-line {
-  stroke-width: 2;
-}
-
-.hw-vents,
-.cart-grip {
-  stroke-width: 4;
-}
-
-.hw-well,
-.hw-port {
+.screen-tag-bg {
   fill: var(--mc-bg);
-  stroke: var(--mc-material-groove);
-  stroke-width: 2;
 }
 
-.hw-power,
-.ctl-btn {
-  fill: var(--mc-material-orange);
-}
+// Etiqueta da tela: ilegível no CRT do mobile; só a partir do tablet.
+.screen-tag,
+.screen-tag-bg {
+  display: none;
 
-.ctl-btn--alt {
-  fill: var(--mc-accent-active);
-}
-
-.hw-switch {
-  fill: var(--mc-material-light);
-}
-
-.hw-led {
-  fill: var(--mc-accent);
-}
-
-.hw-led-glow {
-  fill: var(--mc-glow-warm);
-}
-
-.hw-ink,
-.ctl-ink {
-  fill: var(--mc-material-dark-ink);
-  font-family: var(--mc-font-text);
-  font-weight: 600;
-  letter-spacing: 0.12em;
-}
-
-.hw-ink {
-  font-size: 13px;
-}
-
-.ctl-ink {
-  font-size: 8px;
-}
-
-.hw-cable {
-  fill: none;
-  stroke: var(--mc-material-dark);
-  stroke-width: 6;
-  stroke-linecap: round;
-}
-
-// MC-CART no slot: mesma família do componente (shell, faixa de acento, rótulo com artwork).
-.cart-shell {
-  fill: var(--mc-material-orange);
-}
-
-.cart-ink {
-  fill: var(--mc-material-orange-ink);
-  font-family: var(--mc-font-text);
-  font-size: 7px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-}
-
-.cart-label {
-  fill: var(--mc-material-dark);
-}
-
-.cart-accent {
-  fill: var(--mc-special);
-}
-
-.ctl-dpad {
-  fill: var(--mc-material-orange);
+  @include mq(md) {
+    display: inline;
+  }
 }

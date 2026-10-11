@@ -4,8 +4,8 @@ import { provideRouter } from '@angular/router';
 import { routes } from '../../app.routes';
 import { HeroVisual } from './hero-visual';
 
-// Cena do Hero (D-063) + Boot / Intro (D-059): uma vez por sessão, ≤ 1 s, depois o cartucho
-// MC-001 em execução na tela do CRT.
+// Cena do Hero (D-066): renders oficiais do ecossistema MC-01 + Boot / Intro (D-059): uma vez por
+// sessão, ≤ 1 s, depois o cartucho MC-001 em execução na tela do CRT.
 describe('HeroVisual', () => {
   async function render(): Promise<{ el: HTMLElement; detect: () => void }> {
     // Sem renderizar a Home: o Hero dela consumiria o boot da sessão antes deste componente.
@@ -35,8 +35,9 @@ describe('HeroVisual', () => {
     detect();
     expect(message(el)).toBeUndefined();
     expect(tag(el)).toBe('MC-001 · Modo Campanha');
-    expect(el.querySelector('.screen-art img')?.getAttribute('src')).toBe(
-      'assets/cartridges/mc-001/system-horizon.webp',
+    // Derivado leve do SYSTEM HORIZON para a tela, não a arte de 215 KB.
+    expect(el.querySelector('.screen-art')?.getAttribute('href')).toBe(
+      'assets/hero/screen-440.webp',
     );
   });
 
@@ -55,17 +56,27 @@ describe('HeroVisual', () => {
     expect(sessionStorage.getItem('mc-boot-seen')).toBeNull();
   });
 
-  it('draws the MC-01 hardware with the inserted cartridge, all decorative', async () => {
+  it('composes the official renders (no redrawn hardware), all decorative', async () => {
     sessionStorage.setItem('mc-boot-seen', '1');
     const { el } = await render();
-    const svg = el.querySelector('svg.hardware')!;
+    const images = Array.from(el.querySelectorAll<HTMLImageElement>('img.obj, .crt img'));
 
     expect(el.getAttribute('aria-hidden')).toBe('true');
-    expect(svg.querySelector('.cart image')?.getAttribute('href')).toBe(
-      'assets/cartridges/mc-001/system-horizon.webp',
-    );
-    expect(svg.querySelector('.controller')).not.toBeNull();
-    expect(svg.textContent).toContain('MC-001');
+    expect(images.map((img) => img.getAttribute('src'))).toEqual([
+      'assets/hero/crt-900.webp',
+      'assets/hero/console-1040.webp',
+      'assets/hero/cart-300.webp',
+      'assets/hero/controller-680.webp',
+    ]);
+    for (const img of images) {
+      expect(img.getAttribute('alt')).toBe('');
+      expect(img.getAttribute('srcset')).toMatch(/ \d+w, .* \d+w$/);
+      expect(img.getAttribute('sizes')).toBeTruthy();
+      expect(Number(img.getAttribute('width'))).toBeGreaterThan(0);
+    }
+    // A tela é recortada no vidro do render; nada de hardware desenhado em SVG/CSS.
+    expect(el.querySelector('.screen clipPath path')).not.toBeNull();
+    expect(el.querySelector('mc-crt-frame, svg.hardware')).toBeNull();
     expect(el.querySelectorAll('a, button, [tabindex]').length).toBe(0);
   });
 });

@@ -66,7 +66,8 @@ describe('HeroSection', () => {
     const scene = el.querySelector('app-hero-visual')!;
 
     expect(scene.getAttribute('aria-hidden')).toBe('true');
-    expect(scene.querySelector('mc-crt-frame')).not.toBeNull();
+    // D-066: o CRT da cena é o render oficial (o mc-crt-frame segue no CRT Project Viewer).
+    expect(scene.querySelector('.crt img')).not.toBeNull();
     expect(scene.querySelector('[role="region"]')).toBeNull();
   });
 });
