@@ -89,7 +89,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 Backlog:
 
 - ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
-- ⬜ **Mobile Navigation**: definir quando as seções reais de destino existirem (a ausência atual não é o comportamento final)
+- ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
 
@@ -113,7 +113,7 @@ Backlog:
 
 CRT Project Viewer completo na Home · seleção de cartucho · inserção no console · transição cartucho → CRT · motion relacionado.
 
-## FASE 4 — CAREER CONTENT 🟡 ← atual
+## FASE 4 — CAREER CONTENT 🟡 (estrutura ✅ D-057; conteúdo editorial pendente)
 
 ### Home Slice 03 — Campaign Log 🟡 (plano aprovado, D-048; `docs/15-home-slice-03.md`)
 
@@ -183,6 +183,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ⬜ Lighthouse
 - ⬜ Redução de movimento
 - ⬜ Teclado
+- ⬜ Offset de âncora/foco em CSS acompanhar a altura real do header (mobile 117 px, D-057): `scroll-margin` / `scroll-padding-top` (WCAG 2.4.11)
 
 ## FASE 9 — RELEASE ⬜
 

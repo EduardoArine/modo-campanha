@@ -638,3 +638,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Modelo:** `SideQuest { id; kind: 'game' | 'art' | 'ai' | 'interface' | 'study'; title; summary }`; rótulos de tipo no dicionário de UI (`sideQuests.kind`). Links só com URL real aprovada.
   - **SIDE QUESTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Produção vazia (seção não renderizada); `side-quests.data.development.ts` (ids `mock-side-quest-*`) só em dev/testes; guard do deploy estendido para `mock-side-quest`. Paco (MC-002, `review`) não entra.
 - **Status:** Aceita (REVIEWER). 07-A e 07-B concluídos; **07-C editorial pendente**.
+
+## D-057 — FASE 4: revisão integrada da Home e navegação mobile
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053):**
+  - **Home completa em estrutura:** desenvolvimento mostra as 9 seções de `docs/03` na ordem (Hero → … → Side Quests → Final Checkpoint) + footer; produção mostra só as seções com conteúdo aprovado (Hero, Player Status, Skill Loadout, Project Inventory, Final Checkpoint + footer). Validada em 1440 / 820 / 390, pt-BR e en, sem overflow; o ritmo entre seções segue o espaçamento de seção aprovado.
+  - **Navegação mobile (backlog do Slice 01, D-037/D-039):** os destinos reais agora existem, então abaixo de 768 px a mesma nav (Sobre / Projetos / Contato) aparece como **segunda linha do header**, alinhada à marca. Sem menu, sem JS, sem novo ícone; marca e PT / EN da primeira linha inalterados (a 1ª linha mantém a altura do header). Header mobile: 117 px; o offset das âncoras continua medido em runtime (seção a 133 px). Rejeitado um botão "Menu": a 360 px sobram ~46 px na 1ª linha, e caber exigiria mover PT / EN para dentro do menu (mudança no header aprovado).
+  - **≥ 768 px:** header **idêntico pixel a pixel** ao aprovado na 05-D (verificado em 1440 e 820, pt-BR e en).
+  - **FASE 4 — CAREER CONTENT:** estrutura e visual de todas as seções concluídos; conteúdo editorial pendente em Campaign Log (03-C), Achievements (04-C), Current Main Quest (06-C) e Side Quests (07-C), todos com MOCK dev-only e produção vazia.
+- **Status:** Aceita (REVIEWER).

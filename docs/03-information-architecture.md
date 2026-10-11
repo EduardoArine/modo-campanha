@@ -54,6 +54,7 @@ Não é uma seção, é a moldura fixa do site. Base 03-A:
 - Âncoras com scroll nativo (`withInMemoryScrolling({ anchorScrolling: 'enabled' })`).
 - Header fixo aprovado no Concept 03 (ver acima). Indicador de "fase atual" da página pode ser avaliado no design system.
 - Toda navegação deve funcionar por teclado.
+- **Mobile (< 768 px, D-057):** a mesma nav aparece como segunda linha do header, alinhada à marca; sem menu nem JS.
 
 ## Evolução futura possível
 

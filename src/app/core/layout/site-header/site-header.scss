@@ -15,9 +15,14 @@
 
 .bar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: space(6);
+  column-gap: space(6);
   min-height: var(--mc-header-height);
+
+  @include mq(md) {
+    flex-wrap: nowrap;
+  }
 }
 
 // Marca provisória: caixa "MC" + "MODO CAMPANHA" (Plex: Pixelify não validada em tamanho pequeno).
@@ -25,9 +30,14 @@
   display: inline-flex;
   align-items: center;
   gap: space(3);
-  min-height: 44px;
+  // Abaixo de md a 1ª linha mantém a altura do header (a nav ocupa a 2ª linha, D-057).
+  min-height: var(--mc-header-height);
   color: var(--mc-text);
   text-decoration: none;
+
+  @include mq(md) {
+    min-height: 44px;
+  }
 
   &:hover {
     color: var(--mc-text);
@@ -59,17 +69,25 @@ ul {
   list-style: none;
 }
 
-// Navegação: ausente abaixo de md no Slice 01 (temporário, não define o mobile final).
+// Navegação. Abaixo de md (D-057): segunda linha do header, alinhada à marca, com os mesmos
+// links (sem menu nem JS); marca e PT / EN da primeira linha não mudam.
 .nav {
-  display: none;
-  margin-inline-start: auto;
+  order: 1;
+  flex-basis: 100%;
 
   @include mq(md) {
-    display: block;
+    order: 0;
+    flex-basis: auto;
+    margin-inline-start: auto;
   }
 
   ul {
     gap: space(5);
+    padding-bottom: space(2);
+
+    @include mq(md) {
+      padding-bottom: 0;
+    }
   }
 
   a {
@@ -94,6 +112,7 @@ ul {
   display: flex;
   align-items: center;
   gap: space(5);
+  min-height: var(--mc-header-height);
   margin-inline-start: auto;
 
   @include mq(md) {
