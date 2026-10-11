@@ -521,7 +521,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **não compartilham obrigatoriamente:** horizonte, prédios, checkpoints, composição, cenário.
 - **Produção:** MC-001 tem `publication: 'approved'` e artwork aprovado, então aparece em desenvolvimento, produção e no build do GitHub Pages. A política conservadora não mudou: projeto sem artwork aprovado continua fora da versão pública.
 - **MC-002:** sem mudança (fora do runtime, `review` em `docs/14`).
-- **Status:** **02-C — PROJECT INVENTORY FOUNDATION: APPROVED** e **02-C.5 — MC-001 PROJECT ARTWORK: APPROVED** (2026-10-09, `origin/main` `c204995`). Integração conferida contra o artwork aprovado.
+- **Status:** **02-C — PROJECT INVENTORY FOUNDATION: APPROVED** e **02-C.5 — MC-001 PROJECT ARTWORK: APPROVED** (2026-10-09, `origin/main` `c204995`). Integração conferida contra o artwork aprovado. **Evolução (D-065):** artwork do MC-001 substituído pelo SYSTEM HORIZON dos renders oficiais (v1 arquivada) e shell do MC-001 passa a grafite com acentos laranja.
 - **Freeze:** MC-001 (artwork, crop, escala, shell, accent, conteúdo, summary, tags), MC-CART e Project Inventory congelados. Composição aprovada: primeiro projeto no primeiro slot natural, alinhado à esquerda, sem centralização nem aumento por haver um só projeto, sem slots vazios nem placeholders; o espaço vazio à direita no desktop é aceito (a coleção cresce organicamente).
 - **Interação:** o MC-CART continua não clicável e não vira link para o GitHub. Semântica futura: MC-CART → seleção do projeto → CRT → Project Case; o GitHub será uma ação explícita dentro do case.
 - **Roadmap:** **02-D** (Inventory) absorvido por 02-C / 02-C.5; **02-E** (responsivo) absorvido por 02-B / 02-C / 02-C.5. Sem trabalho artificial para cumprir nomes de etapas antigas. Próxima etapa: **02-F — Integrated Slice Review** (sem feature nova). GitHub Pages: sem deploy até a aprovação do Slice 02 completo.
@@ -723,3 +723,23 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Desktop:** cena em 7–12 com sangria até a borda da página.
   - **Assets dedicados** (render do hardware, ambiente, tela 4:3, variações de cartucho): especificados em `docs/21` §3; a Hero aceita cada um via `HERO_SCENE_ASSETS` sem mudar o layout.
 - **Status:** Implementada na branch `feat/hero-refinement` (REVIEWER). **Aguardando revisão do Eduardo** antes de seguir para outras seções.
+
+## D-065 — MC-CART oficial: renders do MC-001, shell grafite e SYSTEM HORIZON
+
+- **Data:** 2026-10-11
+- **Decisão do Eduardo** (a partir dos renders aprovados "MC-CART MC-001 — front" e "— 3/4"; fontes em `design/source/mc-cart/`):
+  1. **MC-001 = shell grafite/preto fosco com acentos laranja queimado** (pequenos acentos metálicos, plástico texturizado; sem neon, sem excesso de LEDs). O laranja continua cor de identidade e destaque, sem dominar a carcaça. **O shell totalmente laranja deixa de ser a referência principal do MC-001** (dado: `shell: 'dark'`, `accent: 'warm'`, usados só pelo fallback em CSS).
+  2. **SYSTEM HORIZON = artwork oficial do MC-001**: a paisagem pixel art dos renders (pôr do sol, montanhas, lago, caminho), 4:3. Substitui a v1 de D-046 (arquivada em `design/source/mc-cart/archive/mc-001-system-horizon-v1.png`, fora do runtime). Runtime: `assets/cartridges/mc-001/system-horizon.webp` (960 × 720), usada no case do CRT e na tela do CRT da Hero; alt bilíngue novo, descritivo.
+  3. **Render frontal = representação padrão no Project Inventory.** O render É o objeto: o `mc-cart` ganhou o input `render` e, com ele, mostra só a imagem (sem casca, moldura, grips ou sombra interna em CSS). A construção em CSS (D-032/D-034) fica como **fallback** para projetos sem render. Nome acessível, `role="img"`, botão "Inserir cartucho", inserção → CRT, teclado e reduced motion inalterados.
+  4. **Render 3/4 = representação de destaque / product shot** (Hero, inserção, destaques, documentação). Declarado no dado (`cartridge.renders.threeQuarter`), ainda sem uso: entra na próxima rodada da Hero.
+  5. **Glifo de quatro quadrados laranja = SYSTEM / HARDWARE GLYPH**, presente no MC-01, no MC-CART, no controle, na CRT e em detalhes de hardware. **Não é logotipo** e não substitui MODO CAMPANHA nem MC na identidade principal; o monograma MC continua exploração futura separada (D-015).
+  6. **A silhueta dos renders é a direção física oficial do MC-CART**: objeto autoral, ombros próprios, encaixe/rebaixo central no topo, laterais estruturadas, espessura física, área inferior de conexão; não copia cartucho comercial. Onde a construção em CSS divergir, o render prevalece.
+  7. Label com SYSTEM HORIZON, MC-CART, MC-001 e MODO CAMPANHA; sem rarity, level, stats, QR code, selo, XP ou badges.
+- **Implementação:**
+  - Modelo: `ProjectCartridge.renders { front; threeQuarter? }` e `artwork` com `width`/`height` (`CartridgeImage`), sem sistema paralelo. Paths só em `projects.data.ts`.
+  - Assets de runtime (WebP com alfa, recorte das margens transparentes, sem otimização agressiva): `front.webp` 960 × 690 (172 KB), `three-quarter.webp` 1244 × 1017 (367 KB, ainda não carregado), `system-horizon.webp` 960 × 720 (215 KB). Originais PNG em `design/source/mc-cart/`.
+  - **Escala no Inventory:** o cartucho vira o segundo grande objeto físico do site: item até **24rem** (antes 22rem) e **3 por linha no desktop ≥ 1200** (antes 4); 2 no tablet, 1 no mobile. Hover continua sendo só a elevação curta (D-058); sombra de contato discreta (`drop-shadow` com `material-groove`); nada de glow, borda de card ou overlay.
+  - Case e tela do CRT da Hero: artwork 4:3 reduzido com suavização (sem `image-rendering: pixelated`, que serrilha ao reduzir um original de alta resolução). Nenhuma mudança estrutural no CRT.
+  - Orçamento de CSS do `mc-cart` (D-035): regras de host do render ficam no Inventory; removida uma cor duplicada herdada em `.top` (sem efeito visual).
+- **Atualiza:** D-046 (artwork e shell do MC-001), D-032/D-034 (a construção em CSS passa a ser fallback), D-044 (densidade do Inventory no desktop: 3 por linha).
+- **Status:** Aceita (decisão do Eduardo; integração aprovada pelo REVIEWER).

@@ -37,10 +37,17 @@ interface ProjectLink {
   url: string;
 }
 
+interface CartridgeImage {
+  src: string;
+  width: number;
+  height: number;
+}
+
 interface ProjectCartridge {
-  shell: McCartShell; // dark | light | orange | cool
-  accent: McCartAccent; // warm | cool | special
-  artwork?: { src: string; alt: Localized }; // 16:10, mín. 640 × 400
+  shell: McCartShell; // dark | light | orange | cool (fallback em CSS)
+  accent: McCartAccent; // warm | cool | special (fallback em CSS)
+  artwork?: CartridgeImage & { alt: Localized }; // MC-001: SYSTEM HORIZON, 4:3 (D-065)
+  renders?: { front: CartridgeImage; threeQuarter?: CartridgeImage }; // renders oficiais (D-065)
 }
 
 interface Project {
@@ -70,7 +77,7 @@ Regras:
 - **Sem campos editoriais:** nada de aprovador, revisão ou confidencialidade no runtime (repositório público, D-042).
 - **Removidos:** `ProjectType`, `ProjectStatus`/`status`, `featured`, `subtitle`, `summary` (→ `description`), `stack` (→ `technologies`), `mission`, `responsibilities`, `challenges`, `solution`, `results`, `screenshots`, link `video`, entidade `Cartridge` com `label`/`art`/`color`/`serial` (serial subiu para o projeto). Campos de case voltam só quando o CRT/case existir e houver conteúdo aprovado.
 
-Dados: `src/app/data/projects.data.ts`: **MC-001 Modo Campanha** (`approved`, orange/special, artwork `assets/cartridges/mc-001-modo-campanha.png`, D-046). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (MC-002 Paco) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
+Dados: `src/app/data/projects.data.ts`: **MC-001 Modo Campanha** (`approved`, shell grafite com acentos laranja, artwork SYSTEM HORIZON e renders `front`/`threeQuarter` em `assets/cartridges/mc-001/`, D-065). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (MC-002 Paco) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
 
 ## Skill / SkillGroup (Skill Loadout, D-042)
 

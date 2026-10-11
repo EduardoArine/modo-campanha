@@ -26,9 +26,9 @@
 | Learning candidato (case completo) | Construir e validar o Design System antes da Home reduziu retrabalho e ajudou a preservar a direção do concept na implementação. | Building and validating the Design System before the Home reduced rework and helped preserve the concept direction during implementation. |
 | Public links | Repositório: `https://github.com/EduardoArine/modo-campanha` | idem |
 | Site link | **não mostrar** enquanto o GitHub Pages não estiver publicado | |
-| Cartucho | shell `orange` · accent `special` | |
-| Artwork | **System Horizon Refined (aprovado, D-046)**: `assets/cartridges/mc-001-modo-campanha.png`, 640 × 400 (16:10) | |
-| Artwork alt | Paisagem em pixel art de um sistema em construção, com módulos crescentes e um caminho segmentado levando a uma passagem iluminada. | Pixel-art landscape of a system under construction, with growing modules and a segmented path leading to an illuminated gateway. |
+| Cartucho | **D-065:** shell grafite/preto fosco com acentos laranja queimado (dado: `dark` / `warm`); renders oficiais `front` (Inventory) e `threeQuarter` (product shot) em `assets/cartridges/mc-001/`. Antes: shell `orange` · accent `special` | |
+| Artwork | **SYSTEM HORIZON (oficial, D-065)**: paisagem pixel art dos renders, `assets/cartridges/mc-001/system-horizon.webp`, 960 × 720 (4:3). Substitui a v1 de D-046 (arquivada em `design/source/mc-cart/archive/`) | |
+| Artwork alt | Paisagem em pixel art ao pôr do sol: um caminho entre pedras e pinheiros desce até um lago cercado de montanhas, com o sol no horizonte. | Pixel-art landscape at sunset: a path between rocks and pine trees leads down to a lake surrounded by mountains, with the sun on the horizon. |
 | Restrictions | nenhuma conhecida; nenhum link de site enquanto ele não existir | |
 
 Traduções en dos learnings e do learning candidato: **aprovadas** (2026-10-09). O learning candidato fica fora do runtime até o case completo.

@@ -210,7 +210,7 @@ Regras: mínimo absoluto 12 px; corpo ≤ 65ch; tracking positivo só em caixa a
 - **O grid organiza; ele não obriga simetria.** As seções escolhem seus spans. Composições iniciais aprovadas:
   - Hero: 6 / 6 (texto | visual, visual pode sangrar à direita).
   - Player Status: 4 / 4 / 4 como ponto de partida; 3 / 4 / 5 ou outra divisão é válida se o conteúdo real pedir.
-  - Project Inventory: **grid, sem carrossel**: 4 por linha (desktop) · 2 (tablet) · **1 (mobile, baseline)**. Testar 2 por linha no mobile depois.
+  - Project Inventory: **grid, sem carrossel**: 3 por linha (desktop ≥ 1200, D-065; antes 4) · 2 (tablet) · **1 (mobile, baseline)**. Testar 2 por linha no mobile depois.
 - Hero não ocupa 100vh; sem scroll horizontal em nenhum breakpoint.
 
 ---
@@ -633,7 +633,11 @@ Teste de aprovação: escondendo texto e artwork, **a silhueta sozinha lê como 
 - Objeto físico: material + `--mc-shadow-object` + relevo. Sem glow permanente.
 - Rótulo sempre `--mc-panel` (o "adesivo" é constante entre shells).
 - Acessibilidade: host `role="img"` com nome acessível "MC-CART ON-001: Projeto, TIPO"; conteúdo interno é apresentação. **Não clicável nesta fase.** Se virar interativo, o objeto inteiro recebe a semântica de interação (link/botão), não só um hover.
-- Responsivo: 4 por linha (desktop), 2 (tablet), 1 (mobile), sempre reconhecível.
+- Responsivo: 3 por linha (desktop ≥ 1200, D-065), 2 (tablet), 1 (mobile), sempre reconhecível.
+
+**Render oficial (D-065).** Com o input `render` (`{ src; width; height }`, fundo transparente), o render **é** o objeto: o componente mostra só a imagem, sem casca, moldura, grips ou sombra interna em CSS; a construção acima fica como fallback para projetos sem render. A silhueta dos renders do MC-001 é a direção física oficial do MC-CART (ombros próprios, encaixe central no topo, laterais estruturadas, área de conexão). Quem usa define largura e sombra de contato (no Inventory: até 24rem, `drop-shadow` discreto). Render 3/4 (`renders.threeQuarter`) é product shot, não entra no grid.
+
+**System / hardware glyph (D-065).** Os quatro quadrados laranja dos renders (MC-01, MC-CART, controle, CRT) são um glifo de hardware, **não o logotipo**: não substituem MODO CAMPANHA nem MC; o monograma MC segue como exploração futura (D-015).
 
 ### 16. Project Summary (`mc-project-summary`, D-032)
 

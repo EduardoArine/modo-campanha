@@ -5,6 +5,8 @@ Os projetos do portfólio são representados como **cartuchos de videogame antig
 ## MC-CART System (direção aprovada, D-013; componente `mc-cart` implementado no Sprint 4, D-032)
 
 > Anatomia, API, shells e regras de acessibilidade do componente: `docs/11-design-system.md` (seção 15). O Project Summary (seção 16) fica separado do objeto.
+>
+> **D-065:** a direção física oficial do MC-CART é a silhueta dos renders do MC-001 (ombros próprios, encaixe central no topo, laterais estruturadas, área de conexão). No Inventory, o render frontal **é** o objeto; o render 3/4 é product shot. A construção em CSS fica como fallback.
 
 Base visual: cartuchos do **Concept 03-B**. Sistema **autoral**: nenhum formato de fabricante real (Nintendo, Sega etc.).
 
