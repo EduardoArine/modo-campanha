@@ -1,51 +1,25 @@
-/**
- * Cena do Hero (D-066, docs/21 §6): renders oficiais do ecossistema MC-01 compostos sobre o
- * ambiente aprovado. Tudo decorativo (a cena é aria-hidden). Derivados de runtime gerados a partir
- * das fontes em `design/source/hero/` e `design/source/mc-cart/`, recortados no alfa e dimensionados
- * pelo tamanho real de exibição (2× DPR). Caminhos relativos a `public/`.
- */
-export interface HeroSceneImage {
+/** Imagem responsiva (derivados WebP em `public/assets/hero/`). */
+export interface HeroImage {
   src: string;
-  /** Larguras disponíveis (`srcset` com descritores `w`). */
   srcset: string;
   width: number;
   height: number;
 }
 
-export interface HeroScene {
-  /** Ambiente (setup MC-01) desfocado e escurecido: plano de fundo, nunca um banner. */
-  ambient: string;
-  crt: HeroSceneImage;
-  console: HeroSceneImage;
-  controller: HeroSceneImage;
-  /** MC-CART MC-001 em 3/4 (D-065). */
-  cart: HeroSceneImage;
-  /** SYSTEM HORIZON reduzido para a tela do CRT (substitui a arte de 215 KB nesta cena). */
-  screen: { src: string; width: number; height: number };
-}
-
-const image = (name: string, small: number, large: number, height: number): HeroSceneImage => ({
-  src: `assets/hero/${name}-${large}.webp`,
-  srcset: `assets/hero/${name}-${small}.webp ${small}w, assets/hero/${name}-${large}.webp ${large}w`,
-  width: large,
+const image = (name: string, widths: number[], width: number, height: number): HeroImage => ({
+  src: `assets/hero/${name}-${widths[widths.length - 1]}.webp`,
+  srcset: widths.map((w) => `assets/hero/${name}-${w}.webp ${w}w`).join(', '),
+  width,
   height,
 });
 
-export const HERO_SCENE: HeroScene = {
-  ambient: 'assets/hero/ambient-1280.webp',
-  crt: image('crt', 480, 900, 794),
-  console: image('console', 640, 1040, 704),
-  controller: image('controller', 360, 680, 479),
-  cart: image('cart', 160, 300, 243),
-  screen: { src: 'assets/hero/screen-440.webp', width: 440, height: 330 },
-};
-
 /**
- * Vidro do CRT no render recortado (`crt-*.webp`, sistema de coordenadas 1167 × 1029): leve
- * perspectiva (lado direito mais alto) e cantos arredondados. A tela é recortada por esse caminho.
+ * Fundo da Hero (D-067): a imagem aprovada do setup MC-01 ao pôr do sol, usada direto (sem montar
+ * a cena com renders separados). Fonte em `design/source/hero/hero-background.png` (1672 × 941).
+ * `mobile` é um recorte quadrado da mesma imagem (console, CRT e controle; x 628–1569), para o
+ * celular não baixar a imagem inteira só para mostrar o centro dela.
  */
-export const CRT_GLASS = {
-  viewBox: '0 0 1167 1029',
-  box: { x: 119, y: 136, width: 706, height: 596 },
-  path: 'M170 176L776 139Q821 136 822 181L825 687Q825 732 780 731L164 717Q119 716 120 671L125 224Q125 179 170 176Z',
-} as const;
+export const HERO_BACKGROUND = {
+  full: image('background', [640, 960, 1280, 1672], 1672, 941),
+  mobile: image('background-mobile', [480, 800], 800, 800),
+};

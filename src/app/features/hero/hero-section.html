@@ -1,7 +1,4 @@
 <section id="hero" class="hero mc-page-grid" aria-labelledby="hero-title">
-  <!-- Luz quente atrás da cena (tablet/mobile); no desktop o ambiente vem da própria cena. -->
-  <div class="backdrop" aria-hidden="true"></div>
-
   <div class="layout">
     <div class="content">
       <p class="eyebrow">
@@ -29,6 +26,24 @@
       </div>
     </div>
 
-    <app-hero-visual class="visual" />
+    <!-- Fundo aprovado (D-067), decorativo. Sem lazy: no desktop é o maior elemento da dobra. -->
+    <div class="visual" aria-hidden="true">
+      <picture>
+        <source
+          media="(min-width: 768px)"
+          [attr.srcset]="background.full.srcset"
+          sizes="(min-width: 1200px) 100vw, (min-width: 1024px) 88vw, 119vw"
+        />
+        <img
+          [src]="background.mobile.src"
+          [srcset]="background.mobile.srcset"
+          sizes="100vw"
+          [width]="background.mobile.width"
+          [height]="background.mobile.height"
+          alt=""
+          decoding="async"
+        />
+      </picture>
+    </div>
   </div>
 </section>

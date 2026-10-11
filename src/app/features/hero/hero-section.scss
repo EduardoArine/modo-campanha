@@ -1,5 +1,6 @@
-// Hero (docs/12 §8; refinamento D-066, docs/21 §6). Desktop: conteúdo 1–6 sobre a área escura da
-// cena (palco absoluto à direita). Desktop compacto: cena 7–12. Tablet/mobile: conteúdo, depois cena.
+// Hero (docs/12 §8; refinamento D-063; fundo D-067, docs/21 §7). Desktop: o fundo aprovado ocupa a
+// Hero inteira (ancorado à direita, na proporção da imagem) e o conteúdo fica na área escura da
+// esquerda. Desktop compacto: imagem nas colunas 7–12. Tablet/mobile: conteúdo, depois a imagem.
 @use 'mc' as *;
 
 :host {
@@ -9,52 +10,29 @@
 .hero {
   position: relative;
   isolation: isolate;
-  // A cena pode passar da coluna; nunca cria scroll horizontal.
+  // O fundo pode passar da coluna; nunca cria scroll horizontal.
   overflow-x: clip;
   // Base menor: a seção seguinte já traz o próprio espaço de seção (ritmo 03-A).
   padding-block: space(8) space(6);
 
-  // Desktop (D-066): composição única na primeira dobra, na proporção do ambiente (16:9),
-  // limitada à altura útil da janela; o conteúdo centraliza na área escura da esquerda.
+  // Desktop: composição única na primeira dobra, na proporção do fundo (16:9), limitada à altura
+  // útil da janela.
   @include mq(xl) {
     min-height: min(56.25vw, calc(100svh - var(--mc-header-height)));
     grid-template-rows: 1fr;
   }
 }
 
-// Luz quente atrás da cena (tablet/mobile); a base dissolve no fundo da página. No desktop o
-// ambiente fotográfico da cena faz esse papel.
-.backdrop {
-  grid-column: full;
-  grid-row: 1;
-  margin-block: calc(-1 * #{space(8)}) calc(-1 * #{space(6)});
-  pointer-events: none;
-  background:
-    linear-gradient(to bottom, transparent 75%, var(--mc-bg)),
-    radial-gradient(70% 45% at 50% 80%, var(--mc-glow-warm), transparent 70%);
-
-  @include mq(xl) {
-    display: none;
-  }
-}
-
+// Sem posicionamento: no desktop o fundo absoluto se posiciona pela Hero inteira.
 .layout {
   grid-row: 1;
-  position: relative;
-  z-index: 1;
-
-  // Desktop: o palco absoluto da cena se posiciona pela Hero inteira, não pela coluna.
-  @include mq(xl) {
-    position: static;
-  }
-
   @include columns;
   align-items: center;
   align-self: center;
   row-gap: space(7);
 }
 
-// O texto fica sempre acima da cena.
+// O texto fica sempre acima do fundo.
 .content {
   position: relative;
   z-index: 1;
@@ -67,31 +45,63 @@
   }
 }
 
-// Tablet/mobile: a cena vem depois do conteúdo, na largura da coluna. Desktop: palco absoluto
-// ancorado à direita, com a altura da Hero e a proporção do ambiente (as posições dos objetos são
-// relativas a ele); o lado esquerdo do palco fica sob o texto, escuro.
+// Fundo (decorativo). A imagem não é redesenhada nem montada: só recorte, escala e máscara. As
+// bordas sempre se dissolvem no fundo da página (nunca um retângulo). Recortes por faixa mostram o
+// MC-01 (console, CRT e controle ficam entre 48% e 95% da largura da imagem).
 .visual {
   grid-column: 1 / -1;
+  // Tablet/mobile: sangra até as bordas da janela, abaixo do texto.
+  margin-inline: calc(-1 * var(--mc-page-margin));
+  aspect-ratio: 1;
+  // Máscara (local): opaco entre --x1/--x2 e --y1/--y2, dissolvendo até --x0/--x3 e as bordas.
+  // Mobile: o recorte quadrado já vem pronto (HERO_BACKGROUND.mobile).
+  --pos: 50%;
+  --x0: 0%;
+  --x1: 12%;
+  --x2: 88%;
+  --y1: 18%;
+  --y2: 78%;
+  mask-image:
+    linear-gradient(to right, transparent var(--x0), var(--mc-bg) var(--x1) var(--x2), transparent),
+    linear-gradient(to bottom, transparent, var(--mc-bg) var(--y1) var(--y2), transparent);
+  mask-composite: intersect;
 
-  // Tablet: a cena sangra até as bordas da janela (sem corte reto na coluna).
   @include mq(md) {
-    margin-inline: calc(-1 * var(--mc-page-margin));
+    aspect-ratio: 3 / 2;
+    --pos: 80%;
   }
 
-  // Desktop compacto: lado a lado com o texto (colunas 7–12), sangrando só à direita.
+  // Desktop compacto: ao lado do texto (colunas 7–12), sangrando só à direita.
   @include mq(lg) {
     grid-column: 7 / -1;
     margin-inline: 0 calc(-1 * var(--mc-page-margin));
+    aspect-ratio: 1;
+    --pos: 100%;
+    --x1: 30%;
+    --x2: 100%;
+    --y1: 22%;
   }
 
+  // Desktop: a Hero inteira, ancorada à direita; a esquerda (texto) já é escura na imagem e a
+  // máscara a escurece mais; a base dissolve na seção seguinte.
   @include mq(xl) {
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0 0 0 auto;
     z-index: 0;
+    margin: 0;
     aspect-ratio: 1672 / 941;
-    margin-inline: 0;
+    --x0: 12%;
+    --x1: 50%;
+    --y1: 0%;
+    --y2: 80%;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--pos) center;
   }
 }
 

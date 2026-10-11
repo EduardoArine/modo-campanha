@@ -61,13 +61,20 @@ describe('HeroSection', () => {
     expect(el.querySelector('.actions a')?.getAttribute('href')).toBe('/en#player-status');
   });
 
-  it('hides the decorative scene from assistive technologies', async () => {
+  it('uses the approved background image directly, hidden from assistive technologies', async () => {
     const el = await renderAt('/');
-    const scene = el.querySelector('app-hero-visual')!;
+    const visual = el.querySelector('.visual')!;
+    const images = visual.querySelectorAll('img');
 
-    expect(scene.getAttribute('aria-hidden')).toBe('true');
-    // D-066: o CRT da cena é o render oficial (o mc-crt-frame segue no CRT Project Viewer).
-    expect(scene.querySelector('.crt img')).not.toBeNull();
-    expect(scene.querySelector('[role="region"]')).toBeNull();
+    // D-067: uma única imagem de fundo, sem cena montada com renders separados.
+    expect(visual.getAttribute('aria-hidden')).toBe('true');
+    expect(images.length).toBe(1);
+    // Tablet/desktop: a imagem inteira; mobile: recorte da mesma imagem, mais leve.
+    expect(visual.querySelector('source')?.getAttribute('srcset')).toMatch(
+      /background-640\.webp 640w, .*background-1672\.webp 1672w$/,
+    );
+    expect(images[0].getAttribute('src')).toBe('assets/hero/background-mobile-800.webp');
+    expect(images[0].getAttribute('alt')).toBe('');
+    expect(visual.querySelectorAll('a, button, [tabindex]').length).toBe(0);
   });
 });
