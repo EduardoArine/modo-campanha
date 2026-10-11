@@ -88,7 +88,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 Backlog:
 
-- ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- 🟡 **Hero refinement (D-063, `docs/21`)**: console MC-01 + MC-CART inserido + controle + ambiente (vetorial); renders dedicados pendentes. Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)

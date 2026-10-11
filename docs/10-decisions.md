@@ -710,3 +710,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Pendências técnicas (não dependem do Eduardo, adiadas):** preload da fonte do Hero (D-023/D-060: exige rever a fonte com hash ou um passo pós-build); documentar Motion, Responsive e Accessibility como fundamentos no `docs/11` (aprovação como DS definitivo é do Eduardo).
 - ⚠️ **Alerta permanente:** o MOCK do Campaign Log (D-049, só em dev/testes) tem períodos e nomes **plausíveis** ("2013 — 2017", FATEC Americana, Comunidade On). Capturas do ambiente de desenvolvimento **nunca** devem circular como fato sobre o Eduardo. Os MOCKs de Achievements, Current Main Quest e Side Quests são explicitamente "de exemplo".
 - **Status:** Aceita (REVIEWER).
+
+## D-063 — Hero: refinamento de fidelidade à referência (rodada 1)
+
+- **Data:** 2026-10-11
+- **Pedido do Eduardo:** aproximar a Hero da referência visual (concept 03-B, "Referencia – Portfólio Modo Campanha Retro-Tech") em atmosfera, presença do objeto principal e storytelling, sem copiar e sem virar jogo literal. Plano e diagnóstico em `docs/21-hero-refinement.md`. Escopo só da Hero.
+- **Decisão (substitui, só para a Hero, as partes de D-037/D-038/D-039 que vetavam controle e ambientação e mantinham "INSERT CARTRIDGE" como estado final):**
+  - **Console MC-01 autoral** (inspirado na linguagem 16-bit: corpo horizontal, slot no tampo, chaves POWER/RESET, portas de controle), vetorial (SVG local, só tokens de material), com o **MC-CART MC-001 inserido** (shell laranja, faixa special, rótulo com o artwork aprovado). **Controle MC-01** em primeiro plano, com cabo. Sem formas, cores ou marcas de terceiros.
+  - **CRT** (`mc-crt-frame`, inalterado) atrás do console; depois do boot (D-059) a tela mostra o **cartucho em execução**: artwork do MC-001 + faixa `MC-001 · Modo Campanha` (dados aprovados; nenhum texto novo). Sem cartucho aprovado com artwork, volta a `INSERT CARTRIDGE`. A partir de md o CRT tem > 28rem (mantém a moldura física); no mobile, moldura simplificada (D-038).
+  - **Ambiente:** fundo da Hero com luz quente do lado da cena, painéis de parede só onde a luz bate, mesa com reflexo da TV; lado do texto escuro. Glow só na área visual (D-024).
+  - **Texto:** eyebrow como etiqueta de sistema (tag `MC-01` + PORTFÓLIO PROFISSIONAL; `ui.hero.eyebrow` perdeu o prefixo), "MODO CAMPANHA" com gradiente laranja (sem glow), motto com marcador ▶ em laranja (`title-l` 600), GitHub / LinkedIn como ações **secondary**. Textos aprovados inalterados.
+  - **Desktop:** cena em 7–12 com sangria até a borda da página.
+  - **Assets dedicados** (render do hardware, ambiente, tela 4:3, variações de cartucho): especificados em `docs/21` §3; a Hero aceita cada um via `HERO_SCENE_ASSETS` sem mudar o layout.
+- **Status:** Implementada na branch `feat/hero-refinement` (REVIEWER). **Aguardando revisão do Eduardo** antes de seguir para outras seções.

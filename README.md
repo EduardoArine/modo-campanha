@@ -58,6 +58,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 18. [Home Slice 06 — Current Main Quest](docs/18-home-slice-06.md)
 19. [Home Slice 07 — Side Quests](docs/19-home-slice-07.md)
 20. [Game Feel 01 — cartucho → CRT](docs/20-game-feel-01.md)
+21. [Hero — refinamento de fidelidade](docs/21-hero-refinement.md)
 
 ## Rodando localmente
 

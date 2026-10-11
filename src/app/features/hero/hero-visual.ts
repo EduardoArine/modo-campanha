@@ -9,49 +9,58 @@ import {
 } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
+import { PROJECTS } from '../../data';
 import { McCrtFrame } from '../../shared/signature';
+import { HERO_SCENE_ASSETS } from './hero-scene.assets';
 
-/** Passos do boot na tela do CRT (FASE 5, D-059). `ready` = estado aprovado "INSERT CARTRIDGE". */
+/** Passos do boot na tela do CRT (FASE 5, D-059). `ready` = cartucho em execução. */
 type BootStep = 'initializing' | 'player' | 'ready';
 
 /** Duração de cada passo: 2 passos ≈ 840 ms (≤ 1 s, docs/02). */
 const BOOT_STEP_MS = 420;
 /** Uma vez por sessão: não repetir o boot de forma intrusiva (docs/02). */
 const BOOT_SEEN_KEY = 'mc-boot-seen';
+/** Cartucho inserido no console da Hero: o próprio Modo Campanha (MC-001), D-063. */
+const RUNNING_SERIAL = 'MC-001';
 
 /**
- * Cena do Hero (Home Slice 01-C, D-037): CRT sobre o console MC-01 + luz quente.
- * Puramente decorativa (aria-hidden): não comunica informação necessária ao Hero.
- * O console é CSS local (ainda não é componente: um só uso).
- * Boot / Intro (FASE 5, D-059): na primeira visita da sessão, a tela mostra INITIALIZING
- * CAMPAIGN... → PLAYER FOUND antes de INSERT CARTRIDGE (≤ 1 s). Não bloqueia nada, não muda o
- * layout e não acontece com `prefers-reduced-motion`.
+ * Cena do Hero (D-037; refinamento D-063, docs/21): CRT + console MC-01 com o MC-CART MC-001
+ * inserido + controle, sobre uma mesa, com luz quente. O console e o controle são autorais
+ * (inspirados na linguagem dos consoles 16-bit, sem formas ou marcas de terceiros) e vetoriais;
+ * podem ser trocados por renders dedicados (`HERO_SCENE_ASSETS`) sem mudar o layout.
+ * Puramente decorativa (aria-hidden). Boot / Intro (D-059): na primeira visita da sessão, a tela
+ * mostra INITIALIZING CAMPAIGN... → PLAYER FOUND antes do cartucho em execução (≤ 1 s); nunca
+ * com `prefers-reduced-motion`.
  */
 @Component({
   selector: 'app-hero-visual',
   imports: [McCrtFrame],
-  template: `
-    <div class="scene">
-      <mc-crt-frame class="crt">
-        <p class="screen-message">{{ message() }}</p>
-      </mc-crt-frame>
-
-      <div class="console">
-        <span class="console-label">{{ ui().crt.identification }}</span>
-        <span class="console-slot"></span>
-        <span class="console-vents"></span>
-        <span class="console-buttons"><span></span><span></span></span>
-        <span class="console-led"></span>
-      </div>
-    </div>
-  `,
+  templateUrl: './hero-visual.html',
   styleUrl: './hero-visual.scss',
   host: { 'aria-hidden': 'true' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroVisual {
-  protected readonly ui = inject(LocaleService).ui;
+  private readonly locale = inject(LocaleService);
+  protected readonly ui = this.locale.ui;
+  protected readonly assets = HERO_SCENE_ASSETS;
   private readonly step = signal<BootStep>('ready');
+
+  /** Cartucho em execução (nome, serial e artwork aprovados do MC-001). */
+  protected readonly cartridge = computed(() => {
+    const project = PROJECTS.find((p) => p.serial === RUNNING_SERIAL);
+    const artwork = project?.cartridge.artwork;
+    if (!project || !artwork) return null;
+    return {
+      serial: project.serial,
+      title: this.locale.pick(project.title),
+      art: artwork.src,
+      screen: this.assets.screen ?? artwork.src,
+    };
+  });
+
+  /** Tela pronta mostra o cartucho; sem cartucho aprovado, volta a "INSERT CARTRIDGE". */
+  protected readonly running = computed(() => (this.step() === 'ready' ? this.cartridge() : null));
 
   protected readonly message = computed(() => {
     const ui = this.ui();

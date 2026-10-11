@@ -1,7 +1,12 @@
 <section id="hero" class="hero mc-page-grid" aria-labelledby="hero-title">
+  <!-- Ambiente da Hero (D-063): parede com luz quente atrás da cena; lado do texto escuro. -->
+  <div class="backdrop" aria-hidden="true" [style.--backdrop-image]="backdropImage"></div>
+
   <div class="layout">
     <div class="content">
-      <p class="eyebrow">{{ ui().hero.eyebrow }}</p>
+      <p class="eyebrow">
+        <span class="tag">{{ ui().crt.identification }}</span> {{ ui().hero.eyebrow }}
+      </p>
       <p class="brand-display" lang="pt-BR">{{ ui().brand.name }}</p>
       <h1 id="hero-title" class="name">{{ profile.name }}</h1>
       <p class="role">{{ locale.pick(profile.role) }}</p>
@@ -15,7 +20,7 @@
         </a>
         <div class="links">
           @for (link of socialLinks; track link.kind) {
-            <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+            <a mcAction="secondary" [href]="link.url" target="_blank" rel="noopener noreferrer">
               {{ link.label }} <mc-icon name="external" />
               <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
             </a>

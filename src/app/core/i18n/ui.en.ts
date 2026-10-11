@@ -27,7 +27,7 @@ export const UI_EN: UiDictionary = {
     contact: 'Contact',
   },
   hero: {
-    eyebrow: 'MC-01 / PROFESSIONAL PORTFOLIO',
+    eyebrow: 'PROFESSIONAL PORTFOLIO',
   },
   boot: {
     initializing: 'INITIALIZING CAMPAIGN...',

@@ -73,9 +73,9 @@ describe('HomePage', () => {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
     const harness = await RouterTestingHarness.create();
     await harness.navigateByUrl('/en', HomePage);
-    expect(harness.routeNativeElement?.textContent).toContain('MC-01 / PROFESSIONAL PORTFOLIO');
+    expect(harness.routeNativeElement?.textContent).toContain('PROFESSIONAL PORTFOLIO');
 
     await harness.navigateByUrl('/');
-    expect(harness.routeNativeElement?.textContent).toContain('MC-01 / PORTFÓLIO PROFISSIONAL');
+    expect(harness.routeNativeElement?.textContent).toContain('PORTFÓLIO PROFISSIONAL');
   });
 });

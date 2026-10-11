@@ -1,5 +1,5 @@
-// Hero (docs/12-home-slice-01.md, §8). Desktop: conteúdo 1–6, cena 7–12.
-// Tablet/mobile ainda NÃO definitivos (Slice 01-D): por ora empilha sem overflow.
+// Hero (docs/12 §8; refinamento D-063, docs/21). Desktop: conteúdo 1–6, cena 7–12 com sangria
+// até a borda da página. Tablet/mobile: conteúdo primeiro, cena depois.
 @use 'mc' as *;
 
 :host {
@@ -8,19 +8,69 @@
 
 .hero {
   position: relative;
-  // A luz quente da cena pode passar da coluna; nunca cria scroll horizontal.
+  // A luz e a mesa da cena podem passar da coluna; nunca criam scroll horizontal.
   overflow-x: clip;
   // Base menor: a seção seguinte já traz o próprio espaço de seção (ritmo 03-A).
-  padding-block: space(8) space(5);
+  padding-block: space(8) space(6);
+}
+
+// Ambiente (atrás de toda a Hero): parede com painéis muito sutis e luz quente do lado da cena;
+// o lado do texto fica escuro (legibilidade); a base dissolve no fundo da página.
+// Um render dedicado (--backdrop-image, docs/21 §3) entra por baixo das mesmas camadas.
+.backdrop {
+  grid-column: full;
+  grid-row: 1;
+  margin-block: calc(-1 * #{space(8)}) calc(-1 * #{space(6)});
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom, transparent 75%, var(--mc-bg)),
+    radial-gradient(70% 60% at 50% 72%, var(--mc-glow-warm), transparent 70%),
+    var(--backdrop-image, none) center / cover no-repeat,
+    var(--mc-bg);
+
+  @include mq(lg) {
+    background:
+      linear-gradient(to bottom, transparent 72%, var(--mc-bg)),
+      linear-gradient(to right, var(--mc-bg) 32%, transparent 62%),
+      radial-gradient(55% 70% at 74% 40%, var(--mc-glow-warm), transparent 72%),
+      var(--backdrop-image, none) center / cover no-repeat,
+      var(--mc-bg);
+  }
+}
+
+// Painéis da parede só onde a luz quente bate (em volta da cena), nunca atrás do texto.
+.backdrop {
+  @include mq(lg) {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to right,
+        var(--mc-material-highlight) 0 1px,
+        transparent 1px space(10)
+      );
+      mask-image: radial-gradient(38% 55% at 74% 42%, var(--mc-bg), transparent);
+      opacity: 0.6;
+    }
+  }
 }
 
 .layout {
+  grid-row: 1;
+  position: relative;
+  z-index: 1;
   @include columns;
   align-items: center;
   row-gap: space(8);
 }
 
+// O texto fica acima da cena: a mesa e a luz podem passar por trás, nunca por cima.
 .content {
+  position: relative;
+  z-index: 1;
   grid-column: 1 / -1;
   display: grid;
   justify-items: start;
@@ -30,25 +80,47 @@
   }
 }
 
+// Desktop: a cena avança até a borda da página (presença do objeto principal, 03-B).
 .visual {
   grid-column: 1 / -1;
 
   @include mq(lg) {
     grid-column: 7 / -1;
+    margin-inline-end: calc(-1 * var(--mc-page-margin));
   }
 }
 
+// Etiqueta de sistema: MC-01 em tag + tipo do portfólio.
 .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: space(3);
   margin: 0;
   @include type(label);
   color: var(--mc-text-muted);
 }
 
+.tag {
+  padding: space(1) space(2);
+  border: var(--mc-border-width-default) solid var(--mc-accent);
+  color: var(--mc-accent);
+}
+
 // Marca em display: maior que o H1, mas não é o H1 (D-026). Único uso validado da Pixelify (D-029).
+// Gradiente laranja (claro → marca) dá volume sem glow.
 .brand-display {
   margin: space(4) 0 0;
   @include type(display-hero);
   color: var(--mc-accent);
+  background: linear-gradient(to bottom, var(--mc-accent-hover) 10%, var(--mc-accent) 60%);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  // Alto contraste do sistema: texto sólido (o gradiente recortado poderia sumir).
+  @media (forced-colors: active) {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
 }
 
 .name {
@@ -76,23 +148,37 @@
   color: var(--mc-text-secondary);
 }
 
+// Assinatura com marcador ▶ (linguagem de sistema, decorativo).
 .motto {
-  margin: space(3) 0 0;
-  @include type(title-m);
-  color: var(--mc-text);
+  display: flex;
+  align-items: center;
+  gap: space(3);
+  margin: space(4) 0 0;
+  @include type(title-l);
+  font-weight: 600;
+  color: var(--mc-accent);
+
+  &::before {
+    content: '';
+    flex: none;
+    width: space(3);
+    height: space(4);
+    background: var(--mc-accent);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: space(4) space(5);
+  gap: space(4);
   margin-top: space(6);
 }
 
-// GitHub e LinkedIn ficam juntos (no mobile, numa linha abaixo do CTA principal).
+// GitHub e LinkedIn: ações secundárias equivalentes (no mobile, numa linha abaixo do CTA).
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: space(5);
+  gap: space(3);
 }

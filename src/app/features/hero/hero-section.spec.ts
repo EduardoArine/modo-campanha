@@ -22,7 +22,10 @@ describe('HeroSection', () => {
     expect(h1s.length).toBe(1);
     expect(h1s[0].textContent).toBe('Eduardo Arine');
     expect(el.querySelector('.brand-display')?.tagName).toBe('P');
-    expect(el.querySelector('.eyebrow')?.textContent).toBe('MC-01 / PORTFÓLIO PROFISSIONAL');
+    expect(el.querySelector('.eyebrow')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+      'MC-01 PORTFÓLIO PROFISSIONAL',
+    );
+    expect(el.querySelector('.eyebrow .tag')?.textContent).toBe('MC-01');
   });
 
   it('renders the approved pt-BR copy and real links only', async () => {
@@ -33,6 +36,9 @@ describe('HeroSection', () => {
     expect(el.querySelector('.motto')?.textContent).toBe('XP real, sem personagem.');
     expect(links[0].getAttribute('href')).toBe('/#player-status');
     expect(links[0].classList).toContain('mc-action--primary');
+    // GitHub e LinkedIn: ações secundárias equivalentes (D-063); um único primary.
+    expect(links.slice(1).every((a) => a.classList.contains('mc-action--secondary'))).toBe(true);
+    expect(el.querySelectorAll('.mc-action--primary').length).toBe(1);
     expect(links.map((a) => a.getAttribute('href'))).toEqual([
       '/#player-status',
       'https://github.com/EduardoArine',
@@ -44,7 +50,9 @@ describe('HeroSection', () => {
   it('renders the approved en copy', async () => {
     const el = await renderAt('/en');
 
-    expect(el.querySelector('.eyebrow')?.textContent).toBe('MC-01 / PROFESSIONAL PORTFOLIO');
+    expect(el.querySelector('.eyebrow')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+      'MC-01 PROFESSIONAL PORTFOLIO',
+    );
     expect(el.querySelector('.focus')?.textContent).toBe(
       'AI • Product • Development • Gamification',
     );
