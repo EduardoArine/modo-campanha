@@ -760,3 +760,18 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Fontes:** PNGs em `design/source/hero/`; derivados em `public/assets/hero/`; o cartucho da cena é derivado do render 3/4 oficial (D-065).
 - **REVIEWER independente:** 1ª passada APROVADO COM AJUSTES (3 MAJOR: fantasma do controle, fantasma do cartucho deitado do ambiente, ambiente com cara de painel em 1024–1199; MINOR: fade de topo no tablet, MC-CART flutuando, CRT empilhado no mobile, etiqueta da tela ilegível, cena competindo com a marca); corrigidos só com posição, escala e máscara; 2ª passada **APROVADO**. Acompanhamento (MINOR, não bloqueia): CTAs abaixo da dobra em 1280 × 720 (bloco de texto inalterado, não é regressão) e vão escuro entre texto e cena em ultrawide (2560).
 - **Status:** Implementada na branch `feat/hero-refinement` (REVIEWER). **Hero NÃO congelada: aguardando revisão visual do Eduardo.**
+
+## D-067 — Hero: fundo aprovado usado direto (substitui a composição de D-066)
+
+- **Data:** 2026-10-11
+- **Decisão do Eduardo:** a Hero usa **só a imagem de fundo aprovada** (setup MC-01 ao pôr do sol, a mesma imagem de referência de D-066), direto, **em vez de montar a cena com os renders separados**. Detalhes em `docs/21` §7.
+- **Implementação:**
+  - Um único `<img>` decorativo (`aria-hidden`, `alt=""`) dentro de `<picture>`; nada redesenhado nem sobreposto. CSS só recorta (`object-fit`/`object-position`), escala e aplica máscara: as bordas sempre se dissolvem no fundo da página (nunca retângulo).
+  - **Desktop ≥ 1200:** a imagem ocupa a Hero inteira, ancorada à direita, na proporção dela (16:9), com altura `min(56.25vw, 100svh − header)`; a esquerda (texto) já é escura na imagem e a máscara a escurece mais (12% → 50%); a base dissolve na seção seguinte.
+  - **Desktop compacto 1024–1199:** imagem nas colunas 7–12, recorte quadrado à direita (MC-01, CRT e controle). **Tablet:** abaixo do texto, 3:2, sangrando até as bordas. **Mobile:** abaixo do texto, **recorte quadrado próprio** (`background-mobile-*`, x 628–1569 da original), para não baixar a imagem inteira.
+  - **Assets:** fonte `design/source/hero/hero-background.png` (renomeada de `hero-reference-setup.png`); runtime `background-{640,960,1280,1672}.webp` (33–140 KB) e `background-mobile-{480,800}.webp` (41/84 KB). Os derivados da cena de D-066 (CRT, console, controle, cartucho, ambiente desfocado, tela) saíram do runtime; os PNGs oficiais do MC-01 continuam em `design/source/hero/`.
+  - Sem `loading="lazy"`: no desktop a imagem é o maior elemento da dobra.
+- **Removido com a cena:** componente `hero-visual` e o **Boot / Intro na tela do CRT da Hero (D-059)**, que dependia da tela montada. As strings `ui.boot` ficam no dicionário, sem uso, até decisão do Eduardo (descartar ou recolocar como sobreposição na tela da imagem).
+- **Performance (Lighthouse 12, mediana de 3; antes = D-065):** HTTP/2 + TLS mobile 84 → **85** (LCP 3930 → 3780 ms), desktop 99 → 99 (LCP 750 → 770 ms); HTTP/1.1 local mobile 83 → **80** (LCP 3820 → 4271 ms), desktop 99 → 99 (LCP 759 → 880 ms). A imagem é pedida com prioridade alta (está na dobra); no HTTP/1.1 ela disputa as 6 conexões com o JS e as fontes.
+- **Substitui:** a composição de D-066 (texto, hierarquia e ações de D-063 continuam).
+- **Status:** Implementada na branch `feat/hero-refinement`. **Hero NÃO congelada: aguardando revisão visual do Eduardo.**

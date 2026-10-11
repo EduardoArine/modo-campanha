@@ -1,6 +1,6 @@
 # 21 — Hero: refinamento com foco em fidelidade à referência
 
-> Status: **rodada 2 implementada, aguardando revisão visual do Eduardo** (D-066, §6). Rodada 1 (D-063, §1–§5) é histórico: a cena vetorial foi substituída pelos renders oficiais; texto e ações continuam. Escopo: **só a Hero**. Referência de direção: concept 03-B ("Referencia – Portfólio Modo Campanha Retro-Tech"), interpretado, não copiado.
+> Status: **rodada 3 implementada, aguardando revisão visual do Eduardo** (D-067, §7: fundo aprovado direto). Histórico: rodada 1 (D-063, §1–§5, cena vetorial) e rodada 2 (D-066, §6, renders montados); texto e ações de D-063 continuam. Escopo: **só a Hero**. Referência de direção: concept 03-B ("Referencia – Portfólio Modo Campanha Retro-Tech"), interpretado, não copiado.
 
 ## 1. Diagnóstico (Hero aprovada no Slice 01)
 
@@ -88,3 +88,16 @@ Fontes PNG em `design/source/hero/` (o 3/4 e o SYSTEM HORIZON ficam em `design/s
 | HTTP/1.1 local | 83 → 81 (LCP 3820 → 4120) | 99 → 99 (LCP 759 → 840) |
 
 No HTTP/1.1 o LCP simulado piora porque há 3 requisições a mais na fila de 6 conexões, embora o total transferido caia (806 → 726 KB); no HTTP/2 (GitHub Pages) melhora. `@defer (on idle)` na cena foi testado e piorou o LCP (descartado).
+
+## 7. Rodada 3: fundo aprovado direto (D-067)
+
+Decisão do Eduardo: em vez de montar a cena com renders separados (§6), a Hero usa a **imagem de fundo aprovada direto** (`design/source/hero/hero-background.png`, 1672 × 941). A §6 vira histórico.
+
+| Faixa                        | Comportamento                                                                                    |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ |
+| Desktop (≥ 1200)             | imagem na Hero inteira, ancorada à direita (16:9); máscara escurece a esquerda e dissolve a base |
+| Desktop compacto (1024–1199) | colunas 7–12, recorte quadrado à direita (MC-01, CRT, controle), bordas dissolvidas              |
+| Tablet (768–1023)            | abaixo do texto, 3:2, sangrando até as bordas                                                    |
+| Mobile (< 768)               | abaixo do texto, recorte quadrado próprio (`background-mobile-*`, 41/84 KB)                      |
+
+Runtime: `<picture>` com `background-{640,960,1280,1672}.webp` (≥ 768) e `background-mobile-{480,800}.webp`; `alt=""`, `aria-hidden`, sem lazy (maior elemento da dobra no desktop). O boot da tela do CRT (D-059) saiu com a cena; decisão pendente.

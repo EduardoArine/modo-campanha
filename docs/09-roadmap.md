@@ -88,7 +88,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 Backlog:
 
-- 🟡 **Hero refinement (D-063 → D-066, `docs/21` §6)**: composição com os renders oficiais (CRT, console MC-01 com cartucho, MC-CART 3/4, controle) sobre o ambiente; aguardando revisão visual do Eduardo. Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- 🟡 **Hero refinement (D-063 → D-066 → D-067, `docs/21` §7)**: fundo aprovado do setup MC-01 usado direto (recorte próprio no mobile); aguardando revisão visual do Eduardo. Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
@@ -151,7 +151,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Microinterações (estados do cartucho, boot do CRT e do Hero, D-058/D-059)
 - ✅ Cartridge insert (~600 ms, versão "encaixe + boot", D-058)
 - ✅ CRT boot (`LOADING CARTRIDGE...`, D-058)
-- ✅ Boot / Intro (≤ 1 s, na tela do CRT do Hero, D-059)
+- ⏸ Boot / Intro (≤ 1 s, na tela do CRT do Hero, D-059): removido com a cena em D-067; recolocar ou descartar é decisão do Eduardo
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
