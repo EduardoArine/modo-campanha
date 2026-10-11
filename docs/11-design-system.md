@@ -671,7 +671,7 @@ Anatomia: **shell** (material dark + sombra de objeto + aresta) → **bezel** (`
 - A tela **nunca corta conteúdo** (4:3 é mínimo).
 - Responsivo por **container query** (≤ 34 rem): moldura mínima, sem proporção fixa, sem glow nem efeitos. No mobile o conteúdo vem primeiro.
 - Acessibilidade: host `role="region"` com rótulo traduzido; conteúdo semântico projetado (headings, `dl`, imagens com alt); decoração ignorada por tecnologias assistivas.
-- Sem animação: inserção, boot, power-on, no signal e glitch ficam para Motion/Game Feel. "INSERT CARTRIDGE" é o único estado de tela nesta fase.
+- Sem animação no componente. Na Home (FASE 5, D-058) quem usa o viewer liga o CRT (`crt-on`, 220 ms) e mostra `LOADING CARTRIDGE...` antes do case; `mc-crt-frame` e `mc-crt-project-viewer` não mudaram.
 
 **Refinamento físico (desktop), sem mudar a arquitetura:**
 

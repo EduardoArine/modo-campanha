@@ -64,6 +64,15 @@ export const UI_PT_BR = {
   },
   inventory: {
     subtitle: 'Cartuchos coletados durante a campanha.',
+    // Inserir / ejetar o cartucho no CRT Project Viewer (FASE 5, D-058).
+    insert: 'Inserir cartucho',
+    eject: 'Ejetar cartucho',
+  },
+  // Rótulos do case dentro do CRT (FASE 5, D-058).
+  projectCase: {
+    role: 'PAPEL',
+    stack: 'STACK',
+    learnings: 'APRENDIZADOS',
   },
   campaignLog: {
     kind: {
@@ -102,6 +111,7 @@ export const UI_PT_BR = {
   crt: {
     regionLabel: 'Visualizador de projetos',
     empty: 'INSERT CARTRIDGE',
+    loading: 'LOADING CARTRIDGE...',
     identification: 'MC-01',
   },
 };

@@ -87,7 +87,7 @@ O Angular 21 usa a pasta `public/` (copiada para a raiz do build) no lugar do an
 
 ## Estratégia futura de animação
 
-Decisão adiada para a FASE 5. Ordem de preferência:
+Decidido na FASE 5 (D-058): **CSS** (transitions + keyframes). Ordem de preferência registrada:
 
 1. **CSS** (transitions, keyframes, `@starting-style`, View Transitions API) para microinterações e boot.
 2. **Angular** (`animate.enter` / `animate.leave` nativos do Angular 20+) para entrada/saída de elementos.

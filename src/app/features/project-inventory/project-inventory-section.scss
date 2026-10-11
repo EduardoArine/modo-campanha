@@ -41,3 +41,50 @@
     grid-column: span 3;
   }
 }
+
+// FASE 5 (D-058): inserir o cartucho. O MC-CART continua um objeto (role="img", não focável);
+// o clique nele é atalho de ponteiro para o botão do resumo. "Sobe da prateleira" ao passar o
+// ponteiro / focar o botão, e fica levantado enquanto inserido. Movimento curto, sem loop;
+// com prefers-reduced-motion as transições somem (regra global em _base.scss).
+.cart {
+  cursor: pointer;
+  transition: transform 150ms ease-out;
+}
+
+.item:has(.cart:hover, .insert:hover, .insert:focus-visible) .cart {
+  transform: translateY(calc(-1 * #{space(1)}));
+}
+
+.item.is-inserted .cart {
+  transform: translateY(calc(-1 * #{space(2)}));
+}
+
+// CRT Project Viewer: abaixo da grade, só com um cartucho inserido. Desktop: 8/12 colunas.
+.viewer-slot {
+  @include columns;
+}
+
+.viewer {
+  grid-column: 1 / -1;
+  margin-top: space(8);
+  animation: crt-on 220ms ease-out;
+
+  @include mq(lg) {
+    grid-column: 1 / span 8;
+  }
+}
+
+// Liga o CRT: só opacidade e uma subida curta (nada pisca, nada fica em loop).
+@keyframes crt-on {
+  from {
+    opacity: 0;
+    transform: translateY(space(2));
+  }
+}
+
+.loading {
+  place-self: center;
+  margin: 0;
+  @include type(system);
+  color: var(--mc-text-muted);
+}

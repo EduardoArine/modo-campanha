@@ -65,6 +65,13 @@ export const UI_EN: UiDictionary = {
   },
   inventory: {
     subtitle: 'Cartridges collected along the campaign.',
+    insert: 'Insert cartridge',
+    eject: 'Eject cartridge',
+  },
+  projectCase: {
+    role: 'ROLE',
+    stack: 'STACK',
+    learnings: 'LEARNINGS',
   },
   campaignLog: {
     kind: {
@@ -100,6 +107,7 @@ export const UI_EN: UiDictionary = {
   crt: {
     regionLabel: 'Project viewer',
     empty: 'INSERT CARTRIDGE',
+    loading: 'LOADING CARTRIDGE...',
     identification: 'MC-01',
   },
 };

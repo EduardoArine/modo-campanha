@@ -145,17 +145,17 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## FASE 5 — GAME FEEL ⬜
 
-- ⬜ CRT Project Viewer completo na experiência da Home (vindo da FASE 3, D-048)
-- ⬜ Seleção de cartucho (MC-CART → seleção → CRT → Project Case; GitHub como ação explícita no case)
-- ⬜ Transição cartucho → CRT
+- ✅ CRT Project Viewer completo na experiência da Home (D-058)
+- ✅ Seleção de cartucho (MC-CART → seleção → CRT → Project Case; GitHub como ação explícita no case) (D-058)
+- ✅ Transição cartucho → CRT (D-058)
 - ⬜ Microinterações
-- ⬜ Cartridge insert / inserção no console (500–800 ms)
-- ⬜ CRT boot
+- ✅ Cartridge insert (~600 ms, versão "encaixe + boot", D-058)
+- ✅ CRT boot (`LOADING CARTRIDGE...`, D-058)
 - ⬜ Boot / Intro (≤ 1 s)
 - ⬜ Progress
-- ⬜ Hover states
+- ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ⬜ Transitions
-- ⬜ Decisão: CSS vs. Angular animations vs. biblioteca
+- ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
 
 ## FASE 6 — SECRETS ⬜
 

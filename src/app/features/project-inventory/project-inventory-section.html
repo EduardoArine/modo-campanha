@@ -11,22 +11,61 @@
   @if (items().length) {
     <ul class="grid" role="list">
       @for (item of items(); track item.id) {
-        <li class="item">
+        <li class="item" [class.is-inserted]="selectedId() === item.id">
+          <!-- Atalho de ponteiro: o controle acessível é o botão do resumo (mesma ação). -->
           <mc-cart
+            class="cart"
             [serial]="item.serial"
             [title]="item.title"
             [type]="item.type"
             [shell]="item.shell"
             [accent]="item.accent"
             [artwork]="item.artwork"
+            (click)="toggle(item.id)"
           />
           <mc-project-summary
             [title]="item.title"
             [description]="item.description"
             [chips]="item.chips"
-          />
+          >
+            <button
+              mcAction="text"
+              class="insert"
+              [id]="'insert-' + item.id"
+              aria-controls="project-viewer"
+              [attr.aria-label]="
+                (selectedId() === item.id ? ui().inventory.eject : ui().inventory.insert) +
+                ': ' +
+                item.title
+              "
+              (click)="toggle(item.id)"
+            >
+              @if (selectedId() === item.id) {
+                {{ ui().inventory.eject }}
+              } @else {
+                {{ ui().inventory.insert }} <mc-icon name="arrow-down" />
+              }
+            </button>
+          </mc-project-summary>
         </li>
       }
     </ul>
   }
+
+  <!-- Região de status persistente: anuncia o boot de forma confiável (o case recebe o foco). -->
+  <p class="mc-visually-hidden" role="status">
+    {{ phase() === 'loading' ? ui().crt.loading : '' }}
+  </p>
+
+  <div class="viewer-slot" id="project-viewer">
+    @if (selected(); as project) {
+      <mc-crt-project-viewer class="viewer" state="content">
+        @if (phase() === 'loading') {
+          <p class="loading" aria-hidden="true">{{ ui().crt.loading }}</p>
+        } @else {
+          <app-project-case [project]="project" (eject)="eject()" />
+        }
+      </mc-crt-project-viewer>
+    }
+  </div>
 </section>

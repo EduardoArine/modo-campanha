@@ -648,3 +648,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **≥ 768 px:** header **idêntico pixel a pixel** ao aprovado na 05-D (verificado em 1440 e 820, pt-BR e en).
   - **FASE 4 — CAREER CONTENT:** estrutura e visual de todas as seções concluídos; conteúdo editorial pendente em Campaign Log (03-C), Achievements (04-C), Current Main Quest (06-C) e Side Quests (07-C), todos com MOCK dev-only e produção vazia.
 - **Status:** Aceita (REVIEWER).
+
+## D-058 — FASE 5 / Game Feel 01: seleção de cartucho, inserção e CRT Project Viewer na Home
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053; detalhes em `docs/20-game-feel-01.md`):**
+  - **Seleção:** botão `Inserir cartucho / Insert cartridge` no Project Summary (slot de ação previsto no D-032); clicar no MC-CART é atalho de ponteiro para a mesma ação. O `mc-cart` continua `role="img"`, não focável e sem mudança no componente.
+  - **Inserção (~600 ms):** cartucho sobe 8 px; CRT Project Viewer liga abaixo da grade (8/12 no desktop); `LOADING CARTRIDGE...` por 450 ms; case com foco no título. Outro cartucho troca na hora; ejetar devolve o foco. Deslocamento espacial até um console não implementado (versão simplificada "encaixe + boot", prevista em `docs/05`).
+  - **Case:** só campos aprovados do `Project` (serial, tipo, nome, artwork com alt, descrição, papel, stack, aprendizados, links reais). `mc-crt-project-viewer` / `mc-crt-frame` inalterados.
+  - **Motion:** CSS (transitions + keyframes), sem biblioteca; `prefers-reduced-motion` = sem boot, sem deslocamento, sem animação. Sem som, sem loop.
+  - **Roteamento:** case na própria Home; `/projects/:slug` continua futuro.
+  - Atualiza o D-046 ("MC-CART continua não clicável"): a interação chegou como previsto, sem transformar o objeto em link.
+- **Status:** Aceita (REVIEWER).

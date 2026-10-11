@@ -121,7 +121,9 @@ Estados de **status do projeto** (`ProjectStatus`): `in-progress`, `released`, `
 - Apenas um cartucho inserido por vez.
 - Sem JavaScript de animação, a seleção ainda funciona (o case aparece direto).
 
-## Interação com o console (futuro, FASE 5)
+## Interação com o console (FASE 5, implementada em D-058, `docs/20-game-feel-01.md`)
+
+> Implementado: seleção pelo botão "Inserir cartucho" (ou clique no cartucho) → cartucho sobe → CRT liga abaixo da grade → `LOADING CARTRIDGE...` → case. Versão simplificada "encaixe + boot" em todas as larguras (sem deslocamento espacial até um console). Os passos abaixo são o conceito original.
 
 Fluxo:
 

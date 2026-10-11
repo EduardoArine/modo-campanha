@@ -124,7 +124,7 @@ Ao selecionar um projeto, o visitante tem a sensação de **inserir o cartucho e
 
 Mensagens possíveis: `INSERT CARTRIDGE`, `LOADING CARTRIDGE...`, `NO SIGNAL`, `BOOTING...`
 
-Duração alvo: **~500–800 ms**. **Não implementado nesta fase**; ver FASE 5 (Game Feel).
+Duração alvo: **~500–800 ms**. **Implementado na FASE 5** (D-058, `docs/20-game-feel-01.md`) na versão simplificada "encaixe + boot": cartucho sobe, CRT liga, `LOADING CARTRIDGE...`, case.
 
 ---
 
