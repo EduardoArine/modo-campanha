@@ -125,9 +125,15 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 ### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
 
 - 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · ✅ 04-B visual (**APPROVED / FROZEN**, D-051) · ⬜ 04-C editorial (pendente de fatos reais; não bloqueia o resto da Home)
-- ⬜ Current Quest
+
+### Home Slice 05 — Final Checkpoint 🟡 (plano aprovado, D-052; `docs/17-home-slice-05.md`)
+
+Construído antes de Current Quest e Side Quests; continua sendo a última seção da Home (D-052).
+
+- ✅ 05-0 decisões e conteúdo · 🟡 05-A estrutura + dados · 🟡 05-B visual · ⬜ 05-C footer · ⬜ 05-D revisão integrada
+- 🟡 Final Checkpoint (Slice 05)
+- ⬜ Current Quest (depois do Slice 05)
 - ⬜ Side Quests
-- ⬜ Final Checkpoint
 
 ## FASE 5 — GAME FEEL ⬜
 

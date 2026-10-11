@@ -586,3 +586,19 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **ACHIEVEMENTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** 4 itens genéricos e fictícios ("MARCO DE EXEMPLO A…"), sem derivar do MOCK do Campaign Log e sem fatos reais. Mesmo mecanismo do D-049: `achievements.data.ts` vazio em produção; `achievements.data.development.ts` (ids `mock-achievement-*`) só em dev/testes via `fileReplacements`; deploy guard agora procura `mock-campaign-log|mock-achievement`.
 - **04-B.1 (aprovado o visual da 04-B, ajuste único):** com **exatamente 2 itens em ≥ 1200 px** o painel ocupa **8/12 colunas**, alinhado à esquerda (`:has(> :nth-child(2):last-child)`, só CSS); as 2 células dividem o painel e o restante é espaço negativo da página. 768–1199, < 768 e 3–5 itens inalterados (verificado pixel a pixel).
 - **Status:** **04-B — ACHIEVEMENTS VISUAL: APPROVED e FROZEN** (2026-10-09), incluindo a 04-B.1. Nenhuma alteração visual adicional no Achievement Record Panel salvo regressão. Estado: STRUCTURE / VISUAL approved · **EDITORIAL CONTENT pending factual review** (04-0/04-C; não bloqueia o resto da Home). Produção e GitHub Pages seguem sem Achievements e sem MOCK.
+
+## D-052 — Home Slice 05 (Final Checkpoint): construído antes de Current Main Quest e Side Quests
+
+- **Data:** 2026-10-11
+- **Decisão:**
+  - **Ordem de construção alterada:** o **Final Checkpoint** é construído antes de Current Main Quest e Side Quests. A **ordem final da Home não muda**: ele continua sendo a última seção (#9, `docs/03`). Depois dele: Current Main Quest, depois Side Quests.
+  - **Primeira composição publicável:** Hero → Player Status → Skill Loadout → Project Inventory → Final Checkpoint → Footer. Campaign Log e Achievements continuam dev-only enquanto tiverem conteúdo MOCK. A publicação no GitHub Pages segue como decisão separada.
+  - **Direção A — Save Point Editorial** (plano em `docs/17-home-slice-05.md`): section header CAMPAIGN CONTINUES... com **SAVE COMPLETE** como único detalhe MC-01 (slot `code`); frase humana em `title-l` nas colunas 1–7; GitHub e LinkedIn como duas ações `secondary` equivalentes, nova aba, padrão `external` do Hero, **sem ícones de marca** e sem `primary`. Rejeitadas: B — Continue Prompt (`CONTINUE?`, cursor em bloco; videogame literal) e C — Save Slot Panel (repete o Record Panel; banner de CTA SaaS).
+  - **Conteúdo aprovado:** pt-BR "Se quiser construir algo comigo ou trocar ideias sobre produto, IA, desenvolvimento ou games, estes são os melhores lugares para me encontrar." · en "If you'd like to build something together or exchange ideas about product, AI, development, or games, these are the best places to find me." Guardado em `PlayerProfile.closing` (voz do Eduardo; o dicionário de UI guarda só o rótulo SAVE COMPLETE).
+  - **Fora:** currículo, email, WhatsApp e formulário (sem destinos públicos aprovados); "No coins required"; motion.
+  - **Footer faz parte do slice (05-C):** só motto localizado, © ano atual, Eduardo Arine e Modo Campanha; sem link para o repositório na v1. Renderizado pela `HomePage` depois do `</main>` (não no shell): fecha semanticamente a Home e fica fora do `/dev/design-system` sem lógica de roteamento.
+  - **Header (05-D):** Contato / Contact volta e aponta para `#final-checkpoint` (seção real; não vira LinkedIn, D-047).
+- **Contexto:** já existe conteúdo público real suficiente para o encerramento (links aprovados, motto, nome); Current Main Quest e Side Quests dependem de conteúdo ainda não aprovado.
+- **Motivo:** aproximar a Home de uma primeira versão publicável sem placeholder nem conteúdo inventado.
+- **Alternativas:** seguir a ordem da página (Current Main Quest primeiro); footer no shell da app (apareceria no showcase dev ou exigiria condição de rota).
+- **Status:** Aceita. Etapas 05-A e 05-B em andamento.
