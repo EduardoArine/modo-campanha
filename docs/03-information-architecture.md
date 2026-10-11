@@ -20,7 +20,7 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
-> **Hoje a Home renderiza só as seções construídas (#0–#4: Hero, Player Status, Skill Loadout, Project Inventory), D-047.** As seções #5–#9 entram quando seus slices reais existirem; até lá não há placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos** (en: About / Projects); Jornada e Contato voltam com Campaign Log e Final Checkpoint.
+> **A Home renderiza só as seções construídas (D-047).** Em produção: Hero, Player Status, Skill Loadout, Project Inventory e **Final Checkpoint** (#9, sempre a última, D-052), seguidos do **footer** da Home (fora do `<main>`). Campaign Log e Achievements só aparecem quando há conteúdo publicado (hoje, MOCK dev-only). Nenhum placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos / Contato** (en: About / Projects / Contact; Contato → `#final-checkpoint`); Jornada volta quando o Campaign Log tiver conteúdo real.
 
 ## Header (aprovado no Concept 03)
 

@@ -603,3 +603,20 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Alternativas:** seguir a ordem da página (Current Main Quest primeiro); footer no shell da app (apareceria no showcase dev ou exigiria condição de rota).
 - **05-B — FINAL CHECKPOINT VISUAL: APPROVED e FROZEN** (2026-10-11): validado em 1440 / 820 / 390, pt-BR e en, em produção (depois do Project Inventory) e em desenvolvimento (depois dos Achievements MOCK). Nenhum ajuste no Final Checkpoint salvo regressão; o footer (05-C) se ajusta sozinho, sem mexer no espaçamento da seção.
 - **Status:** Aceita. 05-A e 05-B concluídas; 05-C (footer) em andamento.
+
+## D-053 — Modo autônomo de conclusão (Builder + Reviewer)
+
+- **Data:** 2026-10-11
+- **Decisão:** a partir do fim do Slice 05, o desenvolvimento segue sem aprovação manual do Eduardo a cada subetapa. Cada etapa é implementada (BUILDER), validada (testes, typecheck, builds dev/prod/GitHub Pages, guards, Prettier, screenshots 1440 / 820 / 390 em pt-BR e en) e enviada a um **REVIEWER independente**, que devolve `APPROVED`, `APPROVED WITH FIXES` ou `BLOCKED — EDUARDO DECISION REQUIRED`. O REVIEWER protege o sistema aprovado; não pede mudanças subjetivas; no máximo duas rodadas de ajustes visuais por etapa, salvo bug real.
+  - **Bloqueia para o Eduardo:** fato público novo, organização nova, conteúdo interno da Comunidade On, afirmação profissional, novo canal de contato/dado pessoal, mudança importante de identidade visual, alteração de componente FROZEN sem causa técnica, mudança conceitual, remoção de feature, mudança material de escopo, deploy público final, ação destrutiva.
+  - **Conteúdo não confirmado não bloqueia estrutura:** usa MOCK claramente fictício, só em desenvolvimento/testes (`fileReplacements`), produção vazia, guard no deploy, conteúdo editorial registrado como pendente.
+  - **Git:** trabalho na branch `feat/autonomous-site-completion` (push permitido); **sem merge em `main` e sem deploy** até a revisão final do Eduardo.
+- **Status:** Aceita.
+
+## D-054 — HOME SLICE 05 — APPROVED (05-C e 05-D)
+
+- **Data:** 2026-10-11
+- **Decisão:**
+  - **05-C — FOOTER: APPROVED e FROZEN.** Pertence só à Home (renderizado pela `HomePage`, fora do `<main>`, logo depois do Final Checkpoint; não está no shell). Uma régua de 1 px, mesmo fundo da página; desktop/tablet: motto à esquerda e copyright à direita; mobile: empilhado. Sem links, ícones, títulos ou linguagem de game. Ano calculado em runtime. Nenhum espaçamento de seção adicional entre Final Checkpoint e footer.
+  - **05-D:** **Contato / Contact** volta ao header e aponta para `#final-checkpoint` (destino real; não vira LinkedIn, D-047). Nav: Sobre / Projetos / Contato. Jornada continua fora até o Campaign Log ter conteúdo real. Teste de integração garante que todo item da nav aponta para uma seção renderizada. Docs sincronizados (`docs/02`, `03`, `07`, README, roadmap, CLAUDE.md).
+- **Status:** **HOME SLICE 05 — APPROVED** (REVIEWER, D-053). Final Checkpoint e footer congelados.

@@ -126,12 +126,12 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 - 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · ✅ 04-B visual (**APPROVED / FROZEN**, D-051) · ⬜ 04-C editorial (pendente de fatos reais; não bloqueia o resto da Home)
 
-### Home Slice 05 — Final Checkpoint 🟡 (plano aprovado, D-052; `docs/17-home-slice-05.md`)
+### Home Slice 05 — Final Checkpoint ✅ (**APPROVED**, D-054; `docs/17-home-slice-05.md`)
 
 Construído antes de Current Quest e Side Quests; continua sendo a última seção da Home (D-052).
 
-- ✅ 05-0 decisões e conteúdo · ✅ 05-A estrutura + dados · ✅ 05-B visual (**APPROVED / FROZEN**) · 🟡 05-C footer · ⬜ 05-D revisão integrada
-- 🟡 Final Checkpoint (Slice 05)
+- ✅ 05-0 decisões e conteúdo · ✅ 05-A estrutura + dados · ✅ 05-B visual (**APPROVED / FROZEN**) · ✅ 05-C footer (**APPROVED / FROZEN**) · ✅ 05-D revisão integrada (Contato no header; **HOME SLICE 05 — APPROVED**, D-054)
+- ✅ Final Checkpoint + footer (Slice 05)
 - ⬜ Current Quest (depois do Slice 05)
 - ⬜ Side Quests
 
@@ -187,22 +187,22 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## Decisões futuras em aberto
 
-| Tema                                                                                                                          | Fase     |
-| ----------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Efeito do Konami Code                                                                                                         | 6        |
-| Localização do `???` / Secret Area                                                                                            | 6        |
-| ~~Estados das skills~~ ✅ sem estados/graduação, D-040                                                                        | 3        |
-| Abordagem de animação                                                                                                         | 5        |
-| ~~Paleta definitiva~~ ✅ D-014                                                                                                | 1        |
-| ~~Fontes definitivas~~ ✅ D-022                                                                                               | 2        |
-| ~~Player Card com foto~~ ✅ foto real, D-017                                                                                  | 1        |
-| ~~Estratégia de i18n~~ ✅ D-020                                                                                               | 2        |
-| ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                                                                 | 3        |
-| ~~Composição final do Player Status~~ ✅ Slice 01, D-039                                                                      | 3        |
-| Preferência de idioma em localStorage (sem sobrepor a URL)                                                                    | futuro   |
-| Desenho do monograma MC                                                                                                       | 2        |
-| Campaign XP: regras reais de pontuação (product exploration)                                                                  | futuro   |
-| Itens de navegação do header: Sobre / Projetos hoje (D-047); Jornada volta com o Campaign Log, Contato com o Final Checkpoint | 4        |
-| Páginas dedicadas por case (`/projects/:slug`)                                                                                | 5+       |
-| Upgrade para Angular 22 (requer Node ≥ 22.22.3; pendente, D-009)                                                              | qualquer |
-| Domínio próprio                                                                                                               | 9        |
+| Tema                                                                                                                | Fase     |
+| ------------------------------------------------------------------------------------------------------------------- | -------- |
+| Efeito do Konami Code                                                                                               | 6        |
+| Localização do `???` / Secret Area                                                                                  | 6        |
+| ~~Estados das skills~~ ✅ sem estados/graduação, D-040                                                              | 3        |
+| Abordagem de animação                                                                                               | 5        |
+| ~~Paleta definitiva~~ ✅ D-014                                                                                      | 1        |
+| ~~Fontes definitivas~~ ✅ D-022                                                                                     | 2        |
+| ~~Player Card com foto~~ ✅ foto real, D-017                                                                        | 1        |
+| ~~Estratégia de i18n~~ ✅ D-020                                                                                     | 2        |
+| ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                                                       | 3        |
+| ~~Composição final do Player Status~~ ✅ Slice 01, D-039                                                            | 3        |
+| Preferência de idioma em localStorage (sem sobrepor a URL)                                                          | futuro   |
+| Desenho do monograma MC                                                                                             | 2        |
+| Campaign XP: regras reais de pontuação (product exploration)                                                        | futuro   |
+| Itens de navegação do header: Sobre / Projetos / Contato (D-054); Jornada volta com o conteúdo real do Campaign Log | 4        |
+| Páginas dedicadas por case (`/projects/:slug`)                                                                      | 5+       |
+| Upgrade para Angular 22 (requer Node ≥ 22.22.3; pendente, D-009)                                                    | qualquer |
+| Domínio próprio                                                                                                     | 9        |

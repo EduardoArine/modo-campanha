@@ -8,7 +8,7 @@ Uma carreira apresentada como uma campanha de videogame: desenvolvimento, IA, pr
 
 Portfólio profissional gamificado de **Eduardo Arine**, Desenvolvedor de Produtos Digitais com mais de 10 anos em tecnologia e formação em Tecnologia em Jogos Digitais.
 
-Projetos viram cartuchos, a trajetória vira um log de campanha e as competências formam uma árvore de habilidades. Tudo real, só que na linguagem dos games.
+Projetos viram cartuchos, a trajetória vira um log de campanha e as competências formam um loadout de habilidades. Tudo real, só que na linguagem dos games.
 
 ## Conceito
 
@@ -20,7 +20,7 @@ Visão completa em [docs/01-product-vision.md](docs/01-product-vision.md).
 
 ## Status
 
-🚧 Em desenvolvimento. Direção visual aprovada (Concept 03 híbrido); design system aprovado; etapa atual: **FASE 3 — Core Experience** (planejamento da Home).
+🚧 Em desenvolvimento. Direção visual aprovada (Concept 03 híbrido); design system aprovado; etapa atual: **FASE 4 — Career Content**. A Home publicável tem Hero, Player Status, Skill Loadout, Project Inventory e Final Checkpoint.
 
 ## Stack
 
@@ -50,8 +50,11 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 10. [Decisões](docs/10-decisions.md)
 11. [MC Design System](docs/11-design-system.md)
 12. [Home Slice 01](docs/12-home-slice-01.md)
-13. [Home Slice 02 (plano)](docs/13-home-slice-02.md)
-14. [Content inventory (rascunho)](docs/14-content-inventory.md)
+13. [Home Slice 02](docs/13-home-slice-02.md)
+14. [Content inventory](docs/14-content-inventory.md)
+15. [Home Slice 03 — Campaign Log](docs/15-home-slice-03.md)
+16. [Home Slice 04 — Achievements](docs/16-home-slice-04.md)
+17. [Home Slice 05 — Final Checkpoint](docs/17-home-slice-05.md)
 
 ## Rodando localmente
 

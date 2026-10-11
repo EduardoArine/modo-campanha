@@ -210,25 +210,17 @@ Podem reutilizar o sistema de cartuchos com uma variação visual (a definir).
 
 ## Final Checkpoint
 
-Fechamento da página.
+Fechamento da página (Home Slice 05, D-052; `docs/17-home-slice-05.md`). Direção **A — Save Point Editorial**: encerramento aberto, sem painel, objeto físico ou motion.
 
 ```
-CAMPAIGN CONTINUES...
-Ainda há muito XP para ganhar.
+SAVE COMPLETE
+■ CAMPAIGN CONTINUES...
+Se quiser construir algo comigo ou trocar ideias sobre produto, IA, desenvolvimento
+ou games, estes são os melhores lugares para me encontrar.
+[ GitHub ↗ ]  [ LinkedIn ↗ ]
 ```
 
-Links: LinkedIn, GitHub, Email.
-
-Interação possível:
-
-```
-CONTINUE?
-> YES
-```
-
-Detalhe opcional no rodapé:
-
-```
-Built with Angular.
-No coins required.
-```
+- **SAVE COMPLETE** é o único detalhe de sistema MC-01.
+- Só destinos públicos aprovados: **GitHub** e **LinkedIn**, como ações equivalentes (`secondary`). Sem email, WhatsApp, formulário ou currículo enquanto não houver destino aprovado.
+- **Footer** da Home logo abaixo: motto ("XP real, sem personagem.") e "© {ano} Eduardo Arine · Modo Campanha". Sem links, ícones ou linguagem de game.
+- Descartados: "Ainda há muito XP para ganhar." (sugere XP inventado), a interação `CONTINUE? > YES` (videogame literal) e "No coins required" (arcade).

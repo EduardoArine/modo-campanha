@@ -163,7 +163,7 @@ interface SocialLink {
 }
 ```
 
-Dados: `src/app/data/social-links.data.ts`. Hoje contém apenas o GitHub; LinkedIn, email e currículo aguardam os links de Eduardo.
+Dados: `src/app/data/social-links.data.ts`. Hoje contém **GitHub** e **LinkedIn** (aprovados no Slice 01, D-037/D-039), usados no Hero e no Final Checkpoint. Email e currículo não existem: não renderizam sem URL real aprovada.
 
 ## Conteúdo ainda sem modelo
 

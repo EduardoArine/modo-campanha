@@ -17,6 +17,23 @@ describe('App', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
+  // A navegação só expõe destinos que existem (D-047).
+  it('points every header nav item to a section rendered on the Home', async () => {
+    const fixture = TestBed.createComponent(App);
+    await TestBed.inject(Router).navigateByUrl('/');
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const el = fixture.nativeElement as HTMLElement;
+    const fragments = Array.from(el.querySelectorAll('app-site-header nav a')).map(
+      (a) => a.getAttribute('href')?.split('#')[1],
+    );
+
+    expect(fragments).toEqual(['player-status', 'project-inventory', 'final-checkpoint']);
+    for (const id of fragments) {
+      expect(el.querySelector(`main section#${id}`)).not.toBeNull();
+    }
+  });
+
   // O footer pertence à Home (D-052), não ao shell. Os testes rodam na configuração
   // `development`, onde a rota do showcase existe.
   it('renders the footer on the Home only, never on the design system showcase', async () => {
