@@ -3,13 +3,15 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
-import { ACHIEVEMENTS, CAMPAIGN_LOG, shouldRenderAchievements } from '../../data';
+import { ACHIEVEMENTS, CAMPAIGN_LOG, CURRENT_QUEST, shouldRenderAchievements } from '../../data';
 import { HomePage } from './home-page';
 
-// Os testes rodam na configuração `development`: Campaign Log (D-049) e Achievements (D-051)
-// usam MOCK. Em produção as listas publicadas são vazias e as seções não são renderizadas.
+// Os testes rodam na configuração `development`: Campaign Log (D-049), Achievements (D-051) e
+// Current Main Quest (docs/18) usam MOCK. Em produção os dados publicados são vazios e as seções
+// não são renderizadas.
 const hasCampaignLog = CAMPAIGN_LOG.length > 0;
 const hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
+const hasCurrentQuest = CURRENT_QUEST !== null;
 
 describe('HomePage', () => {
   it('should render only the built sections, in order', async () => {
@@ -27,6 +29,7 @@ describe('HomePage', () => {
       'project-inventory',
       ...(hasCampaignLog ? ['campaign-log'] : []),
       ...(hasAchievements ? ['achievements'] : []),
+      ...(hasCurrentQuest ? ['current-quest'] : []),
       'final-checkpoint',
     ]);
   });
@@ -41,7 +44,8 @@ describe('HomePage', () => {
     expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
       'APP-FINAL-CHECKPOINT-SECTION',
     );
-    expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST|SIDE QUESTS/);
+    expect(el.textContent).not.toMatch(/SIDE QUESTS/);
+    if (!hasCurrentQuest) expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST/);
   });
 
   it('should close the page with the footer right after main, outside it', async () => {

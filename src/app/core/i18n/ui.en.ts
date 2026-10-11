@@ -79,6 +79,9 @@ export const UI_EN: UiDictionary = {
     code: 'ACH',
     evidence: 'EVIDENCE',
   },
+  currentQuest: {
+    focus: 'FOCUS AREAS',
+  },
   finalCheckpoint: {
     save: 'SAVE COMPLETE',
   },

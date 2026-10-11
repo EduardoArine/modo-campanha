@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { SiteFooter } from '../../core/layout/site-footer/site-footer';
-import { ACHIEVEMENTS, CAMPAIGN_LOG, shouldRenderAchievements } from '../../data';
+import { ACHIEVEMENTS, CAMPAIGN_LOG, CURRENT_QUEST, shouldRenderAchievements } from '../../data';
 import { AchievementsSection } from '../../features/achievements/achievements-section';
 import { CampaignLogSection } from '../../features/campaign-log/campaign-log-section';
+import { CurrentQuestSection } from '../../features/current-quest/current-quest-section';
 import { FinalCheckpointSection } from '../../features/final-checkpoint/final-checkpoint-section';
 import { HeroSection } from '../../features/hero/hero-section';
 import { PlayerStatusSection } from '../../features/player-status/player-status-section';
@@ -14,8 +15,9 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
 // renderizadas (D-047). O Campaign Log só aparece quando há entradas: em produção a lista
 // publicada está vazia até o histórico real ser aprovado; em desenvolvimento entra o MOCK
 // (D-049). Achievements só com >= 2 itens (D-051), pelo mesmo mecanismo. O Final Checkpoint
-// é sempre a última seção (D-052). Current Main Quest e Side Quests entram com seus slices
-// reais, antes dele. O footer vem logo depois do </main> (só na Home, D-052).
+// é sempre a última seção (D-052). Current Main Quest só com conteúdo publicado (docs/18);
+// Side Quests entra com seu slice, antes do Final Checkpoint. O footer vem logo depois do
+// </main> (só na Home, D-052).
 @Component({
   selector: 'app-home-page',
   imports: [
@@ -25,6 +27,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
     ProjectInventorySection,
     CampaignLogSection,
     AchievementsSection,
+    CurrentQuestSection,
     FinalCheckpointSection,
     SiteFooter,
   ],
@@ -40,6 +43,9 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
       @if (hasAchievements) {
         <app-achievements-section />
       }
+      @if (hasCurrentQuest) {
+        <app-current-quest-section />
+      }
       <app-final-checkpoint-section />
     </main>
     <app-site-footer />
@@ -49,4 +55,5 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
 export class HomePage {
   protected readonly hasCampaignLog = CAMPAIGN_LOG.length > 0;
   protected readonly hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
+  protected readonly hasCurrentQuest = CURRENT_QUEST !== null;
 }

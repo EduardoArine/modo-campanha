@@ -1,0 +1,24 @@
+<section id="current-quest" class="mc-page-grid section" aria-labelledby="current-quest-title">
+  <mc-section-header [heading]="ui().sections.currentQuest" headingId="current-quest-title">
+    <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
+  </mc-section-header>
+
+  <div class="layout">
+    <div class="briefing">
+      <h3 class="title">{{ locale.pick(quest.title) }}</h3>
+      @if (quest.role; as role) {
+        <p class="role">{{ locale.pick(role) }}</p>
+      }
+      <p class="summary">{{ locale.pick(quest.summary) }}</p>
+    </div>
+
+    <div class="focus">
+      <p class="label" id="current-quest-focus">{{ ui().currentQuest.focus }}</p>
+      <ul role="list" aria-labelledby="current-quest-focus">
+        @for (item of locale.pick(quest.focus); track item) {
+          <li>{{ item }}</li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>

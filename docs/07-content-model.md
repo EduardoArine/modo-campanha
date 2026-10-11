@@ -150,6 +150,28 @@ Dados:
 - `src/app/data/campaign-log.data.ts`: **publicado** (produção). Vazio até o histórico real ser aprovado; vazio = seção não renderizada.
 - `src/app/data/campaign-log.data.development.ts`: **MOCK de desenvolvimento visual** (D-049), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
+## CurrentQuest (Home Slice 06, D-055)
+
+`src/app/models/current-quest.model.ts`
+
+```ts
+interface CurrentQuest {
+  id: string;
+  title: Localized; // nome público da campanha
+  role?: Localized; // papel público aprovado
+  summary: Localized; // 1–2 frases públicas (~140–220 caracteres)
+  focus: Localized<readonly string[]>; // 2–4 frentes, sem métricas
+}
+```
+
+- Status **IN PROGRESS** vem do dicionário de UI (`status.inProgress`), não do dado.
+- Fora: métricas, resultados, clientes, parceiros, arquitetura, integrações, datas não aprovadas, XP, level, progresso.
+
+Dados:
+
+- `src/app/data/current-quest.data.ts`: **publicado** (produção). `null` até haver texto público aprovado; `null` = seção não renderizada.
+- `src/app/data/current-quest.data.development.ts`: **MOCK de desenvolvimento visual** (id `mock-current-quest`), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
+
 ## SocialLink
 
 `src/app/models/social-link.model.ts`
@@ -170,5 +192,4 @@ Dados: `src/app/data/social-links.data.ts`. Hoje contém **GitHub** e **LinkedIn
 Criar quando a seção for implementada (evitar modelar cedo demais):
 
 - **Player Status / Hero**: provavelmente um objeto `PlayerProfile` (nome, classe, origem, XP, campanha atual, foco, status, texto de apresentação).
-- **Current Main Quest**: possivelmente reaproveita `Project` (Comunidade On) + campos de status.
 - **Easter eggs**: configuração em `core/` quando aprovados.

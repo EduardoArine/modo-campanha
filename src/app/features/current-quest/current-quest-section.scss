@@ -1,0 +1,103 @@
+// Current Main Quest (docs/18-home-slice-06.md, A — Quest Briefing). Composição aberta: sem
+// painel, sombra ou objeto físico. Desktop: briefing 1–7, frentes 9–12; tablet: 1–5 e 6–8;
+// mobile: empilhado. Laranja só no marcador do header e no status IN PROGRESS.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.layout {
+  @include columns;
+  row-gap: space(6);
+  margin-top: var(--mc-space-section-head);
+  align-items: start;
+}
+
+.briefing {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(2);
+
+  @include mq(md) {
+    grid-column: 1 / span 5;
+  }
+
+  @include mq(lg) {
+    grid-column: 1 / span 7;
+  }
+}
+
+.focus {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(3);
+
+  @include mq(md) {
+    grid-column: 6 / -1;
+  }
+
+  @include mq(lg) {
+    grid-column: 9 / -1;
+  }
+}
+
+p,
+h3,
+ul {
+  margin: 0;
+}
+
+.title {
+  @include type(title-l);
+  font-weight: 600;
+  color: var(--mc-text);
+}
+
+.role {
+  @include type(body);
+  color: var(--mc-text-muted);
+}
+
+.summary {
+  max-width: 62ch;
+  margin-top: space(2);
+  @include type(body-l);
+  color: var(--mc-text-secondary);
+}
+
+.label {
+  padding-bottom: space(3);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Frentes: texto em lista com o marcador discreto do Skill Loadout; nada interativo.
+ul {
+  display: grid;
+  gap: space(2);
+  padding: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-inline-start: space(4);
+    @include type(body);
+    color: var(--mc-text-secondary);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.7em;
+      left: 0;
+      width: space(1);
+      height: space(1);
+      background: var(--mc-border-default);
+    }
+  }
+}

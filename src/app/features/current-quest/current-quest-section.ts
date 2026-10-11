@@ -1,17 +1,25 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
+import { CURRENT_QUEST } from '../../data';
+import { CurrentQuest } from '../../models';
+import { McSectionHeader, McStatus } from '../../shared/ui';
 
-// Placeholder estrutural. Layout e conteúdo definitivos vêm na FASE 3 (docs/09-roadmap.md).
+/**
+ * Current Main Quest (Home Slice 06, docs/18). A — Quest Briefing: composição aberta em duas
+ * colunas (briefing + frentes), sem painel, objeto físico, métricas ou progresso. IN PROGRESS é
+ * o uso documentado de `mc-status`. A Home só renderiza a seção quando há conteúdo publicado.
+ */
 @Component({
   selector: 'app-current-quest-section',
-  template: `
-    <section id="current-quest" aria-labelledby="current-quest-title">
-      <h2 id="current-quest-title">{{ ui().sections.currentQuest }}</h2>
-    </section>
-  `,
+  imports: [McSectionHeader, McStatus],
+  templateUrl: './current-quest-section.html',
+  styleUrl: './current-quest-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentQuestSection {
-  protected readonly ui = inject(LocaleService).ui;
+  protected readonly locale = inject(LocaleService);
+  protected readonly ui = this.locale.ui;
+  // A HomePage só cria a seção quando CURRENT_QUEST existe.
+  protected readonly quest = CURRENT_QUEST as CurrentQuest;
 }

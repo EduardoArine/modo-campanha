@@ -132,7 +132,11 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 - ✅ 05-0 decisões e conteúdo · ✅ 05-A estrutura + dados · ✅ 05-B visual (**APPROVED / FROZEN**) · ✅ 05-C footer (**APPROVED / FROZEN**) · ✅ 05-D revisão integrada (Contato no header; **HOME SLICE 05 — APPROVED**, D-054)
 - ✅ Final Checkpoint + footer (Slice 05)
-- ⬜ Current Quest (depois do Slice 05)
+
+### Home Slice 06 — Current Main Quest 🟡 (D-055; `docs/18-home-slice-06.md`)
+
+- ✅ 06-A modelo / dados (**MOCK**, produção `null`) · ✅ 06-B visual (**APPROVED**, Quest Briefing) · ⬜ 06-C editorial (texto público aprovado pelo Eduardo; não bloqueia o resto da Home)
+- 🟡 Current Main Quest (Slice 06)
 - ⬜ Side Quests
 
 ## FASE 5 — GAME FEEL ⬜

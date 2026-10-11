@@ -55,6 +55,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 15. [Home Slice 03 — Campaign Log](docs/15-home-slice-03.md)
 16. [Home Slice 04 — Achievements](docs/16-home-slice-04.md)
 17. [Home Slice 05 — Final Checkpoint](docs/17-home-slice-05.md)
+18. [Home Slice 06 — Current Main Quest](docs/18-home-slice-06.md)
 
 ## Rodando localmente
 

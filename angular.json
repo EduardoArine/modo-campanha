@@ -67,6 +67,10 @@
                 {
                   "replace": "src/app/data/achievements.data.ts",
                   "with": "src/app/data/achievements.data.development.ts"
+                },
+                {
+                  "replace": "src/app/data/current-quest.data.ts",
+                  "with": "src/app/data/current-quest.data.development.ts"
                 }
               ]
             }
