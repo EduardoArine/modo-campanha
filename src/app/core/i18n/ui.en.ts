@@ -82,6 +82,15 @@ export const UI_EN: UiDictionary = {
   currentQuest: {
     focus: 'FOCUS AREAS',
   },
+  sideQuests: {
+    kind: {
+      game: 'GAME DEV',
+      art: 'ART',
+      ai: 'AI',
+      interface: 'INTERFACE',
+      study: 'STUDY',
+    },
+  },
   finalCheckpoint: {
     save: 'SAVE COMPLETE',
   },

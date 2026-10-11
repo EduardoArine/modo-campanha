@@ -1,0 +1,93 @@
+// Side Quests (docs/19-home-slice-07.md, C — Side Quest Log). Linhas compactas separadas por
+// réguas de 1 px: sem cards, painel, sombra ou objeto físico. ≥ 1024: tipo (1–2) · título (3–6)
+// · resumo (7–12) na mesma linha; 768–1023: tipo + título à esquerda (1–3), resumo (4–8);
+// < 768: empilhado. Sem laranja além do marcador do section header.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.section {
+  padding-block: var(--mc-space-section);
+}
+
+.log {
+  margin: var(--mc-space-section-head) 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.quest {
+  @include columns;
+  row-gap: space(1);
+  padding-block: space(5);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+
+  > * {
+    grid-column: 1 / -1;
+  }
+
+  @include mq(md) {
+    align-items: baseline;
+
+    .kind,
+    .title {
+      grid-column: 1 / span 3;
+    }
+
+    .summary {
+      grid-column: 4 / -1;
+      grid-row: 1 / span 2;
+    }
+  }
+
+  @include mq(lg) {
+    .kind {
+      grid-column: 1 / span 2;
+    }
+
+    .title {
+      grid-column: 3 / span 4;
+      grid-row: 1;
+    }
+
+    .summary {
+      grid-column: 7 / -1;
+      grid-row: 1;
+    }
+  }
+}
+
+p,
+h3 {
+  margin: 0;
+}
+
+.kind {
+  display: flex;
+  gap: space(2);
+  align-items: center;
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Marcador vazado: a mesma linguagem estrutural dos checkpoints do Campaign Log.
+.marker {
+  flex: none;
+  width: space(2);
+  height: space(2);
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+}
+
+.title {
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.summary {
+  max-width: 62ch;
+  @include type(body);
+  color: var(--mc-text-secondary);
+}

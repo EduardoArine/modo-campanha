@@ -137,7 +137,11 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 - ✅ 06-A modelo / dados (**MOCK**, produção `null`) · ✅ 06-B visual (**APPROVED**, Quest Briefing) · ⬜ 06-C editorial (texto público aprovado pelo Eduardo; não bloqueia o resto da Home)
 - 🟡 Current Main Quest (Slice 06)
-- ⬜ Side Quests
+
+### Home Slice 07 — Side Quests 🟡 (D-056; `docs/19-home-slice-07.md`)
+
+- ✅ 07-A modelo / dados (**MOCK**, produção vazia) · ✅ 07-B visual (**APPROVED**, Side Quest Log) · ⬜ 07-C editorial (conteúdo real do Eduardo; não bloqueia o resto da Home)
+- 🟡 Side Quests (Slice 07)
 
 ## FASE 5 — GAME FEEL ⬜
 

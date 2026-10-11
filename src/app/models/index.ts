@@ -5,3 +5,4 @@ export * from './skill.model';
 export * from './social-link.model';
 export * from './player-profile.model';
 export * from './current-quest.model';
+export * from './side-quest.model';

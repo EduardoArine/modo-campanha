@@ -190,6 +190,8 @@ Texto-base conceitual (a revisar):
 
 > Participação na construção e evolução de uma plataforma digital desde suas fundações, conectando desenvolvimento, produto, experiência, automação e gamificação.
 
+Implementação (D-055, `docs/18-home-slice-06.md`): direção **A — Quest Briefing** (título, papel, resumo e frentes de atuação, com `IN PROGRESS`). Conteúdo atual: **MOCK dev-only** ("Campanha de exemplo"); produção `null` até haver texto público aprovado. O texto-base acima continua conceitual e não é publicado.
+
 ---
 
 ## Side Quests
@@ -204,7 +206,7 @@ Projetos fora da atividade profissional principal:
 - projetos pessoais
 - estudos
 
-Podem reutilizar o sistema de cartuchos com uma variação visual (a definir).
+Direção **C — Side Quest Log** (D-056, `docs/19-home-slice-07.md`): linhas compactas (tipo · título · resumo) separadas por réguas finas, **sem cartucho**. Projetos completos e aprovados vão para o Project Inventory (MC-CART); side quests são mais leves (experimento, estudo, exploração). O MC-CART congelado não ganha variação para esta seção. Conteúdo atual: **MOCK dev-only**; produção vazia até haver conteúdo aprovado.
 
 ---
 

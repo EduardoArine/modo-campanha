@@ -56,6 +56,7 @@ Toda a visão de produto, experiência, arquitetura e decisões está em [`/docs
 16. [Home Slice 04 — Achievements](docs/16-home-slice-04.md)
 17. [Home Slice 05 — Final Checkpoint](docs/17-home-slice-05.md)
 18. [Home Slice 06 — Current Main Quest](docs/18-home-slice-06.md)
+19. [Home Slice 07 — Side Quests](docs/19-home-slice-07.md)
 
 ## Rodando localmente
 

@@ -3,15 +3,22 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
-import { ACHIEVEMENTS, CAMPAIGN_LOG, CURRENT_QUEST, shouldRenderAchievements } from '../../data';
+import {
+  ACHIEVEMENTS,
+  CAMPAIGN_LOG,
+  CURRENT_QUEST,
+  SIDE_QUESTS,
+  shouldRenderAchievements,
+} from '../../data';
 import { HomePage } from './home-page';
 
-// Os testes rodam na configuração `development`: Campaign Log (D-049), Achievements (D-051) e
-// Current Main Quest (docs/18) usam MOCK. Em produção os dados publicados são vazios e as seções
-// não são renderizadas.
+// Os testes rodam na configuração `development`, onde Campaign Log (D-049), Achievements
+// (D-051), Current Main Quest (docs/18) e Side Quests (docs/19) usam MOCK. Em produção os
+// dados publicados são vazios e as seções não são renderizadas.
 const hasCampaignLog = CAMPAIGN_LOG.length > 0;
 const hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
 const hasCurrentQuest = CURRENT_QUEST !== null;
+const hasSideQuests = SIDE_QUESTS.length > 0;
 
 describe('HomePage', () => {
   it('should render only the built sections, in order', async () => {
@@ -30,6 +37,7 @@ describe('HomePage', () => {
       ...(hasCampaignLog ? ['campaign-log'] : []),
       ...(hasAchievements ? ['achievements'] : []),
       ...(hasCurrentQuest ? ['current-quest'] : []),
+      ...(hasSideQuests ? ['side-quests'] : []),
       'final-checkpoint',
     ]);
   });
@@ -44,7 +52,7 @@ describe('HomePage', () => {
     expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
       'APP-FINAL-CHECKPOINT-SECTION',
     );
-    expect(el.textContent).not.toMatch(/SIDE QUESTS/);
+    if (!hasSideQuests) expect(el.textContent).not.toMatch(/SIDE QUESTS/);
     if (!hasCurrentQuest) expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST/);
   });
 

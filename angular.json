@@ -71,6 +71,10 @@
                 {
                   "replace": "src/app/data/current-quest.data.ts",
                   "with": "src/app/data/current-quest.data.development.ts"
+                },
+                {
+                  "replace": "src/app/data/side-quests.data.ts",
+                  "with": "src/app/data/side-quests.data.development.ts"
                 }
               ]
             }

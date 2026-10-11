@@ -1,0 +1,15 @@
+<section id="side-quests" class="mc-page-grid section" aria-labelledby="side-quests-title">
+  <mc-section-header [heading]="ui().sections.sideQuests" headingId="side-quests-title" />
+
+  <ul class="log" role="list">
+    @for (quest of quests; track quest.id) {
+      <li class="quest">
+        <p class="kind">
+          <span class="marker" aria-hidden="true"></span>{{ ui().sideQuests.kind[quest.kind] }}
+        </p>
+        <h3 class="title">{{ locale.pick(quest.title) }}</h3>
+        <p class="summary">{{ locale.pick(quest.summary) }}</p>
+      </li>
+    }
+  </ul>
+</section>

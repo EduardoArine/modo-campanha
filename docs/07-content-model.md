@@ -172,6 +172,28 @@ Dados:
 - `src/app/data/current-quest.data.ts`: **publicado** (produção). `null` até haver texto público aprovado; `null` = seção não renderizada.
 - `src/app/data/current-quest.data.development.ts`: **MOCK de desenvolvimento visual** (id `mock-current-quest`), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
+## SideQuest (Home Slice 07, D-056)
+
+`src/app/models/side-quest.model.ts`
+
+```ts
+type SideQuestKind = 'game' | 'art' | 'ai' | 'interface' | 'study';
+
+interface SideQuest {
+  id: string;
+  kind: SideQuestKind; // rótulo vem da UI (sideQuests.kind)
+  title: Localized;
+  summary: Localized; // 1 frase, ~80–120 caracteres
+}
+```
+
+- Fora: progresso, XP, level, raridade, recompensas, métricas; links só com URL real aprovada.
+
+Dados:
+
+- `src/app/data/side-quests.data.ts`: **publicado** (produção). Vazio até haver conteúdo aprovado; vazio = seção não renderizada.
+- `src/app/data/side-quests.data.development.ts`: **MOCK de desenvolvimento visual** (ids `mock-side-quest-*`), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
+
 ## SocialLink
 
 `src/app/models/social-link.model.ts`

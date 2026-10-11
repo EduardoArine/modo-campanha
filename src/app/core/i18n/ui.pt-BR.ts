@@ -81,6 +81,16 @@ export const UI_PT_BR = {
   currentQuest: {
     focus: 'FRENTES',
   },
+  // Tipo de side quest: categoria do trabalho, nunca dificuldade ou raridade.
+  sideQuests: {
+    kind: {
+      game: 'GAME DEV',
+      art: 'ARTE',
+      ai: 'IA',
+      interface: 'INTERFACE',
+      study: 'ESTUDO',
+    },
+  },
   // Único detalhe MC-01 do encerramento (D-052).
   finalCheckpoint: {
     save: 'SAVE COMPLETE',

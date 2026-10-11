@@ -629,3 +629,12 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Modelo:** `CurrentQuest { id; title; role?; summary; focus: Localized<readonly string[]> }`, sem métricas, resultados, clientes, parceiros, arquitetura, datas não aprovadas ou progresso.
   - **CURRENT MAIN QUEST CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Único fato público aprovado: o nome "Comunidade On" como campanha atual (Player Status); só o nome repetiria o Player Status e o texto-base de `docs/02` não está aprovado (Comunidade On = INTERNAL / NEEDS EXPLICIT APPROVAL, D-040). `current-quest.data.ts` = `null` em produção (seção não renderizada); `current-quest.data.development.ts` (id `mock-current-quest`, "Campanha de exemplo / Sample campaign") só em dev/testes via `fileReplacements`; guard do deploy estendido para `mock-current-quest`. O MOCK não descreve a Comunidade On nem é fato sobre o Eduardo.
 - **Status:** Aceita (REVIEWER). 06-A estrutura/MOCK e 06-B visual concluídos; **06-C editorial pendente** (texto público aprovado pelo Eduardo).
+
+## D-056 — Home Slice 07 (Side Quests): Side Quest Log com MOCK dev-only
+
+- **Data:** 2026-10-11
+- **Decisão (modo autônomo, D-053; plano em `docs/19-home-slice-07.md`):**
+  - **Direção C — Side Quest Log:** linhas compactas separadas por réguas de 1 px (tipo · título · resumo), marcador vazado do Campaign Log; desktop em uma linha (1–2 · 3–6 · 7–12), tablet 1–3 · 4–8, mobile empilhado. Rejeitadas: **A — Quest Grid** (repetiria o Skill Loadout) e **B — Demo Carts** (variação do MC-CART congelado; competiria com o Inventory).
+  - **Modelo:** `SideQuest { id; kind: 'game' | 'art' | 'ai' | 'interface' | 'study'; title; summary }`; rótulos de tipo no dicionário de UI (`sideQuests.kind`). Links só com URL real aprovada.
+  - **SIDE QUESTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Produção vazia (seção não renderizada); `side-quests.data.development.ts` (ids `mock-side-quest-*`) só em dev/testes; guard do deploy estendido para `mock-side-quest`. Paco (MC-002, `review`) não entra.
+- **Status:** Aceita (REVIEWER). 07-A e 07-B concluídos; **07-C editorial pendente**.

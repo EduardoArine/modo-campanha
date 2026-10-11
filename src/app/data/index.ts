@@ -1,6 +1,7 @@
 export * from './achievements.data';
 export * from './campaign-log.data';
 export * from './current-quest.data';
+export * from './side-quests.data';
 export * from './projects.data';
 export * from './skills.data';
 export * from './social-links.data';
