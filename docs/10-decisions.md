@@ -776,3 +776,23 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Performance (Lighthouse 12, mediana de 3; antes = D-065):** HTTP/2 + TLS mobile 84 → **85** (LCP 3930 → 3780 ms), desktop 99 → 99 (LCP 750 → 770 ms); HTTP/1.1 local mobile 83 → **80** (LCP 3820 → 4271 ms), desktop 99 → 99 (LCP 759 → 880 ms). A imagem é pedida com prioridade alta (está na dobra); no HTTP/1.1 ela disputa as 6 conexões com o JS e as fontes.
 - **Substitui:** a composição de D-066 (texto, hierarquia e ações de D-063 continuam).
 - **Status:** Implementada na branch `feat/hero-refinement`. **Hero NÃO congelada: aguardando revisão visual do Eduardo.**
+
+## D-068 — SYSTEM HORIZON: teaser do CRT da Hero (attract mode)
+
+- **Data:** 2026-10-12
+- **Pedido e aprovação do Eduardo:** um teaser em pixel art no CRT da Hero que explique a ideia central ("experiência → progresso → conquista → campanha") e o CTA **Explorar campanha**, tratado como a primeira cena real do futuro SYSTEM HORIZON (MC-001), não como animação isolada. Especificação técnica e de assets em `docs/22-system-horizon-teaser.md`.
+- **Decisões:**
+  1. **HUD:** PLAYER 01 + 4 slots de inventário. **Sem "XP 10+"** nem pontuação (os 10+ anos seguem como dado profissional da página).
+  2. **Jogador:** figura humana pequena representando o Eduardo (cabelo escuro, óculos, roupa escura, silhueta simples). É o avatar do jogador, não uma persona profissional fictícia ("XP real, sem personagem").
+  3. **Linguagem de sistema em inglês nos dois idiomas** (PLAYER 01, BUILD, PRODUCT, AI, GAME DNA, CAMPAIGN UNLOCKED, MC-001, SYSTEM HORIZON, CAMPAIGN CONTINUES...), vinda do dicionário (`ui.systemHorizon`); controles localizados (Pausar demonstração / Pause demo, Reproduzir / Play). Texto sempre DOM (IBM Plex) sobre o canvas, nunca desenhado na arte.
+  4. **Pausa:** ícone pause/play discreto no canto inferior do visual (32 × 32, foco visível, nome acessível localizado) e parada automática após **3 voltas** (WCAG 2.2.2).
+  5. **Loop:** ~7 s a 12 fps, 160 × 120 (4:3). O CRT liga só no primeiro play da página; as voltas seguintes reiniciam com 2 quadros de interferência (sem tela preta, sem flash).
+  6. **Estático oficial** (`prefers-reduced-motion` e pausado): os quatro itens formando o MC-CART + CAMPAIGN UNLOCKED + MC-001 (tick 58).
+  7. **Ícones:** BUILD `</>`, PRODUCT card de interface, AI nós conectados, GAME DNA d-pad.
+  8. **Arquitetura:** `src/app/system-horizon/` (`engine/`, `world/`, `scenes/`, `control/`, `content/`); engine em TypeScript puro; o teaser é o attract mode (roteiro) e o jogo trocará o roteiro por input.
+  9. **Arte final produzida externamente** a partir de `docs/22` §4; nesta rodada, placeholders técnicos com a mesma geometria.
+  10. O final da experiência completa (esposa e três gatos) fica fora do teaser.
+- **Implementação:** `features/hero/hero-scene.*` (fundo de D-067 + tela + pausa; layout, textos, CTAs e imagem inalterados), tela posicionada sobre o vidro do CRT da imagem (recortada onde o cartucho do console cobre o vidro), chunk próprio (~5,8 KB gzip) carregado depois do `load` + idle + 1 s, pausa fora da viewport/aba oculta, ícones `pause`/`play` no `mc-icon`. Testes do roteiro (coletas, quadro-chave, boot único), do relógio, do estado de reprodução e da cena da Hero. `src/test-setup.ts` desliga o canvas do jsdom.
+- **Performance:** sem regressão (HTTP/2 mobile 85 → 85, LCP igual; desktop 99, LCP 770 → 790 ms). Detalhes em `docs/22` §8.
+- **Resolve:** a pendência do Boot / Intro (D-059, removido em D-067): o liga-CRT volta como parte do teaser.
+- **Status:** Implementada com placeholders na branch `feat/hero-refinement`. **Aguardando revisão do Eduardo antes de substituir os placeholders pela arte final.**

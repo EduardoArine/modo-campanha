@@ -397,7 +397,7 @@ Duas famílias, sem biblioteca:
 
 | Família           | Ícones                                     | Estilo                                                                                   |
 | ----------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| MC system icons   | `arrow-down`, `external`, `document`, `language` | desenhados para o Modo Campanha: grade 16 px, traço 1.5, pontas retas, só 0/45/90° (curvas viram chanfros). Técnico, levemente pixel, sem cara de sprite. |
+| MC system icons   | `arrow-down`, `external`, `document`, `language`, `pause`, `play` | desenhados para o Modo Campanha: grade 16 px, traço 1.5, pontas retas, só 0/45/90° (curvas viram chanfros). Técnico, levemente pixel, sem cara de sprite. |
 | Brand icons       | `github`, `linkedin`                       | marcas oficiais monocromáticas (GitHub Octicons "mark-github", MIT; LinkedIn via Simple Icons, CC0). **Sem pixelização.** |
 
 Só existem ícones usados por componentes reais. Novo ícone = necessidade concreta.

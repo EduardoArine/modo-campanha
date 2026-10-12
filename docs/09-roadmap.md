@@ -151,7 +151,8 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Microinterações (estados do cartucho, boot do CRT e do Hero, D-058/D-059)
 - ✅ Cartridge insert (~600 ms, versão "encaixe + boot", D-058)
 - ✅ CRT boot (`LOADING CARTRIDGE...`, D-058)
-- ⏸ Boot / Intro (≤ 1 s, na tela do CRT do Hero, D-059): removido com a cena em D-067; recolocar ou descartar é decisão do Eduardo
+- ✅ Boot / Intro: removido com a cena em D-067 e retomado como o liga-CRT do teaser SYSTEM HORIZON (D-068)
+- 🟡 **SYSTEM HORIZON — teaser do CRT da Hero** (D-068, `docs/22`): engine, roteiro, estados e acessibilidade com placeholders técnicos; arte final em produção externa; aguardando revisão
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
