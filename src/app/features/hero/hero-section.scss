@@ -83,15 +83,15 @@
   }
 
   // Desktop: a Hero inteira, ancorada à direita; a esquerda (texto) já é escura na imagem e a
-  // máscara a escurece mais; a base dissolve na seção seguinte.
+  // máscara a escurece até depois do texto (o teclado da imagem fica sob o resumo); a base dissolve.
   @include mq(xl) {
     position: absolute;
     inset: 0 0 0 auto;
     z-index: 0;
     margin: 0;
     aspect-ratio: 1672 / 941;
-    --x0: 12%;
-    --x1: 50%;
+    --x0: 34%;
+    --x1: 62%;
     --y1: 0%;
     --y2: 80%;
   }
