@@ -1,6 +1,6 @@
 # 22 — SYSTEM HORIZON: teaser do CRT da Hero (attract mode)
 
-> Status: **engine, roteiro, estados e integração implementados com placeholders técnicos** (D-068). **Arte final pendente** (produção externa, especificação em §4). Aguardando revisão do Eduardo antes de substituir os placeholders.
+> Status: **TEASER TÉCNICO APPROVED e FROZEN** (D-068, 2026-10-12): engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode. Não alterar sem regressão objetiva. **Placeholders ainda em uso**; próxima etapa = **só** receber e integrar a arte final conforme §4, seguindo §11.
 
 ## 1. Conceito
 
@@ -232,5 +232,17 @@ Carregar só no idle não bastou (o chunk ainda caía na janela do LCP simulado:
 
 ## 10. Pendências
 
-- Produção da arte (§4.9) e revisão antes de trocar os placeholders.
-- Strings `ui.boot` (D-059) seguem sem uso: o boot agora é o cartão MC-01 / SYSTEM HORIZON do teaser. Descartar quando o Eduardo confirmar.
+- Produção da arte (§4.9) e integração conforme §11.
+- ~~Strings `ui.boot`~~: removidas (2026-10-12, autorizado pelo Eduardo; busca global sem usos, testes e builds verdes). O boot agora é o cartão MC-01 / SYSTEM HORIZON do teaser.
+
+## 11. Integração dos assets finais (próxima etapa)
+
+Regras do Eduardo (2026-10-12):
+
+- **A arte se adapta ao contrato aprovado**: preservar exatamente dimensões, pivots e layout das folhas (§4, `world/assets.ts`). Não redesenhar a animação, o roteiro nem os timings para acomodar a arte.
+- **Ordem de validação:**
+  1. **Cenário** (`sh-bg-*`, 4 camadas) **+ personagem** (`sh-player-*`): integrar, capturar e validar com o Eduardo; pickups e MC-CART continuam placeholders.
+  2. Só depois: **pickups** (`sh-items`, `sh-collect-fx`, `sh-hud-slot`) e **MC-CART** (`sh-cart-mini`, `sh-cart-form`).
+- Antes de integrar, conferir cada PNG: tamanho exato do arquivo (§4.9), alfa binário, paleta (§4.0), área segura.
+- Integração = carregador dos PNGs de `ASSET_BASE` com o mesmo formato `Art`, por grupo (o que não chegou continua placeholder). Cena, controle, tela e Hero não mudam.
+- **Fora de escopo:** o SYSTEM HORIZON jogável, merge em `main` e deploy.
