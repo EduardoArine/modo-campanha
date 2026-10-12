@@ -100,4 +100,4 @@ Decisão do Eduardo: em vez de montar a cena com renders separados (§6), a Hero
 | Tablet (768–1023)            | abaixo do texto, 3:2, sangrando até as bordas                                                                                    |
 | Mobile (< 768)               | abaixo do texto, recorte quadrado próprio (`background-mobile-*`, 43/88 KB)                                                      |
 
-Runtime: `<picture>` com `background-{640,960,1280,1672}.webp` (≥ 768) e `background-mobile-{480,800}.webp`; `alt=""`, `aria-hidden`, sem lazy (maior elemento da dobra no desktop). O boot da tela do CRT (D-059) saiu com a cena; decisão pendente. Imagem atual (2026-10-12): versão com teclado e mouse na mesa.
+Runtime: `<picture>` com `background-{640,960,1280,1672}.webp` (≥ 768) e `background-mobile-{480,800}.webp`; `alt=""`, `aria-hidden`, sem lazy (maior elemento da dobra no desktop). O boot da tela do CRT (D-059) saiu com a cena; decisão pendente. Imagem atual (2026-10-12): **arte final** do fundo (sem teclado e mouse, cabo do controle ligado ao MC-01). Sobre o vidro do CRT roda o teaser SYSTEM HORIZON (D-068, `docs/22`), projetado no ângulo da TV.
