@@ -23,7 +23,7 @@
   }
 }
 
-// Sem posicionamento: no desktop o fundo absoluto se posiciona pela Hero inteira.
+// Sem posicionamento: no desktop a cena absoluta (app-hero-scene) se posiciona pela Hero inteira.
 .layout {
   grid-row: 1;
   @include columns;
@@ -42,66 +42,6 @@
 
   @include mq(lg) {
     grid-column: 1 / 7;
-  }
-}
-
-// Fundo (decorativo). A imagem não é redesenhada nem montada: só recorte, escala e máscara. As
-// bordas sempre se dissolvem no fundo da página (nunca um retângulo). Recortes por faixa mostram o
-// MC-01 (console, CRT e controle ficam entre 48% e 95% da largura da imagem).
-.visual {
-  grid-column: 1 / -1;
-  // Tablet/mobile: sangra até as bordas da janela, abaixo do texto.
-  margin-inline: calc(-1 * var(--mc-page-margin));
-  aspect-ratio: 1;
-  // Máscara (local): opaco entre --x1/--x2 e --y1/--y2, dissolvendo até --x0/--x3 e as bordas.
-  // Mobile: o recorte quadrado já vem pronto (HERO_BACKGROUND.mobile).
-  --pos: 50%;
-  --x0: 0%;
-  --x1: 12%;
-  --x2: 88%;
-  --y1: 18%;
-  --y2: 78%;
-  mask-image:
-    linear-gradient(to right, transparent var(--x0), var(--mc-bg) var(--x1) var(--x2), transparent),
-    linear-gradient(to bottom, transparent, var(--mc-bg) var(--y1) var(--y2), transparent);
-  mask-composite: intersect;
-
-  @include mq(md) {
-    aspect-ratio: 3 / 2;
-    --pos: 80%;
-  }
-
-  // Desktop compacto: ao lado do texto (colunas 7–12), sangrando só à direita.
-  @include mq(lg) {
-    grid-column: 7 / -1;
-    margin-inline: 0 calc(-1 * var(--mc-page-margin));
-    aspect-ratio: 1;
-    --pos: 100%;
-    --x1: 30%;
-    --x2: 100%;
-    --y1: 22%;
-  }
-
-  // Desktop: a Hero inteira, ancorada à direita; a esquerda (texto) já é escura na imagem e a
-  // máscara a escurece até depois do texto (o teclado da imagem fica sob o resumo); a base dissolve.
-  @include mq(xl) {
-    position: absolute;
-    inset: 0 0 0 auto;
-    z-index: 0;
-    margin: 0;
-    aspect-ratio: 1672 / 941;
-    --x0: 34%;
-    --x1: 62%;
-    --y1: 0%;
-    --y2: 80%;
-  }
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: var(--pos) center;
   }
 }
 

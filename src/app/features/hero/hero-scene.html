@@ -1,0 +1,34 @@
+<!-- Fundo aprovado (D-067), decorativo. Sem lazy: no desktop é o maior elemento da dobra. -->
+<div class="frame" aria-hidden="true">
+  <div class="stage">
+    <picture>
+      <source
+        media="(min-width: 768px)"
+        [attr.srcset]="background.full.srcset"
+        sizes="(min-width: 1200px) 100vw, (min-width: 1024px) 88vw, 119vw"
+      />
+      <img
+        [src]="background.mobile.src"
+        [srcset]="background.mobile.srcset"
+        sizes="100vw"
+        [width]="background.mobile.width"
+        [height]="background.mobile.height"
+        alt=""
+        decoding="async"
+      />
+    </picture>
+    <!-- SYSTEM HORIZON sobre o vidro do CRT da imagem (D-068); só depois do load (não disputa o LCP). -->
+    @defer (when teaserReady()) {
+      <app-system-horizon-screen class="crt" [playback]="playback" />
+    }
+  </div>
+</div>
+
+<button
+  type="button"
+  class="toggle"
+  [attr.aria-label]="playback.playing() ? ui().systemHorizon.pause : ui().systemHorizon.play"
+  (click)="playback.toggle()"
+>
+  <mc-icon [name]="playback.playing() ? 'pause' : 'play'" />
+</button>

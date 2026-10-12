@@ -26,24 +26,7 @@
       </div>
     </div>
 
-    <!-- Fundo aprovado (D-067), decorativo. Sem lazy: no desktop é o maior elemento da dobra. -->
-    <div class="visual" aria-hidden="true">
-      <picture>
-        <source
-          media="(min-width: 768px)"
-          [attr.srcset]="background.full.srcset"
-          sizes="(min-width: 1200px) 100vw, (min-width: 1024px) 88vw, 119vw"
-        />
-        <img
-          [src]="background.mobile.src"
-          [srcset]="background.mobile.srcset"
-          sizes="100vw"
-          [width]="background.mobile.width"
-          [height]="background.mobile.height"
-          alt=""
-          decoding="async"
-        />
-      </picture>
-    </div>
+    <!-- Fundo aprovado (D-067) + attract mode do SYSTEM HORIZON no CRT (D-068). -->
+    <app-hero-scene />
   </div>
 </section>

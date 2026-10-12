@@ -115,4 +115,15 @@ export const UI_EN: UiDictionary = {
     loading: 'LOADING CARTRIDGE...',
     identification: 'MC-01',
   },
+  // SYSTEM HORIZON (D-068): linguagem de sistema do MC-01, em inglês nos dois idiomas;
+  // só os controles (pausar/reproduzir) são localizados.
+  systemHorizon: {
+    player: 'PLAYER 01',
+    items: { build: 'BUILD', product: 'PRODUCT', ai: 'AI', gameDna: 'GAME DNA' },
+    title: 'SYSTEM HORIZON',
+    unlocked: 'CAMPAIGN UNLOCKED',
+    continues: 'CAMPAIGN CONTINUES...',
+    pause: 'Pause demo',
+    play: 'Play',
+  },
 };

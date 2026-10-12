@@ -40,6 +40,17 @@ export const MC_ICONS = {
       'M1.75 8h12.5',
     ],
   },
+  // Controle do attract mode do SYSTEM HORIZON (D-068).
+  pause: {
+    viewBox: '0 0 16 16',
+    style: 'stroke',
+    paths: ['M5.25 3.25v9.5', 'M10.75 3.25v9.5'],
+  },
+  play: {
+    viewBox: '0 0 16 16',
+    style: 'stroke',
+    paths: ['M4.75 2.75v10.5L12.75 8z'],
+  },
   // Brand
   github: {
     viewBox: '0 0 16 16',
