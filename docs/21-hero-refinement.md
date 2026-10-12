@@ -93,11 +93,11 @@ No HTTP/1.1 o LCP simulado piora porque há 3 requisições a mais na fila de 6 
 
 Decisão do Eduardo: em vez de montar a cena com renders separados (§6), a Hero usa a **imagem de fundo aprovada direto** (`design/source/hero/hero-background.png`, 1672 × 941). A §6 vira histórico.
 
-| Faixa                        | Comportamento                                                                                    |
-| ---------------------------- | ------------------------------------------------------------------------------------------------ |
-| Desktop (≥ 1200)             | imagem na Hero inteira, ancorada à direita (16:9); máscara escurece a esquerda e dissolve a base |
-| Desktop compacto (1024–1199) | colunas 7–12, recorte quadrado à direita (MC-01, CRT, controle), bordas dissolvidas              |
-| Tablet (768–1023)            | abaixo do texto, 3:2, sangrando até as bordas                                                    |
-| Mobile (< 768)               | abaixo do texto, recorte quadrado próprio (`background-mobile-*`, 41/84 KB)                      |
+| Faixa                        | Comportamento                                                                                                                    |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Desktop (≥ 1200)             | imagem na Hero inteira, ancorada à direita (16:9); máscara escurece a esquerda até depois do texto (34% → 62%) e dissolve a base |
+| Desktop compacto (1024–1199) | colunas 7–12, recorte quadrado à direita (MC-01, CRT, controle), bordas dissolvidas                                              |
+| Tablet (768–1023)            | abaixo do texto, 3:2, sangrando até as bordas                                                                                    |
+| Mobile (< 768)               | abaixo do texto, recorte quadrado próprio (`background-mobile-*`, 43/88 KB)                                                      |
 
-Runtime: `<picture>` com `background-{640,960,1280,1672}.webp` (≥ 768) e `background-mobile-{480,800}.webp`; `alt=""`, `aria-hidden`, sem lazy (maior elemento da dobra no desktop). O boot da tela do CRT (D-059) saiu com a cena; decisão pendente.
+Runtime: `<picture>` com `background-{640,960,1280,1672}.webp` (≥ 768) e `background-mobile-{480,800}.webp`; `alt=""`, `aria-hidden`, sem lazy (maior elemento da dobra no desktop). O boot da tela do CRT (D-059) saiu com a cena; decisão pendente. Imagem atual (2026-10-12): versão com teclado e mouse na mesa.
