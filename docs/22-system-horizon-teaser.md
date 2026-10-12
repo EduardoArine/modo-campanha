@@ -59,26 +59,17 @@ Câmera: segue o jogador (x − 56), limitada a 0–80 (mundo de 240 px). Parall
 
 - **Resolução nativa:** tudo desenhado para a tela de **160 × 120**. Um pixel de arte = um pixel nativo; a engine amplia em múltiplos inteiros. Não entregar versões ampliadas.
 - **Formato:** PNG (de preferência indexado). **Alfa binário** (0 ou 255): sem semitransparência, sem antialiasing, sem sombras suaves.
-- **Paleta:** até **16 cores**, todas derivadas do MC Design System. Base obrigatória (13):
+- **Paleta (D-068, revisada em 2026-10-12):** uma **única paleta de 16 cores**, compartilhada por **todas** as camadas finais (cenário, personagem, pickups, MC-CART). Ela é **derivada da identidade cromática do Modo Campanha**: **laranja, creme, grafite e frios complementares** continuam sendo as âncoras, mas a cena pode usar **tonalidades próprias** (por exemplo, vermelhos e roxos do pôr do sol) para preservar atmosfera e legibilidade. Não é exigida correspondência literal com os tokens do site quando isso degradar o visual. A paleta é extraída da própria arte aprovada na integração (§12) e registrada aqui quando o cenário fechar. Referência de âncoras (tokens):
 
-  | Nome | Hex | Uso sugerido |
+  | Âncora | Hex (token) | Papel na cena |
   |---|---|---|
-  | ink-950 | `#14110f` | sombras mais profundas, contorno |
-  | ink-900 | `#1d1815` | chão, pinheiros |
-  | ink-850 | `#231f1c` | montanhas distantes |
-  | ink-800 | `#2b2521` | carcaça grafite (MC-CART, roupa) |
-  | cream-100 | `#f3e9d2` | brilhos, PRODUCT |
-  | cream-300 | `#d7cbb5` | pele, luz suave |
-  | cream-500 | `#a89a86` | detalhes, slot vazio |
-  | orange-500 | `#f28c28` | marca, BUILD, acentos |
-  | orange-300 | `#ffb357` | luz do pôr do sol |
-  | orange-700 | `#c96a1b` | trilha, sombras quentes |
-  | gold-400 | `#f2c14e` | sol, GAME DNA |
-  | petrol-800 | `#1f3a4a` | céu alto, lago |
-  | teal-500 | `#3fa7a3` | AI, reflexo dos óculos |
+  | laranja | `#f28c28` (orange-500), `#ffb357`, `#c96a1b` | sol, trilha, luz quente lateral |
+  | creme | `#f3e9d2` (cream-100), `#d7cbb5` | brilhos, pele, PRODUCT |
+  | grafite | `#2b2521` (ink-800), `#14110f` | carcaça do MC-CART, roupa, solo |
+  | frios | `#1f3a4a` (petrol-800), `#3fa7a3` (teal-500) | céu alto, lago, montanhas, AI |
 
-  Até **3 cores livres** (tons intermediários de céu/lago), aprovadas com a arte. Nada de neon, saturação extra ou gradiente suave.
-- **Área segura:** a tela 4:3 aparece num vidro de proporção ~1,24 : 1, então até **~6 px de cada lado** podem ser cortados. Nada importante fora de **x 8–152**. Topo **y 4–18** é do HUD; faixas onde aparecem textos (centros em y 26–30, 60 e 78) devem continuar legíveis com uma etiqueta sólida por cima.
+  Nada de neon, saturação extra ou gradiente suave.
+- **Área segura:** a tela 4:3 aparece num vidro de proporção ~1,24 : 1, então até **~6 px de cada lado** podem ser cortados. Nada importante fora de **x 8–152**. Topo **y 4–18** é do HUD; faixas onde aparecem textos (centros em y 26–30 e 60; MC-001 no quadro-chave, ver §12) devem continuar legíveis com uma etiqueta sólida por cima.
 - **Sem texto na arte.** Os textos são DOM (dicionário).
 - **Folhas de sprites:** quadros do mesmo tamanho, em grade, **sem espaçamento**, lidos da esquerda para a direita e de cima para baixo. O tamanho do arquivo = colunas × largura do quadro por linhas × altura.
 - **Pivot:** coordenada dentro do quadro que a engine posiciona no ponto do mundo (pés do jogador, centro do item etc.).
@@ -89,16 +80,16 @@ Câmera: segue o jogador (x − 56), limitada a 0–80 (mundo de 240 px). Parall
 
 | Arquivo | Tamanho | Parallax | Alfa | Conteúdo |
 |---|---|---|---|---|
-| `sh-bg-sky.png` | 160 × 120 | 0 (fixo) | não (opaco) | Céu do SYSTEM HORIZON ao pôr do sol (petrol no alto → laranja/ouro no horizonte, ~y 70), **sol** visível entre x ~100–124 e y ~44–60, lago abaixo do horizonte com reflexo. |
-| `sh-bg-mountains.png` | 180 × 120 | 0,25 | sim | Cordilheira distante, cumes entre y ~54–66, base em y 72; não esconder o sol. |
-| `sh-bg-trees.png` | 200 × 120 | 0,5 | sim | Pinheiros/bosque na faixa y ~70–92, espaçados (o lago aparece entre eles). |
-| `sh-bg-ground.png` | 240 × 120 | 1 | sim | Chão + **trilha**. A borda superior da trilha segue **exatamente** o perfil abaixo; abaixo dela, terreno escuro. Pode ter pedras, grama, cerca baixa no mirante (sem obstruir o jogador). |
+| `sh-bg-sky.png` | 160 × 120 | 0 (fixo) | não (opaco) | Céu ao pôr do sol, **sol central** (centro ~x 78, y 79, raio ~10), horizonte em y ~88, lago com reflexo abaixo. **Aprovado** (master em `design/source/system-horizon/`). |
+| `sh-bg-mountains.png` | 180 × 120 | 0,25 | sim | Cordilheira distante: picos altos só nas laterais (topo ~y 57–75), **vale central aberto** (nada acima de y 88 entre x 60 e 116, para o sol ficar livre em qualquer câmera), **base no horizonte (y 92)**, transparente abaixo. **Aprovado** via harmonização técnica do master (§12). |
+| `sh-bg-trees.png` | 200 × 120 | 0,5 | sim | Pinheiros com luz quente lateral, alturas variadas (y ~61–116), **abertura central** (x 62–134 abaixo de y ~95) que deixa ver o lago e o reflexo do sol. **Aprovado**. |
+| `sh-bg-ground.png` | 240 × 120 | 1 | sim | Chão + **trilha**. A borda superior da trilha segue **exatamente** o perfil abaixo; abaixo dela, terreno escuro. Pedras, vegetação e a placa no platô (x ~180–230); corpo do chão **opaco até a borda inferior**. **Em regeneração externa** (opção A, §12; guia em `design/source/system-horizon/sh-bg-ground-guide.png`). |
 
 Perfil da trilha (x, y dos pés), interpolação linear (`world/trail.ts`):
 
 `(0, 104) → (100, 102) → (112, 98) → (122, 90) → (128, 86) → (240, 86)`. O **mirante** é o platô a partir de x 128.
 
-Os itens flutuam 12 px acima da trilha em x **47, 62, 77, 92** (y ≈ 90–92): manter essa faixa limpa.
+Os itens flutuam 12 px acima da trilha em x **47, 62, 77, 92** (y ≈ 90–92): manter essa faixa limpa (grama/pedras no máximo ~6 px acima da trilha entre x 40 e 100; ~12 px no resto).
 
 ### 4.2 Eduardo (jogador)
 
@@ -246,3 +237,30 @@ Regras do Eduardo (2026-10-12):
 - Antes de integrar, conferir cada PNG: tamanho exato do arquivo (§4.9), alfa binário, paleta (§4.0), área segura.
 - Integração = carregador dos PNGs de `ASSET_BASE` com o mesmo formato `Art`, por grupo (o que não chegou continua placeholder). Cena, controle, tela e Hero não mudam.
 - **Fora de escopo:** o SYSTEM HORIZON jogável, merge em `main` e deploy.
+
+## 12. Rodada do cenário (2026-10-12)
+
+Masters aprovados como direção visual (SKY, MOUNTAINS, TREES, GROUND v1). Decisões do Eduardo:
+
+| Camada | Estado | Tratamento |
+|---|---|---|
+| SKY | **Aprovado** | Só técnico: resolução nativa, alfa, paleta compartilhada. |
+| MOUNTAINS | **Aprovado** (harmonização técnica do master) | Altura reduzida mais no centro que nas laterais (fator vertical `0,55 + 0,33·t^1,3`: 0,55 no centro → 0,88 nas bordas, ancorado na base), base movida para y 92 (horizonte), transparente abaixo; alfa binário; paleta compartilhada. Sem arte nova, se continuar limpo na integração. |
+| TREES | **Aprovado** | Só técnico. |
+| GROUND | **Em regeneração externa** | **Opção A:** trecho inicial praticamente plano (y 102–104 até x 100), subida suave até y 86 em x 128 e platô (mirante) até o fim; mesma estética, mesma placa, sem novos objetos; corpo opaco até a borda inferior. **Sem warp, stretch nem deformação** na arte final (a prévia deformada foi só referência de posição). Guia: `sh-bg-ground-guide.png`. O perfil congelado (`world/trail.ts`) **não muda**. |
+
+**Pipeline técnico de integração (todas as camadas):**
+
+1. **Resolução nativa** com amostragem pela cor predominante de cada bloco (sem média, preserva os pixels nítidos).
+2. **Alfa binário** (limiar 128; os masters vêm com alfa 224–254 no conteúdo).
+3. **Harmonização** específica (só MOUNTAINS, parâmetros acima).
+4. **Paleta compartilhada de 16 cores** extraída das camadas finais juntas (k-means), aplicada a todas; registrada em §4.0.
+5. **Validação:** sobreposição com o parallax real (câmera 0, 40, 80), perfil da trilha por cima, nenhum vazamento do lago sob o chão, sol livre, área segura.
+
+**Quadro-chave × sol central:** o sol da arte fica no centro e não se move. Está autorizado ajustar **só a posição da legenda HTML "MC-001"** no quadro-chave para não cobrir o sol (por exemplo, acima do cartucho, sob CAMPAIGN UNLOCKED). Ajuste específico do teaser, feito na integração com a arte e validado em captura; não reabre o layout da Hero nem muda engine, timings ou roteiro.
+
+**Ordem:** os masters atuais **não** entram como arte final até o novo GROUND chegar; então o cenário inteiro é integrado de uma vez (com a paleta única), validado com o personagem e só depois seguem pickups e MC-CART (§11).
+
+Fontes: `design/source/system-horizon/` (`sh-bg-sky-master.png`, `sh-bg-mountains-master.png`, `sh-bg-trees-master.png`, `sh-bg-ground-guide.png`; GROUND v1 em `archive/` como referência de estilo).
+
+**Ao receber o novo GROUND:** reduzir para 240 × 120, alfa binário, paleta compartilhada, validar contra o perfil congelado (sobreposição com a linha da trilha) e verificar que o lago não vaza por baixo do chão.
