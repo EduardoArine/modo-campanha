@@ -4,7 +4,16 @@
 
 :host {
   display: block;
+}
+
+// Plano da tela; com `quad`, projetado em perspectiva sobre o vidro (canvas e textos juntos).
+// O arredondamento dos cantos vem de quem exibe (`--screen-radius`).
+.warp {
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  transform-origin: 0 0;
+  border-radius: var(--screen-radius, 0);
 }
 
 .view {

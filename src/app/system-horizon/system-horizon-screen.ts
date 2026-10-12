@@ -19,6 +19,7 @@ import { FixedClock } from './engine/clock';
 import { Renderer } from './engine/renderer';
 import { AttractScene } from './scenes/attract';
 import { Caption, CaptionKey } from './scenes/scene';
+import { quadTransform, ScreenQuad } from './screen-quad';
 import { Art } from './world/assets';
 import { Palette, readPalette } from './world/palette';
 import { createPlaceholderArt } from './world/placeholder-art';
@@ -27,23 +28,26 @@ import { createPlaceholderArt } from './world/placeholder-art';
  * Tela do SYSTEM HORIZON (D-068, docs/22): canvas 160 × 120 em escala inteira + textos de sistema
  * (dicionário) por cima. Roda o attract mode enquanto `playback` está tocando e a tela está
  * visível (pausa fora da viewport e com a aba oculta); pausado = quadro-chave. Decorativa
- * (aria-hidden): a mensagem já está no texto da Hero. Não conhece o lugar onde é exibida.
+ * (aria-hidden): a mensagem já está no texto da Hero. Não conhece o lugar onde é exibida; com
+ * `quad`, projeta a tela nos cantos do vidro (perspectiva de um CRT fotografado).
  */
 @Component({
   selector: 'app-system-horizon-screen',
   template: `
-    <div class="view">
-      <canvas #canvas></canvas>
-      @for (caption of captions(); track caption.key) {
-        <span
-          class="caption"
-          [class.start]="caption.align === 'start'"
-          [class.minor]="caption.minor"
-          [style.left.%]="caption.x / 1.6"
-          [style.top.%]="caption.y / 1.2"
-          >{{ text(caption.key) }}</span
-        >
-      }
+    <div class="warp" [style.transform]="warp()">
+      <div class="view">
+        <canvas #canvas></canvas>
+        @for (caption of captions(); track caption.key) {
+          <span
+            class="caption"
+            [class.start]="caption.align === 'start'"
+            [class.minor]="caption.minor"
+            [style.left.%]="caption.x / 1.6"
+            [style.top.%]="caption.y / 1.2"
+            >{{ text(caption.key) }}</span
+          >
+        }
+      </div>
     </div>
   `,
   styleUrl: './system-horizon-screen.scss',
@@ -52,6 +56,8 @@ import { createPlaceholderArt } from './world/placeholder-art';
 })
 export class SystemHorizonScreen {
   readonly playback = input.required<AttractPlayback>();
+  /** Cantos do vidro dentro do host (frações); sem quad, a tela ocupa o host reto. */
+  readonly quad = input<ScreenQuad>();
 
   private readonly ui = inject(LocaleService).ui;
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
@@ -61,6 +67,7 @@ export class SystemHorizonScreen {
   private readonly inView = signal(true);
   private readonly pageVisible = signal(true);
   protected readonly captions = signal<readonly Caption[]>([]);
+  protected readonly warp = signal<string | null>(null);
 
   private renderer: Renderer | null = null;
   private art: Art | null = null;
@@ -128,11 +135,15 @@ export class SystemHorizonScreen {
     this.palette = readPalette(win.getComputedStyle(this.host));
     this.art = createPlaceholderArt(doc, this.palette);
 
-    const resize = new win.ResizeObserver(([entry]) => {
-      this.renderer?.resize(entry.contentRect.width, win.devicePixelRatio || 1);
+    const resize = new win.ResizeObserver(() => {
+      this.renderer?.resize(canvas.clientWidth, win.devicePixelRatio || 1);
+      const quad = this.quad();
+      const { clientWidth: w, clientHeight: h } = this.host;
+      this.warp.set(quad && w && h ? quadTransform(w, h, quad) : null);
       this.draw();
     });
     resize.observe(canvas);
+    resize.observe(this.host);
     const view = new win.IntersectionObserver(([entry]) => this.inView.set(entry.isIntersecting));
     view.observe(this.host);
     const onVisibility = () => this.pageVisible.set(doc.visibilityState === 'visible');

@@ -14,9 +14,10 @@
   // Imagem mostrada: recorte quadrado no mobile (HERO_BACKGROUND.mobile, x 628–1569 da fonte).
   --ar: 1;
   --pos: 50%;
-  // Vidro do CRT na imagem mostrada (fonte 1672 × 941: x 1157–1474, y 150–406).
+  // Caixa do vidro do CRT na imagem mostrada (fonte 1672 × 941: x 1157–1473, y 151–405); os
+  // cantos dentro dela (perspectiva da TV) estão em HERO_CRT_GLASS.
   --sx: 56.22%;
-  --sw: 33.69%;
+  --sw: 33.58%;
   // Máscara (local): opaca entre --x1/--x2 e --y1/--y2, dissolvendo até --x0 e as bordas.
   --x0: 0%;
   --x1: 12%;
@@ -30,7 +31,7 @@
     --ar: 1672 / 941;
     --pos: 80%;
     --sx: 69.2%;
-    --sw: 18.96%;
+    --sw: 18.9%;
   }
 
   // Desktop compacto: ao lado do texto (colunas 7–12), sangrando só à direita.
@@ -45,7 +46,7 @@
   }
 
   // Desktop: a Hero inteira, ancorada à direita; a máscara escurece a esquerda até depois do
-  // texto (o teclado da imagem fica sob o resumo); a base dissolve.
+  // texto (o resumo nunca fica sobre objetos claros da imagem); a base dissolve.
   @include mq(xl) {
     position: absolute;
     inset: 0 0 0 auto;
@@ -89,11 +90,11 @@ img {
 .crt {
   position: absolute;
   left: var(--sx);
-  top: 15.94%;
+  top: 16.05%;
   width: var(--sw);
-  height: 27.2%;
-  border-radius: 4% / 5%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 23.3% 100%, 23.3% 90.6%, 0 90.6%);
+  height: 26.99%;
+  --screen-radius: 4% / 5%;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 23.4% 100%, 23.4% 90.9%, 0 90.9%);
 }
 
 // Pausar/reproduzir (WCAG 2.2.2): pequeno, no canto inferior do visual, sem competir com os CTAs.

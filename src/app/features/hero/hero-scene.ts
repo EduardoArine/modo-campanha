@@ -12,7 +12,7 @@ import { LocaleService } from '../../core/i18n';
 import { McIcon } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { SystemHorizonScreen } from '../../system-horizon/system-horizon-screen';
-import { HERO_BACKGROUND } from './hero-scene.assets';
+import { HERO_BACKGROUND, HERO_CRT_GLASS } from './hero-scene.assets';
 
 /**
  * Cena da Hero: o fundo aprovado (D-067) e, sobre o vidro do CRT da imagem, o attract mode do
@@ -30,6 +30,7 @@ import { HERO_BACKGROUND } from './hero-scene.assets';
 export class HeroScene {
   protected readonly ui = inject(LocaleService).ui;
   protected readonly background = HERO_BACKGROUND;
+  protected readonly glass = HERO_CRT_GLASS;
   protected readonly playback = new AttractPlayback();
   protected readonly teaserReady = signal(false);
 

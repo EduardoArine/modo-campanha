@@ -19,7 +19,7 @@
     </picture>
     <!-- SYSTEM HORIZON sobre o vidro do CRT da imagem (D-068); só depois do load (não disputa o LCP). -->
     @defer (when teaserReady()) {
-      <app-system-horizon-screen class="crt" [playback]="playback" />
+      <app-system-horizon-screen class="crt" [playback]="playback" [quad]="glass" />
     }
   </div>
 </div>
