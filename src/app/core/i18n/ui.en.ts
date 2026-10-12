@@ -29,10 +29,6 @@ export const UI_EN: UiDictionary = {
   hero: {
     eyebrow: 'PROFESSIONAL PORTFOLIO',
   },
-  boot: {
-    initializing: 'INITIALIZING CAMPAIGN...',
-    playerFound: 'PLAYER FOUND',
-  },
   a11y: {
     newTab: '(opens in a new tab)',
     skipToContent: 'Skip to content',

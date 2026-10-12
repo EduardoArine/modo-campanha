@@ -29,11 +29,6 @@ export const UI_PT_BR = {
     // O código MC-01 vem de crt.identification, numa etiqueta própria (D-063).
     eyebrow: 'PORTFÓLIO PROFISSIONAL',
   },
-  // Boot / Intro na tela do CRT do Hero (FASE 5, D-059): linguagem de sistema.
-  boot: {
-    initializing: 'INITIALIZING CAMPAIGN...',
-    playerFound: 'PLAYER FOUND',
-  },
   a11y: {
     newTab: '(abre em nova aba)',
     skipToContent: 'Pular para o conteúdo',
