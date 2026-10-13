@@ -1,6 +1,6 @@
 # 22 — SYSTEM HORIZON: teaser do CRT da Hero (attract mode)
 
-> Status: **TEASER TÉCNICO APPROVED e FROZEN** (D-068, 2026-10-12): engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode. Não alterar sem regressão objetiva. **Placeholders ainda em uso**; próxima etapa = **só** receber e integrar a arte final conforme §4, seguindo §11.
+> Status: **TEASER TÉCNICO APPROVED e FROZEN** (D-068, 2026-10-12): engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode. Não alterar sem regressão objetiva. **Cenário final integrado** (§12); **personagem, pickups e MC-CART ainda placeholders**; próxima etapa = arte final do personagem conforme §4, seguindo §11.
 
 ## 1. Conceito
 
@@ -59,7 +59,11 @@ Câmera: segue o jogador (x − 56), limitada a 0–80 (mundo de 240 px). Parall
 
 - **Resolução nativa:** tudo desenhado para a tela de **160 × 120**. Um pixel de arte = um pixel nativo; a engine amplia em múltiplos inteiros. Não entregar versões ampliadas.
 - **Formato:** PNG (de preferência indexado). **Alfa binário** (0 ou 255): sem semitransparência, sem antialiasing, sem sombras suaves.
-- **Paleta (D-068, revisada em 2026-10-12):** uma **única paleta de 16 cores**, compartilhada por **todas** as camadas finais (cenário, personagem, pickups, MC-CART). Ela é **derivada da identidade cromática do Modo Campanha**: **laranja, creme, grafite e frios complementares** continuam sendo as âncoras, mas a cena pode usar **tonalidades próprias** (por exemplo, vermelhos e roxos do pôr do sol) para preservar atmosfera e legibilidade. Não é exigida correspondência literal com os tokens do site quando isso degradar o visual. A paleta é extraída da própria arte aprovada na integração (§12) e registrada aqui quando o cenário fechar. Referência de âncoras (tokens):
+- **Paleta (D-068, revisada em 2026-10-12):** uma **única paleta de 16 cores**, compartilhada por **todas** as camadas finais (cenário, personagem, pickups, MC-CART). Ela é **derivada da identidade cromática do Modo Campanha**: **laranja, creme, grafite e frios complementares** continuam sendo as âncoras, mas a cena pode usar **tonalidades próprias** (por exemplo, vermelhos e roxos do pôr do sol) para preservar atmosfera e legibilidade. Não é exigida correspondência literal com os tokens do site quando isso degradar o visual. A paleta foi extraída das quatro camadas finais do cenário (§12) e é **a paleta oficial** para personagem, pickups e MC-CART: `design/source/system-horizon/sh-palette.gpl`.
+
+  `#3b2f4c` `#22191c` `#f14d1c` `#b53731` `#111f2f` `#5f7a82` `#6f3246` `#df6d37` `#94630c` `#fdba3f` `#29425c` `#1b2e40` `#382c24` `#fb7416` `#473b5d` `#664e16`
+
+  Referência de âncoras (tokens) que orientaram a paleta:
 
   | Âncora | Hex (token) | Papel na cena |
   |---|---|---|
@@ -261,8 +265,12 @@ Masters aprovados como direção visual (SKY, MOUNTAINS, TREES, GROUND v1). Deci
 
 **Ordem:** os masters atuais **não** entram como arte final até o novo GROUND chegar; então o cenário inteiro é integrado de uma vez (com a paleta única), validado com o personagem e só depois seguem pickups e MC-CART (§11).
 
-Fontes: `design/source/system-horizon/` (`sh-bg-sky-master.png`, `sh-bg-mountains-master.png`, `sh-bg-trees-master.png`, `sh-bg-ground-guide.png`; GROUND v1 em `archive/` como referência de estilo).
+Fontes: `design/source/system-horizon/` (`sh-bg-sky-master.png`, `sh-bg-mountains-master.png`, `sh-bg-trees-master.png`, `sh-bg-ground-master.png`, `sh-bg-ground-guide.png`, `sh-palette.gpl`; GROUND v1 e v2 em `archive/` como referência).
 
 **Ao receber o novo GROUND:** reduzir para 240 × 120, alfa binário, paleta compartilhada, validar contra o perfil congelado (sobreposição com a linha da trilha) e verificar que o lago não vaza por baixo do chão.
 
 **GROUND v2 (2026-10-12) — validação:** 1774 × 887 (2:1), corpo opaco até a borda (sem vazamento do lago), placa no platô. Na integração ele desce **16 px nativos** (só translação vertical). Com isso, o trecho plano (x 0–110) e o platô (a partir de x ~165, y ~86–87) coincidem com o perfil. **Reprovado só na rampa:** a subida da arte vai de x ~110 a ~165 (813–1220 px no master); o perfil sobe de x 100 a 128 (739–946 px). No mirante (x 132) a trilha desenhada fica em y ~95 e o personagem pisa em y 86, ou seja, ~9 px no ar. Pedido para a próxima versão: **só encurtar e antecipar a rampa** (de ~739 a ~946 px, ≈ 118 px de altura no master); manter todo o resto. Guia: `sh-bg-ground-v2-ramp-fix.png`; master em `archive/sh-bg-ground-master-v2.png`. Nada integrado.
+
+**GROUND v3 (2026-10-12) — APROVADO e integrado:** rampa de x ~100 a ~135, platô a partir daí. Na integração desce **14 px nativos** (translação vertical, sem deformar). Assim os pés ficam dentro da faixa da trilha no trecho plano e rentes ao topo no mirante (x 132) e no platô. Resta uma folga de 2–4 px só na subida (x 112–127, ~4 quadros), aceitável no tamanho da tela. O corpo é opaco até a borda e o lago não vaza. Master: `sh-bg-ground-master.png`.
+
+**Cenário integrado (2026-10-12):** as quatro camadas (`public/assets/system-horizon/sh-bg-{sky,mountains,trees,ground}.png`, ~20 KB no total) passaram pelo pipeline acima e compartilham a paleta oficial de 16 cores (§4.0). São carregadas por `world/art-loader.ts` (`FINAL_LAYERS` em `world/assets.ts`) antes de a tela ficar pronta, sem troca visível de placeholder para arte final. Se algum arquivo falhar, aquela camada continua placeholder. **Personagem, pickups e MC-CART seguem placeholders** (§11: próximo passo é o personagem). A legenda **MC-001** do quadro-chave saiu de cima do sol e foi para o lado do cartucho, em (96, 52), alinhada à esquerda. É a única mudança na cena; engine, timings e roteiro estão intactos. Lighthouse (HTTP/2) inalterado: mobile 85, desktop 99.
