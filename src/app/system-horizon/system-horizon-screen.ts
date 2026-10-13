@@ -22,6 +22,7 @@ import { Caption, CaptionKey } from './scenes/scene';
 import { quadTransform, ScreenQuad } from './screen-quad';
 import { Art } from './world/assets';
 import { Palette, readPalette } from './world/palette';
+import { withFinalLayers } from './world/art-loader';
 import { createPlaceholderArt } from './world/placeholder-art';
 
 /**
@@ -78,7 +79,7 @@ export class SystemHorizonScreen {
 
   constructor() {
     const destroyRef = inject(DestroyRef);
-    afterNextRender(() => this.setup(destroyRef));
+    afterNextRender(() => void this.setup(destroyRef));
 
     // Play = recomeça o attract mode; pausa = quadro-chave estático.
     effect(() => {
@@ -126,14 +127,19 @@ export class SystemHorizonScreen {
     }
   }
 
-  private setup(destroyRef: DestroyRef): void {
+  private async setup(destroyRef: DestroyRef): Promise<void> {
     const doc = this.host.ownerDocument;
     const win = doc.defaultView;
     const canvas = this.canvas().nativeElement;
     this.renderer = win ? Renderer.create(canvas) : null;
     if (!win || !this.renderer) return;
     this.palette = readPalette(win.getComputedStyle(this.host));
-    this.art = createPlaceholderArt(doc, this.palette);
+    let destroyed = false;
+    destroyRef.onDestroy(() => (destroyed = true));
+    // Arte final onde já integrada (docs/22 §12); placeholders no resto. A tela só fica pronta
+    // depois disso, sem trocar o cenário na frente do visitante.
+    this.art = await withFinalLayers(doc, createPlaceholderArt(doc, this.palette));
+    if (destroyed) return;
 
     const resize = new win.ResizeObserver(() => {
       this.renderer?.resize(canvas.clientWidth, win.devicePixelRatio || 1);

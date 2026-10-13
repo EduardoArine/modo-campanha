@@ -156,7 +156,8 @@ export class AttractScene implements Scene {
       }
     });
     if (t >= 54 && t < 63) {
-      out.push({ key: 'unlocked', x: 80, y: 26 }, { key: 'serial', x: 80, y: 78 });
+      // MC-001 ao lado do cartucho, não sobre o sol central da arte (docs/22 §12).
+      out.push({ key: 'unlocked', x: 80, y: 26 }, { key: 'serial', x: 96, y: 52, align: 'start' });
     }
     if (t >= BEATS.horizon && t < BEATS.continues) out.push({ key: 'horizon', x: 80, y: 30 });
     if (t >= BEATS.continues) out.push({ key: 'continues', x: 80, y: 60 });

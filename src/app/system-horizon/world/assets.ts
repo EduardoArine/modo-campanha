@@ -30,7 +30,10 @@ export const LAYERS = [
 
 export type LayerId = (typeof LAYERS)[number]['id'];
 
-/** Imagens prontas para desenhar (placeholders hoje; PNGs finais depois). */
+/** Grupos com arte final integrada (docs/22 §11–§12); o resto segue placeholder. */
+export const FINAL_LAYERS: readonly LayerId[] = ['sky', 'mountains', 'trees', 'ground'];
+
+/** Imagens prontas para desenhar (arte final onde já integrada; placeholders no resto). */
 export interface Art {
   readonly sheets: Record<SheetName, CanvasImageSource>;
   readonly layers: Record<LayerId, CanvasImageSource>;
