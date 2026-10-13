@@ -1,6 +1,6 @@
 # 22 — SYSTEM HORIZON: teaser do CRT da Hero (attract mode)
 
-> Status: **TEASER TÉCNICO APPROVED e FROZEN** (D-068, 2026-10-12): engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode. Não alterar sem regressão objetiva. **Cenário final integrado** (§12); **personagem, pickups e MC-CART ainda placeholders**; próxima etapa = arte final do personagem conforme §4, seguindo §11.
+> Status: **TEASER TÉCNICO APPROVED e FROZEN** (D-068, 2026-10-12): engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode. Não alterar sem regressão objetiva. **Toda a arte integrada** (cenário §12, personagem provisório §13, pickups/HUD/MC-CART §14); **aguardando validação conjunta do Eduardo**. Pendência: versão definitiva do personagem (~12 × 24).
 
 ## 1. Conceito
 
@@ -286,3 +286,21 @@ Arte do personagem aprovada pelo Eduardo (19 quadros: walk 8, look 7, idle 4) ch
 - **Rótulos dos itens** (BUILD, PRODUCT, AI, GAME DNA) subiram de 24 para **30 px** acima da trilha, para não cobrir a cabeça.
 - **Integração:** `FINAL_SHEETS` (idle, walk, look) carregadas por `world/art-loader.ts` junto com o cenário; placeholder do personagem continua como fallback, já no quadro 16 × 24. Total de arte final no runtime: ~22 KB. Lighthouse (HTTP/2) inalterado: mobile 85, desktop 99.
 - **Próximo:** validação do Eduardo (cenário + personagem); depois, pickups (`sh-items`, `sh-collect-fx`, `sh-hud-slot`) e MC-CART (`sh-cart-mini`, `sh-cart-form`), na paleta oficial.
+
+## 14. Pickups, HUD e MC-CART (2026-10-13)
+
+Sem arte externa disponível, o Eduardo pediu para concluir a parte e validar tudo junto. Os cinco assets foram **desenhados em pixel art no repositório**, como fonte editável: `design/source/system-horizon/pixel/build-pickups.mjs` (grades de caracteres, só cores da paleta oficial, encoder PNG sem dependências). Para regerar: `node design/source/system-horizon/pixel/build-pickups.mjs`. Podem ser trocados por arte externa sem mudar código, desde que mantenham o contrato.
+
+| Arquivo | Tamanho | Conteúdo |
+|---|---|---|
+| `sh-items.png` | 16 × 32 | BUILD `</>` (laranja, traço fino sem borda), PRODUCT card de interface (creme, contorno), AI nós conectados (teal, sombra de 1 px), GAME DNA d-pad (ouro, contorno); coluna 1 = brilho de 1 px |
+| `sh-collect-fx.png` | 36 × 12 | cruz pequena → cruz maior com cantos → pixels dispersos (ouro/laranja/claro, sem glow) |
+| `sh-hud-slot.png` | 20 × 10 | vazio (borda bronze) · preenchido (borda laranja), interior escuro |
+| `sh-cart-mini.png` | 12 × 15 | MC-CART reduzido à mão (centrado na vertical) |
+| `sh-cart-form.png` | 144 × 30 | 0 contorno · 1 carcaça · 2 rótulo · 3 dois quadrados do glifo · 4 os quatro · 5 completo com brilho (quadro-chave) |
+
+**MC-CART:** segue a silhueta oficial dos renders (D-065): horizontal, carcaça grafite, trilhos laranja nas laterais, rebaixo no centro do topo, rótulo com o pôr do sol do SYSTEM HORIZON, faixa inferior (MC-CART) com o glifo de quatro quadrados, ▼ embutido na base. Desenho de 24 × 15 centrado no quadro 24 × 30. Sem texto na arte.
+
+**Integração:** `FINAL_SHEETS` = todas as folhas; placeholders em código só como fallback. Total de arte do teaser no runtime: **~23 KB**. Engine, roteiro, timings e posições congelados intactos. 123 testes e builds verdes; Lighthouse (HTTP/2) inalterado: mobile 85, desktop 99.
+
+**Para a validação do Eduardo:** cenário (§12), personagem provisório (§13), ícones e MC-CART (§14), legendas, quadro-chave e reduced motion.

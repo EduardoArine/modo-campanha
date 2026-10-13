@@ -155,7 +155,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ **SYSTEM HORIZON — teaser do CRT da Hero: base técnica APPROVED / FROZEN** (D-068, `docs/22`): engine, roteiro, timings, pause/play, 3 voltas, reduced motion, responsivo, arquitetura
 - ✅ SYSTEM HORIZON — cenário final integrado (4 camadas, paleta única de 16 cores, `docs/22` §12)
 - 🟡 SYSTEM HORIZON — personagem provisório integrado (quadros aprovados reduzidos 2:1, 16 × 24; `docs/22` §13); versão definitiva em ~12 × 24 pendente
-- ⬜ SYSTEM HORIZON — pickups + MC-CART (`docs/22` §4, §11)
+- ✅ SYSTEM HORIZON — pickups, HUD e MC-CART em pixel art no repositório (`docs/22` §14); aguardando validação conjunta do Eduardo
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
