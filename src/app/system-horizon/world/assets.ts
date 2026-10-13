@@ -31,9 +31,9 @@ export const LAYERS = [
 
 export type LayerId = (typeof LAYERS)[number]['id'];
 
-/** Grupos com arte final integrada (docs/22 §11–§12); o resto segue placeholder. */
+/** Arte final integrada (docs/22 §12–§14): todo o cenário e todas as folhas; placeholders só como fallback. */
 export const FINAL_LAYERS: readonly LayerId[] = ['sky', 'mountains', 'trees', 'ground'];
-export const FINAL_SHEETS: readonly SheetName[] = ['playerIdle', 'playerWalk', 'playerLook'];
+export const FINAL_SHEETS: readonly SheetName[] = Object.keys(SHEETS) as SheetName[];
 
 /** Imagens prontas para desenhar (arte final onde já integrada; placeholders no resto). */
 export interface Art {
