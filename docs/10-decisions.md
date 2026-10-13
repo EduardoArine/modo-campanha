@@ -800,3 +800,19 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Aprovação (2026-10-12, Eduardo): TEASER TÉCNICO APPROVED e FROZEN.** Engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode não mudam sem regressão objetiva. `ui.boot` removido (busca global sem usos; testes e builds verdes). Próxima etapa: só integrar a arte final conforme `docs/22` §4, sem mudar dimensões, pivots nem layout das folhas, validando **cenário + personagem antes** de pickups e MC-CART (`docs/22` §11). System Horizon jogável fora de escopo.
 - **Rodada do cenário (2026-10-12):** SKY, MOUNTAINS (harmonização técnica do master) e TREES aprovados; GROUND em regeneração externa pela opção A (trilha plana → subida suave → mirante, perfil congelado mantido); paleta única de 16 cores derivada da identidade cromática do Modo Campanha, compartilhada por todas as camadas; sol central preservado (só a legenda MC-001 do quadro-chave pode ser reposicionada). Detalhes e pipeline em docs/22 §12. **Cenário integrado** (GROUND v3 aprovado, translação de 14 px; paleta oficial em `design/source/system-horizon/sh-palette.gpl`; legenda MC-001 ao lado do cartucho); personagem, pickups e MC-CART seguem placeholders. **Personagem provisório (2026-10-13):** quadros aprovados reduzidos 2:1, quadro do personagem revisado para 16 × 24 (pivot 8,23), paleta única recalculada com cenário + personagem, rótulos dos itens 30 px acima da trilha (docs/22 §13). **Pickups, HUD e MC-CART (2026-10-13):** desenhados em pixel art no repositório (fonte editável `design/source/system-horizon/pixel/build-pickups.mjs`), na paleta oficial e no contrato de §4; MC-CART na silhueta oficial (D-065). Toda a arte do teaser integrada (~23 KB); aguardando validação conjunta (docs/22 §14).
 - **Status:** **APPROVED / FROZEN** (base técnica) na branch `feat/hero-refinement`; placeholders em uso até a arte final.
+
+## D-069 — SYSTEM HORIZON: MVP interativo (proposta)
+
+- **Data:** 2026-10-13
+- **Pedido do Eduardo:** definir, antes de implementar, como o MC-001 SYSTEM HORIZON vira a primeira experiência jogável do portfólio. Escopo desta rodada: arquitetura e experiência; nada implementado.
+- **Proposta (`docs/23-system-horizon-mvp.md`):**
+  - o jogo é o **Campaign Log transformado em lugar**: uma visão interativa dos dados já publicados, sem conteúdo próprio;
+  - o mapa do mundo guarda **referências** (Campaign Log, Skill Loadout, Project Inventory, Player Status, Achievements, Current Main Quest, Final Checkpoint) e posições;
+  - dado não publicado não aparece;
+  - 5 atos (ORIGIN, BUILD, EVOLVE, CAMPAIGNS, HORIZON), 3–5 min, loop andar → marco → ler (DOM) → checkpoint;
+  - os 4 grupos do Skill Loadout são os coletáveis do teaser; o MC-CART se forma no ato 04;
+  - **entrada híbrida:** o case do MC-001 no CRT do Inventory leva à rota dedicada `/system-horizon` (pt/en), lazy, com layout próprio; a saída devolve a `#project-inventory`;
+  - **engine:** evolução do engine do teaser (viewport lógico variável, terreno por segmento, controller com intenção de movimento, laço comum), com regressão zero no teaser congelado;
+  - **acessibilidade:** conteúdo profissional só em DOM, versão em texto equivalente, `<dialog>` de leitura, região viva, teclado completo, toque com ◀ Ler ▶ e "próximo marco", reduced motion;
+  - epílogo pessoal só estudado.
+- **Status:** **PROPOSTA**, aguardando aprovação do Eduardo (decisões em `docs/23` §17). Não implementar antes disso.

@@ -156,6 +156,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ SYSTEM HORIZON — cenário final integrado (4 camadas, paleta única de 16 cores, `docs/22` §12)
 - 🟡 SYSTEM HORIZON — personagem provisório integrado (quadros aprovados reduzidos 2:1, 16 × 24; `docs/22` §13); versão definitiva em ~12 × 24 pendente
 - ✅ SYSTEM HORIZON — pickups, HUD e MC-CART em pixel art no repositório (`docs/22` §14); aguardando validação conjunta do Eduardo
+- 🟡 **SYSTEM HORIZON — MVP interativo: proposta** (D-069, `docs/23`); aguardando aprovação; implementação só depois (e lançamento recomendado após o Campaign Log real, 03-0)
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
