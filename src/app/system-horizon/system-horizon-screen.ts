@@ -22,7 +22,7 @@ import { Caption, CaptionKey } from './scenes/scene';
 import { quadTransform, ScreenQuad } from './screen-quad';
 import { Art } from './world/assets';
 import { Palette, readPalette } from './world/palette';
-import { withFinalLayers } from './world/art-loader';
+import { withFinalArt } from './world/art-loader';
 import { createPlaceholderArt } from './world/placeholder-art';
 
 /**
@@ -138,7 +138,7 @@ export class SystemHorizonScreen {
     destroyRef.onDestroy(() => (destroyed = true));
     // Arte final onde já integrada (docs/22 §12); placeholders no resto. A tela só fica pronta
     // depois disso, sem trocar o cenário na frente do visitante.
-    this.art = await withFinalLayers(doc, createPlaceholderArt(doc, this.palette));
+    this.art = await withFinalArt(doc, createPlaceholderArt(doc, this.palette));
     if (destroyed) return;
 
     const resize = new win.ResizeObserver(() => {

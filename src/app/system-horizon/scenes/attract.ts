@@ -152,7 +152,7 @@ export class AttractScene implements Scene {
     ATTRACT_COLLECTIBLES.forEach((item, i) => {
       const at = this.collectedAt[i];
       if (at >= 0 && t - at <= 3) {
-        out.push({ key: item.id, x: item.x - cam, y: trailY(item.x) - 24, minor: true });
+        out.push({ key: item.id, x: item.x - cam, y: trailY(item.x) - 30, minor: true });
       }
     });
     if (t >= 54 && t < 63) {

@@ -69,8 +69,9 @@ const ICONS: readonly (readonly string[])[] = [
   ['........', '...##...', '...##...', '.######.', '.######.', '...##...', '...##...', '........'],
 ];
 
-/** Jogador 10 × 14 no quadro 16 × 16 (pés no pivot 8,15): cabelo escuro, óculos, roupa escura. */
+/** Jogador 10 × 14 no quadro 16 × 24 (pés no pivot 8,23): cabelo escuro, óculos, roupa escura. */
 function player(g: Ctx, p: Palette, legs: readonly [number, number], lookUp = false): void {
+  g.translate(0, 8); // figura na base do quadro (vale para o resto deste quadro)
   px(g, p.night, 5, 1, 6, 3); // cabelo
   px(g, p.creamDim, 6, 3, 4, 4); // rosto
   px(g, p.night, 5, 4, 6, 1); // óculos (armação)

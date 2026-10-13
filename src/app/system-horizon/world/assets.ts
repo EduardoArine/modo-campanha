@@ -8,9 +8,10 @@ import { LayerSpec, SheetSpec } from '../engine/sprite-sheet';
 export const ASSET_BASE = 'assets/system-horizon/';
 
 export const SHEETS = {
-  playerIdle: sheet('sh-player-idle.png', 16, 16, 2, 2, 8, 15),
-  playerWalk: sheet('sh-player-walk.png', 16, 16, 4, 4, 8, 15),
-  playerLook: sheet('sh-player-look.png', 16, 16, 2, 2, 8, 15),
+  // Personagem em quadros 16 × 24, pés no pivot 8,23 (docs/22 §4.2, revisado em §13).
+  playerIdle: sheet('sh-player-idle.png', 16, 24, 2, 2, 8, 23),
+  playerWalk: sheet('sh-player-walk.png', 16, 24, 4, 4, 8, 23),
+  playerLook: sheet('sh-player-look.png', 16, 24, 2, 2, 8, 23),
   // Linha = item (BUILD, PRODUCT, AI, GAME DNA); coluna 0 = base, 1 = brilho.
   items: sheet('sh-items.png', 8, 8, 8, 2, 4, 4),
   collectFx: sheet('sh-collect-fx.png', 12, 12, 3, 3, 6, 6),
@@ -32,6 +33,7 @@ export type LayerId = (typeof LAYERS)[number]['id'];
 
 /** Grupos com arte final integrada (docs/22 §11–§12); o resto segue placeholder. */
 export const FINAL_LAYERS: readonly LayerId[] = ['sky', 'mountains', 'trees', 'ground'];
+export const FINAL_SHEETS: readonly SheetName[] = ['playerIdle', 'playerWalk', 'playerLook'];
 
 /** Imagens prontas para desenhar (arte final onde já integrada; placeholders no resto). */
 export interface Art {
