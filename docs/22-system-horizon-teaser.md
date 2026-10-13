@@ -61,7 +61,7 @@ Câmera: segue o jogador (x − 56), limitada a 0–80 (mundo de 240 px). Parall
 - **Formato:** PNG (de preferência indexado). **Alfa binário** (0 ou 255): sem semitransparência, sem antialiasing, sem sombras suaves.
 - **Paleta (D-068, revisada em 2026-10-12):** uma **única paleta de 16 cores**, compartilhada por **todas** as camadas finais (cenário, personagem, pickups, MC-CART). Ela é **derivada da identidade cromática do Modo Campanha**: **laranja, creme, grafite e frios complementares** continuam sendo as âncoras, mas a cena pode usar **tonalidades próprias** (por exemplo, vermelhos e roxos do pôr do sol) para preservar atmosfera e legibilidade. Não é exigida correspondência literal com os tokens do site quando isso degradar o visual. A paleta foi extraída das quatro camadas finais do cenário (§12) e é **a paleta oficial** para personagem, pickups e MC-CART: `design/source/system-horizon/sh-palette.gpl`.
 
-  `#3b2f4c` `#22191c` `#f14d1c` `#b53731` `#111f2f` `#5f7a82` `#6f3246` `#df6d37` `#94630c` `#fdba3f` `#29425c` `#1b2e40` `#382c24` `#fb7416` `#473b5d` `#664e16`
+  `#393455` `#c6805c` `#f04e1c` `#b43831` `#f1ba8c` `#3c372e` `#693548` `#51909a` `#264f5e` `#040403` `#312726` `#162637` `#21191b` `#fdba3f` `#f8761a` `#715313` (recalculada com cenário + personagem em §13)
 
   Referência de âncoras (tokens) que orientaram a paleta:
 
@@ -97,13 +97,13 @@ Os itens flutuam 12 px acima da trilha em x **47, 62, 77, 92** (y ≈ 90–92): 
 
 ### 4.2 Eduardo (jogador)
 
-Silhueta de **~10 × 14 px** dentro de um quadro **16 × 16**, voltado para a direita. Sinais: **cabelo escuro, óculos** (1–2 px de reflexo teal), **roupa escura** (grafite), pele cream-300; sem rosto detalhado. Contorno legível sobre a trilha laranja e o chão escuro.
+**(Revisado em §13: quadro 16 × 24, pivot 8,23, figura ~12–13 × 23–24.)** Contrato original: silhueta de **~10 × 14 px** dentro de um quadro **16 × 16**, voltado para a direita. Sinais: **cabelo escuro, óculos** (1–2 px de reflexo teal), **roupa escura** (grafite), pele cream-300; sem rosto detalhado. Contorno legível sobre a trilha laranja e o chão escuro.
 
 | Arquivo | Quadro | Quadros | Layout | Pivot | Animação |
 |---|---|---|---|---|---|
-| `sh-player-idle.png` | 16 × 16 | 2 | 2 × 1 (32 × 16) | 8, 15 (pés) | respiração sutil, 1 px; troca a cada 6 ticks |
-| `sh-player-walk.png` | 16 × 16 | 4 | 4 × 1 (64 × 16) | 8, 15 | contato · passagem · contato (perna oposta) · passagem; 6 fps |
-| `sh-player-look.png` | 16 × 16 | 2 | 2 × 1 (32 × 16) | 8, 15 | parado no mirante olhando o horizonte (3/4 de costas ou perfil, cabeça levemente erguida), respiração 1 px; troca a cada 8 ticks |
+| `sh-player-idle.png` | 16 × 24 | 2 | 2 × 1 (32 × 24) | 8, 23 (pés) | respiração sutil, 1 px; troca a cada 6 ticks |
+| `sh-player-walk.png` | 16 × 24 | 4 | 4 × 1 (64 × 24) | 8, 23 | contato · passagem · contato (perna oposta) · passagem; 6 fps |
+| `sh-player-look.png` | 16 × 24 | 2 | 2 × 1 (32 × 24) | 8, 23 | parado no mirante olhando o horizonte (3/4 de costas ou perfil, cabeça levemente erguida), respiração 1 px; troca a cada 8 ticks |
 
 ### 4.3 Experiências coletáveis
 
@@ -161,9 +161,9 @@ Os quatro itens chegam em (80 ± 3, 52 ± 3): os **quatro quadrados do glifo** d
 | 2 | `sh-bg-mountains.png` | 180 × 120 |
 | 3 | `sh-bg-trees.png` | 200 × 120 |
 | 4 | `sh-bg-ground.png` | 240 × 120 |
-| 5 | `sh-player-idle.png` | 32 × 16 |
-| 6 | `sh-player-walk.png` | 64 × 16 |
-| 7 | `sh-player-look.png` | 32 × 16 |
+| 5 | `sh-player-idle.png` | 32 × 24 |
+| 6 | `sh-player-walk.png` | 64 × 24 |
+| 7 | `sh-player-look.png` | 32 × 24 |
 | 8 | `sh-items.png` | 16 × 32 |
 | 9 | `sh-collect-fx.png` | 36 × 12 |
 | 10 | `sh-hud-slot.png` | 20 × 10 |
@@ -274,3 +274,15 @@ Fontes: `design/source/system-horizon/` (`sh-bg-sky-master.png`, `sh-bg-mountain
 **GROUND v3 (2026-10-12) — APROVADO e integrado:** rampa de x ~100 a ~135, platô a partir daí. Na integração desce **14 px nativos** (translação vertical, sem deformar). Assim os pés ficam dentro da faixa da trilha no trecho plano e rentes ao topo no mirante (x 132) e no platô. Resta uma folga de 2–4 px só na subida (x 112–127, ~4 quadros), aceitável no tamanho da tela. O corpo é opaco até a borda e o lago não vaza. Master: `sh-bg-ground-master.png`.
 
 **Cenário integrado (2026-10-12):** as quatro camadas (`public/assets/system-horizon/sh-bg-{sky,mountains,trees,ground}.png`, ~20 KB no total) passaram pelo pipeline acima e compartilham a paleta oficial de 16 cores (§4.0). São carregadas por `world/art-loader.ts` (`FINAL_LAYERS` em `world/assets.ts`) antes de a tela ficar pronta, sem troca visível de placeholder para arte final. Se algum arquivo falhar, aquela camada continua placeholder. **Personagem, pickups e MC-CART seguem placeholders** (§11: próximo passo é o personagem). A legenda **MC-001** do quadro-chave saiu de cima do sol e foi para o lado do cartucho, em (96, 52), alinhada à esquerda. É a única mudança na cena; engine, timings e roteiro estão intactos. Lighthouse (HTTP/2) inalterado: mobile 85, desktop 99.
+
+## 13. Personagem provisório (2026-10-13)
+
+Arte do personagem aprovada pelo Eduardo (19 quadros: walk 8, look 7, idle 4) chegou em escala maior que o contrato (figura ~24 × 47 em quadros de 68 × 68 / 80 × 80). Decisões:
+
+- **Escala:** o quadro do personagem passa de 16 × 16 para **16 × 24, pivot 8,23** (só dados das folhas em `world/assets.ts`; engine, roteiro e timings intactos). Na cena de 160 × 120 a figura com ~23 px fica proporcional aos pickups e não briga com o horizonte (a escala inteira dominava a tela; a do contrato original virava borrão).
+- **Versão provisória:** redução automática 2:1 dos quadros aprovados (cor predominante por bloco 2 × 2, mesma grade e janela por animação para não tremer), pés na linha 23 e centro da animação em x 8. Perde olhos e parte do contorno; **será substituída** pela arte definitiva em ~12 × 24 (PixelLab ou artista), sem mudar o contrato.
+- **Quadros usados** (contagens e ritmo congelados): walk = master 1, 3, 5, 7 (contato · passagem · contato · passagem, 6 fps); idle = master 1, 3; look = master 3, 7 (parado, olhando para cima). Os 19 quadros ficam em `design/source/system-horizon/player/` (`sh-player-{walk,look,idle}-master-N.png`) para a versão definitiva e para o jogável.
+- **Paleta:** a paleta única foi **recalculada com cenário + personagem** (a anterior não tinha teal, pele nem tons claros); cenário requantizado sem mudança visível relevante. Total: 16 cores; `sh-palette.gpl` atualizado.
+- **Rótulos dos itens** (BUILD, PRODUCT, AI, GAME DNA) subiram de 24 para **30 px** acima da trilha, para não cobrir a cabeça.
+- **Integração:** `FINAL_SHEETS` (idle, walk, look) carregadas por `world/art-loader.ts` junto com o cenário; placeholder do personagem continua como fallback, já no quadro 16 × 24. Total de arte final no runtime: ~22 KB. Lighthouse (HTTP/2) inalterado: mobile 85, desktop 99.
+- **Próximo:** validação do Eduardo (cenário + personagem); depois, pickups (`sh-items`, `sh-collect-fx`, `sh-hud-slot`) e MC-CART (`sh-cart-mini`, `sh-cart-form`), na paleta oficial.
