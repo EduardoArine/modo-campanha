@@ -848,4 +848,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Data:** 2026-10-17
 - **Conteúdo:** checkpoint ScoutEvo (2018) com os textos pt/en do Eduardo. Abre o CHAPTER 02 porque vem depois do fechamento do CHAPTER 01. Detalhes em `docs/15` §15.
 - **Modelo:** `name` e `signature` do capítulo viram opcionais. Sem nome aprovado, o cabeçalho mostra só "CHAPTER 02"; nada é inventado.
+- **Link (2026-10-17):** reportagem do O Globo sobre a maratona (2018). A imagem-colagem fica pendente de decisão sobre direitos e marcas.
 - **Status:** só em desenvolvimento, **aguardando revisão** e o nome/assinatura do capítulo.

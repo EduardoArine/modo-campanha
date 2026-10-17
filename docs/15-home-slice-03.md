@@ -276,4 +276,5 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
 1. Nome e assinatura do CHAPTER 02, e se ele terá período e fechamento como o 01.
 2. **Linha profissional MOCK em desenvolvimento:** depois do ScoutEvo aparecem as entradas MOCK (2014–2018, 2019–2022, 2023–2025, "desde 2025"), com cronologia que não bate com os capítulos reais. Elas não são fatos e vão sair conforme os capítulos reais chegarem.
 3. **ScoutEvo como projeto e a vitória como achievement:** mesma questão do Aedes Revenge (§14), ou seja, MC-CART no Inventory e Achievements sem repetir o Campaign Log.
-4. **Link público** (site, notícia da competição), se existir.
+4. ~~Link público~~ **feito:** a reportagem do O Globo sobre a maratona (10/04/2018, "Flamengo faz 'maratona' de inovação em São Paulo para aprimorar gestão") está linkada dentro da história. A matéria trata do evento, não do resultado, e é fechada para assinantes.
+5. **Imagem enviada pelo Eduardo** (colagem com a reportagem do O Globo, o anúncio "And the winner is: ScoutEvo" do FUTEBOOM, o escudo do Flamengo e o logo do ScoutEvo): **não integrada**, aguardando decisão. Ela reproduz a foto e a marca de um veículo de imprensa e o escudo de um clube num repositório público.
