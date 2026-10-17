@@ -270,7 +270,12 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
 
 - **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
 - **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
-- **EOS (2019):** plataforma de logística de doação e transplante de órgãos. O Eduardo participou da engenharia da solução e fez todo o frontend web (ASP.NET/C#). Em setembro de 2019 foi disponibilizada à Central Estadual de Transplantes de São Paulo e divulgada pela Unicamp; a pesquisa gerou um artigo na _Case Studies on Transport Policy_ (2021). Ênfases do texto viram texto simples. Links (divulgação da Unicamp, artigo) não foram fornecidos.
+- **EOS (2019):** plataforma de logística de doação e transplante de órgãos. O Eduardo participou da engenharia da solução e fez todo o frontend web (ASP.NET/C#). Em setembro de 2019 foi disponibilizada à Central Estadual de Transplantes de São Paulo e divulgada pela Unicamp; a pesquisa gerou um artigo na _Case Studies on Transport Policy_ (2021). Ênfases do texto viram texto simples. Referências externas (2026-10-17), na história completa, agrupadas por tipo e verificadas:
+  - **Publicação científica:** "System for transporting human organs", _Case Studies on Transport Policy_, Elsevier (2021): link do ScienceDirect e DOI permanente 10.1016/j.cstp.2021.01.005. A nota de contexto diz "Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso". **A autoria não é do Eduardo**; a participação dele, segundo o próprio relato, foi a engenharia da solução e o frontend web.
+  - **Imprensa:** Portal Afya, "Software pode reduzir tempo no transporte de órgãos para transplante" (2019, publicada em 23/12/2019).
+  - **Registro bibliográfico:** OpenAlex W3128566934.
+  - **Lançamento institucional (Unicamp, 2019): pendente.** O link não veio, e a busca em unicamp.br não encontrou a matéria. Entra como "LANÇAMENTO INSTITUCIONAL" (disponibilização para uso experimental, 2019) quando o Eduardo enviar o endereço.
+  - **Sem afirmação de resultado:** nenhum rótulo apresenta resultados de teste como adoção operacional definitiva ou como redução comprovada de perdas de órgãos.
 - **Fatos preservados (ScoutEvo):** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
 
 **Pontos para o Eduardo:**

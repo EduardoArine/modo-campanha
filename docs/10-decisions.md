@@ -849,5 +849,6 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Conteúdo:** checkpoint ScoutEvo (2018) com os textos pt/en do Eduardo. Abre o CHAPTER 02 porque vem depois do fechamento do CHAPTER 01. Detalhes em `docs/15` §15.
 - **Modelo:** `name` e `signature` do capítulo viram opcionais. Sem nome aprovado, o cabeçalho mostra só "CHAPTER 02"; nada é inventado.
 - **Link e imagem (2026-10-17):** reportagem do O Globo sobre a maratona (2018) e a colagem com o anúncio do vencedor do FUTEBOOM, usada como o Eduardo enviou (decisão dele, ciente de que inclui a marca do O Globo e o escudo do Flamengo).
-- **EOS (2026-10-17):** CHECKPOINT 02 do CHAPTER 02 (2019), com os textos pt/en do Eduardo; sem links até ele fornecer.
+- **EOS (2026-10-17):** CHECKPOINT 02 do CHAPTER 02 (2019), com os textos pt/en do Eduardo.
+- **Referências do EOS:** links do Campaign Log ganham tipo (lançamento institucional, publicação científica, imprensa, registro bibliográfico, documento acadêmico) e nota opcional. O EOS lista o artigo da Elsevier (ScienceDirect + DOI, autoria de Henrique Barros Bellotti e Maria Teresa Françoso, nunca do Eduardo), a reportagem do Portal Afya e o registro no OpenAlex. O anúncio da Unicamp fica pendente até o link chegar.
 - **Status:** só em desenvolvimento, **aguardando revisão** e o nome/assinatura do capítulo.

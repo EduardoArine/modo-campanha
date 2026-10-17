@@ -170,7 +170,14 @@ interface CampaignLogChapterEntry {
   summary: Localized; // 1 frase extraída literalmente da história
   story: Localized<readonly string[]>; // história completa, em parágrafos
   photos?: readonly CampaignLogPhoto[]; // fotos reais citadas na história (src, srcset, width, height, alt)
-  links?: readonly { label: Localized; url: string }[]; // documentos públicos que comprovam o checkpoint (ex.: TCC)
+  links?: readonly CampaignLogLink[]; // referências públicas que comprovam o checkpoint
+}
+
+interface CampaignLogLink {
+  kind: 'launch' | 'paper' | 'press' | 'record' | 'academic'; // rótulo do tipo vem do dicionário
+  label: Localized;
+  url: string;
+  note?: Localized; // contexto factual curto (ex.: autoria de um artigo que não é do Eduardo)
 }
 
 interface CampaignLogChapter {
