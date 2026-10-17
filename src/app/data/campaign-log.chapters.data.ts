@@ -338,6 +338,17 @@ export const CHAPTER_02: CampaignLogChapter = {
           "ScoutEvo marked a new stage in my journey. I was no longer just developing games. I was applying what I'd learned to build digital solutions for different purposes.",
         ],
       },
+      // Reportagem do O Globo sobre a maratona (10/04/2018), fornecida pelo Eduardo (2026-10-17).
+      // Trata do evento, não do resultado; conteúdo para assinantes.
+      links: [
+        {
+          label: {
+            'pt-BR': 'Reportagem do O Globo sobre a maratona (2018)',
+            en: 'O Globo report on the competition (2018, in Portuguese)',
+          },
+          url: 'https://oglobo.globo.com/esportes/flamengo-faz-maratona-de-inovacao-em-sao-paulo-para-aprimorar-gestao-22577762',
+        },
+      ],
     },
   ],
 };

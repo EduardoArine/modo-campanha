@@ -166,7 +166,7 @@ describe('CampaignLogSection', () => {
     ]);
   });
 
-  it('keeps decoration hidden; interactions are the story toggles and the thesis link', async () => {
+  it('keeps decoration hidden; interactions are the story toggles and evidence links', async () => {
     const el = await renderAt('/');
 
     expect(
@@ -175,7 +175,7 @@ describe('CampaignLogSection', () => {
       ),
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
-    expect(el.querySelectorAll('a').length).toBe(1);
+    expect(el.querySelectorAll('a').length).toBe(2);
     expect(el.querySelectorAll('summary').length).toBe(11);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });

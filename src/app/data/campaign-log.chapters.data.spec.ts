@@ -130,6 +130,12 @@ describe('Campaign Log — CHAPTER 02 (ScoutEvo)', () => {
     );
   });
 
+  it('links the O Globo report about the competition', () => {
+    expect(scoutevo.links?.map((l) => l.url)).toEqual([
+      'https://oglobo.globo.com/esportes/flamengo-faz-maratona-de-inovacao-em-sao-paulo-para-aprimorar-gestao-22577762',
+    ]);
+  });
+
   it('takes the summary literally from the story, in both languages', () => {
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(scoutevo.story[locale][0]).toBe(scoutevo.summary[locale]);
