@@ -263,11 +263,11 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 
 O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
 
-| #   | Quando | Codinome | Título pt / en                                                                    |
-| --- | ------ | -------- | --------------------------------------------------------------------------------- |
-| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                    |
-| 02  | 2019   | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters     |
-| 03  | 2021   | AXIA     | Quando o software encontrou o mundo físico / When Software Met the Physical World |
+| #   | Quando      | Codinome | Título pt / en                                                                 |
+| --- | ----------- | -------- | ------------------------------------------------------------------------------ |
+| 01  | 2018        | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                 |
+| 02  | 2019        | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters  |
+| 03  | 2021 — 2024 | AXIA     | Da ideia à inteligência operacional / From Concept to Operational Intelligence |
 
 - **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
 - **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
@@ -277,7 +277,9 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
   - **Registro bibliográfico:** OpenAlex W3128566934.
   - **Lançamento institucional (Unicamp, 2019): pendente.** O link não veio, e a busca em unicamp.br não encontrou a matéria. Entra como "LANÇAMENTO INSTITUCIONAL" (disponibilização para uso experimental, 2019) quando o Eduardo enviar o endereço.
   - **Sem afirmação de resultado:** nenhum rótulo apresenta resultados de teste como adoção operacional definitiva ou como redução comprovada de perdas de órgãos.
-- **Axia (2021):** desenvolvida pela Ativvus/Arppen; gestão de operações de limpeza e facilities com dispositivos conectados e plataforma de dados. O Eduardo participou da idealização e da engenharia da solução e focou na aplicação web em Angular, na WebAPI .NET/C# e no design das interfaces. Também trabalhou com SQL Server e contribuiu para o código embarcado dos dispositivos em C. Sem links.
+- **Axia (2021 — 2024, versão do Eduardo de 2026-10-17, substitui a anterior):** plataforma de inteligência operacional da Ativvus/Arppen para limpeza e facilities. O Eduardo participou de toda a evolução do produto, incluindo a Inteligência Axia: arquitetura, webapp Angular, WebAPI .NET/C#, SQL Server, design das interfaces e contribuições ao código embarcado em C. Foco principal: plataforma web, APIs e experiência de uso. O modelo ganhou `when: { span }` para intervalos de anos confirmados.
+  - **Referências:** **imprensa:** InfraFM, "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos" (verificada; cita a Axia como produto da Ativvus; data de publicação não confirmada, por isso sem ano no rótulo). **Não entram:** `arppen.com/about.html` e `arppen.com/axia.html` retornam 404. A página inicial da Arppen ("2012 — 2026") aponta para comunidadeon.com; linkar o site exporia essa relação, então fica a critério do Eduardo.
+  - **Nota factual:** a InfraFM diz que a Axia foi "desenvolvida pela empresa de tecnologia Ativvus em 2022", depois retirada do mercado para uma nova versão. O relato do Eduardo começa em 2021 (idealização e engenharia). Não é necessariamente conflito, mas vale a revisão dele.
 - **Fatos preservados (ScoutEvo):** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
 
 **Pontos para o Eduardo:**
