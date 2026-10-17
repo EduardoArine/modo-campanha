@@ -842,3 +842,10 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Publicação:** o capítulo 01 fica só em desenvolvimento até a revisão.
 - **Links (2026-10-17):** o checkpoint 05 do CHAPTER 01 linka o TCC no repositório do CPS, dentro da história completa (campo `links`, só para documentos públicos que comprovam o checkpoint). O Google Play expirou: sem link, e retomar o Aedes Revenge fica como projeto futuro.
 - **Status:** CHAPTER 00 **APPROVED / FROZEN / publicado**; CHAPTER 01 **aguardando revisão visual e aprovação da tradução**.
+
+## D-072 — Campaign Log: CHAPTER 02 (ScoutEvo)
+
+- **Data:** 2026-10-17
+- **Conteúdo:** checkpoint ScoutEvo (2018) com os textos pt/en do Eduardo. Abre o CHAPTER 02 porque vem depois do fechamento do CHAPTER 01. Detalhes em `docs/15` §15.
+- **Modelo:** `name` e `signature` do capítulo viram opcionais. Sem nome aprovado, o cabeçalho mostra só "CHAPTER 02"; nada é inventado.
+- **Status:** só em desenvolvimento, **aguardando revisão** e o nome/assinatura do capítulo.

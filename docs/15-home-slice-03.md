@@ -256,3 +256,24 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 4. **Tecnologias no texto** (Unity, C#): estão no relato do Eduardo; o Skill Loadout não lista Unity.
 5. **Google Play:** o link expirou e o jogo não está mais publicado (Eduardo, 2026-10-17). Não há link. Retomar o Aedes Revenge fica como possível projeto futuro.
 6. **TCC publicado:** o checkpoint 05 tem o link "Ler o TCC (PDF)" / "Read the capstone project (PDF, in Portuguese)" para o PDF no Repositório Institucional do Conhecimento do CPS (`ric.cps.sp.gov.br`, verificado: HTTP 200, PDF de ~3,3 MB). O link fica dentro da história completa, abaixo do texto, como ação `text` com ícone de link externo e "(abre em nova aba)" para leitor de tela. O Campaign Log passa a ter links só para documentos públicos que comprovam um checkpoint (campo `links`).
+
+## 15. CHAPTER 02 — ScoutEvo (D-072, 2026-10-17)
+
+> Estado: **implementado em desenvolvimento, aguardando revisão do Eduardo**; não publicado em produção.
+
+O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
+
+| #   | Quando | Codinome | Título pt / en                                                 |
+| --- | ------ | -------- | -------------------------------------------------------------- |
+| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field |
+
+- **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
+- **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
+- **Fatos preservados:** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
+
+**Pontos para o Eduardo:**
+
+1. Nome e assinatura do CHAPTER 02, e se ele terá período e fechamento como o 01.
+2. **Linha profissional MOCK em desenvolvimento:** depois do ScoutEvo aparecem as entradas MOCK (2014–2018, 2019–2022, 2023–2025, "desde 2025"), com cronologia que não bate com os capítulos reais. Elas não são fatos e vão sair conforme os capítulos reais chegarem.
+3. **ScoutEvo como projeto e a vitória como achievement:** mesma questão do Aedes Revenge (§14), ou seja, MC-CART no Inventory e Achievements sem repetir o Campaign Log.
+4. **Link público** (site, notícia da competição), se existir.
