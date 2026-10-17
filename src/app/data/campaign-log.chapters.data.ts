@@ -1,6 +1,6 @@
 import { CampaignLogChapter, CampaignLogPhoto } from '../models';
 
-const ORIGIN_ASSETS = 'assets/campaign-log/origin/';
+const ASSETS = 'assets/campaign-log/';
 
 /** Derivados WebP (proporção original, sem filtro) das fotos fornecidas pelo Eduardo. */
 function photo(
@@ -11,8 +11,8 @@ function photo(
 ): CampaignLogPhoto {
   const max = widths[widths.length - 1];
   return {
-    src: ORIGIN_ASSETS + name + '-' + max + '.webp',
-    srcset: widths.map((w) => ORIGIN_ASSETS + name + '-' + w + '.webp ' + w + 'w').join(', '),
+    src: ASSETS + name + '-' + max + '.webp',
+    srcset: widths.map((w) => ASSETS + name + '-' + w + '.webp ' + w + 'w').join(', '),
     width: max,
     height: Math.round(max / ratio),
     alt,
@@ -141,12 +141,12 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
       },
       // Fotos da coleção e do móvel construído pelo Eduardo (fornecidas por ele, 2026-10-17).
       photos: [
-        photo('collection-front', [480, 720], 3 / 4, {
+        photo('origin/collection-front', [480, 720], 3 / 4, {
           'pt-BR':
             'Móvel de madeira com duas prateleiras iluminadas por luz colorida, cheias de consoles retrô; acima dele, uma TV na parede e bonecos colecionáveis.',
           en: 'Wooden cabinet with two shelves lit by colored light and filled with retro consoles; above it, a wall-mounted TV and collectible figures.',
         }),
-        photo('collection-wide', [640, 960], 4 / 3, {
+        photo('origin/collection-wide', [640, 960], 4 / 3, {
           'pt-BR':
             'Vista frontal do mesmo móvel: consoles retrô alinhados nas duas prateleiras iluminadas e uma TV ligada acima.',
           en: 'Front view of the same cabinet: retro consoles lined up on both lit shelves and a TV switched on above.',
@@ -338,6 +338,15 @@ export const CHAPTER_02: CampaignLogChapter = {
           "ScoutEvo marked a new stage in my journey. I was no longer just developing games. I was applying what I'd learned to build digital solutions for different purposes.",
         ],
       },
+      // Montagem fornecida pelo Eduardo (2026-10-17), usada como ele enviou: reportagem do O Globo e
+      // anúncio do vencedor do FUTEBOOM. Evidência documental da vitória.
+      photos: [
+        photo('scoutevo/scoutevo-win', [480, 894], 894 / 1112, {
+          'pt-BR':
+            'Montagem com a reportagem do O Globo "Flamengo faz \'maratona\' de inovação em São Paulo para aprimorar gestão" e o anúncio do FUTEBOOM "And the winner is: ScoutEvo / Ecossistema Escalável de Talentos", com o escudo do Flamengo e o logo do ScoutEvo.',
+          en: 'Collage with the O Globo report on Flamengo\'s innovation "marathon" in São Paulo and the FUTEBOOM announcement "And the winner is: ScoutEvo / Ecossistema Escalável de Talentos", with the Flamengo crest and the ScoutEvo logo.',
+        }),
+      ],
       // Reportagem do O Globo sobre a maratona (10/04/2018), fornecida pelo Eduardo (2026-10-17).
       // Trata do evento, não do resultado; conteúdo para assinantes.
       links: [

@@ -130,6 +130,13 @@ describe('Campaign Log — CHAPTER 02 (ScoutEvo)', () => {
     );
   });
 
+  it('shows the collage Eduardo sent, at its original ratio, with bilingual alt', () => {
+    expect(scoutevo.photos?.map((p) => [p.src, p.width, p.height])).toEqual([
+      ['assets/campaign-log/scoutevo/scoutevo-win-894.webp', 894, 1112],
+    ]);
+    expect(scoutevo.photos?.[0].alt.en).toContain('And the winner is: ScoutEvo');
+  });
+
   it('links the O Globo report about the competition', () => {
     expect(scoutevo.links?.map((l) => l.url)).toEqual([
       'https://oglobo.globo.com/esportes/flamengo-faz-maratona-de-inovacao-em-sao-paulo-para-aprimorar-gestao-22577762',

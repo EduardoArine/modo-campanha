@@ -218,6 +218,11 @@ h4 {
     @include mq(md) {
       flex: var(--ratio) 1 0;
     }
+
+    // Imagem única (ex.: montagem em retrato): largura contida.
+    &:only-child {
+      max-width: 24rem;
+    }
   }
 }
 
