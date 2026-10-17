@@ -829,4 +829,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Datas:** só c. 1991; os demais checkpoints usam época em texto.
 - **Fotos (2026-10-17):** as duas fotos reais da coleção e do móvel entram no checkpoint 05, dentro da história completa (modelo `CampaignLogPhoto`: WebP, proporção original, alt bilíngue, lazy).
 - **Pendências:** aprovação das frases-resumo e dos textos alternativos das fotos; publicação; o checkpoint real da FATEC (hoje só MOCK).
-- **Status:** Implementada em desenvolvimento na branch `feat/hero-refinement`. **Aguardando revisão visual do Eduardo** (não congelado).
+- **Status:** **APPROVED / FROZEN e publicado em produção** (D-071).
+
+## D-071 — Campaign Log: CHAPTER 01 — DO CONTROLE AO CÓDIGO; CHAPTER 00 publicado
+
+- **Data:** 2026-10-17
+- **CHAPTER 00 — ORIGIN:** aprovado e congelado pelo Eduardo (incluindo frases-resumo, fotos e textos alternativos). Publicado na produção: `CAMPAIGN_LOG_CHAPTERS = [ORIGIN_CHAPTER]`. Sem deploy.
+- **CHAPTER 01 — DO CONTROLE AO CÓDIGO (2013–2017, FATEC Americana):**
+  - **Conteúdo:** cinco checkpoints com o texto pt do Eduardo e o fechamento CHECKPOINT COMPLETE — 2017. A tradução para o inglês é minha e está pendente. Detalhes em `docs/15` §14.
+  - **Modelo:** `when` passa a aceitar `{ year }`; `code` vira opcional; o capítulo ganha `name` localizado, `period`, `context` e `closing`.
+  - **MOCK:** a entrada MOCK da formação saiu do MOCK de desenvolvimento.
+  - **Publicação:** o capítulo 01 fica só em desenvolvimento até a revisão.
+- **Status:** CHAPTER 00 **APPROVED / FROZEN / publicado**; CHAPTER 01 **aguardando revisão visual e aprovação da tradução**.

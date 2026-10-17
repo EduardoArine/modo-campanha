@@ -178,7 +178,7 @@ Commits ficam locais até a aprovação da 03-C (mesmo fluxo da 02-C).
 
 ## 13. CHAPTER 00 — ORIGIN (D-070, 2026-10-17)
 
-> Estado: **implementado em desenvolvimento, aguardando revisão visual do Eduardo**; não publicado em produção.
+> Estado: **APPROVED e FROZEN** pelo Eduardo (2026-10-17), inclusive frases-resumo, fotos e textos alternativos. **Publicado na produção** (`CAMPAIGN_LOG_CHAPTERS = [ORIGIN_CHAPTER]`); sem deploy.
 
 **Assinatura:** A campanha começou muito antes do código. / The campaign started long before the code.
 
@@ -215,7 +215,43 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
    - **Carregamento:** `loading="lazy"`, então só carregam quando a história é aberta.
    - **Texto alternativo:** objetivo e bilíngue; precisa de aprovação.
    - **Marca na foto 2:** a TV mostra o logo de um jogo de terceiros (Gears 5). É registro documental, não asset do projeto, mas vale a sua decisão.
-2. **Publicação:** depois do congelamento, basta `CAMPAIGN_LOG_CHAPTERS = [ORIGIN_CHAPTER]` em `campaign-log.data.ts`. Sozinho, isso faz a seção aparecer em produção só com o capítulo 00, porque a linha profissional real (03-0) ainda não existe.
-3. **Checkpoint da FATEC Americana:** existe hoje **só como MOCK**, com período 2013–2017 e texto inventados para desenvolvimento (D-049/D-050). O NEW GAME real precisa de período e texto aprovados pelo Eduardo.
-4. **Frases-resumo:** são extrações literais (primeira frase de cada texto; no 04, a primeira do segundo parágrafo) e precisam de aprovação editorial.
-5. **Jornada / Journey no header:** continua oculta (regra 03-C) até o Campaign Log ir para produção.
+2. ~~Publicação~~ **feita:** o capítulo 00 está em `campaign-log.data.ts`, então a seção aparece em produção com ele (a linha profissional real ainda não existe).
+3. ~~Checkpoint da FATEC Americana~~ **substituído pelo CHAPTER 01 real (§14).** A entrada MOCK da formação saiu do MOCK de desenvolvimento.
+4. ~~Frases-resumo~~ **aprovadas** junto com o capítulo.
+5. **Jornada / Journey no header:** o Campaign Log já está na produção, então pela regra 03-C a Jornada poderia voltar ao header. Não mexi no header (fora do escopo); depende do Eduardo.
+
+## 14. CHAPTER 01 — DO CONTROLE AO CÓDIGO (D-071, 2026-10-17)
+
+> Estado: **implementado em desenvolvimento, aguardando revisão visual do Eduardo**; não publicado em produção.
+
+**Cabeçalho:** 2013 — 2017 · `CHAPTER 01 — DO CONTROLE AO CÓDIGO` (en: FROM CONTROLLER TO CODE) · assinatura "O que começou como paixão na infância se transformou em uma escolha de vida." · contexto "Tecnologia em Jogos Digitais · FATEC Americana". **Fechamento:** `CHECKPOINT COMPLETE — 2017` · "A campanha estava apenas começando."
+
+| #   | Quando              | Título pt                                    | Título en (tradução)                    |
+| --- | ------------------- | -------------------------------------------- | --------------------------------------- |
+| 01  | 2013                | Quando a paixão virou escolha                | When Passion Became a Choice            |
+| 02  | Durante a graduação | Aedes Revenge — Meu primeiro grande projeto  | Aedes Revenge — My First Big Project    |
+| 03  | 2016                | Meu primeiro Melhor Jogo                     | My First Best Game Award                |
+| 04  | 2017                | Um jogo de verdade, com jogadores de verdade | A Real Game, with Real Players          |
+| 05  | 2017                | Dois prêmios e um TCC nota 10                | Two Awards and a Perfect-Score Capstone |
+
+**Modelo (evolução mínima de §13):**
+
+- `when` aceita ano confirmado (`{ year }`).
+- `code` (codinome) ficou opcional; este capítulo não tem codinomes.
+- O capítulo ganhou `name` localizado e três campos opcionais: `period`, `context` e `closing` (fechamento CHECKPOINT COMPLETE + ano final).
+
+**Texto:**
+
+- **Português:** o do Eduardo, sem alteração. As ênfases (negrito/itálico) viram texto simples, porque o modelo guarda parágrafos sem formatação.
+- **Inglês:** tradução fiel, **pendente de aprovação**.
+- **Frases-resumo:** extração literal; no 01, é a primeira frase do 2º parágrafo.
+
+**Linha profissional:** a entrada MOCK da formação (FATEC) saiu do MOCK de desenvolvimento, porque este capítulo a substitui. Em produção nada muda até a aprovação.
+
+**Pontos para o Eduardo:**
+
+1. Revisão visual e aprovação da tradução para o inglês.
+2. **Aedes Revenge como projeto:** o capítulo descreve o projeto em detalhe. Pela regra original (§2), o Campaign Log não descreve projetos. Aqui é parte do relato, mas o Aedes Revenge poderia virar um MC-CART no Project Inventory (serial a definir; o MC-002 é o Paco, em revisão).
+3. **Achievements:** os dois prêmios e o TCC nota 10 são evidências reais. Pela regra de não repetir o Campaign Log, só entram em Achievements se forem apresentados de outro jeito, ou ficam só aqui.
+4. **Tecnologias no texto** (Unity, C#): estão no relato do Eduardo; o Skill Loadout não lista Unity.
+5. **Link do Google Play:** não informado, então não há link.
