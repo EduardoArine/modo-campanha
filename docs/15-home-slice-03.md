@@ -231,8 +231,8 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 | 01  | 2013                | Quando a paixão virou escolha                | When Passion Became a Choice            |
 | 02  | Durante a graduação | Aedes Revenge — Meu primeiro grande projeto  | Aedes Revenge — My First Big Project    |
 | 03  | 2016                | Meu primeiro Melhor Jogo                     | My First Best Game Award                |
-| 04  | 2017                | Um jogo de verdade, com jogadores de verdade | A Real Game, with Real Players          |
-| 05  | 2017                | Dois prêmios e um TCC nota 10                | Two Awards and a Perfect-Score Capstone |
+| 04  | 2017                | Um jogo de verdade, com jogadores de verdade | A Real Game with Real Players           |
+| 05  | 2017                | Dois prêmios e um TCC nota 10                | Two Awards and a Perfect Capstone Score |
 
 **Modelo (evolução mínima de §13):**
 
@@ -243,7 +243,7 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 **Texto:**
 
 - **Português:** o do Eduardo, sem alteração. As ênfases (negrito/itálico) viram texto simples, porque o modelo guarda parágrafos sem formatação.
-- **Inglês:** tradução fiel, **pendente de aprovação**.
+- **Inglês:** tradução fiel, **pendente de aprovação**; revisada na consolidação (§16).
 - **Frases-resumo:** extração literal; no 01, é a primeira frase do 2º parágrafo.
 
 **Linha profissional:** a entrada MOCK da formação (FATEC) saiu do MOCK de desenvolvimento, porque este capítulo a substitui. Em produção nada muda até a aprovação.
@@ -257,29 +257,29 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 5. **Google Play:** o link expirou e o jogo não está mais publicado (Eduardo, 2026-10-17). Não há link. Retomar o Aedes Revenge fica como possível projeto futuro.
 6. **TCC publicado:** o checkpoint 05 tem o link "Ler o TCC (PDF)" / "Read the capstone project (PDF, in Portuguese)" para o PDF no Repositório Institucional do Conhecimento do CPS (`ric.cps.sp.gov.br`, verificado: HTTP 200, PDF de ~3,3 MB). O link fica dentro da história completa, abaixo do texto, como ação `text` com ícone de link externo e "(abre em nova aba)" para leitor de tela. O Campaign Log passa a ter links só para documentos públicos que comprovam um checkpoint (campo `links`).
 
-## 15. CHAPTER 02 — ScoutEvo (D-072, 2026-10-17)
+## 15. CHAPTER 02 — DO CÓDIGO AO PRODUTO (D-072, D-073, 2026-10-17)
 
 > Estado: **implementado em desenvolvimento, aguardando revisão do Eduardo**; não publicado em produção.
 
 O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
 
-| #   | Quando      | Codinome      | Título pt / en                                                                          |
-| --- | ----------- | ------------- | --------------------------------------------------------------------------------------- |
-| 01  | 2018        | SCOUTEVO      | Quando uma ideia entrou em campo / When an Idea Took the Field                          |
-| 02  | 2019        | EOS           | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters           |
-| 03  | 2021 — 2024 | AXIA          | Da ideia à inteligência operacional / From Concept to Operational Intelligence          |
-| 04  | DESDE 2025  | COMUNIDADE ON | Quando os games viraram uma linguagem de produto / When Games Became a Product Language |
+| #   | Quando       | Codinome      | Título pt / en                                                                          |
+| --- | ------------ | ------------- | --------------------------------------------------------------------------------------- |
+| 01  | 2018         | SCOUTEVO      | Quando uma ideia entrou em campo / When an Idea Took the Field                          |
+| 02  | 2019         | EOS           | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters           |
+| 03  | c. 2020/2021 | AXIA          | Da ideia à inteligência operacional / From Concept to Operational Intelligence          |
+| 04  | DESDE 2025   | COMUNIDADE ON | Quando os games viraram uma linguagem de produto / When Games Became a Product Language |
 
-- **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
-- **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
+- **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto, exceto na Comunidade ON (resumo próprio, §16).
+- **Nome, período e assinatura do capítulo:** definidos pelo Eduardo na consolidação (§16): `2018 — ATUAL · CHAPTER 02 — DO CÓDIGO AO PRODUTO`. `name` e `signature` continuam opcionais no modelo.
 - **EOS (2019):** plataforma de logística de doação e transplante de órgãos. O Eduardo participou da engenharia da solução e fez todo o frontend web (ASP.NET/C#). Em setembro de 2019 foi disponibilizada à Central Estadual de Transplantes de São Paulo e divulgada pela Unicamp; a pesquisa gerou um artigo na _Case Studies on Transport Policy_ (2021). Ênfases do texto viram texto simples. Referências externas (2026-10-17), na história completa, agrupadas por tipo e verificadas:
   - **Publicação científica:** "System for transporting human organs", _Case Studies on Transport Policy_, Elsevier (2021): link do ScienceDirect e DOI permanente 10.1016/j.cstp.2021.01.005. A nota de contexto diz "Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso". **A autoria não é do Eduardo**; a participação dele, segundo o próprio relato, foi a engenharia da solução e o frontend web.
   - **Imprensa:** Portal Afya, "Software pode reduzir tempo no transporte de órgãos para transplante" (2019, publicada em 23/12/2019).
   - **Registro bibliográfico:** OpenAlex W3128566934.
-  - **Lançamento institucional (Unicamp, 2019): pendente.** O link não veio, e a busca em unicamp.br não encontrou a matéria. Entra como "LANÇAMENTO INSTITUCIONAL" (disponibilização para uso experimental, 2019) quando o Eduardo enviar o endereço.
+  - **Lançamento institucional (Unicamp, 2019):** notícia da FECFAU/PPG-EC de 27/09/2019, "EOS - o primeiro sistema de planejamento de transporte de órgãos para transplante" (enviada na consolidação, verificada; §16). Primeira da lista.
   - **Sem afirmação de resultado:** nenhum rótulo apresenta resultados de teste como adoção operacional definitiva ou como redução comprovada de perdas de órgãos.
-- **Axia (2021 — 2024, versão do Eduardo de 2026-10-17, substitui a anterior):** plataforma de inteligência operacional da Ativvus/Arppen para limpeza e facilities. O Eduardo participou de toda a evolução do produto, incluindo a Inteligência Axia: arquitetura, webapp Angular, WebAPI .NET/C#, SQL Server, design das interfaces e contribuições ao código embarcado em C. Foco principal: plataforma web, APIs e experiência de uso. O modelo ganhou `when: { span }` para intervalos de anos confirmados.
-  - **Referências:** **imprensa:** InfraFM, "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos" (verificada; cita a Axia como produto da Ativvus; data de publicação não confirmada, por isso sem ano no rótulo). **Não entram:** `arppen.com/about.html` e `arppen.com/axia.html` retornam 404. A página inicial da Arppen ("2012 — 2026") aponta para comunidadeon.com; linkar o site exporia essa relação, então fica a critério do Eduardo.
+- **Axia (versão do Eduardo de 2026-10-17; data revista em §16 para c. 2020/2021, sem ano final):** plataforma de inteligência operacional da Ativvus/Arppen para limpeza e facilities. O Eduardo participou de toda a evolução do produto, incluindo a Inteligência Axia: arquitetura, webapp Angular, WebAPI .NET/C#, SQL Server, design das interfaces e contribuições ao código embarcado em C. Foco principal: plataforma web, APIs e experiência de uso. O modelo ganhou `when: { span }` para intervalos de anos confirmados.
+  - **Referências:** **registro da empresa:** página inicial da Arppen, com a seção da Axia e a linha do tempo pública (entrou na consolidação, §16; `arppen.com/axia.html` segue em 404). **Imprensa:** InfraFM, "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos" (verificada; cita a Axia como produto da Ativvus; data de publicação não informada, por isso sem ano no rótulo).
   - **Nota factual:** a InfraFM diz que a Axia foi "desenvolvida pela empresa de tecnologia Ativvus em 2022", depois retirada do mercado para uma nova versão. O relato do Eduardo começa em 2021 (idealização e engenharia). Não é necessariamente conflito, mas vale a revisão dele.
 - **Comunidade ON (desde 2025, textos do Eduardo de 2026-10-17):** "2025–Atual" aparece como **DESDE 2025 / SINCE 2025** (`when: { since }`, mesmo formato da entrada current em aberto, D-050). O Eduardo desenvolve as aplicações web, integra serviços e APIs e constrói as experiências de interface (Angular, TypeScript, .NET, C#); a gamificação liga o trabalho à formação em Jogos Digitais. O texto é a descrição pública que ele mesmo escreveu: nada interno da Comunidade On, sem links. Ênfases viram texto simples.
   - **Fechamento em andamento:** o CHAPTER 02 fecha com **CURRENT QUEST — EM ANDAMENTO / CURRENT QUEST — IN PROGRESS** (`ongoing: true`, rótulo do dicionário) no lugar de CHECKPOINT COMPLETE, sem ano final. A frase é o lema aprovado do Player Status ("XP real, sem personagem." / "Real XP. No persona."), lido de `PLAYER_PROFILE.motto`, sem cópia. O marker usa a cor de campanha atual (`--mc-status-online`), como a entrada current da linha profissional.
@@ -288,9 +288,111 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
 
 **Pontos para o Eduardo:**
 
-1. Nome e assinatura do CHAPTER 02, e se ele terá período (o fechamento já é CURRENT QUEST — EM ANDAMENTO).
+1. ~~Nome e assinatura do CHAPTER 02~~ **definidos** na consolidação (§16).
 2. **Linha profissional MOCK em desenvolvimento:** depois do fechamento do CHAPTER 02 aparecem as entradas MOCK (2014–2018, 2019–2022, 2023–2025, "Comunidade On desde 2025"), com cronologia que não bate com os capítulos reais; a última agora duplica o checkpoint real. Elas não são fatos e devem sair quando os capítulos forem aprovados.
-3. **Sobreposição com outras seções:** o Player Status já mostra a campanha atual e o Current Main Quest (D-055) ainda está com MOCK. Vale decidir se o Current Main Quest repete, aprofunda ou é absorvido pelo checkpoint Comunidade ON.
+3. **Sobreposição com outras seções:** tratada na consolidação (§16.4 e §16.6).
 4. **ScoutEvo como projeto e a vitória como achievement:** mesma questão do Aedes Revenge (§14), ou seja, MC-CART no Inventory e Achievements sem repetir o Campaign Log.
 5. ~~Link público~~ **feito:** a reportagem do O Globo sobre a maratona (10/04/2018, "Flamengo faz 'maratona' de inovação em São Paulo para aprimorar gestão") está linkada dentro da história. A matéria trata do evento, não do resultado, e é fechada para assinantes.
 6. **Imagem integrada (decisão do Eduardo, 2026-10-17):** a colagem enviada por ele (reportagem do O Globo, anúncio "And the winner is: ScoutEvo" do FUTEBOOM, escudo do Flamengo, logo do ScoutEvo) foi usada **como ele mandou**, como evidência documental da vitória, dentro da história completa. Arquivos: `public/assets/campaign-log/scoutevo/scoutevo-win-{480,894}.webp` (43/93 KB), na proporção original, sem metadados. Alt bilíngue descreve o conteúdo; largura limitada a 24rem.
+
+## 16. Consolidação editorial dos CHAPTERS 01 e 02 (D-073, 2026-10-17)
+
+> Estado: **aplicado em desenvolvimento, aguardando aprovação visual e editorial do Eduardo**. Nada foi publicado: a produção continua só com o CHAPTER 00. A liberação do Campaign Log completo é uma etapa separada, depois da aprovação.
+
+### 16.1 Decisões do Eduardo aplicadas
+
+| Capítulo | Período      | Nome pt / en                                    | Assinatura pt / en (en = proposta)                                                                                                                                                                       |
+| -------- | ------------ | ----------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 00       | —            | ORIGIN                                          | A campanha começou muito antes do código. / The campaign started long before the code. (FROZEN, sem mudança)                                                                                             |
+| 01       | 2013 — 2017  | DO CONTROLE AO CÓDIGO / FROM CONTROLLER TO CODE | O que começou como paixão na infância se transformou em uma escolha de vida. / What started as a childhood passion became the path I chose.                                                              |
+| 02       | 2018 — ATUAL | DO CÓDIGO AO PRODUTO / FROM CODE TO PRODUCT     | Cada projeto trouxe um novo desafio. Cada desafio ampliou minha maneira de criar produtos digitais. / Every project brought a new challenge. Every challenge broadened the way I build digital products. |
+
+- **CHAPTER 02 em aberto:** período `{ start: 2018, end: 'present' }` (exibido "2018 — ATUAL / PRESENT") e fechamento CURRENT QUEST — EM ANDAMENTO / IN PROGRESS com o lema do Player Status (`PLAYER_PROFILE.motto`, fonte única).
+- **Comunidade ON, resumo do card:** "Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais." / "Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces." É a única exceção à regra "resumo = primeira frase da história" (modelo e testes documentam a exceção); a história completa segue intacta. Aberta, a história substitui o resumo, como nos outros checkpoints.
+- **Axia:** "início aproximado em 2020/2021 e evolução posterior" vira **c. 2020/2021**, sem ano final (`when: { approx: [2020, 2021] }`). O ano final 2024 saiu.
+- **EOS:** 2019 como marco público (sem mudança de data).
+
+### 16.2 Fontes e datas (concepção, desenvolvimento, divulgação, evolução pública)
+
+| Checkpoint    | Data exibida | O que cada data significa                                                                                                                                                                                                                                                                                                     | Fonte                                               |
+| ------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- |
+| ScoutEvo      | 2018         | Maratona e vitória (relato do Eduardo). A matéria trata do evento, não do resultado.                                                                                                                                                                                                                                          | O Globo, 10/04/2018; colagem FUTEBOOM               |
+| EOS           | 2019         | Disponibilização à Central Estadual de Transplantes de SP: 27/09/2019. Imprensa: 23/12/2019. Artigo científico: 2021. A data de concepção/desenvolvimento não foi informada e não aparece.                                                                                                                                    | Unicamp FECFAU; Portal Afya; Elsevier/DOI; OpenAlex |
+| Axia          | c. 2020/2021 | Início aproximado segundo o Eduardo. Linha do tempo pública da Arppen: ponto de partida em 2021, protótipos e testes em 2022, "recalculando rotas" em 2023, Inteligência Axia no mercado em 2024; produto listado como 2021–2026. A InfraFM cita o desenvolvimento em 2022. **2020 não tem fonte pública**; vem só do relato. | Arppen (página inicial); InfraFM                    |
+| Comunidade ON | DESDE 2025   | Relato do Eduardo. Sem links.                                                                                                                                                                                                                                                                                                 | —                                                   |
+
+- **Atribuição:** nenhuma das fontes cita o Eduardo. A Unicamp credita o EOS a Henrique Bellotti (mestrando), "com apoio de Adriano Balista (Ativvus) e Dr. Ronaldo Honorato (InCor)", com orientação da Profa. Maria Teresa Françoso; o artigo é de Bellotti e Françoso. As fontes comprovam os **projetos e as datas**; a participação do Eduardo vem do relato dele, que não foi reescrito. As notas dos links não atribuem a ele publicações, resultados nem funcionalidades.
+- **Arppen:** `arppen.com/axia.html` (enviado de novo) continua 404; o link aponta para a página inicial, que tem a seção da Axia. **Atenção:** essa página diz publicamente que a Arppen foi incorporada à Comunidade ON (2026) e cita um cliente na história da Axia. O Campaign Log não repete nada disso, mas o link leva até lá. Como o Eduardo enviou o link, ele entrou; confirmar na aprovação.
+- **Novo tipo de link:** `company` = "REGISTRO DA EMPRESA / COMPANY RECORD" (página institucional da empresa responsável pelo produto).
+
+### 16.3 Revisão das traduções em inglês
+
+**Aplicado (CHAPTER 01: a tradução en foi feita na implementação, não pelo Eduardo; o pt não muda):**
+
+- Assinatura: "…became a life choice." → "…became the path I chose." ("life choice" soa como "estilo de vida" em inglês).
+- Títulos: "A Real Game, with Real Players" → "A Real Game with Real Players"; "Two Awards and a Perfect-Score Capstone" → "Two Awards and a Perfect Capstone Score".
+- Aedes Revenge: frase com dois sinais de dois-pontos reescrita ("Aedes Revenge was born during college: … — the mosquito's own."); "many different development challenges" → "a wide range of development challenges".
+- FAEL 2016: "at FAEL 2016, at FATEC Americana" → "at FATEC Americana's FAEL 2016"; "get recognized was a defining achievement" → "receive recognition was a memorable achievement" (pt: "conquista marcante").
+- Google Play: "putting the game online … watch" → "getting the game online … see"; "needed to improve" → "needed improvement"; "thinking of" → "thinking about".
+- TCC: "presented the project as my capstone project … perfect score of 10" → "presented it as my capstone project (TCC) and received a perfect 10".
+
+**Sugestões para os textos en do Eduardo (não aplicadas):**
+
+1. **Comunidade ON, §5:** "that led me to study Game Development" → "that led me to study Digital Games". O curso aparece como "Digital Games Technology" no Player Status e no CHAPTER 01.
+2. **Axia, §2:** "including the development of Axia's intelligence capabilities" perde o nome do produto. Sugestão: "including its evolution into Axia Intelligence (Inteligência Axia)". A Arppen usa "A Inteligência Axia" como marco de 2024.
+3. **Comunidade ON, §7:** o pt lista cinco frentes ("engenharia, produto, design, IA e gamificação") e o en, quatro ("engineering, product design, AI, and gamification"). O resumo novo usa "design de produto" nos dois idiomas, então o en atual combina com ele; manter se for intencional.
+4. ScoutEvo, EOS e os títulos en do CHAPTER 02 estão naturais; sem sugestão.
+
+### 16.4 Repetições identificadas
+
+1. **Grafia da marca:** "Comunidade On" no Player Status (CAMPANHA ATUAL), no CLAUDE.md e nos docs; "Comunidade ON" no checkpoint (texto do Eduardo). Escolher uma. O Player Status está congelado: mudar exige aprovação.
+2. **Lema "XP real, sem personagem."**: aparece no Hero, no footer e agora no fechamento do CHAPTER 02 (três vezes na Home). Frase curta de marca e fonte única; mantido por decisão do Eduardo.
+3. **A fórmula "engenharia/desenvolvimento + produto + IA + gamificação"** aparece no Player Status (focusLine e resumo), no resumo do card da ON e no §7 da história da ON. Não é texto grande duplicado, mas o Current Main Quest não deve repetir a fórmula (§16.6).
+4. **Achievements (futuros):** os dois prêmios do Aedes Revenge (CHAPTER 01, checkpoints 03 e 05), o TCC nota 10 (checkpoint 05) e a vitória do ScoutEvo (CHAPTER 02, checkpoint 01) já são narrados no Campaign Log. Nos Achievements devem entrar como **registro** (nome do prêmio, quem concedeu, ano, evidência), sem narrativa (D-051). **Evidência:** ScoutEvo tem a colagem com "And the winner is: ScoutEvo"; o PDF do TCC comprova o trabalho, mas falta confirmar se mostra a nota; os prêmios FAEL 2016 e Mostra de Jogos 2017 ainda não têm evidência pública (certificado, foto ou página).
+5. **Project Inventory (futuro):** se Aedes Revenge, ScoutEvo, EOS ou Axia virarem MC-CART, o case conta o projeto e o Campaign Log continua contando a trajetória. Não copiar parágrafos de um para o outro.
+6. **Player Status × Campaign Log:** só "Tecnologia em Jogos Digitais" (ORIGEM × contexto do CHAPTER 01) e "Comunidade On" (CAMPANHA ATUAL × checkpoint 04) se repetem, como rótulos curtos. Aceitável.
+
+### 16.5 Auditoria das entradas MOCK da linha profissional
+
+`campaign-log.data.development.ts` (só dev/testes; produção vazia, deploy guard `mock-campaign-log`):
+
+| id                              | Período     | Título                                                | Conflito com os capítulos reais                  |
+| ------------------------------- | ----------- | ----------------------------------------------------- | ------------------------------------------------ |
+| `mock-campaign-log-development` | 2014 — 2018 | Da tecnologia para o desenvolvimento                  | Sobrepõe a FATEC (2013–2017) e o ScoutEvo (2018) |
+| `mock-campaign-log-product`     | 2019 — 2022 | Código passou a ser só uma parte do produto           | Inventa uma fase que não existe entre EOS e Axia |
+| `mock-campaign-log-ai`          | 2023 — 2025 | IA entrou no workflow                                 | Fase fictícia, sem relato real                   |
+| `mock-campaign-log-current`     | DESDE 2025  | Construindo produtos de ponta a ponta (Comunidade On) | Duplica o checkpoint real da Comunidade ON       |
+
+**Dependências:** a Home em dev (aparecem depois do fechamento do CHAPTER 02); `campaign-log-section.spec.ts` (testes da linha profissional: rótulos CHECKPOINT/CAMPANHA ATUAL, períodos, DESDE, contexto, h3); `campaign-log.data.spec.ts` (estrutura do MOCK); `home-page.spec.ts` (`hasCampaignLog`); o deploy guard; e o `stylecheck` de revisão, que compara os checkpoints de capítulo com os profissionais. O showcase `/dev/design-system` não usa.
+
+**Proposta para a etapa de liberação (não executada):**
+
+1. Esvaziar `CAMPAIGN_LOG` também em dev: a visualização real passa a ser só capítulos, sem datas fictícias.
+2. Os capítulos cobrem de c. 1991 até hoje, então a linha profissional (`CampaignLogEntry`, D-048/D-050) fica sem conteúdo real previsto. **Recomendação:** aposentá-la (modelo, bloco do template, MOCK, `fileReplacements` e testes) e manter a tipografia aprovada do D-050 por um teste com valores fixos (título 20px/600, resumo 16px/400, rótulo 13px/500). Alternativa: manter o bloco com uma fixture só de teste, injetada por token, se houver plano para entradas profissionais fora dos capítulos.
+3. O deploy guard `mock-campaign-log` pode ficar como proteção.
+
+### 16.6 Current Main Quest: recomendações
+
+O checkpoint da Comunidade ON já conta o quê, o porquê e o papel do Eduardo. O Current Main Quest (D-055, `docs/18`) deve falar do **agora**: o desafio em andamento, no presente, sem recontar a história.
+
+1. **Título:** não repetir "Comunidade On" sozinho, que já está no Player Status e no Campaign Log. Usar o nome do desafio atual.
+2. **Resumo (140–220 caracteres):** o problema que ele está resolvendo agora. Evitar a fórmula "engenharia, produto, IA e gamificação" (§16.4, item 3) e o lema.
+3. **Frentes (2–4):** temas públicos de trabalho atual, sem arquitetura, integrações, métricas ou clientes (D-040). O texto e as frentes vêm do Eduardo, nada é presumido.
+4. **Nomenclatura:** o fechamento do Campaign Log diz "CURRENT QUEST" e a seção se chama "CURRENT MAIN QUEST". Se a seção for publicada, o fechamento pode virar um link para `#current-main-quest` (proposta de interação, exige aprovação).
+5. **Também é uma saída válida não publicar o Current Main Quest**, se não houver mais nada público para dizer além do checkpoint. Assim a Home evita uma seção que repetiria o Campaign Log.
+6. A confirmação de que a seção pode falar da Comunidade On continua necessária (`docs/18` §6).
+
+### 16.7 Correções visuais desta rodada
+
+- **Rótulos e notas das referências:** desde o commit fa5adc0, a regra `.story p` (compartilhada com o resumo) sobrepunha `.kind` e `.context` dentro das referências. Os tipos ("IMPRENSA"...) e as notas saíam como texto corrido. Agora a regra vale só para `.story > p`, e voltam o rótulo de sistema e a nota body-s. O CHAPTER 00 de produção não tem referências e não muda.
+- **Conhecido, não corrigido:** em rótulos longos (InfraFM no desktop), a seta de link externo pode quebrar sozinha para a linha seguinte. `&nbsp;` não resolve (a especificação CSS permite quebra junto de elementos inline-block). A correção exige envolver a última palavra e o ícone num `nowrap`; fica como proposta.
+
+### 16.8 Para aprovação do Eduardo
+
+1. Visual e texto dos CHAPTERS 01 e 02 (capturas desktop e mobile, pt e en).
+2. Versões en do nome e da assinatura do CHAPTER 02 e a revisão en do CHAPTER 01 (§16.3).
+3. Axia: exibir "c. 2020/2021" mesmo com as fontes públicas começando em 2021 (§16.2).
+4. Link da página inicial da Arppen (§16.2, atenção).
+5. Sugestões en para os textos dele (§16.3) e a grafia ON/On (§16.4).
+6. Destino das entradas MOCK e da linha profissional (§16.5).
+7. Current Main Quest (§16.6).

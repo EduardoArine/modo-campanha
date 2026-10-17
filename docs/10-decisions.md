@@ -855,3 +855,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Correção de regressão (2026-10-17):** o enxugamento de CSS do commit fa5adc0 grudou `.title` na regra de `.context`, e os títulos dos checkpoints de capítulo passaram a sair pequenos e apagados (inclusive no capítulo 00 da produção; sem deploy). A correção junta `.title` e `.signature` como era a intenção, e foi conferida no navegador: título, resumo e rótulo dos capítulos têm estilo computado idêntico ao da linha profissional aprovada (D-050).
 - **Comunidade ON (2026-10-17):** CHECKPOINT 04 do CHAPTER 02 (`when: { since: 2025 }`, exibido como DESDE 2025), com os textos pt/en do Eduardo. O capítulo ganhou `ongoing: true`: o fechamento mostra CURRENT QUEST — EM ANDAMENTO e o lema do Player Status (`PLAYER_PROFILE.motto`), com o marker de campanha atual. Descrição pública escrita pelo Eduardo; nada interno da Comunidade On.
 - **Status:** só em desenvolvimento, **aguardando revisão** e o nome/assinatura do capítulo.
+
+## D-073 — Campaign Log: consolidação editorial dos CHAPTERS 01 e 02
+
+- **Data:** 2026-10-17
+- **Decisões do Eduardo:** CHAPTER 02 — DO CÓDIGO AO PRODUTO, 2018–atual, assinatura "Cada projeto trouxe um novo desafio. Cada desafio ampliou minha maneira de criar produtos digitais.", em aberto (CURRENT QUEST — EM ANDAMENTO + lema do Player Status). Resumo próprio do card da Comunidade ON, única exceção à regra "resumo = primeira frase". Axia com início aproximado (c. 2020/2021) e evolução posterior, sem ano final. EOS com 2019 como marco público.
+- **Fontes:** notícia da Unicamp (FECFAU, 27/09/2019) como lançamento institucional do EOS; página inicial da Arppen como registro da empresa da Axia (`axia.html` em 404). Nenhuma fonte cita o Eduardo; as notas separam as datas de disponibilização, imprensa, artigo, início, protótipos e mercado, sem atribuir a ele publicações, resultados ou funcionalidades.
+- **Modelo:** `approx` aceita dois anos possíveis (`[2020, 2021]` → "c. 2020/2021"); período do capítulo aceita `end: 'present'` (ATUAL / PRESENT); novo tipo de link `company` (REGISTRO DA EMPRESA / COMPANY RECORD).
+- **Inglês:** revisão da tradução en do CHAPTER 01 (feita na implementação, não pelo Eduardo) e versões en propostas para o nome e a assinatura do CHAPTER 02; sugestões para os textos en do Eduardo ficam em `docs/15` §16.3, sem aplicar.
+- **Correção:** `.story p` → `.story > p` devolve o estilo de rótulo e nota às referências (regressão desde fa5adc0; sem efeito no CHAPTER 00 de produção).
+- **Auditoria:** repetições entre seções, entradas MOCK da linha profissional e recomendações para o Current Main Quest em `docs/15` §16.4–§16.6.
+- **Status:** só em desenvolvimento, **aguardando aprovação visual e editorial do Eduardo**. A liberação em produção é uma etapa separada.

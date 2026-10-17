@@ -166,7 +166,7 @@ type CampaignLogWhen =
   | { year: number }
   | { span: { start: number; end: number } }
   | { since: number }
-  | { approx: number }
+  | { approx: number | readonly [number, number] } // [2020, 2021] → "c. 2020/2021"
   | { era: Localized };
 
 interface CampaignLogPhoto {
@@ -178,7 +178,7 @@ interface CampaignLogPhoto {
 }
 
 interface CampaignLogLink {
-  kind: 'launch' | 'paper' | 'press' | 'record' | 'academic'; // rótulo do tipo vem do dicionário
+  kind: 'launch' | 'paper' | 'press' | 'record' | 'academic' | 'company'; // rótulo do dicionário
   label: Localized;
   url: string;
   note?: Localized; // contexto factual curto (ex.: autoria de um artigo que não é do Eduardo)
@@ -189,7 +189,7 @@ interface CampaignLogChapterEntry {
   code?: string; // codinome de sistema, igual nos dois idiomas (FIRST CONTACT, SCOUTEVO)
   when: CampaignLogWhen;
   title: Localized;
-  summary: Localized; // 1 frase extraída literalmente da história
+  summary: Localized; // 1ª frase da história, literal; resumo próprio só com aprovação (Comunidade ON, D-073)
   story: Localized<readonly string[]>; // história completa, em parágrafos
   photos?: readonly CampaignLogPhoto[]; // fotos reais citadas na história
   links?: readonly CampaignLogLink[]; // referências públicas que comprovam o checkpoint
@@ -199,7 +199,7 @@ interface CampaignLogChapter {
   id: string;
   number: string; // "00", "01"...
   name?: Localized; // ausente = cabeçalho só com o número (sem nome aprovado)
-  period?: CampaignLogPeriod; // ex.: 2013–2017
+  period?: CampaignLogPeriod; // ex.: 2013–2017; end: 'present' = em aberto (ATUAL)
   context?: Localized; // curso, instituição
   signature?: Localized;
   entries: readonly CampaignLogChapterEntry[];
