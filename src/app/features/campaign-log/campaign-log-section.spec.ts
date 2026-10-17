@@ -112,7 +112,21 @@ describe('CampaignLogSection', () => {
     expect(stories.length).toBe(10);
     expect(Array.from(stories).every((d) => !d.open)).toBe(true);
     expect(stories[0].querySelector('summary .open')?.textContent).toBe('Ler a história completa');
-    expect(stories[9].querySelectorAll('p').length).toBe(4);
+    expect(stories[9].querySelectorAll('p:not(.doc)').length).toBe(4);
+  });
+
+  it('links the capstone project (TCC) inside the last FATEC story, in a new tab', async () => {
+    const el = await renderAt('/');
+    const link = el
+      .querySelectorAll('.entry--story')[9]
+      .querySelector<HTMLAnchorElement>('details .doc a')!;
+
+    expect(link.getAttribute('href')).toBe(
+      'https://ric.cps.sp.gov.br/bitstream/123456789/720/1/20171S_ARINEJUNIOREduardoLuiz_OD0153.pdf',
+    );
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toBe('noopener noreferrer');
+    expect(link.textContent?.replace(/s+/g, ' ').trim()).toBe('Ler o TCC (PDF) (abre em nova aba)');
   });
 
   it('resolves professional system labels from the UI dictionary', async () => {
@@ -148,7 +162,7 @@ describe('CampaignLogSection', () => {
     ]);
   });
 
-  it('keeps decoration hidden; the only interaction is the story toggle', async () => {
+  it('keeps decoration hidden; interactions are the story toggles and the thesis link', async () => {
     const el = await renderAt('/');
 
     expect(
@@ -156,7 +170,8 @@ describe('CampaignLogSection', () => {
         (m) => m.getAttribute('aria-hidden') === 'true',
       ),
     ).toBe(true);
-    expect(el.querySelectorAll('a, button, [tabindex], [role="button"]').length).toBe(0);
+    expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
+    expect(el.querySelectorAll('a').length).toBe(1);
     expect(el.querySelectorAll('summary').length).toBe(10);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });

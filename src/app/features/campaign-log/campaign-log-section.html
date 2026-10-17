@@ -71,6 +71,15 @@
                 }
               </div>
             }
+            @for (link of entry.links ?? []; track link.url) {
+              <!-- Documento público que comprova o checkpoint (ex.: TCC). -->
+              <p class="doc">
+                <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+                  {{ locale.pick(link.label) }} <mc-icon name="external" />
+                  <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+                </a>
+              </p>
+            }
           </details>
         </li>
       }

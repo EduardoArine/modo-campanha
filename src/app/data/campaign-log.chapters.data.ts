@@ -287,6 +287,16 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
           'The passion that began in front of an Atari had now become knowledge, code, and a game I created myself.',
         ],
       },
+      // TCC no Repositório Institucional do Conhecimento (CPS), fornecido pelo Eduardo (2026-10-17).
+      links: [
+        {
+          label: {
+            'pt-BR': 'Ler o TCC (PDF)',
+            en: 'Read the capstone project (PDF, in Portuguese)',
+          },
+          url: 'https://ric.cps.sp.gov.br/bitstream/123456789/720/1/20171S_ARINEJUNIOREduardoLuiz_OD0153.pdf',
+        },
+      ],
     },
   ],
   closing: {

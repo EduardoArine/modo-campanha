@@ -45,6 +45,12 @@ export interface CampaignLogPhoto {
   alt: Localized;
 }
 
+/** Link externo verificável de um checkpoint (abre em nova aba). */
+export interface CampaignLogLink {
+  label: Localized;
+  url: string;
+}
+
 /** Checkpoint dentro de um capítulo (docs/15 §13–§14). Relato pessoal real. */
 export interface CampaignLogChapterEntry {
   id: string;
@@ -58,6 +64,8 @@ export interface CampaignLogChapterEntry {
   story: Localized<readonly string[]>;
   /** Fotos reais citadas na história, exibidas com ela. */
   photos?: readonly CampaignLogPhoto[];
+  /** Documentos públicos que comprovam o checkpoint (ex.: o TCC no repositório da FATEC). */
+  links?: readonly CampaignLogLink[];
 }
 
 /**
