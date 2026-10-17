@@ -31,8 +31,8 @@ describe('CampaignLogSection', () => {
 
     expect(section.querySelector('h2')?.textContent).toBe('CAMPAIGN LOG');
     expect(section.querySelectorAll('ol[role="list"]').length).toBe(1);
-    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 1 · MOCK: 4.
-    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 2 + 4);
+    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 2 · MOCK: 4.
+    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 3 + 4);
     expect(texts(section, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
@@ -50,6 +50,7 @@ describe('CampaignLogSection', () => {
       'Um jogo de verdade, com jogadores de verdade',
       'Dois prêmios e um TCC nota 10',
       'Quando uma ideia entrou em campo',
+      'Tecnologia em que cada minuto importa',
     ]);
     expect(texts(section, `${PRO} h3`)[0]).toBe('Da tecnologia para o desenvolvimento');
   });
@@ -85,6 +86,7 @@ describe('CampaignLogSection', () => {
       'CHECKPOINT 04',
       'CHECKPOINT 05',
       'CHECKPOINT 01 · SCOUTEVO',
+      'CHECKPOINT 02 · EOS',
     ]);
   });
 
@@ -103,17 +105,18 @@ describe('CampaignLogSection', () => {
       '2017',
       '2017',
       '2018',
+      '2019',
     ]);
     expect(
       Array.from(el.querySelectorAll(`${STORY} time`)).map((t) => t.getAttribute('datetime')),
-    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018']);
+    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019']);
   });
 
   it('shows the full story only on demand, with a native, localized details toggle', async () => {
     const el = await renderAt('/');
     const stories = el.querySelectorAll<HTMLDetailsElement>(`${STORY} details`);
 
-    expect(stories.length).toBe(11);
+    expect(stories.length).toBe(12);
     expect(Array.from(stories).every((d) => !d.open)).toBe(true);
     expect(stories[0].querySelector('summary .open')?.textContent).toBe('Ler a história completa');
     expect(stories[9].querySelectorAll('p:not(.doc)').length).toBe(4);
@@ -176,7 +179,7 @@ describe('CampaignLogSection', () => {
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
     expect(el.querySelectorAll('a').length).toBe(2);
-    expect(el.querySelectorAll('summary').length).toBe(11);
+    expect(el.querySelectorAll('summary').length).toBe(12);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });
 
@@ -188,7 +191,10 @@ describe('CampaignLogSection', () => {
       'CHAPTER 01 — FROM CONTROLLER TO CODE',
       'CHAPTER 02',
     ]);
-    expect(texts(el, `${STORY} h4`).at(-1)).toBe('When an Idea Took the Field');
+    expect(texts(el, `${STORY} h4`).slice(-2)).toEqual([
+      'When an Idea Took the Field',
+      'Technology Where Every Minute Matters',
+    ]);
     expect(texts(el, '.signature')[0]).toBe('The campaign started long before the code.');
     expect(texts(el, `${STORY} .period`)[1]).toBe('SNES era');
     expect(texts(el, `${STORY} .period`)[6]).toBe('During college');

@@ -150,3 +150,32 @@ describe('Campaign Log — CHAPTER 02 (ScoutEvo)', () => {
     }
   });
 });
+
+// CHAPTER 02 · EOS (2019): textos pt/en do Eduardo.
+describe('Campaign Log — CHAPTER 02 (EOS)', () => {
+  const eos = CHAPTER_02.entries[1];
+
+  it('is the second checkpoint of CHAPTER 02, in 2019', () => {
+    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual(['SCOUTEVO', 'EOS']);
+    expect(eos.when).toEqual({ year: 2019 });
+  });
+
+  it('keeps the facts: frontend in ASP.NET/C#, Sept 2019 handover, Unicamp and the 2021 paper', () => {
+    const pt = eos.story['pt-BR'].join(' ');
+    expect(pt).toContain(
+      'fui responsável por todo o frontend da aplicação web, desenvolvido com ASP.NET e C#',
+    );
+    expect(pt).toContain(
+      'Em setembro de 2019, o sistema foi disponibilizado à Central Estadual de Transplantes de São Paulo e divulgado pela Unicamp.',
+    );
+    expect(pt).toContain('Case Studies on Transport Policy, em 2021');
+    expect(eos.story.en.join(' ')).toContain("São Paulo's State Transplant Center");
+  });
+
+  it('takes the summary literally from the story, in both languages', () => {
+    for (const locale of ['pt-BR', 'en'] as const) {
+      expect(eos.story[locale][0]).toBe(eos.summary[locale]);
+      expect(eos.story[locale].length).toBe(6);
+    }
+  });
+});

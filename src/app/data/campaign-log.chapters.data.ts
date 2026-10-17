@@ -359,5 +359,38 @@ export const CHAPTER_02: CampaignLogChapter = {
         },
       ],
     },
+    {
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
+      id: 'eos',
+      code: 'EOS',
+      when: { year: 2019 },
+      title: {
+        'pt-BR': 'Tecnologia em que cada minuto importa',
+        en: 'Technology Where Every Minute Matters',
+      },
+      summary: {
+        'pt-BR':
+          'Depois de trabalhar com jogos e soluções para o esporte, participei de um projeto que me mostrou outra dimensão do desenvolvimento de produtos digitais: a possibilidade de apoiar processos diretamente ligados à saúde.',
+        en: 'After working on games and sports technology, I took part in a project that showed me another dimension of digital product development: supporting processes directly connected to healthcare.',
+      },
+      story: {
+        'pt-BR': [
+          'Depois de trabalhar com jogos e soluções para o esporte, participei de um projeto que me mostrou outra dimensão do desenvolvimento de produtos digitais: a possibilidade de apoiar processos diretamente ligados à saúde.',
+          'O EOS — Plataforma Inteligente para Logística de Doação e Transplante de Órgãos foi criado para auxiliar o planejamento do transporte de órgãos e equipes médicas, considerando rotas, modalidades de transporte, tempo de deslocamento e os limites de preservação dos órgãos.',
+          'Participei da engenharia da solução e fui responsável por todo o frontend da aplicação web, desenvolvido com ASP.NET e C#.',
+          'O desafio ia além de construir telas. Era necessário organizar informações complexas e apresentá-las de maneira clara para apoiar profissionais que precisavam tomar decisões sob restrições de tempo.',
+          'Em setembro de 2019, o sistema foi disponibilizado à Central Estadual de Transplantes de São Paulo e divulgado pela Unicamp. A pesquisa que fundamentou a solução também ganhou projeção internacional, com um artigo publicado na revista científica Case Studies on Transport Policy, em 2021.',
+          'Foi um projeto que reforçou algo importante para mim: desenvolver produtos digitais não é apenas trabalhar com tecnologia. É entender problemas reais e construir soluções que possam fazer diferença.',
+        ],
+        en: [
+          'After working on games and sports technology, I took part in a project that showed me another dimension of digital product development: supporting processes directly connected to healthcare.',
+          'EOS — Intelligent Platform for Organ Donation and Transplant Logistics was designed to assist in planning the transportation of organs and medical teams, considering routes, transportation modes, travel times, and organ preservation constraints.',
+          "I contributed to the solution's engineering and was responsible for the entire web application frontend, built with ASP.NET and C#.",
+          'The challenge went beyond building screens. It meant organizing complex information and presenting it clearly to support professionals making time-sensitive decisions.',
+          "In September 2019, the system was made available to São Paulo's State Transplant Center and featured by Unicamp. The underlying research also gained international academic visibility through a paper published in Case Studies on Transport Policy in 2021.",
+          "This project reinforced something important for me: building digital products isn't just about technology. It's about understanding real problems and creating solutions that can make a difference.",
+        ],
+      },
+    },
   ],
 };
