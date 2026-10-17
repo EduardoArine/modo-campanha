@@ -130,9 +130,10 @@ h4 {
   color: var(--mc-text-muted);
 }
 
-// Parágrafos da história completa: mesma regra do resumo.
+// Parágrafos da história completa (só os filhos diretos: rótulo e nota das referências mantêm
+// .kind e .context): mesma regra do resumo.
 .summary,
-.story p {
+.story > p {
   max-width: 62ch;
   margin-top: space(2);
   @include type(body);
