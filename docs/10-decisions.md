@@ -816,3 +816,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **acessibilidade:** conteúdo profissional só em DOM, versão em texto equivalente, `<dialog>` de leitura, região viva, teclado completo, toque com ◀ Ler ▶ e "próximo marco", reduced motion;
   - epílogo pessoal só estudado.
 - **Status:** **PROPOSTA**, aguardando aprovação do Eduardo (decisões em `docs/23` §17). Não implementar antes disso.
+
+## D-070 — Campaign Log: CHAPTER 00 — ORIGIN
+
+- **Data:** 2026-10-17
+- **Pedido do Eduardo:** começar o histórico real pelo arco de origem da paixão por videogames ("A campanha começou muito antes do código."). São cinco checkpoints com textos pt/en fornecidos por ele, sem inventar datas nem conquistas. Detalhes em `docs/15` §13.
+- **Decisão (menor evolução):**
+  - **Modelo:** o modelo das entradas profissionais (D-048) não muda. Entra `CampaignLogChapter` com `CampaignLogChapterEntry` (código de sistema, `when` = ano aproximado ou época, título, frase-resumo literal, história em parágrafos).
+  - **Visual:** o visual congelado (D-050) é preservado. O capítulo é o primeiro grupo do mesmo eixo, com os mesmos markers, tipografia e spacing, sem cards.
+  - **Interação:** a única interação nova é o `<details>` nativo "Ler a história completa". Isso flexibiliza o "nada é interativo" de D-048/D-050 só para as histórias de capítulo, a pedido do Eduardo.
+  - **Publicação:** `ORIGIN_CHAPTER` é conteúdo real, mas `CAMPAIGN_LOG_CHAPTERS` fica vazio em produção até o Eduardo congelar o capítulo; em desenvolvimento aparece antes da linha profissional MOCK. A Home renderiza o Campaign Log se houver entradas ou capítulos.
+  - **Datas:** só c. 1991; os demais checkpoints usam época em texto.
+- **Pendências:** fotos do checkpoint 05 (não recebidas); aprovação das frases-resumo; publicação; o checkpoint real da FATEC (hoje só MOCK).
+- **Status:** Implementada em desenvolvimento na branch `feat/hero-refinement`. **Aguardando revisão visual do Eduardo** (não congelado).

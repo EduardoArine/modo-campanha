@@ -175,3 +175,42 @@ Commits ficam locais até a aprovação da 03-C (mesmo fluxo da 02-C).
 ## 12. Documentação ao longo do slice
 
 `docs/14` (seção Campaign Log, só depois do histórico real), `docs/07` (modelo, na 03-A), `docs/02` (tipos de checkpoint), `docs/03` (Home e nav, na 03-C), roadmap, decision log e CLAUDE.md.
+
+## 13. CHAPTER 00 — ORIGIN (D-070, 2026-10-17)
+
+> Estado: **implementado em desenvolvimento, aguardando revisão visual do Eduardo**; não publicado em produção.
+
+**Assinatura:** A campanha começou muito antes do código. / The campaign started long before the code.
+
+Cinco checkpoints da origem da paixão por videogames, antes da formação e da carreira. É um relato pessoal real fornecido pelo Eduardo; os textos pt/en são dele, sem alteração de fatos, cronologia ou intenção.
+
+| #   | Código (sistema)       | Quando                                 | Título pt / en                                              |
+| --- | ---------------------- | -------------------------------------- | ----------------------------------------------------------- |
+| 01  | FIRST CONTACT          | c. 1991 (aproximado, informado)        | Primeiro contato / First Contact                            |
+| 02  | THE RENTAL STORE YEARS | Época do SNES / SNES era               | A escola das locadoras / The Rental Store Years             |
+| 03  | THE LADYBUG WISH       | Infância / Childhood                   | O pedido à joaninha / The Ladybug Wish                      |
+| 04  | EARNED, NOT GIVEN      | Época do PlayStation / PlayStation era | Uma conquista construída com trabalho / Earned Through Work |
+| 05  | BUILT FROM MEMORIES    | Vida adulta / Adulthood                | Uma coleção de histórias / A Collection of Stories          |
+
+**Apresentação (menor evolução do visual congelado, D-050):**
+
+- **Cabeçalho:** o capítulo é o primeiro grupo do **mesmo eixo** do Campaign Log, com `CHAPTER 00 — ORIGIN` (h3), a assinatura e um marker warm vazado.
+- **Checkpoints:** cada um mostra a época na coluna de período, o rótulo `CHECKPOINT 0N · CÓDIGO`, o título (h4) e uma frase do próprio texto. Tipografia, markers e spacing são os aprovados, sem redução.
+- **História completa:** "Ler a história completa / Read the full story" abre um `<details>` nativo, que funciona com teclado e leitor de tela sem JS. Aberta, a história substitui a frase-resumo.
+- **Linha profissional:** continua depois do capítulo, intacta (NEW GAME = formação; checkpoints; campanha atual). O cabeçalho e os checkpoints são itens do mesmo `<ol>` (lista plana), para o eixo continuar íntegro.
+
+**Regras factuais:**
+
+- **Datas:** só "c. 1991" é data; os outros quatro checkpoints usam a época descrita pelo Eduardo, sem anos inventados.
+- **Joaninha:** mantém a ambiguidade ("não sei se foi coincidência ou sorte").
+- **Trabalho:** o trabalho de servente de pedreiro não é experiência em tecnologia.
+- **Causalidade:** nenhuma relação causal entre um jogo e a escolha profissional.
+- **Marcas:** nomes de consoles e jogos aparecem só como texto do relato. A regra de marcas vale para assets e formatos visuais, e nenhum asset de terceiros foi usado.
+
+**Pendências:**
+
+1. **Fotografias** da coleção e do móvel (checkpoint 05): arquivos não recebidos. O texto do 05 cita "As fotos mostram…" / "The photos capture…", que hoje aparece sem as fotos. Quando chegarem, entram como evidência documental no 05 (WebP, proporção preservada, sem filtro pixel, alt objetivo).
+2. **Publicação:** depois do congelamento, basta `CAMPAIGN_LOG_CHAPTERS = [ORIGIN_CHAPTER]` em `campaign-log.data.ts`. Sozinho, isso faz a seção aparecer em produção só com o capítulo 00, porque a linha profissional real (03-0) ainda não existe.
+3. **Checkpoint da FATEC Americana:** existe hoje **só como MOCK**, com período 2013–2017 e texto inventados para desenvolvimento (D-049/D-050). O NEW GAME real precisa de período e texto aprovados pelo Eduardo.
+4. **Frases-resumo:** são extrações literais (primeira frase de cada texto; no 04, a primeira do segundo parágrafo) e precisam de aprovação editorial.
+5. **Jornada / Journey no header:** continua oculta (regra 03-C) até o Campaign Log ir para produção.

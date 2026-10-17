@@ -157,6 +157,33 @@ Dados:
 - `src/app/data/campaign-log.data.ts`: **publicado** (produção). Vazio até o histórico real ser aprovado; vazio = seção não renderizada.
 - `src/app/data/campaign-log.data.development.ts`: **MOCK de desenvolvimento visual** (D-049), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
+### CampaignLogChapter (D-070, docs/15 §13)
+
+```ts
+type CampaignLogWhen = { approx: number } | { era: Localized }; // "c. 1991" ou época; nunca ano exato inventado
+
+interface CampaignLogChapterEntry {
+  id: string;
+  code: string; // rótulo de sistema, igual nos dois idiomas (FIRST CONTACT)
+  when: CampaignLogWhen;
+  title: Localized;
+  summary: Localized; // 1 frase extraída literalmente da história
+  story: Localized<readonly string[]>; // história completa, em parágrafos
+}
+
+interface CampaignLogChapter {
+  id: string;
+  number: string; // "00"
+  name: string; // ORIGIN (sistema)
+  signature: Localized;
+  entries: readonly CampaignLogChapterEntry[];
+}
+```
+
+- Capítulos antecedem a linha profissional no mesmo eixo; não substituem `CampaignLogEntry`.
+- O número do checkpoint (01, 02...) é derivado da ordem, nunca do dado.
+- Dados: `campaign-log.chapters.data.ts` (conteúdo real, `ORIGIN_CHAPTER`). A publicação passa por `CAMPAIGN_LOG_CHAPTERS`: vazio em produção até o Eduardo congelar o capítulo; `[ORIGIN_CHAPTER]` em desenvolvimento.
+
 ## CurrentQuest (Home Slice 06, D-055)
 
 `src/app/models/current-quest.model.ts`
