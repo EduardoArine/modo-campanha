@@ -33,6 +33,17 @@ export interface CampaignLogEntry {
  */
 export type CampaignLogWhen = { readonly approx: number } | { readonly era: Localized };
 
+/** Fotografia pessoal real, como evidência documental de um checkpoint (não decoração). */
+export interface CampaignLogPhoto {
+  /** Maior derivado WebP; `srcset` lista todos. */
+  src: string;
+  srcset: string;
+  width: number;
+  height: number;
+  /** Descrição objetiva do que a foto mostra. */
+  alt: Localized;
+}
+
 /** Checkpoint dentro de um capítulo (CHAPTER 00 — ORIGIN, docs/15 §13). Relato pessoal real. */
 export interface CampaignLogChapterEntry {
   id: string;
@@ -44,6 +55,8 @@ export interface CampaignLogChapterEntry {
   summary: Localized;
   /** História completa, em parágrafos (aberta por "Ler a história completa"). */
   story: Localized<readonly string[]>;
+  /** Fotos reais citadas na história, exibidas com ela. */
+  photos?: readonly CampaignLogPhoto[];
 }
 
 /**

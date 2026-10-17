@@ -47,6 +47,20 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
     expect(JSON.stringify(ORIGIN_CHAPTER)).not.toMatch(/\bXP\b|\bLV\b|level|score|rank|%|★/i);
   });
 
+  it('shows the two real photos only in BUILT FROM MEMORIES, with bilingual alt and original ratio', () => {
+    expect(entries.slice(0, 4).every((e) => !e.photos)).toBe(true);
+    const photos = entries[4].photos ?? [];
+    expect(photos.map((p) => [p.width, p.height])).toEqual([
+      [720, 960],
+      [960, 720],
+    ]);
+    for (const p of photos) {
+      expect(p.src).toMatch(/^assets\/campaign-log\/origin\/.+\.webp$/);
+      expect(p.alt['pt-BR'].length).toBeGreaterThan(20);
+      expect(p.alt.en.length).toBeGreaterThan(20);
+    }
+  });
+
   it('appears in development for review (production publishes no chapter yet)', () => {
     expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER]);
   });

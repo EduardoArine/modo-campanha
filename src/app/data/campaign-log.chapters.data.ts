@@ -1,4 +1,23 @@
-import { CampaignLogChapter } from '../models';
+import { CampaignLogChapter, CampaignLogPhoto } from '../models';
+
+const ORIGIN_ASSETS = 'assets/campaign-log/origin/';
+
+/** Derivados WebP (proporção original, sem filtro) das fotos fornecidas pelo Eduardo. */
+function photo(
+  name: string,
+  widths: readonly number[],
+  ratio: number,
+  alt: CampaignLogPhoto['alt'],
+): CampaignLogPhoto {
+  const max = widths[widths.length - 1];
+  return {
+    src: ORIGIN_ASSETS + name + '-' + max + '.webp',
+    srcset: widths.map((w) => ORIGIN_ASSETS + name + '-' + w + '.webp ' + w + 'w').join(', '),
+    width: max,
+    height: Math.round(max / ratio),
+    alt,
+  };
+}
 
 // CHAPTER 00 — ORIGIN (docs/15 §13). Relato pessoal real do Eduardo, com os textos fornecidos por
 // ele (2026-10-17), sem alteração de fatos, cronologia ou intenção. Não é MOCK.
@@ -120,6 +139,19 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
           "I'd always dreamed of having a space to display my consoles and play them. After sketching out several ideas, I decided to build the furniture myself. The photos capture part of that dream taking shape. To me, every console holds much more than games. It holds memories.",
         ],
       },
+      // Fotos da coleção e do móvel construído pelo Eduardo (fornecidas por ele, 2026-10-17).
+      photos: [
+        photo('collection-front', [480, 720], 3 / 4, {
+          'pt-BR':
+            'Móvel de madeira com duas prateleiras iluminadas por luz colorida, cheias de consoles retrô; acima dele, uma TV na parede e bonecos colecionáveis.',
+          en: 'Wooden cabinet with two shelves lit by colored light and filled with retro consoles; above it, a wall-mounted TV and collectible figures.',
+        }),
+        photo('collection-wide', [640, 960], 4 / 3, {
+          'pt-BR':
+            'Vista frontal do mesmo móvel: consoles retrô alinhados nas duas prateleiras iluminadas e uma TV ligada acima.',
+          en: 'Front view of the same cabinet: retro consoles lined up on both lit shelves and a TV switched on above.',
+        }),
+      ],
     },
   ],
 };

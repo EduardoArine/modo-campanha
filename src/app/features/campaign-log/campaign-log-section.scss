@@ -127,7 +127,9 @@ h4 {
   color: var(--mc-text-muted);
 }
 
-.summary {
+// Parágrafos da história completa: mesma regra do resumo.
+.summary,
+.story p {
   max-width: 62ch;
   margin-top: space(2);
   @include type(body);
@@ -184,15 +186,37 @@ h4 {
   &:not([open]) .close {
     display: none;
   }
-
-  p {
-    max-width: 62ch;
-    margin-top: space(2);
-    @include type(body);
-    color: var(--mc-text-secondary);
-  }
 }
 
 .entry--story:has(.story[open]) .summary {
   display: none;
+}
+
+// Fotos da história (evidência documental): proporção original, sem filtro nem sombra; borda sutil.
+// ≥ 768: lado a lado na mesma altura (--ratio = largura/altura de cada foto vira o flex-grow); < 768:
+// empilhadas.
+.photos {
+  display: flex;
+  flex-direction: column;
+  gap: space(3);
+  max-width: 62ch;
+  margin-top: space(4);
+
+  @include mq(md) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  img {
+    display: block;
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+    border-radius: var(--mc-radius-sm);
+
+    @include mq(md) {
+      flex: var(--ratio) 1 0;
+    }
+  }
 }

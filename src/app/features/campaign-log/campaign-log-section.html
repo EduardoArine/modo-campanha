@@ -35,6 +35,24 @@
             @for (paragraph of locale.pick(entry.story); track $index) {
               <p>{{ paragraph }}</p>
             }
+            @if (entry.photos; as photos) {
+              <!-- Fotos reais como evidência documental (proporção original, sem filtro). -->
+              <div class="photos">
+                @for (photo of photos; track photo.src) {
+                  <img
+                    [src]="photo.src"
+                    [srcset]="photo.srcset"
+                    sizes="(min-width: 768px) 320px, 100vw"
+                    [width]="photo.width"
+                    [height]="photo.height"
+                    [alt]="locale.pick(photo.alt)"
+                    [style.--ratio]="photo.width / photo.height"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                }
+              </div>
+            }
           </details>
         </li>
       }
