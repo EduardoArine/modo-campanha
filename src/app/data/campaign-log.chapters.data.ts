@@ -441,5 +441,36 @@ export const CHAPTER_02: CampaignLogChapter = {
         },
       ],
     },
+    {
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
+      id: 'axia',
+      code: 'AXIA',
+      when: { year: 2021 },
+      title: {
+        'pt-BR': 'Quando o software encontrou o mundo físico',
+        en: 'When Software Met the Physical World',
+      },
+      summary: {
+        'pt-BR':
+          'Depois de experiências com jogos, plataformas digitais e sistemas de logística, participei de um dos projetos mais completos da minha trajetória: a Axia, desenvolvida pela Ativvus/Arppen.',
+        en: 'After working on games, digital platforms, and logistics systems, I became involved in one of the most comprehensive projects of my career: Axia, developed by Ativvus/Arppen.',
+      },
+      story: {
+        'pt-BR': [
+          'Depois de experiências com jogos, plataformas digitais e sistemas de logística, participei de um dos projetos mais completos da minha trajetória: a Axia, desenvolvida pela Ativvus/Arppen.',
+          'A proposta era melhorar a gestão de operações de limpeza e facilities por meio de dispositivos conectados, coleta de dados e uma plataforma digital capaz de transformar informações do ambiente em indicadores para apoiar decisões.',
+          'Participei desde a idealização e a engenharia da solução até o desenvolvimento de diferentes partes do sistema. Minha atuação teve foco principalmente na aplicação web em Angular, na WebAPI em .NET com C# e no design das interfaces. Também trabalhei com SQL Server e contribuí para o desenvolvimento do código embarcado dos dispositivos em C.',
+          'O grande desafio foi fazer essas diferentes tecnologias trabalharem juntas de forma coerente, transformando dados capturados no mundo físico em informações úteis e acessíveis para quem gerenciava as operações.',
+          'Foi uma experiência importante para consolidar a maneira como passei a enxergar meu trabalho: não apenas como alguém que desenvolve telas ou APIs, mas como alguém que participa da construção de produtos digitais de ponta a ponta.',
+        ],
+        en: [
+          'After working on games, digital platforms, and logistics systems, I became involved in one of the most comprehensive projects of my career: Axia, developed by Ativvus/Arppen.',
+          'The goal was to improve cleaning and facilities management through connected devices, data collection, and a digital platform that could turn information from physical environments into actionable operational insights.',
+          "I contributed from the initial concept and solution engineering through several areas of development. My main focus was the Angular web application, the .NET WebAPI built with C#, and interface design. I also worked with SQL Server and contributed to the devices' embedded C code.",
+          'The biggest challenge was connecting these different technologies into a coherent product, transforming real-world data into useful, accessible information for operational managers.',
+          'This experience helped shape how I see my work today: not simply as someone who builds interfaces or APIs, but as someone involved in creating digital products from concept to implementation.',
+        ],
+      },
+    },
   ],
 };

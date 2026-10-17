@@ -156,7 +156,7 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
   const eos = CHAPTER_02.entries[1];
 
   it('is the second checkpoint of CHAPTER 02, in 2019', () => {
-    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual(['SCOUTEVO', 'EOS']);
+    expect(CHAPTER_02.entries.map((e) => e.code).slice(0, 2)).toEqual(['SCOUTEVO', 'EOS']);
     expect(eos.when).toEqual({ year: 2019 });
   });
 
@@ -186,6 +186,35 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(eos.story[locale][0]).toBe(eos.summary[locale]);
       expect(eos.story[locale].length).toBe(6);
+    }
+  });
+});
+
+// CHAPTER 02 · Axia (2021): textos pt/en do Eduardo.
+describe('Campaign Log — CHAPTER 02 (Axia)', () => {
+  const axia = CHAPTER_02.entries[2];
+
+  it('is the third checkpoint of CHAPTER 02, in 2021', () => {
+    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual(['SCOUTEVO', 'EOS', 'AXIA']);
+    expect(axia.when).toEqual({ year: 2021 });
+  });
+
+  it('keeps the facts: developed by Ativvus/Arppen, his focus and contributions', () => {
+    const pt = axia.story['pt-BR'].join(' ');
+    expect(pt).toContain('a Axia, desenvolvida pela Ativvus/Arppen');
+    expect(pt).toContain(
+      'na aplicação web em Angular, na WebAPI em .NET com C# e no design das interfaces',
+    );
+    expect(pt).toContain(
+      'contribuí para o desenvolvimento do código embarcado dos dispositivos em C',
+    );
+    expect(axia.links).toBeUndefined();
+  });
+
+  it('takes the summary literally from the story, in both languages', () => {
+    for (const locale of ['pt-BR', 'en'] as const) {
+      expect(axia.story[locale][0]).toBe(axia.summary[locale]);
+      expect(axia.story[locale].length).toBe(5);
     }
   });
 });
