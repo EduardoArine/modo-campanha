@@ -170,6 +170,7 @@ interface CampaignLogChapterEntry {
   summary: Localized; // 1 frase extraída literalmente da história
   story: Localized<readonly string[]>; // história completa, em parágrafos
   photos?: readonly CampaignLogPhoto[]; // fotos reais citadas na história (src, srcset, width, height, alt)
+  links?: readonly { label: Localized; url: string }[]; // documentos públicos que comprovam o checkpoint (ex.: TCC)
 }
 
 interface CampaignLogChapter {

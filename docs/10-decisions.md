@@ -840,4 +840,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Modelo:** `when` passa a aceitar `{ year }`; `code` vira opcional; o capítulo ganha `name` localizado, `period`, `context` e `closing`.
   - **MOCK:** a entrada MOCK da formação saiu do MOCK de desenvolvimento.
   - **Publicação:** o capítulo 01 fica só em desenvolvimento até a revisão.
+- **Links (2026-10-17):** o checkpoint 05 do CHAPTER 01 linka o TCC no repositório do CPS, dentro da história completa (campo `links`, só para documentos públicos que comprovam o checkpoint). O Google Play expirou: sem link, e retomar o Aedes Revenge fica como projeto futuro.
 - **Status:** CHAPTER 00 **APPROVED / FROZEN / publicado**; CHAPTER 01 **aguardando revisão visual e aprovação da tradução**.
