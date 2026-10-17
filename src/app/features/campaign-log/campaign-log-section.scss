@@ -80,7 +80,8 @@
   background: var(--mc-accent-active);
 }
 
-.entry--current .marker {
+.entry--current .marker,
+.entry--chapter.entry--ongoing .marker {
   border-color: var(--mc-status-online);
   background: var(--mc-status-online);
 }

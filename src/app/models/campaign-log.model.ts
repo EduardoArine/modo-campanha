@@ -34,6 +34,7 @@ export interface CampaignLogEntry {
 export type CampaignLogWhen =
   | { readonly year: number }
   | { readonly span: { readonly start: number; readonly end: number } }
+  | { readonly since: number }
   | { readonly approx: number }
   | { readonly era: Localized };
 
@@ -99,4 +100,6 @@ export interface CampaignLogChapter {
   entries: readonly CampaignLogChapterEntry[];
   /** Frase de fechamento após CHECKPOINT COMPLETE (o ano vem de `period.end`). */
   closing?: Localized;
+  /** Capítulo ainda em andamento: o fechamento vira CURRENT QUEST — EM ANDAMENTO. */
+  ongoing?: boolean;
 }

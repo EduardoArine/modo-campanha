@@ -88,6 +88,7 @@ export const UI_PT_BR = {
     chapter: 'CHAPTER',
     checkpoint: 'CHECKPOINT',
     complete: 'CHECKPOINT COMPLETE',
+    ongoing: 'CURRENT QUEST — EM ANDAMENTO',
     approx: 'c.',
     links: {
       launch: 'LANÇAMENTO INSTITUCIONAL',

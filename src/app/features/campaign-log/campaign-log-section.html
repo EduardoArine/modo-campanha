@@ -35,6 +35,9 @@
           <p class="period">
             @if ('year' in when) {
               <time [attr.datetime]="when.year">{{ when.year }}</time>
+            } @else if ('since' in when) {
+              {{ ui().campaignLog.since }}
+              <time [attr.datetime]="when.since">{{ when.since }}</time>
             } @else if ('span' in when) {
               <time [attr.datetime]="when.span.start">{{ when.span.start }}</time> —
               <time [attr.datetime]="when.span.end">{{ when.span.end }}</time>
@@ -102,13 +105,17 @@
         </li>
       }
       @if (chapter.closing; as closing) {
-        <!-- Fechamento do capítulo: CHECKPOINT COMPLETE + ano final do período. -->
-        <li class="entry entry--chapter">
+        <!-- Fechamento: CHECKPOINT COMPLETE + ano final, ou CURRENT QUEST — EM ANDAMENTO. -->
+        <li class="entry entry--chapter" [class.entry--ongoing]="chapter.ongoing">
           <span class="marker" aria-hidden="true"></span>
           <p class="chapter-name">
-            {{ ui().campaignLog.complete }}
-            @if (chapter.period?.end; as end) {
-              — <time [attr.datetime]="end">{{ end }}</time>
+            @if (chapter.ongoing) {
+              {{ ui().campaignLog.ongoing }}
+            } @else {
+              {{ ui().campaignLog.complete }}
+              @if (chapter.period?.end; as end) {
+                — <time [attr.datetime]="end">{{ end }}</time>
+              }
             }
           </p>
           <p class="signature">{{ locale.pick(closing) }}</p>

@@ -1,4 +1,5 @@
 import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+import { PLAYER_PROFILE } from './profile.data';
 import { CAMPAIGN_LOG_CHAPTERS as DEV_CHAPTERS } from './campaign-log.data.development';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
@@ -195,7 +196,12 @@ describe('Campaign Log — CHAPTER 02 (Axia)', () => {
   const axia = CHAPTER_02.entries[2];
 
   it('is the third checkpoint of CHAPTER 02, spanning 2021–2024', () => {
-    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual(['SCOUTEVO', 'EOS', 'AXIA']);
+    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual([
+      'SCOUTEVO',
+      'EOS',
+      'AXIA',
+      'COMUNIDADE ON',
+    ]);
     expect(axia.when).toEqual({ span: { start: 2021, end: 2024 } });
   });
 
@@ -223,6 +229,42 @@ describe('Campaign Log — CHAPTER 02 (Axia)', () => {
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(axia.story[locale][0]).toBe(axia.summary[locale]);
       expect(axia.story[locale].length).toBe(6);
+    }
+  });
+});
+
+// CHAPTER 02 · Comunidade ON (desde 2025): textos pt/en do Eduardo; capítulo em andamento.
+describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
+  const on = CHAPTER_02.entries[3];
+
+  it('is the fourth checkpoint, open since 2025, and keeps CHAPTER 02 in progress', () => {
+    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual([
+      'SCOUTEVO',
+      'EOS',
+      'AXIA',
+      'COMUNIDADE ON',
+    ]);
+    expect(on.when).toEqual({ since: 2025 });
+    expect(CHAPTER_02.ongoing).toBe(true);
+  });
+
+  it('closes with the approved Player Status motto (single source)', () => {
+    expect(CHAPTER_02.closing).toBe(PLAYER_PROFILE.motto);
+  });
+
+  it('keeps the facts and stays a public, non-internal description', () => {
+    const pt = on.story['pt-BR'].join(' ');
+    expect(pt).toContain('Trabalho com Angular, TypeScript, .NET e C#');
+    expect(pt).toContain(
+      'Mas aqui surgiu uma conexão especialmente importante com minha história: a gamificação.',
+    );
+    expect(on.links).toBeUndefined();
+  });
+
+  it('takes the summary literally from the story, in both languages', () => {
+    for (const locale of ['pt-BR', 'en'] as const) {
+      expect(on.story[locale][0]).toBe(on.summary[locale]);
+      expect(on.story[locale].length).toBe(8);
     }
   });
 });

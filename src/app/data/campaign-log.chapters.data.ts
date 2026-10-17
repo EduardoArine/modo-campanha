@@ -1,4 +1,5 @@
 import { CampaignLogChapter, CampaignLogPhoto } from '../models';
+import { PLAYER_PROFILE } from './profile.data';
 
 const ASSETS = 'assets/campaign-log/';
 
@@ -491,5 +492,46 @@ export const CHAPTER_02: CampaignLogChapter = {
         },
       ],
     },
+    {
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
+      // Descrição pública escrita por ele; nada interno da Comunidade On.
+      id: 'comunidade-on',
+      code: 'COMUNIDADE ON',
+      when: { since: 2025 },
+      title: {
+        'pt-BR': 'Quando os games viraram uma linguagem de produto',
+        en: 'When Games Became a Product Language',
+      },
+      summary: {
+        'pt-BR':
+          'Depois de experiências com jogos, plataformas esportivas, logística e sistemas conectados, cheguei à Comunidade ON, um projeto que reúne muito do que construí ao longo da minha trajetória.',
+        en: "After working on games, sports platforms, logistics solutions, and connected systems, I joined Comunidade ON, a project that brings together many of the things I've learned throughout my career.",
+      },
+      story: {
+        'pt-BR': [
+          'Depois de experiências com jogos, plataformas esportivas, logística e sistemas conectados, cheguei à Comunidade ON, um projeto que reúne muito do que construí ao longo da minha trajetória.',
+          'A proposta da ON é repensar o relacionamento entre marcas e consumidores, combinando tecnologia, inteligência artificial e pessoas em uma plataforma de atendimento.',
+          'Minha atuação envolve o desenvolvimento das aplicações web, a integração com serviços e APIs e, principalmente, a construção e evolução das experiências de interface. Trabalho com Angular, TypeScript, .NET e C#, sempre buscando conectar o lado técnico às necessidades do produto e de quem utiliza a plataforma.',
+          'Mas aqui surgiu uma conexão especialmente importante com minha história: a gamificação.',
+          'A paixão por videogames, que me levou a estudar Jogos Digitais, passou a encontrar uma aplicação direta no meu trabalho. Conceitos como progressão, desafios, conquistas, feedback e reconhecimento começaram a fazer parte da maneira como penso e desenvolvo experiências digitais.',
+          'O desafio não é simplesmente colocar elementos de jogos em uma interface. É utilizar essa linguagem para tornar experiências de trabalho e aprendizado mais claras, envolventes e significativas, sem comprometer a usabilidade e a eficiência operacional.',
+          'Na Comunidade ON, tenho a oportunidade de trabalhar nessa interseção entre engenharia, produto, design, inteligência artificial e gamificação.',
+          'É uma campanha que continua em desenvolvimento — e talvez uma das que melhor representam o profissional que me tornei.',
+        ],
+        en: [
+          "After working on games, sports platforms, logistics solutions, and connected systems, I joined Comunidade ON, a project that brings together many of the things I've learned throughout my career.",
+          'ON aims to rethink the relationship between brands and consumers by bringing technology, artificial intelligence, and people together in a customer service platform.',
+          'My work involves developing web applications, integrating services and APIs, and, especially, designing and improving user experiences. I work with Angular, TypeScript, .NET, and C#, connecting technical decisions with product needs and the people using the platform.',
+          'But this project brought something particularly meaningful back into my career: gamification.',
+          'The passion for video games that led me to study Game Development found a practical application in my everyday work. Concepts such as progression, challenges, achievements, feedback, and recognition became part of how I think about and build digital experiences.',
+          "The challenge isn't simply adding game elements to an interface. It's using that language to make work and learning experiences clearer, more engaging, and more meaningful without sacrificing usability or operational efficiency.",
+          'At Comunidade ON, I get to work at the intersection of engineering, product design, artificial intelligence, and gamification.',
+          "This is an ongoing campaign — and perhaps one of the projects that best reflects the professional I've become.",
+        ],
+      },
+    },
   ],
+  // CURRENT QUEST — EM ANDAMENTO + o lema aprovado do Player Status (fonte única).
+  ongoing: true,
+  closing: PLAYER_PROFILE.motto,
 };

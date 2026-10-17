@@ -31,8 +31,8 @@ describe('CampaignLogSection', () => {
 
     expect(section.querySelector('h2')?.textContent).toBe('CAMPAIGN LOG');
     expect(section.querySelectorAll('ol[role="list"]').length).toBe(1);
-    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 3 · MOCK: 4.
-    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 4 + 4);
+    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 4 + fechamento · MOCK: 4.
+    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 6 + 4);
     expect(texts(section, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
@@ -52,6 +52,7 @@ describe('CampaignLogSection', () => {
       'Quando uma ideia entrou em campo',
       'Tecnologia em que cada minuto importa',
       'Da ideia à inteligência operacional',
+      'Quando os games viraram uma linguagem de produto',
     ]);
     expect(texts(section, `${PRO} h3`)[0]).toBe('Da tecnologia para o desenvolvimento');
   });
@@ -63,9 +64,14 @@ describe('CampaignLogSection', () => {
       'A campanha começou muito antes do código.',
       'O que começou como paixão na infância se transformou em uma escolha de vida.',
       'A campanha estava apenas começando.',
+      'XP real, sem personagem.',
     ]);
     const chapterItems = Array.from(el.querySelectorAll('.entry--chapter'));
-    expect(chapterItems.length).toBe(4);
+    expect(chapterItems.length).toBe(5);
+    expect(chapterItems[4].classList).toContain('entry--ongoing');
+    expect(chapterItems[4].querySelector('.chapter-name')?.textContent?.trim()).toBe(
+      'CURRENT QUEST — EM ANDAMENTO',
+    );
     expect(
       chapterItems[2].querySelector('.chapter-name')?.textContent?.replace(/\s+/g, ' ').trim(),
     ).toBe('CHECKPOINT COMPLETE — 2017');
@@ -89,6 +95,7 @@ describe('CampaignLogSection', () => {
       'CHECKPOINT 01 · SCOUTEVO',
       'CHECKPOINT 02 · EOS',
       'CHECKPOINT 03 · AXIA',
+      'CHECKPOINT 04 · COMUNIDADE ON',
     ]);
   });
 
@@ -109,17 +116,18 @@ describe('CampaignLogSection', () => {
       '2018',
       '2019',
       '2021 — 2024',
+      'DESDE 2025',
     ]);
     expect(
       Array.from(el.querySelectorAll(`${STORY} time`)).map((t) => t.getAttribute('datetime')),
-    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2021', '2024']);
+    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2021', '2024', '2025']);
   });
 
   it('shows the full story only on demand, with a native, localized details toggle', async () => {
     const el = await renderAt('/');
     const stories = el.querySelectorAll<HTMLDetailsElement>(`${STORY} details`);
 
-    expect(stories.length).toBe(13);
+    expect(stories.length).toBe(14);
     expect(Array.from(stories).every((d) => !d.open)).toBe(true);
     expect(stories[0].querySelector('summary .open')?.textContent).toBe('Ler a história completa');
     expect(stories[9].querySelectorAll('details > p').length).toBe(4);
@@ -209,8 +217,11 @@ describe('CampaignLogSection', () => {
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
     expect(el.querySelectorAll('a').length).toBe(7);
-    expect(el.querySelectorAll('summary').length).toBe(13);
-    expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
+    expect(el.querySelectorAll('summary').length).toBe(14);
+    // O lema aprovado ("XP real, sem personagem.") é a única ocorrência permitida de XP.
+    expect(el.textContent?.replace('XP real, sem personagem.', '')).not.toMatch(
+      /\bXP\b|\bLV\b|unlocked|%|★/,
+    );
   });
 
   it('renders the en labels and content', async () => {
@@ -221,10 +232,11 @@ describe('CampaignLogSection', () => {
       'CHAPTER 01 — FROM CONTROLLER TO CODE',
       'CHAPTER 02',
     ]);
-    expect(texts(el, `${STORY} h4`).slice(-3)).toEqual([
+    expect(texts(el, `${STORY} h4`).slice(-4)).toEqual([
       'When an Idea Took the Field',
       'Technology Where Every Minute Matters',
       'From Concept to Operational Intelligence',
+      'When Games Became a Product Language',
     ]);
     expect(texts(el, '.signature')[0]).toBe('The campaign started long before the code.');
     expect(texts(el, `${STORY} .period`)[1]).toBe('SNES era');

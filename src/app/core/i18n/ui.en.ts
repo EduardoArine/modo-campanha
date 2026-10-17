@@ -85,6 +85,7 @@ export const UI_EN: UiDictionary = {
     chapter: 'CHAPTER',
     checkpoint: 'CHECKPOINT',
     complete: 'CHECKPOINT COMPLETE',
+    ongoing: 'CURRENT QUEST — IN PROGRESS',
     approx: 'c.',
     links: {
       launch: 'INSTITUTIONAL LAUNCH',
