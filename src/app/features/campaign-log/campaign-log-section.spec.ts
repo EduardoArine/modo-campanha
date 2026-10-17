@@ -74,7 +74,7 @@ describe('CampaignLogSection', () => {
   it('numbers chapter checkpoints from their order; codenames only where they exist', async () => {
     const el = await renderAt('/');
 
-    expect(texts(el, `${STORY} .kind`)).toEqual([
+    expect(texts(el, `${STORY} > .kind`)).toEqual([
       'CHECKPOINT 01 · FIRST CONTACT',
       'CHECKPOINT 02 · THE RENTAL STORE YEARS',
       'CHECKPOINT 03 · THE LADYBUG WISH',
@@ -119,14 +119,14 @@ describe('CampaignLogSection', () => {
     expect(stories.length).toBe(12);
     expect(Array.from(stories).every((d) => !d.open)).toBe(true);
     expect(stories[0].querySelector('summary .open')?.textContent).toBe('Ler a história completa');
-    expect(stories[9].querySelectorAll('p:not(.doc)').length).toBe(4);
+    expect(stories[9].querySelectorAll('details > p').length).toBe(4);
   });
 
   it('links the capstone project (TCC) inside the last FATEC story, in a new tab', async () => {
     const el = await renderAt('/');
     const link = el
       .querySelectorAll('.entry--story')[9]
-      .querySelector<HTMLAnchorElement>('details .doc a')!;
+      .querySelector<HTMLAnchorElement>('details .refs a')!;
 
     expect(link.getAttribute('href')).toBe(
       'https://ric.cps.sp.gov.br/bitstream/123456789/720/1/20171S_ARINEJUNIOREduardoLuiz_OD0153.pdf',
@@ -134,6 +134,33 @@ describe('CampaignLogSection', () => {
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
     expect(link.textContent?.replace(/s+/g, ' ').trim()).toBe('Ler o TCC (PDF) (abre em nova aba)');
+  });
+
+  it('lists the EOS references by type, with the paper authorship as context', async () => {
+    const el = await renderAt('/');
+    const eos = el.querySelectorAll('.entry--story')[11];
+    const hrefs = Array.from(eos.querySelectorAll('.refs a')).map((a) => a.getAttribute('href'));
+
+    // O DOI fica sob o mesmo tipo do artigo: o rótulo não se repete.
+    expect(texts(eos, '.refs .kind')).toEqual([
+      'PUBLICAÇÃO CIENTÍFICA',
+      'IMPRENSA',
+      'REGISTRO BIBLIOGRÁFICO',
+    ]);
+    expect(hrefs).toEqual([
+      'https://www.sciencedirect.com/science/article/abs/pii/S2213624X21000067',
+      'https://doi.org/10.1016/j.cstp.2021.01.005',
+      'https://portal.afya.com.br/saude/software-pode-reduzir-tempo-no-transporte-de-orgaos-para-transplante',
+      'https://openalex.org/W3128566934',
+    ]);
+    expect(texts(eos, '.refs .context')[0]).toBe(
+      'Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso.',
+    );
+    expect(
+      Array.from(eos.querySelectorAll('.refs a')).every(
+        (a) => a.getAttribute('target') === '_blank',
+      ),
+    ).toBe(true);
   });
 
   it('resolves professional system labels from the UI dictionary', async () => {
@@ -163,7 +190,7 @@ describe('CampaignLogSection', () => {
   it('shows context only when present', async () => {
     const el = await renderAt('/');
 
-    expect(texts(el, '.context')).toEqual([
+    expect(texts(el, '.entry > .context')).toEqual([
       'Tecnologia em Jogos Digitais · FATEC Americana',
       'Comunidade On',
     ]);
@@ -178,7 +205,7 @@ describe('CampaignLogSection', () => {
       ),
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
-    expect(el.querySelectorAll('a').length).toBe(2);
+    expect(el.querySelectorAll('a').length).toBe(6);
     expect(el.querySelectorAll('summary').length).toBe(12);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });
@@ -201,6 +228,7 @@ describe('CampaignLogSection', () => {
     expect(texts(el, `${STORY} h4`)[3]).toBe('Earned Through Work');
     expect(el.querySelector(`${STORY} summary .open`)?.textContent).toBe('Read the full story');
     expect(texts(el, '.context')[0]).toBe('Digital Games Technology · FATEC Americana');
+    expect(texts(el, '.refs .kind')[0]).toBe('ACADEMIC DOCUMENT');
     expect(texts(el, `${PRO} .kind`).at(-1)).toBe('CURRENT CAMPAIGN');
     expect(texts(el, `${PRO} .period`).at(-1)).toBe('SINCE 2025');
     expect(texts(el, `${PRO} h3`).at(-1)).toBe('Building products end to end');

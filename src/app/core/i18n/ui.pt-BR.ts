@@ -89,6 +89,13 @@ export const UI_PT_BR = {
     checkpoint: 'CHECKPOINT',
     complete: 'CHECKPOINT COMPLETE',
     approx: 'c.',
+    links: {
+      launch: 'LANÇAMENTO INSTITUCIONAL',
+      paper: 'PUBLICAÇÃO CIENTÍFICA',
+      press: 'IMPRENSA',
+      record: 'REGISTRO BIBLIOGRÁFICO',
+      academic: 'DOCUMENTO ACADÊMICO',
+    },
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },
   achievements: {

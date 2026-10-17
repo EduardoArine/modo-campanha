@@ -45,10 +45,19 @@ export interface CampaignLogPhoto {
   alt: Localized;
 }
 
-/** Link externo verificável de um checkpoint (abre em nova aba). */
+/**
+ * Tipo da referência externa (o rótulo vem do dicionário): lançamento institucional, publicação
+ * científica, imprensa, registro bibliográfico ou documento acadêmico.
+ */
+export type CampaignLogLinkKind = 'launch' | 'paper' | 'press' | 'record' | 'academic';
+
+/** Referência externa verificável de um checkpoint (abre em nova aba). */
 export interface CampaignLogLink {
+  kind: CampaignLogLinkKind;
   label: Localized;
   url: string;
+  /** Contexto factual curto (ex.: autoria de um artigo que não é do Eduardo). */
+  note?: Localized;
 }
 
 /** Checkpoint dentro de um capítulo (docs/15 §13–§14). Relato pessoal real. */

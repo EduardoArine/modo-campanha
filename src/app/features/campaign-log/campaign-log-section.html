@@ -76,14 +76,24 @@
                 }
               </div>
             }
-            @for (link of entry.links ?? []; track link.url) {
-              <!-- Documento público que comprova o checkpoint (ex.: TCC). -->
-              <p class="doc">
-                <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
-                  {{ locale.pick(link.label) }} <mc-icon name="external" />
-                  <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
-                </a>
-              </p>
+            @if (entry.links; as links) {
+              <!-- Referências externas verificáveis (tipo + título + contexto), em nova aba. -->
+              <ul class="refs" role="list">
+                @for (link of links; track link.url; let r = $index) {
+                  <li>
+                    @if (r === 0 || links[r - 1].kind !== link.kind) {
+                      <p class="kind">{{ ui().campaignLog.links[link.kind] }}</p>
+                    }
+                    <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+                      {{ locale.pick(link.label) }} <mc-icon name="external" />
+                      <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+                    </a>
+                    @if (link.note; as note) {
+                      <p class="context">{{ locale.pick(note) }}</p>
+                    }
+                  </li>
+                }
+              </ul>
             }
           </details>
         </li>

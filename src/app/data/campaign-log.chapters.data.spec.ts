@@ -172,6 +172,16 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
     expect(eos.story.en.join(' ')).toContain("São Paulo's State Transplant Center");
   });
 
+  it('credits the paper to its authors, never to Eduardo, and keeps the sources verifiable', () => {
+    const links = eos.links ?? [];
+    expect(links.map((l) => l.kind)).toEqual(['paper', 'paper', 'press', 'record']);
+    expect(links[0].note?.['pt-BR']).toBe(
+      'Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso.',
+    );
+    expect(JSON.stringify(links)).not.toMatch(/Eduardo|Arine/);
+    expect(links.every((l) => l.url.startsWith('https://'))).toBe(true);
+  });
+
   it('takes the summary literally from the story, in both languages', () => {
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(eos.story[locale][0]).toBe(eos.summary[locale]);

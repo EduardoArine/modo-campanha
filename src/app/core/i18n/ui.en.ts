@@ -86,6 +86,13 @@ export const UI_EN: UiDictionary = {
     checkpoint: 'CHECKPOINT',
     complete: 'CHECKPOINT COMPLETE',
     approx: 'c.',
+    links: {
+      launch: 'INSTITUTIONAL LAUNCH',
+      paper: 'SCIENTIFIC PUBLICATION',
+      press: 'PRESS',
+      record: 'BIBLIOGRAPHIC RECORD',
+      academic: 'ACADEMIC DOCUMENT',
+    },
     story: { open: 'Read the full story', close: 'Collapse the story' },
   },
   achievements: {

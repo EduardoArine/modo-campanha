@@ -115,12 +115,8 @@ h4 {
   }
 }
 
-.title {
-  margin-top: space(2);
-  @include type(title-m);
-  color: var(--mc-text);
-}
-
+// Títulos de checkpoint e assinatura/fechamento de capítulo.
+.title,
 .context {
   margin-top: space(1);
   @include type(body-s);
@@ -226,7 +222,16 @@ h4 {
   }
 }
 
-// Documento público do checkpoint (ex.: TCC), depois do texto e das fotos.
-.doc {
-  margin-top: space(4);
+// Referências externas do checkpoint (ex.: TCC, artigo, imprensa), depois do texto e das fotos.
+// Reusa .kind (tipo) e .context (nota).
+.refs {
+  display: grid;
+  gap: space(4);
+  margin: space(5) 0 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    white-space: normal;
+  }
 }

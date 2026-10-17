@@ -290,6 +290,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       // TCC no Repositório Institucional do Conhecimento (CPS), fornecido pelo Eduardo (2026-10-17).
       links: [
         {
+          kind: 'academic',
           label: {
             'pt-BR': 'Ler o TCC (PDF)',
             en: 'Read the capstone project (PDF, in Portuguese)',
@@ -351,6 +352,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // Trata do evento, não do resultado; conteúdo para assinantes.
       links: [
         {
+          kind: 'press',
           label: {
             'pt-BR': 'Reportagem do O Globo sobre a maratona (2018)',
             en: 'O Globo report on the competition (2018, in Portuguese)',
@@ -391,6 +393,53 @@ export const CHAPTER_02: CampaignLogChapter = {
           "This project reinforced something important for me: building digital products isn't just about technology. It's about understanding real problems and creating solutions that can make a difference.",
         ],
       },
+      // Referências fornecidas pelo Eduardo (2026-10-17), verificadas (título, data, autoria via
+      // OpenAlex/DOI). O artigo é de Henrique Barros Bellotti e Maria Teresa Françoso, não do
+      // Eduardo. O anúncio oficial da Unicamp (2019) entra quando o link for informado.
+      links: [
+        {
+          kind: 'paper',
+          label: {
+            'pt-BR':
+              'System for transporting human organs: Case Studies on Transport Policy, Elsevier (2021)',
+            en: 'System for transporting human organs: Case Studies on Transport Policy, Elsevier (2021)',
+          },
+          url: 'https://www.sciencedirect.com/science/article/abs/pii/S2213624X21000067',
+          note: {
+            'pt-BR': 'Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso.',
+            en: 'Paper about EOS by Henrique Barros Bellotti and Maria Teresa Françoso.',
+          },
+        },
+        {
+          kind: 'paper',
+          label: {
+            'pt-BR': 'DOI permanente do artigo: 10.1016/j.cstp.2021.01.005',
+            en: 'Permanent DOI of the paper: 10.1016/j.cstp.2021.01.005',
+          },
+          url: 'https://doi.org/10.1016/j.cstp.2021.01.005',
+        },
+        {
+          kind: 'press',
+          label: {
+            'pt-BR':
+              'Portal Afya: "Software pode reduzir tempo no transporte de órgãos para transplante" (2019)',
+            en: 'Portal Afya: "Software pode reduzir tempo no transporte de órgãos para transplante" (2019, in Portuguese)',
+          },
+          url: 'https://portal.afya.com.br/saude/software-pode-reduzir-tempo-no-transporte-de-orgaos-para-transplante',
+          note: {
+            'pt-BR': 'Reportagem sobre a solução.',
+            en: 'Press report about the solution.',
+          },
+        },
+        {
+          kind: 'record',
+          label: {
+            'pt-BR': 'Registro bibliográfico do artigo no OpenAlex',
+            en: 'Bibliographic record of the paper on OpenAlex',
+          },
+          url: 'https://openalex.org/W3128566934',
+        },
+      ],
     },
   ],
 };
