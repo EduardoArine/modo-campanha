@@ -117,6 +117,12 @@ h4 {
 
 // Títulos de checkpoint e assinatura/fechamento de capítulo.
 .title,
+.signature {
+  margin-top: space(2);
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
 .context {
   margin-top: space(1);
   @include type(body-s);
@@ -141,12 +147,6 @@ h4 {
 .chapter-name {
   @include type(label);
   color: var(--mc-accent);
-}
-
-.signature {
-  margin-top: space(2);
-  @include type(title-m);
-  color: var(--mc-text);
 }
 
 // História completa: <details> nativo (teclado e leitor de tela sem JS). Aberta, substitui o resumo.
