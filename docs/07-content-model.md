@@ -157,20 +157,18 @@ Dados:
 - `src/app/data/campaign-log.data.ts`: **publicado** (produção). Vazio até o histórico real ser aprovado; vazio = seção não renderizada.
 - `src/app/data/campaign-log.data.development.ts`: **MOCK de desenvolvimento visual** (D-049), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
-### CampaignLogChapter (D-070, docs/15 §13)
+### CampaignLogChapter (D-070–D-072, docs/15 §13–§15)
 
 ```ts
-type CampaignLogWhen = { approx: number } | { era: Localized }; // "c. 1991" ou época; nunca ano exato inventado
+// Ano confirmado, ano aproximado ("c. 1991") ou época em texto; nunca ano inventado.
+type CampaignLogWhen = { year: number } | { approx: number } | { era: Localized };
 
-interface CampaignLogChapterEntry {
-  id: string;
-  code: string; // rótulo de sistema, igual nos dois idiomas (FIRST CONTACT)
-  when: CampaignLogWhen;
-  title: Localized;
-  summary: Localized; // 1 frase extraída literalmente da história
-  story: Localized<readonly string[]>; // história completa, em parágrafos
-  photos?: readonly CampaignLogPhoto[]; // fotos reais citadas na história (src, srcset, width, height, alt)
-  links?: readonly CampaignLogLink[]; // referências públicas que comprovam o checkpoint
+interface CampaignLogPhoto {
+  src: string; // maior derivado WebP
+  srcset: string;
+  width: number;
+  height: number;
+  alt: Localized; // descrição objetiva
 }
 
 interface CampaignLogLink {
@@ -180,12 +178,26 @@ interface CampaignLogLink {
   note?: Localized; // contexto factual curto (ex.: autoria de um artigo que não é do Eduardo)
 }
 
+interface CampaignLogChapterEntry {
+  id: string;
+  code?: string; // codinome de sistema, igual nos dois idiomas (FIRST CONTACT, SCOUTEVO)
+  when: CampaignLogWhen;
+  title: Localized;
+  summary: Localized; // 1 frase extraída literalmente da história
+  story: Localized<readonly string[]>; // história completa, em parágrafos
+  photos?: readonly CampaignLogPhoto[]; // fotos reais citadas na história
+  links?: readonly CampaignLogLink[]; // referências públicas que comprovam o checkpoint
+}
+
 interface CampaignLogChapter {
   id: string;
-  number: string; // "00"
-  name: string; // ORIGIN (sistema)
-  signature: Localized;
+  number: string; // "00", "01"...
+  name?: Localized; // ausente = cabeçalho só com o número (sem nome aprovado)
+  period?: CampaignLogPeriod; // ex.: 2013–2017
+  context?: Localized; // curso, instituição
+  signature?: Localized;
   entries: readonly CampaignLogChapterEntry[];
+  closing?: Localized; // frase após CHECKPOINT COMPLETE (ano = period.end)
 }
 ```
 
