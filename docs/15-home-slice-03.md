@@ -263,13 +263,15 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 
 O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
 
-| #   | Quando | Codinome | Título pt / en                                                 |
-| --- | ------ | -------- | -------------------------------------------------------------- |
-| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field |
+| #   | Quando | Codinome | Título pt / en                                                                |
+| --- | ------ | -------- | ----------------------------------------------------------------------------- |
+| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                |
+| 02  | 2019   | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters |
 
 - **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
 - **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
-- **Fatos preservados:** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
+- **EOS (2019):** plataforma de logística de doação e transplante de órgãos. O Eduardo participou da engenharia da solução e fez todo o frontend web (ASP.NET/C#). Em setembro de 2019 foi disponibilizada à Central Estadual de Transplantes de São Paulo e divulgada pela Unicamp; a pesquisa gerou um artigo na _Case Studies on Transport Policy_ (2021). Ênfases do texto viram texto simples. Links (divulgação da Unicamp, artigo) não foram fornecidos.
+- **Fatos preservados (ScoutEvo):** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
 
 **Pontos para o Eduardo:**
 
