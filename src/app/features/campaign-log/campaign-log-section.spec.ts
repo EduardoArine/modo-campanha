@@ -36,7 +36,7 @@ describe('CampaignLogSection', () => {
     expect(texts(section, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
-      'CHAPTER 02',
+      'CHAPTER 02 — DO CÓDIGO AO PRODUTO',
     ]);
     expect(texts(section, `${STORY} h4`)).toEqual([
       'Primeiro contato',
@@ -64,18 +64,20 @@ describe('CampaignLogSection', () => {
       'A campanha começou muito antes do código.',
       'O que começou como paixão na infância se transformou em uma escolha de vida.',
       'A campanha estava apenas começando.',
+      'Cada projeto trouxe um novo desafio. Cada desafio ampliou minha maneira de criar produtos digitais.',
       'XP real, sem personagem.',
     ]);
     const chapterItems = Array.from(el.querySelectorAll('.entry--chapter'));
     expect(chapterItems.length).toBe(5);
     expect(chapterItems[4].classList).toContain('entry--ongoing');
+    expect(chapterItems[4].querySelector('time')).toBeNull();
     expect(chapterItems[4].querySelector('.chapter-name')?.textContent?.trim()).toBe(
       'CURRENT QUEST — EM ANDAMENTO',
     );
     expect(
       chapterItems[2].querySelector('.chapter-name')?.textContent?.replace(/\s+/g, ' ').trim(),
     ).toBe('CHECKPOINT COMPLETE — 2017');
-    expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017']);
+    expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017', '2018 — ATUAL']);
   });
 
   it('numbers chapter checkpoints from their order; codenames only where they exist', async () => {
@@ -115,12 +117,12 @@ describe('CampaignLogSection', () => {
       '2017',
       '2018',
       '2019',
-      '2021 — 2024',
+      'c. 2020/2021',
       'DESDE 2025',
     ]);
     expect(
       Array.from(el.querySelectorAll(`${STORY} time`)).map((t) => t.getAttribute('datetime')),
-    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2021', '2024', '2025']);
+    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2025']);
   });
 
   it('shows the full story only on demand, with a native, localized details toggle', async () => {
@@ -144,7 +146,9 @@ describe('CampaignLogSection', () => {
     );
     expect(link.getAttribute('target')).toBe('_blank');
     expect(link.getAttribute('rel')).toBe('noopener noreferrer');
-    expect(link.textContent?.replace(/s+/g, ' ').trim()).toBe('Ler o TCC (PDF) (abre em nova aba)');
+    expect(link.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+      'Ler o TCC (PDF) (abre em nova aba)',
+    );
   });
 
   it('lists the EOS references by type, with the paper authorship as context', async () => {
@@ -154,17 +158,19 @@ describe('CampaignLogSection', () => {
 
     // O DOI fica sob o mesmo tipo do artigo: o rótulo não se repete.
     expect(texts(eos, '.refs .kind')).toEqual([
+      'LANÇAMENTO INSTITUCIONAL',
       'PUBLICAÇÃO CIENTÍFICA',
       'IMPRENSA',
       'REGISTRO BIBLIOGRÁFICO',
     ]);
     expect(hrefs).toEqual([
+      'https://www.fecfau.unicamp.br/pos/ppgec/noticias/1693',
       'https://www.sciencedirect.com/science/article/abs/pii/S2213624X21000067',
       'https://doi.org/10.1016/j.cstp.2021.01.005',
       'https://portal.afya.com.br/saude/software-pode-reduzir-tempo-no-transporte-de-orgaos-para-transplante',
       'https://openalex.org/W3128566934',
     ]);
-    expect(texts(eos, '.refs .context')[0]).toBe(
+    expect(texts(eos, '.refs .context')[1]).toBe(
       'Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso.',
     );
     expect(
@@ -216,7 +222,7 @@ describe('CampaignLogSection', () => {
       ),
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
-    expect(el.querySelectorAll('a').length).toBe(7);
+    expect(el.querySelectorAll('a').length).toBe(9);
     expect(el.querySelectorAll('summary').length).toBe(14);
     // O lema aprovado ("XP real, sem personagem.") é a única ocorrência permitida de XP.
     expect(el.textContent?.replace('XP real, sem personagem.', '')).not.toMatch(
@@ -230,8 +236,13 @@ describe('CampaignLogSection', () => {
     expect(texts(el, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — FROM CONTROLLER TO CODE',
-      'CHAPTER 02',
+      'CHAPTER 02 — FROM CODE TO PRODUCT',
     ]);
+    expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017', '2018 — PRESENT']);
+    expect(texts(el, '.entry--ongoing .chapter-name')).toEqual(['CURRENT QUEST — IN PROGRESS']);
+    expect(texts(el, `${STORY} .summary`).at(-1)).toBe(
+      'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
+    );
     expect(texts(el, `${STORY} h4`).slice(-4)).toEqual([
       'When an Idea Took the Field',
       'Technology Where Every Minute Matters',

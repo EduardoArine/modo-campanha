@@ -171,7 +171,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   },
   signature: {
     'pt-BR': 'O que começou como paixão na infância se transformou em uma escolha de vida.',
-    en: 'What began as a childhood passion became a life choice.',
+    en: 'What started as a childhood passion became the path I chose.',
   },
   entries: [
     {
@@ -203,7 +203,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       summary: {
         'pt-BR':
           'Foi durante a faculdade que nasceu o Aedes Revenge, um jogo 2D para dispositivos móveis que abordava a conscientização sobre a dengue de uma perspectiva diferente: a do próprio mosquito.',
-        en: "It was during college that Aedes Revenge was born: a 2D mobile game that approached dengue awareness from a different perspective: the mosquito's own.",
+        en: "Aedes Revenge was born during college: a 2D mobile game that approached dengue awareness from a different perspective — the mosquito's own.",
       },
       story: {
         'pt-BR': [
@@ -212,8 +212,8 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
           'Foi uma oportunidade de colocar em prática o que eu aprendia e descobrir, na experiência, quanto trabalho existe por trás de um jogo.',
         ],
         en: [
-          "It was during college that Aedes Revenge was born: a 2D mobile game that approached dengue awareness from a different perspective: the mosquito's own.",
-          'The project started as a group effort, but after the other members left, I kept developing the game on my own. I worked with Unity, C#, mechanics, interfaces, characters, and many different development challenges.',
+          "Aedes Revenge was born during college: a 2D mobile game that approached dengue awareness from a different perspective — the mosquito's own.",
+          'The project started as a group effort, but after the other members left, I kept developing the game on my own. I worked with Unity, C#, mechanics, interfaces, characters, and a wide range of development challenges.',
           'It was a chance to put what I was learning into practice and discover, firsthand, how much work goes into making a game.',
         ],
       },
@@ -225,7 +225,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       summary: {
         'pt-BR':
           'Em 2016, o Aedes Revenge recebeu o prêmio de Melhor Jogo — Categoria Acadêmica, no FAEL 2016 da FATEC Americana.',
-        en: 'In 2016, Aedes Revenge won Best Game — Academic Category at FAEL 2016, at FATEC Americana.',
+        en: "In 2016, Aedes Revenge won Best Game — Academic Category at FATEC Americana's FAEL 2016.",
       },
       story: {
         'pt-BR': [
@@ -233,8 +233,8 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
           'Ver um projeto que eu estava desenvolvendo ser reconhecido foi uma conquista marcante. Era a primeira vez que aquele sonho de infância ganhava também a forma de um trabalho premiado.',
         ],
         en: [
-          'In 2016, Aedes Revenge won Best Game — Academic Category at FAEL 2016, at FATEC Americana.',
-          'Seeing a project I was developing get recognized was a defining achievement. It was the first time that childhood dream also took the shape of award-winning work.',
+          "In 2016, Aedes Revenge won Best Game — Academic Category at FATEC Americana's FAEL 2016.",
+          'Seeing a project I was developing receive recognition was a memorable achievement. It was the first time that childhood dream also took the shape of award-winning work.',
         ],
       },
     },
@@ -243,7 +243,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       when: { year: 2017 },
       title: {
         'pt-BR': 'Um jogo de verdade, com jogadores de verdade',
-        en: 'A Real Game, with Real Players',
+        en: 'A Real Game with Real Players',
       },
       summary: {
         'pt-BR': 'O Aedes Revenge chegou ao Google Play em maio de 2017.',
@@ -257,8 +257,8 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           'Aedes Revenge launched on Google Play in May 2017.',
-          'The beta version had three playable levels and a boss. More important than putting the game online was starting to watch how real people interacted with it.',
-          "Reviews and surveys showed what worked and what needed to improve. That experience helped me understand that development isn't just about making something work: it's about thinking of the people who will use it.",
+          'The beta version had three playable levels and a boss. More important than getting the game online was starting to see how real people interacted with it.',
+          "Reviews and surveys showed what worked and what needed improvement. That experience helped me understand that development isn't just about making something work: it's about thinking about the people who will use it.",
         ],
       },
     },
@@ -267,7 +267,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       when: { year: 2017 },
       title: {
         'pt-BR': 'Dois prêmios e um TCC nota 10',
-        en: 'Two Awards and a Perfect-Score Capstone',
+        en: 'Two Awards and a Perfect Capstone Score',
       },
       summary: {
         'pt-BR':
@@ -283,7 +283,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           "In 2017, Aedes Revenge was once again named Best Game — Academic Category, this time at FATEC Americana's Game Showcase (Mostra de Jogos).",
-          'To close that chapter, I presented the project as my capstone project (TCC) and received a perfect score of 10.',
+          'To close that chapter, I presented it as my capstone project (TCC) and received a perfect 10.',
           'After so many challenges, finishing my degree with two awards and that grade was one of my greatest academic achievements.',
           'The passion that began in front of an Atari had now become knowledge, code, and a game I created myself.',
         ],
@@ -307,12 +307,19 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   },
 };
 
-// CHAPTER 02 (docs/15 §15): começa com o ScoutEvo (2018). Textos pt/en fornecidos pelo Eduardo
-// (2026-10-17), sem alteração. Nome e assinatura do capítulo ainda não foram definidos por ele:
-// ficam ausentes (o cabeçalho mostra só "CHAPTER 02"), nunca inventados.
+// CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §15): do ScoutEvo (2018) até hoje. Textos pt/en dos
+// checkpoints fornecidos pelo Eduardo (2026-10-17). Nome, período e assinatura pt definidos por ele
+// na consolidação (D-073); as versões en do nome e da assinatura são propostas, a aprovar.
 export const CHAPTER_02: CampaignLogChapter = {
   id: 'chapter-02',
   number: '02',
+  name: { 'pt-BR': 'DO CÓDIGO AO PRODUTO', en: 'FROM CODE TO PRODUCT' },
+  period: { start: 2018, end: 'present' },
+  signature: {
+    'pt-BR':
+      'Cada projeto trouxe um novo desafio. Cada desafio ampliou minha maneira de criar produtos digitais.',
+    en: 'Every project brought a new challenge. Every challenge broadened the way I build digital products.',
+  },
   entries: [
     {
       id: 'scoutevo',
@@ -396,8 +403,24 @@ export const CHAPTER_02: CampaignLogChapter = {
       },
       // Referências fornecidas pelo Eduardo (2026-10-17), verificadas (título, data, autoria via
       // OpenAlex/DOI). O artigo é de Henrique Barros Bellotti e Maria Teresa Françoso, não do
-      // Eduardo. O anúncio oficial da Unicamp (2019) entra quando o link for informado.
+      // Eduardo. A notícia da Unicamp (27/09/2019) não cita o Eduardo: credita o sistema a Henrique
+      // Bellotti, com apoio da Ativvus e do InCor. Datas distintas: disponibilização (set/2019),
+      // imprensa (dez/2019) e artigo (2021).
       links: [
+        {
+          kind: 'launch',
+          label: {
+            'pt-BR':
+              'Unicamp (FECFAU): "EOS - o primeiro sistema de planejamento de transporte de órgãos para transplante" (2019)',
+            en: 'Unicamp (FECFAU): "EOS - o primeiro sistema de planejamento de transporte de órgãos para transplante" (2019, in Portuguese)',
+          },
+          url: 'https://www.fecfau.unicamp.br/pos/ppgec/noticias/1693',
+          note: {
+            'pt-BR':
+              'Notícia de 27/09/2019 sobre a disponibilização do EOS à Central Estadual de Transplantes de SP.',
+            en: "News from September 27, 2019, on EOS being made available to São Paulo's State Transplant Center.",
+          },
+        },
         {
           kind: 'paper',
           label: {
@@ -443,10 +466,12 @@ export const CHAPTER_02: CampaignLogChapter = {
       ],
     },
     {
-      // Textos pt/en fornecidos pelo Eduardo (2026-10-17, versão 2021–2024), sem alteração.
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração. Data (D-073): início
+      // aproximado em 2020/2021, segundo o Eduardo, e evolução posterior, sem ano final. As fontes
+      // públicas dão 2021 como ponto de partida (Arppen) e citam o desenvolvimento em 2022 (InfraFM).
       id: 'axia',
       code: 'AXIA',
-      when: { span: { start: 2021, end: 2024 } },
+      when: { approx: [2020, 2021] },
       title: {
         'pt-BR': 'Da ideia à inteligência operacional',
         en: 'From Concept to Operational Intelligence',
@@ -474,9 +499,23 @@ export const CHAPTER_02: CampaignLogChapter = {
           "This project strengthened my approach to digital product development: contributing to decisions, building solutions, understanding how they're used, and continuously improving the product.",
         ],
       },
-      // Reportagem da InfraFM sobre a Axia (fornecida pelo Eduardo, verificada em 2026-10-17).
-      // As páginas da Arppen enviadas (about.html, axia.html) retornam 404 e não entram.
+      // Fontes enviadas pelo Eduardo, verificadas em 2026-10-17. `arppen.com/axia.html` retorna 404;
+      // a página inicial da Arppen traz a seção da Axia e a linha do tempo pública. Nenhuma das duas
+      // fontes cita o Eduardo.
       links: [
+        {
+          kind: 'company',
+          label: {
+            'pt-BR': 'Arppen: a Axia e sua linha do tempo',
+            en: 'Arppen: Axia and its timeline (in Portuguese)',
+          },
+          url: 'https://www.arppen.com/',
+          note: {
+            'pt-BR':
+              'Linha do tempo pública: ponto de partida em 2021, protótipos e testes em 2022 e a Inteligência Axia no mercado em 2024.',
+            en: 'Public timeline: starting point in 2021, prototypes and field tests in 2022, and Axia Intelligence on the market in 2024.',
+          },
+        },
         {
           kind: 'press',
           label: {
@@ -486,15 +525,17 @@ export const CHAPTER_02: CampaignLogChapter = {
           },
           url: 'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
           note: {
-            'pt-BR': 'Reportagem sobre a Axia, produto da Ativvus.',
-            en: 'Press report about Axia, a product by Ativvus.',
+            'pt-BR':
+              'Reportagem sobre a Axia, produto da Ativvus; cita o desenvolvimento em 2022. Data de publicação não informada.',
+            en: 'Press report about Axia, a product by Ativvus; mentions its development in 2022. Publication date not stated.',
           },
         },
       ],
     },
     {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
-      // Descrição pública escrita por ele; nada interno da Comunidade On.
+      // Descrição pública escrita por ele; nada interno da Comunidade On. O resumo do card é próprio
+      // (D-073), não a primeira frase da história.
       id: 'comunidade-on',
       code: 'COMUNIDADE ON',
       when: { since: 2025 },
@@ -504,8 +545,8 @@ export const CHAPTER_02: CampaignLogChapter = {
       },
       summary: {
         'pt-BR':
-          'Depois de experiências com jogos, plataformas esportivas, logística e sistemas conectados, cheguei à Comunidade ON, um projeto que reúne muito do que construí ao longo da minha trajetória.',
-        en: "After working on games, sports platforms, logistics solutions, and connected systems, I joined Comunidade ON, a project that brings together many of the things I've learned throughout my career.",
+          'Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais.',
+        en: 'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
       },
       story: {
         'pt-BR': [

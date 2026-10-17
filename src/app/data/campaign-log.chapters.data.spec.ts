@@ -109,14 +109,19 @@ describe('Campaign Log — CHAPTER 01 FATEC', () => {
   });
 });
 
-// CHAPTER 02 (docs/15 §15): ScoutEvo, textos pt/en do Eduardo; nome do capítulo ainda não definido.
+// CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §15, D-073): ScoutEvo, textos pt/en do Eduardo.
 describe('Campaign Log — CHAPTER 02 (ScoutEvo)', () => {
   const [scoutevo] = CHAPTER_02.entries;
 
-  it('has no invented chapter name or signature yet', () => {
-    expect(CHAPTER_02.name).toBeUndefined();
-    expect(CHAPTER_02.signature).toBeUndefined();
-    expect(CHAPTER_02.period).toBeUndefined();
+  it('has the approved name, an open 2018–present period and the signature', () => {
+    expect(CHAPTER_02.name).toEqual({
+      'pt-BR': 'DO CÓDIGO AO PRODUTO',
+      en: 'FROM CODE TO PRODUCT',
+    });
+    expect(CHAPTER_02.period).toEqual({ start: 2018, end: 'present' });
+    expect(CHAPTER_02.signature?.['pt-BR']).toBe(
+      'Cada projeto trouxe um novo desafio. Cada desafio ampliou minha maneira de criar produtos digitais.',
+    );
   });
 
   it('keeps the facts: 2018, the Flamengo competition and the shared database work', () => {
@@ -175,8 +180,9 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
 
   it('credits the paper to its authors, never to Eduardo, and keeps the sources verifiable', () => {
     const links = eos.links ?? [];
-    expect(links.map((l) => l.kind)).toEqual(['paper', 'paper', 'press', 'record']);
-    expect(links[0].note?.['pt-BR']).toBe(
+    expect(links.map((l) => l.kind)).toEqual(['launch', 'paper', 'paper', 'press', 'record']);
+    expect(links[0].url).toBe('https://www.fecfau.unicamp.br/pos/ppgec/noticias/1693');
+    expect(links[1].note?.['pt-BR']).toBe(
       'Artigo sobre o EOS, de Henrique Barros Bellotti e Maria Teresa Françoso.',
     );
     expect(JSON.stringify(links)).not.toMatch(/Eduardo|Arine/);
@@ -195,14 +201,14 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
 describe('Campaign Log — CHAPTER 02 (Axia)', () => {
   const axia = CHAPTER_02.entries[2];
 
-  it('is the third checkpoint of CHAPTER 02, spanning 2021–2024', () => {
+  it('is the third checkpoint of CHAPTER 02: approximate start (2020/2021), no end year', () => {
     expect(CHAPTER_02.entries.map((e) => e.code)).toEqual([
       'SCOUTEVO',
       'EOS',
       'AXIA',
       'COMUNIDADE ON',
     ]);
-    expect(axia.when).toEqual({ span: { start: 2021, end: 2024 } });
+    expect(axia.when).toEqual({ approx: [2020, 2021] });
   });
 
   it('keeps the facts: developed by Ativvus/Arppen, his focus and contributions', () => {
@@ -215,14 +221,18 @@ describe('Campaign Log — CHAPTER 02 (Axia)', () => {
     );
   });
 
-  it('links only the verified InfraFM report (the Arppen pages sent are gone: 404)', () => {
+  it('links the Arppen public timeline (axia.html is a 404) and the InfraFM report', () => {
     expect(axia.links?.map((l) => [l.kind, l.url])).toEqual([
+      ['company', 'https://www.arppen.com/'],
       [
         'press',
         'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
       ],
     ]);
-    expect(JSON.stringify(axia.links)).not.toContain('arppen.com');
+    expect(JSON.stringify(axia.links)).not.toContain('axia.html');
+    // As fontes não citam o Eduardo; as notas separam início (2021), desenvolvimento (2022) e
+    // mercado (2024), sem atribuir a ele funcionalidades ou resultados.
+    expect(JSON.stringify(axia.links)).not.toMatch(/Eduardo|Arine/);
   });
 
   it('takes the summary literally from the story, in both languages', () => {
@@ -261,10 +271,17 @@ describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
     expect(on.links).toBeUndefined();
   });
 
-  it('takes the summary literally from the story, in both languages', () => {
+  it('uses its own approved card summary (not a repeat of the story) and keeps the full story', () => {
+    expect(on.summary['pt-BR']).toBe(
+      'Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais.',
+    );
+    expect(on.summary.en).toBe(
+      'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
+    );
     for (const locale of ['pt-BR', 'en'] as const) {
-      expect(on.story[locale][0]).toBe(on.summary[locale]);
+      expect(on.story[locale].join(' ')).not.toContain(on.summary[locale]);
       expect(on.story[locale].length).toBe(8);
     }
+    expect(on.story['pt-BR'][0]).toMatch(/^Depois de experiências com jogos/);
   });
 });

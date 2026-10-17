@@ -28,14 +28,15 @@ export interface CampaignLogEntry {
 }
 
 /**
- * Quando aconteceu um checkpoint de capítulo: ano confirmado ("2016"), ano aproximado ("c. 1991") ou
- * uma época descrita em texto, sem inventar ano ("Época do SNES"). Nunca um ano não confirmado.
+ * Quando aconteceu um checkpoint de capítulo: ano confirmado ("2016"), intervalo confirmado, "desde"
+ * (em aberto), ano aproximado ("c. 1991") ou aproximado entre dois anos informados ("c. 2020/2021"),
+ * ou uma época descrita em texto, sem inventar ano ("Época do SNES"). Nunca um ano não confirmado.
  */
 export type CampaignLogWhen =
   | { readonly year: number }
   | { readonly span: { readonly start: number; readonly end: number } }
   | { readonly since: number }
-  | { readonly approx: number }
+  | { readonly approx: number | readonly [number, number] }
   | { readonly era: Localized };
 
 /** Fotografia pessoal real, como evidência documental de um checkpoint (não decoração). */
@@ -51,9 +52,9 @@ export interface CampaignLogPhoto {
 
 /**
  * Tipo da referência externa (o rótulo vem do dicionário): lançamento institucional, publicação
- * científica, imprensa, registro bibliográfico ou documento acadêmico.
+ * científica, imprensa, registro bibliográfico, documento acadêmico ou registro público da empresa.
  */
-export type CampaignLogLinkKind = 'launch' | 'paper' | 'press' | 'record' | 'academic';
+export type CampaignLogLinkKind = 'launch' | 'paper' | 'press' | 'record' | 'academic' | 'company';
 
 /** Referência externa verificável de um checkpoint (abre em nova aba). */
 export interface CampaignLogLink {
@@ -71,7 +72,10 @@ export interface CampaignLogChapterEntry {
   code?: string;
   when: CampaignLogWhen;
   title: Localized;
-  /** 1 frase, extraída literalmente da história (visível sem expandir). */
+  /**
+   * Frase visível sem expandir. Regra: a primeira frase da história, literal. Exceção só com resumo
+   * próprio aprovado pelo Eduardo (Comunidade ON, D-073), sem repetir a história.
+   */
   summary: Localized;
   /** História completa, em parágrafos (aberta por "Ler a história completa"). */
   story: Localized<readonly string[]>;

@@ -11,7 +11,12 @@
           <p class="period">
             <time [attr.datetime]="period.start">{{ period.start }}</time>
             @if (period.end; as end) {
-              — <time [attr.datetime]="end">{{ end }}</time>
+              —
+              @if (end === 'present') {
+                {{ ui().campaignLog.present }}
+              } @else {
+                <time [attr.datetime]="end">{{ end }}</time>
+              }
             }
           </p>
         }
@@ -42,8 +47,14 @@
               <time [attr.datetime]="when.span.start">{{ when.span.start }}</time> —
               <time [attr.datetime]="when.span.end">{{ when.span.end }}</time>
             } @else if ('approx' in when) {
+              @let approx = when.approx;
               {{ ui().campaignLog.approx }}
-              <time [attr.datetime]="when.approx">{{ when.approx }}</time>
+              @if (typeof approx === 'number') {
+                <time [attr.datetime]="approx">{{ approx }}</time>
+              } @else {
+                <!-- Dois anos possíveis, sem escolher um: "c. 2020/2021". -->
+                {{ approx[0] }}/{{ approx[1] }}
+              }
             } @else {
               {{ locale.pick(when.era) }}
             }

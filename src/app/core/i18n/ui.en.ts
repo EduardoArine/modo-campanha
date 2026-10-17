@@ -93,6 +93,7 @@ export const UI_EN: UiDictionary = {
       press: 'PRESS',
       record: 'BIBLIOGRAPHIC RECORD',
       academic: 'ACADEMIC DOCUMENT',
+      company: 'COMPANY RECORD',
     },
     story: { open: 'Read the full story', close: 'Collapse the story' },
   },

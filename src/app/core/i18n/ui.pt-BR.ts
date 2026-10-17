@@ -96,6 +96,7 @@ export const UI_PT_BR = {
       press: 'IMPRENSA',
       record: 'REGISTRO BIBLIOGRÁFICO',
       academic: 'DOCUMENTO ACADÊMICO',
+      company: 'REGISTRO DA EMPRESA',
     },
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },
