@@ -1,4 +1,8 @@
-import { CampaignLogEntry } from '../models';
+import { CampaignLogChapter, CampaignLogEntry } from '../models';
+import { ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+
+// CHAPTER 00 — ORIGIN é conteúdo REAL (não MOCK): em desenvolvimento aparece para a revisão visual.
+export const CAMPAIGN_LOG_CHAPTERS: readonly CampaignLogChapter[] = [ORIGIN_CHAPTER];
 
 // ⚠️ CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT (D-049).
 // Períodos, títulos, contextos e textos abaixo NÃO são o histórico aprovado do Eduardo: servem só

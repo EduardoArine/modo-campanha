@@ -2,6 +2,43 @@
   <mc-section-header [heading]="ui().sections.campaignLog" headingId="campaign-log-title" />
 
   <ol class="log" role="list">
+    <!-- Capítulos (docs/15 §13): o arco antes da linha profissional, no mesmo eixo. Lista plana:
+         o cabeçalho do capítulo (h3) e os checkpoints dele (h4) são itens do mesmo eixo. -->
+    @for (chapter of chapters; track chapter.id) {
+      <li class="entry entry--chapter">
+        <span class="marker" aria-hidden="true"></span>
+        <h3 class="chapter-name">
+          {{ ui().campaignLog.chapter }} {{ chapter.number }} — {{ chapter.name }}
+        </h3>
+        <p class="signature">{{ locale.pick(chapter.signature) }}</p>
+      </li>
+      @for (entry of chapter.entries; track entry.id; let i = $index) {
+        @let when = entry.when;
+        <li class="entry entry--story">
+          <span class="marker" aria-hidden="true"></span>
+          <p class="period">
+            @if ('approx' in when) {
+              {{ ui().campaignLog.approx }}
+              <time [attr.datetime]="when.approx">{{ when.approx }}</time>
+            } @else {
+              {{ locale.pick(when.era) }}
+            }
+          </p>
+          <p class="kind">{{ ui().campaignLog.checkpoint }} {{ code(i) }} · {{ entry.code }}</p>
+          <h4 class="title">{{ locale.pick(entry.title) }}</h4>
+          <p class="summary">{{ locale.pick(entry.summary) }}</p>
+          <details class="story">
+            <summary>
+              <span class="open">{{ ui().campaignLog.story.open }}</span>
+              <span class="close">{{ ui().campaignLog.story.close }}</span>
+            </summary>
+            @for (paragraph of locale.pick(entry.story); track $index) {
+              <p>{{ paragraph }}</p>
+            }
+          </details>
+        </li>
+      }
+    }
     @for (entry of entries; track entry.id) {
       <li [class]="'entry entry--' + entry.kind">
         <span class="marker" aria-hidden="true"></span>

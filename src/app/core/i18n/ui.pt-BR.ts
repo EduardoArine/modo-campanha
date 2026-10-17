@@ -84,6 +84,11 @@ export const UI_PT_BR = {
     },
     present: 'ATUAL',
     since: 'DESDE',
+    // Capítulos (docs/15 §13): rótulos de sistema em inglês; ações localizadas.
+    chapter: 'CHAPTER',
+    checkpoint: 'CHECKPOINT',
+    approx: 'c.',
+    story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },
   achievements: {
     code: 'ACH',

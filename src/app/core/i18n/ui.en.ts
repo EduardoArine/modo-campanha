@@ -82,6 +82,10 @@ export const UI_EN: UiDictionary = {
     },
     present: 'PRESENT',
     since: 'SINCE',
+    chapter: 'CHAPTER',
+    checkpoint: 'CHECKPOINT',
+    approx: 'c.',
+    story: { open: 'Read the full story', close: 'Collapse the story' },
   },
   achievements: {
     code: 'ACH',

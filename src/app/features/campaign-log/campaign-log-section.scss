@@ -86,7 +86,8 @@
 }
 
 p,
-h3 {
+h3,
+h4 {
   margin: 0;
 }
 
@@ -131,4 +132,67 @@ h3 {
   margin-top: space(2);
   @include type(body);
   color: var(--mc-text-secondary);
+}
+
+// Capítulo (docs/15 §13): cabeçalho no mesmo eixo, marker warm vazado (o origin profissional
+// continua o único warm cheio). Os checkpoints do capítulo usam a tipografia aprovada (D-050).
+.entry--chapter .marker {
+  border-color: var(--mc-accent-active);
+}
+
+.chapter-name {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.signature {
+  margin-top: space(2);
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+// História completa: <details> nativo (teclado e leitor de tela sem JS). Aberta, substitui o resumo.
+.story {
+  margin-top: space(2);
+
+  summary {
+    display: inline-flex;
+    gap: space(2);
+    cursor: pointer;
+    list-style: none;
+    @include type(body-s);
+    color: var(--mc-link);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: '▸';
+    }
+
+    &:hover {
+      color: var(--mc-link-hover);
+    }
+  }
+
+  &[open] summary::before {
+    content: '▾';
+  }
+
+  &[open] .open,
+  &:not([open]) .close {
+    display: none;
+  }
+
+  p {
+    max-width: 62ch;
+    margin-top: space(2);
+    @include type(body);
+    color: var(--mc-text-secondary);
+  }
+}
+
+.entry--story:has(.story[open]) .summary {
+  display: none;
 }
