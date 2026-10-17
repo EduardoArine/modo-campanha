@@ -231,7 +231,9 @@ h4 {
   padding: 0;
   list-style: none;
 
+  // Títulos longos quebram linha; inline mantém o ícone externo junto do fim do texto.
   a {
+    display: inline;
     white-space: normal;
   }
 }

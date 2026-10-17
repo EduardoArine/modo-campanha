@@ -35,6 +35,9 @@
           <p class="period">
             @if ('year' in when) {
               <time [attr.datetime]="when.year">{{ when.year }}</time>
+            } @else if ('span' in when) {
+              <time [attr.datetime]="when.span.start">{{ when.span.start }}</time> —
+              <time [attr.datetime]="when.span.end">{{ when.span.end }}</time>
             } @else if ('approx' in when) {
               {{ ui().campaignLog.approx }}
               <time [attr.datetime]="when.approx">{{ when.approx }}</time>

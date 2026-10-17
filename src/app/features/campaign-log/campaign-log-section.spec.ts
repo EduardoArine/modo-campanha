@@ -51,7 +51,7 @@ describe('CampaignLogSection', () => {
       'Dois prêmios e um TCC nota 10',
       'Quando uma ideia entrou em campo',
       'Tecnologia em que cada minuto importa',
-      'Quando o software encontrou o mundo físico',
+      'Da ideia à inteligência operacional',
     ]);
     expect(texts(section, `${PRO} h3`)[0]).toBe('Da tecnologia para o desenvolvimento');
   });
@@ -108,11 +108,11 @@ describe('CampaignLogSection', () => {
       '2017',
       '2018',
       '2019',
-      '2021',
+      '2021 — 2024',
     ]);
     expect(
       Array.from(el.querySelectorAll(`${STORY} time`)).map((t) => t.getAttribute('datetime')),
-    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2021']);
+    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018', '2019', '2021', '2024']);
   });
 
   it('shows the full story only on demand, with a native, localized details toggle', async () => {
@@ -208,7 +208,7 @@ describe('CampaignLogSection', () => {
       ),
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
-    expect(el.querySelectorAll('a').length).toBe(6);
+    expect(el.querySelectorAll('a').length).toBe(7);
     expect(el.querySelectorAll('summary').length).toBe(13);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });
@@ -224,7 +224,7 @@ describe('CampaignLogSection', () => {
     expect(texts(el, `${STORY} h4`).slice(-3)).toEqual([
       'When an Idea Took the Field',
       'Technology Where Every Minute Matters',
-      'When Software Met the Physical World',
+      'From Concept to Operational Intelligence',
     ]);
     expect(texts(el, '.signature')[0]).toBe('The campaign started long before the code.');
     expect(texts(el, `${STORY} .period`)[1]).toBe('SNES era');

@@ -442,35 +442,54 @@ export const CHAPTER_02: CampaignLogChapter = {
       ],
     },
     {
-      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17, versão 2021–2024), sem alteração.
       id: 'axia',
       code: 'AXIA',
-      when: { year: 2021 },
+      when: { span: { start: 2021, end: 2024 } },
       title: {
-        'pt-BR': 'Quando o software encontrou o mundo físico',
-        en: 'When Software Met the Physical World',
+        'pt-BR': 'Da ideia à inteligência operacional',
+        en: 'From Concept to Operational Intelligence',
       },
       summary: {
         'pt-BR':
-          'Depois de experiências com jogos, plataformas digitais e sistemas de logística, participei de um dos projetos mais completos da minha trajetória: a Axia, desenvolvida pela Ativvus/Arppen.',
-        en: 'After working on games, digital platforms, and logistics systems, I became involved in one of the most comprehensive projects of my career: Axia, developed by Ativvus/Arppen.',
+          'Um dos projetos mais completos da minha trajetória foi a Axia, uma plataforma de inteligência operacional desenvolvida pela Ativvus/Arppen para transformar a gestão de limpeza e facilities por meio de tecnologia, dados e dispositivos conectados.',
+        en: 'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to improve cleaning and facilities management through technology, data, and connected devices.',
       },
       story: {
         'pt-BR': [
-          'Depois de experiências com jogos, plataformas digitais e sistemas de logística, participei de um dos projetos mais completos da minha trajetória: a Axia, desenvolvida pela Ativvus/Arppen.',
-          'A proposta era melhorar a gestão de operações de limpeza e facilities por meio de dispositivos conectados, coleta de dados e uma plataforma digital capaz de transformar informações do ambiente em indicadores para apoiar decisões.',
-          'Participei desde a idealização e a engenharia da solução até o desenvolvimento de diferentes partes do sistema. Minha atuação teve foco principalmente na aplicação web em Angular, na WebAPI em .NET com C# e no design das interfaces. Também trabalhei com SQL Server e contribuí para o desenvolvimento do código embarcado dos dispositivos em C.',
-          'O grande desafio foi fazer essas diferentes tecnologias trabalharem juntas de forma coerente, transformando dados capturados no mundo físico em informações úteis e acessíveis para quem gerenciava as operações.',
-          'Foi uma experiência importante para consolidar a maneira como passei a enxergar meu trabalho: não apenas como alguém que desenvolve telas ou APIs, mas como alguém que participa da construção de produtos digitais de ponta a ponta.',
+          'Um dos projetos mais completos da minha trajetória foi a Axia, uma plataforma de inteligência operacional desenvolvida pela Ativvus/Arppen para transformar a gestão de limpeza e facilities por meio de tecnologia, dados e dispositivos conectados.',
+          'Participei de toda a evolução do produto, desde sua idealização e engenharia inicial até as melhorias e expansões realizadas nos anos seguintes, incluindo a evolução para a Inteligência Axia.',
+          'Minha atuação passou por diferentes camadas da solução: arquitetura, desenvolvimento do webapp em Angular, WebAPI em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C.',
+          'Embora tenha trabalhado em praticamente todas as frentes, meu foco principal sempre esteve no desenvolvimento da plataforma web, das APIs e na experiência de uso.',
+          'Acompanhar a Axia durante tantos ciclos de evolução foi uma experiência importante. O desafio não era apenas fazer tecnologias diferentes funcionarem juntas, mas transformar necessidades operacionais reais em um produto consistente, capaz de evoluir conforme novos problemas e oportunidades surgiam.',
+          'Esse projeto consolidou minha visão de desenvolvimento de produtos digitais: participar das decisões, construir soluções, entender como são utilizadas e continuar evoluindo o produto.',
         ],
         en: [
-          'After working on games, digital platforms, and logistics systems, I became involved in one of the most comprehensive projects of my career: Axia, developed by Ativvus/Arppen.',
-          'The goal was to improve cleaning and facilities management through connected devices, data collection, and a digital platform that could turn information from physical environments into actionable operational insights.',
-          "I contributed from the initial concept and solution engineering through several areas of development. My main focus was the Angular web application, the .NET WebAPI built with C#, and interface design. I also worked with SQL Server and contributed to the devices' embedded C code.",
-          'The biggest challenge was connecting these different technologies into a coherent product, transforming real-world data into useful, accessible information for operational managers.',
-          'This experience helped shape how I see my work today: not simply as someone who builds interfaces or APIs, but as someone involved in creating digital products from concept to implementation.',
+          'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to improve cleaning and facilities management through technology, data, and connected devices.',
+          "I contributed throughout the product's evolution, from its initial concept and engineering to subsequent improvements and expansions, including the development of Axia's intelligence capabilities.",
+          "My work covered several parts of the solution: architecture, the Angular web application, .NET WebAPI with C#, SQL Server, interface design, and contributions to the devices' embedded C code.",
+          'Although I worked across nearly every area, my primary focus remained on the web platform, APIs, and user experience.',
+          "Being involved in Axia across multiple development cycles was an important experience. The challenge wasn't simply connecting different technologies, but turning real operational needs into a consistent product that could evolve as new challenges and opportunities emerged.",
+          "This project strengthened my approach to digital product development: contributing to decisions, building solutions, understanding how they're used, and continuously improving the product.",
         ],
       },
+      // Reportagem da InfraFM sobre a Axia (fornecida pelo Eduardo, verificada em 2026-10-17).
+      // As páginas da Arppen enviadas (about.html, axia.html) retornam 404 e não entram.
+      links: [
+        {
+          kind: 'press',
+          label: {
+            'pt-BR':
+              'InfraFM: "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos"',
+            en: 'InfraFM: "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos" (in Portuguese)',
+          },
+          url: 'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
+          note: {
+            'pt-BR': 'Reportagem sobre a Axia, produto da Ativvus.',
+            en: 'Press report about Axia, a product by Ativvus.',
+          },
+        },
+      ],
     },
   ],
 };

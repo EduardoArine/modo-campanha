@@ -32,7 +32,10 @@ export interface CampaignLogEntry {
  * uma época descrita em texto, sem inventar ano ("Época do SNES"). Nunca um ano não confirmado.
  */
 export type CampaignLogWhen =
-  { readonly year: number } | { readonly approx: number } | { readonly era: Localized };
+  | { readonly year: number }
+  | { readonly span: { readonly start: number; readonly end: number } }
+  | { readonly approx: number }
+  | { readonly era: Localized };
 
 /** Fotografia pessoal real, como evidência documental de um checkpoint (não decoração). */
 export interface CampaignLogPhoto {

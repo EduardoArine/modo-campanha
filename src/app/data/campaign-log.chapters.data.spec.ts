@@ -194,27 +194,35 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
 describe('Campaign Log — CHAPTER 02 (Axia)', () => {
   const axia = CHAPTER_02.entries[2];
 
-  it('is the third checkpoint of CHAPTER 02, in 2021', () => {
+  it('is the third checkpoint of CHAPTER 02, spanning 2021–2024', () => {
     expect(CHAPTER_02.entries.map((e) => e.code)).toEqual(['SCOUTEVO', 'EOS', 'AXIA']);
-    expect(axia.when).toEqual({ year: 2021 });
+    expect(axia.when).toEqual({ span: { start: 2021, end: 2024 } });
   });
 
   it('keeps the facts: developed by Ativvus/Arppen, his focus and contributions', () => {
     const pt = axia.story['pt-BR'].join(' ');
-    expect(pt).toContain('a Axia, desenvolvida pela Ativvus/Arppen');
+    expect(pt).toContain('desenvolvida pela Ativvus/Arppen');
+    expect(pt).toContain('incluindo a evolução para a Inteligência Axia');
+    expect(pt).toContain('contribuições ao código embarcado dos dispositivos em C');
     expect(pt).toContain(
-      'na aplicação web em Angular, na WebAPI em .NET com C# e no design das interfaces',
+      'meu foco principal sempre esteve no desenvolvimento da plataforma web, das APIs e na experiência de uso',
     );
-    expect(pt).toContain(
-      'contribuí para o desenvolvimento do código embarcado dos dispositivos em C',
-    );
-    expect(axia.links).toBeUndefined();
+  });
+
+  it('links only the verified InfraFM report (the Arppen pages sent are gone: 404)', () => {
+    expect(axia.links?.map((l) => [l.kind, l.url])).toEqual([
+      [
+        'press',
+        'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
+      ],
+    ]);
+    expect(JSON.stringify(axia.links)).not.toContain('arppen.com');
   });
 
   it('takes the summary literally from the story, in both languages', () => {
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(axia.story[locale][0]).toBe(axia.summary[locale]);
-      expect(axia.story[locale].length).toBe(5);
+      expect(axia.story[locale].length).toBe(6);
     }
   });
 });
