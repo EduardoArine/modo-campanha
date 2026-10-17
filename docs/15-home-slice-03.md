@@ -263,10 +263,11 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 
 O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
 
-| #   | Quando | Codinome | Título pt / en                                                                |
-| --- | ------ | -------- | ----------------------------------------------------------------------------- |
-| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                |
-| 02  | 2019   | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters |
+| #   | Quando | Codinome | Título pt / en                                                                    |
+| --- | ------ | -------- | --------------------------------------------------------------------------------- |
+| 01  | 2018   | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                    |
+| 02  | 2019   | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters     |
+| 03  | 2021   | AXIA     | Quando o software encontrou o mundo físico / When Software Met the Physical World |
 
 - **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
 - **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
@@ -276,6 +277,7 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
   - **Registro bibliográfico:** OpenAlex W3128566934.
   - **Lançamento institucional (Unicamp, 2019): pendente.** O link não veio, e a busca em unicamp.br não encontrou a matéria. Entra como "LANÇAMENTO INSTITUCIONAL" (disponibilização para uso experimental, 2019) quando o Eduardo enviar o endereço.
   - **Sem afirmação de resultado:** nenhum rótulo apresenta resultados de teste como adoção operacional definitiva ou como redução comprovada de perdas de órgãos.
+- **Axia (2021):** desenvolvida pela Ativvus/Arppen; gestão de operações de limpeza e facilities com dispositivos conectados e plataforma de dados. O Eduardo participou da idealização e da engenharia da solução e focou na aplicação web em Angular, na WebAPI .NET/C# e no design das interfaces. Também trabalhou com SQL Server e contribuiu para o código embarcado dos dispositivos em C. Sem links.
 - **Fatos preservados (ScoutEvo):** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
 
 **Pontos para o Eduardo:**
