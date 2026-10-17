@@ -31,11 +31,12 @@ describe('CampaignLogSection', () => {
 
     expect(section.querySelector('h2')?.textContent).toBe('CAMPAIGN LOG');
     expect(section.querySelectorAll('ol[role="list"]').length).toBe(1);
-    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · MOCK: 4.
-    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 4);
-    expect(texts(section, 'h3').slice(0, 2)).toEqual([
+    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 1 · MOCK: 4.
+    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 2 + 4);
+    expect(texts(section, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
+      'CHAPTER 02',
     ]);
     expect(texts(section, `${STORY} h4`)).toEqual([
       'Primeiro contato',
@@ -48,6 +49,7 @@ describe('CampaignLogSection', () => {
       'Meu primeiro Melhor Jogo',
       'Um jogo de verdade, com jogadores de verdade',
       'Dois prêmios e um TCC nota 10',
+      'Quando uma ideia entrou em campo',
     ]);
     expect(texts(section, `${PRO} h3`)[0]).toBe('Da tecnologia para o desenvolvimento');
   });
@@ -61,7 +63,7 @@ describe('CampaignLogSection', () => {
       'A campanha estava apenas começando.',
     ]);
     const chapterItems = Array.from(el.querySelectorAll('.entry--chapter'));
-    expect(chapterItems.length).toBe(3);
+    expect(chapterItems.length).toBe(4);
     expect(
       chapterItems[2].querySelector('.chapter-name')?.textContent?.replace(/\s+/g, ' ').trim(),
     ).toBe('CHECKPOINT COMPLETE — 2017');
@@ -82,6 +84,7 @@ describe('CampaignLogSection', () => {
       'CHECKPOINT 03',
       'CHECKPOINT 04',
       'CHECKPOINT 05',
+      'CHECKPOINT 01 · SCOUTEVO',
     ]);
   });
 
@@ -99,17 +102,18 @@ describe('CampaignLogSection', () => {
       '2016',
       '2017',
       '2017',
+      '2018',
     ]);
     expect(
       Array.from(el.querySelectorAll(`${STORY} time`)).map((t) => t.getAttribute('datetime')),
-    ).toEqual(['1991', '2013', '2016', '2017', '2017']);
+    ).toEqual(['1991', '2013', '2016', '2017', '2017', '2018']);
   });
 
   it('shows the full story only on demand, with a native, localized details toggle', async () => {
     const el = await renderAt('/');
     const stories = el.querySelectorAll<HTMLDetailsElement>(`${STORY} details`);
 
-    expect(stories.length).toBe(10);
+    expect(stories.length).toBe(11);
     expect(Array.from(stories).every((d) => !d.open)).toBe(true);
     expect(stories[0].querySelector('summary .open')?.textContent).toBe('Ler a história completa');
     expect(stories[9].querySelectorAll('p:not(.doc)').length).toBe(4);
@@ -172,17 +176,19 @@ describe('CampaignLogSection', () => {
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
     expect(el.querySelectorAll('a').length).toBe(1);
-    expect(el.querySelectorAll('summary').length).toBe(10);
+    expect(el.querySelectorAll('summary').length).toBe(11);
     expect(el.textContent).not.toMatch(/\bXP\b|\bLV\b|unlocked|%|★/);
   });
 
   it('renders the en labels and content', async () => {
     const el = await renderAt('/en');
 
-    expect(texts(el, 'h3').slice(0, 2)).toEqual([
+    expect(texts(el, 'h3').slice(0, 3)).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — FROM CONTROLLER TO CODE',
+      'CHAPTER 02',
     ]);
+    expect(texts(el, `${STORY} h4`).at(-1)).toBe('When an Idea Took the Field');
     expect(texts(el, '.signature')[0]).toBe('The campaign started long before the code.');
     expect(texts(el, `${STORY} .period`)[1]).toBe('SNES era');
     expect(texts(el, `${STORY} .period`)[6]).toBe('During college');

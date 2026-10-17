@@ -1,4 +1,4 @@
-import { FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 import { CAMPAIGN_LOG_CHAPTERS as DEV_CHAPTERS } from './campaign-log.data.development';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
@@ -62,7 +62,7 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
   });
 
   it('appears in development next to CHAPTER 01 (production publishes CHAPTER 00 only)', () => {
-    expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER, FATEC_CHAPTER]);
+    expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER, FATEC_CHAPTER, CHAPTER_02]);
   });
 });
 
@@ -104,6 +104,36 @@ describe('Campaign Log — CHAPTER 01 FATEC', () => {
         expect(entry.story[locale].join(' ')).toContain(entry.summary[locale]);
         expect(entry.story[locale].length).toBe(entry.story['pt-BR'].length);
       }
+    }
+  });
+});
+
+// CHAPTER 02 (docs/15 §15): ScoutEvo, textos pt/en do Eduardo; nome do capítulo ainda não definido.
+describe('Campaign Log — CHAPTER 02 (ScoutEvo)', () => {
+  const [scoutevo] = CHAPTER_02.entries;
+
+  it('has no invented chapter name or signature yet', () => {
+    expect(CHAPTER_02.name).toBeUndefined();
+    expect(CHAPTER_02.signature).toBeUndefined();
+    expect(CHAPTER_02.period).toBeUndefined();
+  });
+
+  it('keeps the facts: 2018, the Flamengo competition and the shared database work', () => {
+    expect(scoutevo.when).toEqual({ year: 2018 });
+    const pt = scoutevo.story['pt-BR'].join(' ');
+    expect(pt).toContain('venceu uma maratona de inovação ligada ao Flamengo');
+    expect(pt).toContain(
+      'A parte de banco de dados ficou sob responsabilidade de outro integrante.',
+    );
+    expect(scoutevo.story.en.join(' ')).toContain(
+      'Database development was handled by another team member.',
+    );
+  });
+
+  it('takes the summary literally from the story, in both languages', () => {
+    for (const locale of ['pt-BR', 'en'] as const) {
+      expect(scoutevo.story[locale][0]).toBe(scoutevo.summary[locale]);
+      expect(scoutevo.story[locale].length).toBe(5);
     }
   });
 });

@@ -304,3 +304,40 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     en: 'The campaign was only just beginning.',
   },
 };
+
+// CHAPTER 02 (docs/15 §15): começa com o ScoutEvo (2018). Textos pt/en fornecidos pelo Eduardo
+// (2026-10-17), sem alteração. Nome e assinatura do capítulo ainda não foram definidos por ele:
+// ficam ausentes (o cabeçalho mostra só "CHAPTER 02"), nunca inventados.
+export const CHAPTER_02: CampaignLogChapter = {
+  id: 'chapter-02',
+  number: '02',
+  entries: [
+    {
+      id: 'scoutevo',
+      code: 'SCOUTEVO',
+      when: { year: 2018 },
+      title: { 'pt-BR': 'Quando uma ideia entrou em campo', en: 'When an Idea Took the Field' },
+      summary: {
+        'pt-BR':
+          'Depois da faculdade, um dos projetos mais marcantes de que participei foi o ScoutEvo, uma plataforma criada para ajudar a descobrir novos talentos no futebol.',
+        en: 'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover young football talent.',
+      },
+      story: {
+        'pt-BR': [
+          'Depois da faculdade, um dos projetos mais marcantes de que participei foi o ScoutEvo, uma plataforma criada para ajudar a descobrir novos talentos no futebol.',
+          'A ideia era permitir a coleta de informações de jovens jogadores por meio de um aplicativo e reunir esses dados em uma plataforma que pudesse apoiar a análise de atletas por clubes brasileiros e internacionais.',
+          'Fiquei responsável pela arquitetura da solução, pelo desenvolvimento do aplicativo de coleta com Unity e C#, pelo frontend web em ASP.NET com C# e também por todo o design das interfaces. A parte de banco de dados ficou sob responsabilidade de outro integrante.',
+          'Em 2018, nossa solução venceu uma maratona de inovação ligada ao Flamengo. Foi uma conquista importante e uma oportunidade de trabalhar em um produto que conectava tecnologia, esporte e um problema real.',
+          'O ScoutEvo marcou uma evolução na minha trajetória: eu já não estava apenas desenvolvendo jogos. Estava usando o conhecimento que havia construído para criar soluções digitais com outras finalidades.',
+        ],
+        en: [
+          'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover young football talent.',
+          'The idea was to collect scouting information about young players through an app and bring that data together in a platform that could support talent evaluation by clubs in Brazil and abroad.',
+          'I was responsible for the solution architecture, developing the scouting app with Unity and C#, building the web frontend with ASP.NET and C#, and designing the interfaces. Database development was handled by another team member.',
+          'In 2018, our solution won an innovation competition connected to Flamengo. It was an important achievement and an opportunity to work on a product that brought technology, sport, and a real-world challenge together.',
+          "ScoutEvo marked a new stage in my journey. I was no longer just developing games. I was applying what I'd learned to build digital solutions for different purposes.",
+        ],
+      },
+    },
+  ],
+};

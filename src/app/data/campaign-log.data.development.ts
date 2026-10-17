@@ -1,8 +1,12 @@
 import { CampaignLogChapter, CampaignLogEntry } from '../models';
-import { FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 
-// Capítulos são conteúdo REAL (não MOCK). CHAPTER 01 aparece aqui para a revisão visual do Eduardo.
-export const CAMPAIGN_LOG_CHAPTERS: readonly CampaignLogChapter[] = [ORIGIN_CHAPTER, FATEC_CHAPTER];
+// Capítulos são conteúdo REAL (não MOCK). CHAPTER 01 e 02 aparecem aqui para a revisão do Eduardo.
+export const CAMPAIGN_LOG_CHAPTERS: readonly CampaignLogChapter[] = [
+  ORIGIN_CHAPTER,
+  FATEC_CHAPTER,
+  CHAPTER_02,
+];
 
 // ⚠️ CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT (D-049).
 // Períodos, títulos, contextos e textos abaixo NÃO são o histórico aprovado do Eduardo: servem só

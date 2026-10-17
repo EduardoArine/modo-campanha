@@ -16,9 +16,14 @@
           </p>
         }
         <h3 class="chapter-name">
-          {{ ui().campaignLog.chapter }} {{ chapter.number }} — {{ locale.pick(chapter.name) }}
+          {{ ui().campaignLog.chapter }} {{ chapter.number }}
+          @if (chapter.name; as name) {
+            — {{ locale.pick(name) }}
+          }
         </h3>
-        <p class="signature">{{ locale.pick(chapter.signature) }}</p>
+        @if (chapter.signature; as signature) {
+          <p class="signature">{{ locale.pick(signature) }}</p>
+        }
         @if (chapter.context; as context) {
           <p class="context">{{ locale.pick(context) }}</p>
         }

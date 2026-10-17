@@ -76,14 +76,14 @@ export interface CampaignLogChapter {
   id: string;
   /** Número do capítulo como rótulo (ex.: '00'). */
   number: string;
-  /** Nome do capítulo (ex.: ORIGIN; DO CONTROLE AO CÓDIGO / FROM CONTROLLER TO CODE). */
-  name: Localized;
+  /** Nome do capítulo (ex.: ORIGIN). Opcional: sem nome aprovado, o cabeçalho mostra só o número. */
+  name?: Localized;
   /** Período real do capítulo, quando confirmado (ex.: 2013–2017). */
   period?: CampaignLogPeriod;
   /** Contexto do capítulo (curso, instituição), quando aprovado. */
   context?: Localized;
-  /** Assinatura editorial do capítulo. */
-  signature: Localized;
+  /** Assinatura editorial do capítulo, quando aprovada. */
+  signature?: Localized;
   entries: readonly CampaignLogChapterEntry[];
   /** Frase de fechamento após CHECKPOINT COMPLETE (o ano vem de `period.end`). */
   closing?: Localized;
