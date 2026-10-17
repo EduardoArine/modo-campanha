@@ -1,30 +1,16 @@
 import { CampaignLogChapter, CampaignLogEntry } from '../models';
-import { ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+import { FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 
-// CHAPTER 00 — ORIGIN é conteúdo REAL (não MOCK): em desenvolvimento aparece para a revisão visual.
-export const CAMPAIGN_LOG_CHAPTERS: readonly CampaignLogChapter[] = [ORIGIN_CHAPTER];
+// Capítulos são conteúdo REAL (não MOCK). CHAPTER 01 aparece aqui para a revisão visual do Eduardo.
+export const CAMPAIGN_LOG_CHAPTERS: readonly CampaignLogChapter[] = [ORIGIN_CHAPTER, FATEC_CHAPTER];
 
 // ⚠️ CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT (D-049).
 // Períodos, títulos, contextos e textos abaixo NÃO são o histórico aprovado do Eduardo: servem só
 // para validar modelo, composição, ritmo e responsividade. Serão substituídos pelo histórico real
 // (03-0) e este arquivo será removido junto com o `fileReplacements` correspondente.
 // Só entra em builds de desenvolvimento e testes; a produção usa `campaign-log.data.ts` (vazio).
+// A entrada MOCK da formação (FATEC) saiu: o CHAPTER 01 real a substitui (docs/15 §14).
 export const CAMPAIGN_LOG: readonly CampaignLogEntry[] = [
-  {
-    id: 'mock-campaign-log-origin',
-    kind: 'origin',
-    period: { start: 2013, end: 2017 },
-    title: {
-      'pt-BR': 'Jogos Digitais como ponto de partida',
-      en: 'Digital Games as a starting point',
-    },
-    context: { 'pt-BR': 'FATEC Americana', en: 'FATEC Americana' },
-    summary: {
-      'pt-BR':
-        'A formação em Tecnologia em Jogos Digitais trouxe programação, interação e sistemas para o centro da forma como comecei a pensar tecnologia.',
-      en: 'A degree in Digital Games Technology brought programming, interaction, and systems into the way I started thinking about technology.',
-    },
-  },
   {
     id: 'mock-campaign-log-development',
     kind: 'checkpoint',

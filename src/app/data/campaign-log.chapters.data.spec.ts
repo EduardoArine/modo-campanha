@@ -1,4 +1,4 @@
-import { ORIGIN_CHAPTER } from './campaign-log.chapters.data';
+import { FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 import { CAMPAIGN_LOG_CHAPTERS as DEV_CHAPTERS } from './campaign-log.data.development';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
@@ -24,7 +24,7 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
   });
 
   it('uses only the approximate year provided (c. 1991); every other entry is an era', () => {
-    expect(entries.filter((e) => 'approx' in e.when).map((e) => e.when)).toEqual([
+    expect(entries.filter((e) => !('era' in e.when)).map((e) => e.when)).toEqual([
       { approx: 1991 },
     ]);
     expect(entries.slice(1).every((e) => 'era' in e.when)).toBe(true);
@@ -61,7 +61,49 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
     }
   });
 
-  it('appears in development for review (production publishes no chapter yet)', () => {
-    expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER]);
+  it('appears in development next to CHAPTER 01 (production publishes CHAPTER 00 only)', () => {
+    expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER, FATEC_CHAPTER]);
+  });
+});
+
+// CHAPTER 01 — DO CONTROLE AO CÓDIGO (docs/15 §14): texto pt do Eduardo; en pendente de aprovação.
+describe('Campaign Log — CHAPTER 01 FATEC', () => {
+  const entries = FATEC_CHAPTER.entries;
+
+  it('spans 2013–2017 at FATEC Americana and closes the chapter', () => {
+    expect(FATEC_CHAPTER.period).toEqual({ start: 2013, end: 2017 });
+    expect(FATEC_CHAPTER.context?.['pt-BR']).toBe('Tecnologia em Jogos Digitais · FATEC Americana');
+    expect(FATEC_CHAPTER.closing?.['pt-BR']).toBe('A campanha estava apenas começando.');
+    expect(entries.length).toBe(5);
+    expect(entries.every((e) => !e.code)).toBe(true);
+  });
+
+  it('uses only the years Eduardo gave; the project checkpoint is an era', () => {
+    expect(entries.map((e) => e.when)).toEqual([
+      { year: 2013 },
+      { era: { 'pt-BR': 'Durante a graduação', en: 'During college' } },
+      { year: 2016 },
+      { year: 2017 },
+      { year: 2017 },
+    ]);
+  });
+
+  it('keeps the facts: two Best Game awards, the 2017 launch and the grade', () => {
+    const pt = JSON.stringify(FATEC_CHAPTER);
+    expect(pt.match(/Melhor Jogo — Categoria Acadêmica/g)?.length).toBeGreaterThanOrEqual(2);
+    expect(pt).toContain('FAEL 2016');
+    expect(pt).toContain('Google Play em maio de 2017');
+    expect(pt).toContain('recebi nota 10');
+    // "score" (nota do TCC) e "levels" (fases do jogo) são legítimos; métricas de jogo, não.
+    expect(pt).not.toMatch(/\bXP\b|\bLV\b|\brank\b|%|★/i);
+  });
+
+  it('takes each summary literally from its own story, in both languages', () => {
+    for (const entry of entries) {
+      for (const locale of ['pt-BR', 'en'] as const) {
+        expect(entry.story[locale].join(' ')).toContain(entry.summary[locale]);
+        expect(entry.story[locale].length).toBe(entry.story['pt-BR'].length);
+      }
+    }
   });
 });

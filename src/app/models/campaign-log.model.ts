@@ -28,10 +28,11 @@ export interface CampaignLogEntry {
 }
 
 /**
- * Quando aconteceu um checkpoint de capítulo: ano aproximado (exibido como "c. 1991") ou uma época
- * descrita em texto, sem inventar ano ("Época do SNES"). Nunca um ano exato não confirmado.
+ * Quando aconteceu um checkpoint de capítulo: ano confirmado ("2016"), ano aproximado ("c. 1991") ou
+ * uma época descrita em texto, sem inventar ano ("Época do SNES"). Nunca um ano não confirmado.
  */
-export type CampaignLogWhen = { readonly approx: number } | { readonly era: Localized };
+export type CampaignLogWhen =
+  { readonly year: number } | { readonly approx: number } | { readonly era: Localized };
 
 /** Fotografia pessoal real, como evidência documental de um checkpoint (não decoração). */
 export interface CampaignLogPhoto {
@@ -44,11 +45,11 @@ export interface CampaignLogPhoto {
   alt: Localized;
 }
 
-/** Checkpoint dentro de um capítulo (CHAPTER 00 — ORIGIN, docs/15 §13). Relato pessoal real. */
+/** Checkpoint dentro de um capítulo (docs/15 §13–§14). Relato pessoal real. */
 export interface CampaignLogChapterEntry {
   id: string;
-  /** Rótulo de sistema do MC-01, igual nos dois idiomas (ex.: FIRST CONTACT). */
-  code: string;
+  /** Codinome de sistema do MC-01, igual nos dois idiomas (ex.: FIRST CONTACT); opcional. */
+  code?: string;
   when: CampaignLogWhen;
   title: Localized;
   /** 1 frase, extraída literalmente da história (visível sem expandir). */
@@ -67,9 +68,15 @@ export interface CampaignLogChapter {
   id: string;
   /** Número do capítulo como rótulo (ex.: '00'). */
   number: string;
-  /** Nome de sistema, igual nos dois idiomas (ex.: ORIGIN). */
-  name: string;
+  /** Nome do capítulo (ex.: ORIGIN; DO CONTROLE AO CÓDIGO / FROM CONTROLLER TO CODE). */
+  name: Localized;
+  /** Período real do capítulo, quando confirmado (ex.: 2013–2017). */
+  period?: CampaignLogPeriod;
+  /** Contexto do capítulo (curso, instituição), quando aprovado. */
+  context?: Localized;
   /** Assinatura editorial do capítulo. */
   signature: Localized;
   entries: readonly CampaignLogChapterEntry[];
+  /** Frase de fechamento após CHECKPOINT COMPLETE (o ano vem de `period.end`). */
+  closing?: Localized;
 }

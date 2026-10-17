@@ -84,6 +84,7 @@ export const UI_EN: UiDictionary = {
     since: 'SINCE',
     chapter: 'CHAPTER',
     checkpoint: 'CHECKPOINT',
+    complete: 'CHECKPOINT COMPLETE',
     approx: 'c.',
     story: { open: 'Read the full story', close: 'Collapse the story' },
   },

@@ -2,29 +2,47 @@
   <mc-section-header [heading]="ui().sections.campaignLog" headingId="campaign-log-title" />
 
   <ol class="log" role="list">
-    <!-- Capítulos (docs/15 §13): o arco antes da linha profissional, no mesmo eixo. Lista plana:
-         o cabeçalho do capítulo (h3) e os checkpoints dele (h4) são itens do mesmo eixo. -->
+    <!-- Capítulos (docs/15 §13–§14): arcos antes da linha profissional, no mesmo eixo. Lista plana:
+         cabeçalho do capítulo (h3), checkpoints (h4) e fechamento são itens do mesmo eixo. -->
     @for (chapter of chapters; track chapter.id) {
       <li class="entry entry--chapter">
         <span class="marker" aria-hidden="true"></span>
+        @if (chapter.period; as period) {
+          <p class="period">
+            <time [attr.datetime]="period.start">{{ period.start }}</time>
+            @if (period.end; as end) {
+              — <time [attr.datetime]="end">{{ end }}</time>
+            }
+          </p>
+        }
         <h3 class="chapter-name">
-          {{ ui().campaignLog.chapter }} {{ chapter.number }} — {{ chapter.name }}
+          {{ ui().campaignLog.chapter }} {{ chapter.number }} — {{ locale.pick(chapter.name) }}
         </h3>
         <p class="signature">{{ locale.pick(chapter.signature) }}</p>
+        @if (chapter.context; as context) {
+          <p class="context">{{ locale.pick(context) }}</p>
+        }
       </li>
       @for (entry of chapter.entries; track entry.id; let i = $index) {
         @let when = entry.when;
         <li class="entry entry--story">
           <span class="marker" aria-hidden="true"></span>
           <p class="period">
-            @if ('approx' in when) {
+            @if ('year' in when) {
+              <time [attr.datetime]="when.year">{{ when.year }}</time>
+            } @else if ('approx' in when) {
               {{ ui().campaignLog.approx }}
               <time [attr.datetime]="when.approx">{{ when.approx }}</time>
             } @else {
               {{ locale.pick(when.era) }}
             }
           </p>
-          <p class="kind">{{ ui().campaignLog.checkpoint }} {{ code(i) }} · {{ entry.code }}</p>
+          <p class="kind">
+            {{ ui().campaignLog.checkpoint }} {{ code(i) }}
+            @if (entry.code; as name) {
+              · {{ name }}
+            }
+          </p>
           <h4 class="title">{{ locale.pick(entry.title) }}</h4>
           <p class="summary">{{ locale.pick(entry.summary) }}</p>
           <details class="story">
@@ -54,6 +72,19 @@
               </div>
             }
           </details>
+        </li>
+      }
+      @if (chapter.closing; as closing) {
+        <!-- Fechamento do capítulo: CHECKPOINT COMPLETE + ano final do período. -->
+        <li class="entry entry--chapter">
+          <span class="marker" aria-hidden="true"></span>
+          <p class="chapter-name">
+            {{ ui().campaignLog.complete }}
+            @if (chapter.period?.end; as end) {
+              — <time [attr.datetime]="end">{{ end }}</time>
+            }
+          </p>
+          <p class="signature">{{ locale.pick(closing) }}</p>
         </li>
       }
     }

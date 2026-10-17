@@ -6,14 +6,9 @@ import { CAMPAIGN_LOG as MOCK } from './campaign-log.data.development';
 const ALLOWED_KEYS = ['id', 'kind', 'period', 'title', 'context', 'summary'];
 
 describe('Campaign Log MOCK (visual development data)', () => {
-  it('has 5 entries: origin first, current last, checkpoints between', () => {
-    expect(MOCK.map((e) => e.kind)).toEqual([
-      'origin',
-      'checkpoint',
-      'checkpoint',
-      'checkpoint',
-      'current',
-    ]);
+  // A entrada MOCK da formação saiu: o CHAPTER 01 real a substitui (docs/15 §14).
+  it('has 4 entries: checkpoints, then the current campaign last', () => {
+    expect(MOCK.map((e) => e.kind)).toEqual(['checkpoint', 'checkpoint', 'checkpoint', 'current']);
   });
 
   it('marks every entry as mock (CI guard keeps it out of production)', () => {

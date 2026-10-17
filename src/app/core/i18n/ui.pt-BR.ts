@@ -87,6 +87,7 @@ export const UI_PT_BR = {
     // Capítulos (docs/15 §13): rótulos de sistema em inglês; ações localizadas.
     chapter: 'CHAPTER',
     checkpoint: 'CHECKPOINT',
+    complete: 'CHECKPOINT COMPLETE',
     approx: 'c.',
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },

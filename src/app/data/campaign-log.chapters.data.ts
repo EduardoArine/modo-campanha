@@ -28,7 +28,7 @@ function photo(
 export const ORIGIN_CHAPTER: CampaignLogChapter = {
   id: 'chapter-00-origin',
   number: '00',
-  name: 'ORIGIN',
+  name: { 'pt-BR': 'ORIGIN', en: 'ORIGIN' },
   signature: {
     'pt-BR': 'A campanha começou muito antes do código.',
     en: 'The campaign started long before the code.',
@@ -154,4 +154,143 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
       ],
     },
   ],
+};
+
+// CHAPTER 01 — DO CONTROLE AO CÓDIGO (docs/15 §14). Texto pt fornecido pelo Eduardo (2026-10-17),
+// sem alteração de fatos; ênfases (negrito/itálico) viram texto simples. Inglês: tradução fiel,
+// PENDENTE de aprovação. Datas: só as informadas (2013, 2016, 2017; período 2013–2017).
+export const FATEC_CHAPTER: CampaignLogChapter = {
+  id: 'chapter-01-fatec',
+  number: '01',
+  name: { 'pt-BR': 'DO CONTROLE AO CÓDIGO', en: 'FROM CONTROLLER TO CODE' },
+  period: { start: 2013, end: 2017 },
+  context: {
+    'pt-BR': 'Tecnologia em Jogos Digitais · FATEC Americana',
+    en: 'Digital Games Technology · FATEC Americana',
+  },
+  signature: {
+    'pt-BR': 'O que começou como paixão na infância se transformou em uma escolha de vida.',
+    en: 'What began as a childhood passion became a life choice.',
+  },
+  entries: [
+    {
+      id: 'fatec-passion-became-choice',
+      when: { year: 2013 },
+      title: { 'pt-BR': 'Quando a paixão virou escolha', en: 'When Passion Became a Choice' },
+      summary: {
+        'pt-BR': 'Em 2013, comecei a graduação em Jogos Digitais na FATEC Americana.',
+        en: 'In 2013, I started my degree in Digital Games at FATEC Americana.',
+      },
+      story: {
+        'pt-BR': [
+          'Depois de tantos anos entre consoles, locadoras e jogos que marcaram minha infância, chegou a hora de conhecer o outro lado da tela.',
+          'Em 2013, comecei a graduação em Jogos Digitais na FATEC Americana. Eu já sabia o quanto gostava de videogames. Agora queria aprender como eles eram feitos e transformar aquela paixão em algo que eu também pudesse construir.',
+        ],
+        en: [
+          'After so many years of consoles, rental stores, and the games that shaped my childhood, it was time to see the other side of the screen.',
+          'In 2013, I started my degree in Digital Games at FATEC Americana. I already knew how much I loved video games. Now I wanted to learn how they were made and turn that passion into something I could build myself.',
+        ],
+      },
+    },
+    {
+      id: 'fatec-aedes-revenge',
+      when: { era: { 'pt-BR': 'Durante a graduação', en: 'During college' } },
+      title: {
+        'pt-BR': 'Aedes Revenge — Meu primeiro grande projeto',
+        en: 'Aedes Revenge — My First Big Project',
+      },
+      summary: {
+        'pt-BR':
+          'Foi durante a faculdade que nasceu o Aedes Revenge, um jogo 2D para dispositivos móveis que abordava a conscientização sobre a dengue de uma perspectiva diferente: a do próprio mosquito.',
+        en: "It was during college that Aedes Revenge was born: a 2D mobile game that approached dengue awareness from a different perspective: the mosquito's own.",
+      },
+      story: {
+        'pt-BR': [
+          'Foi durante a faculdade que nasceu o Aedes Revenge, um jogo 2D para dispositivos móveis que abordava a conscientização sobre a dengue de uma perspectiva diferente: a do próprio mosquito.',
+          'O projeto começou em grupo, mas, com a saída dos outros integrantes, continuei desenvolvendo o jogo sozinho. Trabalhei com Unity, C#, mecânicas, interfaces, personagens e diferentes desafios de desenvolvimento.',
+          'Foi uma oportunidade de colocar em prática o que eu aprendia e descobrir, na experiência, quanto trabalho existe por trás de um jogo.',
+        ],
+        en: [
+          "It was during college that Aedes Revenge was born: a 2D mobile game that approached dengue awareness from a different perspective: the mosquito's own.",
+          'The project started as a group effort, but after the other members left, I kept developing the game on my own. I worked with Unity, C#, mechanics, interfaces, characters, and many different development challenges.',
+          'It was a chance to put what I was learning into practice and discover, firsthand, how much work goes into making a game.',
+        ],
+      },
+    },
+    {
+      id: 'fatec-first-best-game',
+      when: { year: 2016 },
+      title: { 'pt-BR': 'Meu primeiro Melhor Jogo', en: 'My First Best Game Award' },
+      summary: {
+        'pt-BR':
+          'Em 2016, o Aedes Revenge recebeu o prêmio de Melhor Jogo — Categoria Acadêmica, no FAEL 2016 da FATEC Americana.',
+        en: 'In 2016, Aedes Revenge won Best Game — Academic Category at FAEL 2016, at FATEC Americana.',
+      },
+      story: {
+        'pt-BR': [
+          'Em 2016, o Aedes Revenge recebeu o prêmio de Melhor Jogo — Categoria Acadêmica, no FAEL 2016 da FATEC Americana.',
+          'Ver um projeto que eu estava desenvolvendo ser reconhecido foi uma conquista marcante. Era a primeira vez que aquele sonho de infância ganhava também a forma de um trabalho premiado.',
+        ],
+        en: [
+          'In 2016, Aedes Revenge won Best Game — Academic Category at FAEL 2016, at FATEC Americana.',
+          'Seeing a project I was developing get recognized was a defining achievement. It was the first time that childhood dream also took the shape of award-winning work.',
+        ],
+      },
+    },
+    {
+      id: 'fatec-real-players',
+      when: { year: 2017 },
+      title: {
+        'pt-BR': 'Um jogo de verdade, com jogadores de verdade',
+        en: 'A Real Game, with Real Players',
+      },
+      summary: {
+        'pt-BR': 'O Aedes Revenge chegou ao Google Play em maio de 2017.',
+        en: 'Aedes Revenge launched on Google Play in May 2017.',
+      },
+      story: {
+        'pt-BR': [
+          'O Aedes Revenge chegou ao Google Play em maio de 2017.',
+          'A versão beta tinha três fases jogáveis e um chefe. Mais importante que colocar o jogo no ar foi começar a observar como pessoas reais interagiam com ele.',
+          'As avaliações e pesquisas mostraram o que funcionava e também o que precisava melhorar. Foi uma experiência que me ajudou a entender que desenvolver não é apenas fazer algo funcionar: é pensar em quem vai usar.',
+        ],
+        en: [
+          'Aedes Revenge launched on Google Play in May 2017.',
+          'The beta version had three playable levels and a boss. More important than putting the game online was starting to watch how real people interacted with it.',
+          "Reviews and surveys showed what worked and what needed to improve. That experience helped me understand that development isn't just about making something work: it's about thinking of the people who will use it.",
+        ],
+      },
+    },
+    {
+      id: 'fatec-two-awards-capstone',
+      when: { year: 2017 },
+      title: {
+        'pt-BR': 'Dois prêmios e um TCC nota 10',
+        en: 'Two Awards and a Perfect-Score Capstone',
+      },
+      summary: {
+        'pt-BR':
+          'Em 2017, o Aedes Revenge foi novamente reconhecido como Melhor Jogo — Categoria Acadêmica, desta vez na Mostra de Jogos da FATEC Americana.',
+        en: "In 2017, Aedes Revenge was once again named Best Game — Academic Category, this time at FATEC Americana's Game Showcase (Mostra de Jogos).",
+      },
+      story: {
+        'pt-BR': [
+          'Em 2017, o Aedes Revenge foi novamente reconhecido como Melhor Jogo — Categoria Acadêmica, desta vez na Mostra de Jogos da FATEC Americana.',
+          'Para fechar essa etapa, apresentei o projeto como meu Trabalho de Conclusão de Curso e recebi nota 10.',
+          'Depois de tantos desafios, terminar a graduação com dois prêmios e essa avaliação foi uma das minhas maiores conquistas acadêmicas.',
+          'A paixão que começou diante de um Atari agora tinha se transformado em conhecimento, código e um jogo criado por mim.',
+        ],
+        en: [
+          "In 2017, Aedes Revenge was once again named Best Game — Academic Category, this time at FATEC Americana's Game Showcase (Mostra de Jogos).",
+          'To close that chapter, I presented the project as my capstone project (TCC) and received a perfect score of 10.',
+          'After so many challenges, finishing my degree with two awards and that grade was one of my greatest academic achievements.',
+          'The passion that began in front of an Atari had now become knowledge, code, and a game I created myself.',
+        ],
+      },
+    },
+  ],
+  closing: {
+    'pt-BR': 'A campanha estava apenas começando.',
+    en: 'The campaign was only just beginning.',
+  },
 };
