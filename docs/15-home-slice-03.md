@@ -210,9 +210,9 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 **Pendências:**
 
 1. ~~Fotografias~~ **integradas (2026-10-17):** as duas fotos da coleção e do móvel, fornecidas pelo Eduardo, ficam no checkpoint 05, dentro da história completa e logo depois do texto que as cita.
-   - **Arquivos:** WebP em ( em retrato 3:4 e em paisagem 4:3, 22–56 KB). Proporção original, sem filtro pixel nem sombra, borda sutil; não há metadados nos originais.
+   - **Arquivos:** WebP em `public/assets/campaign-log/origin/` (`collection-front-{480,720}` em retrato 3:4 e `collection-wide-{640,960}` em paisagem 4:3, 22–56 KB). Proporção original, sem filtro pixel nem sombra, borda sutil; não há metadados nos originais.
    - **Layout:** lado a lado na mesma altura a partir de 768 px, empilhadas no celular.
-   - **Carregamento:** , então só carregam quando a história é aberta.
+   - **Carregamento:** `loading="lazy"`, então só carregam quando a história é aberta.
    - **Texto alternativo:** objetivo e bilíngue; precisa de aprovação.
    - **Marca na foto 2:** a TV mostra o logo de um jogo de terceiros (Gears 5). É registro documental, não asset do projeto, mas vale a sua decisão.
 2. **Publicação:** depois do congelamento, basta `CAMPAIGN_LOG_CHAPTERS = [ORIGIN_CHAPTER]` em `campaign-log.data.ts`. Sozinho, isso faz a seção aparecer em produção só com o capítulo 00, porque a linha profissional real (03-0) ainda não existe.

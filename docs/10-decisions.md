@@ -827,6 +827,6 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Interação:** a única interação nova é o `<details>` nativo "Ler a história completa". Isso flexibiliza o "nada é interativo" de D-048/D-050 só para as histórias de capítulo, a pedido do Eduardo.
   - **Publicação:** `ORIGIN_CHAPTER` é conteúdo real, mas `CAMPAIGN_LOG_CHAPTERS` fica vazio em produção até o Eduardo congelar o capítulo; em desenvolvimento aparece antes da linha profissional MOCK. A Home renderiza o Campaign Log se houver entradas ou capítulos.
   - **Datas:** só c. 1991; os demais checkpoints usam época em texto.
-- **Fotos (2026-10-17):** as duas fotos reais da coleção e do móvel entram no checkpoint 05, dentro da história completa (modelo : WebP, proporção original, alt bilíngue, lazy).
+- **Fotos (2026-10-17):** as duas fotos reais da coleção e do móvel entram no checkpoint 05, dentro da história completa (modelo `CampaignLogPhoto`: WebP, proporção original, alt bilíngue, lazy).
 - **Pendências:** aprovação das frases-resumo e dos textos alternativos das fotos; publicação; o checkpoint real da FATEC (hoje só MOCK).
 - **Status:** Implementada em desenvolvimento na branch `feat/hero-refinement`. **Aguardando revisão visual do Eduardo** (não congelado).
