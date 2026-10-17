@@ -160,8 +160,14 @@ Dados:
 ### CampaignLogChapter (D-070–D-072, docs/15 §13–§15)
 
 ```ts
-// Ano confirmado, ano aproximado ("c. 1991") ou época em texto; nunca ano inventado.
-type CampaignLogWhen = { year: number } | { approx: number } | { era: Localized };
+// Ano confirmado, intervalo confirmado, "desde" (em aberto), ano aproximado ("c. 1991") ou época
+// em texto; nunca ano inventado.
+type CampaignLogWhen =
+  | { year: number }
+  | { span: { start: number; end: number } }
+  | { since: number }
+  | { approx: number }
+  | { era: Localized };
 
 interface CampaignLogPhoto {
   src: string; // maior derivado WebP
@@ -198,6 +204,7 @@ interface CampaignLogChapter {
   signature?: Localized;
   entries: readonly CampaignLogChapterEntry[];
   closing?: Localized; // frase após CHECKPOINT COMPLETE (ano = period.end)
+  ongoing?: boolean; // em andamento: fechamento = CURRENT QUEST — EM ANDAMENTO, sem ano
 }
 ```
 

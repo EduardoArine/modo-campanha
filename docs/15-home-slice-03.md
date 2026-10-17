@@ -263,11 +263,12 @@ Cinco checkpoints da origem da paixão por videogames, antes da formação e da 
 
 O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2017; "Depois da faculdade"), por isso abre um capítulo novo.
 
-| #   | Quando      | Codinome | Título pt / en                                                                 |
-| --- | ----------- | -------- | ------------------------------------------------------------------------------ |
-| 01  | 2018        | SCOUTEVO | Quando uma ideia entrou em campo / When an Idea Took the Field                 |
-| 02  | 2019        | EOS      | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters  |
-| 03  | 2021 — 2024 | AXIA     | Da ideia à inteligência operacional / From Concept to Operational Intelligence |
+| #   | Quando      | Codinome      | Título pt / en                                                                          |
+| --- | ----------- | ------------- | --------------------------------------------------------------------------------------- |
+| 01  | 2018        | SCOUTEVO      | Quando uma ideia entrou em campo / When an Idea Took the Field                          |
+| 02  | 2019        | EOS           | Tecnologia em que cada minuto importa / Technology Where Every Minute Matters           |
+| 03  | 2021 — 2024 | AXIA          | Da ideia à inteligência operacional / From Concept to Operational Intelligence          |
+| 04  | DESDE 2025  | COMUNIDADE ON | Quando os games viraram uma linguagem de produto / When Games Became a Product Language |
 
 - **Textos:** pt e en são do Eduardo, sem alteração. A frase visível é a primeira de cada texto.
 - **Nome e assinatura do capítulo:** ainda não definidos pelo Eduardo, então ficam **ausentes**, sem invenção. `name` e `signature` passaram a ser opcionais no modelo; o cabeçalho mostra só "CHAPTER 02".
@@ -280,12 +281,16 @@ O ScoutEvo vem **depois** do fechamento do CHAPTER 01 (CHECKPOINT COMPLETE — 2
 - **Axia (2021 — 2024, versão do Eduardo de 2026-10-17, substitui a anterior):** plataforma de inteligência operacional da Ativvus/Arppen para limpeza e facilities. O Eduardo participou de toda a evolução do produto, incluindo a Inteligência Axia: arquitetura, webapp Angular, WebAPI .NET/C#, SQL Server, design das interfaces e contribuições ao código embarcado em C. Foco principal: plataforma web, APIs e experiência de uso. O modelo ganhou `when: { span }` para intervalos de anos confirmados.
   - **Referências:** **imprensa:** InfraFM, "Como um pequeno dispositivo pode acabar com ruídos operacionais e prever afastamentos" (verificada; cita a Axia como produto da Ativvus; data de publicação não confirmada, por isso sem ano no rótulo). **Não entram:** `arppen.com/about.html` e `arppen.com/axia.html` retornam 404. A página inicial da Arppen ("2012 — 2026") aponta para comunidadeon.com; linkar o site exporia essa relação, então fica a critério do Eduardo.
   - **Nota factual:** a InfraFM diz que a Axia foi "desenvolvida pela empresa de tecnologia Ativvus em 2022", depois retirada do mercado para uma nova versão. O relato do Eduardo começa em 2021 (idealização e engenharia). Não é necessariamente conflito, mas vale a revisão dele.
+- **Comunidade ON (desde 2025, textos do Eduardo de 2026-10-17):** "2025–Atual" aparece como **DESDE 2025 / SINCE 2025** (`when: { since }`, mesmo formato da entrada current em aberto, D-050). O Eduardo desenvolve as aplicações web, integra serviços e APIs e constrói as experiências de interface (Angular, TypeScript, .NET, C#); a gamificação liga o trabalho à formação em Jogos Digitais. O texto é a descrição pública que ele mesmo escreveu: nada interno da Comunidade On, sem links. Ênfases viram texto simples.
+  - **Fechamento em andamento:** o CHAPTER 02 fecha com **CURRENT QUEST — EM ANDAMENTO / CURRENT QUEST — IN PROGRESS** (`ongoing: true`, rótulo do dicionário) no lugar de CHECKPOINT COMPLETE, sem ano final. A frase é o lema aprovado do Player Status ("XP real, sem personagem." / "Real XP. No persona."), lido de `PLAYER_PROFILE.motto`, sem cópia. O marker usa a cor de campanha atual (`--mc-status-online`), como a entrada current da linha profissional.
+  - **Teste "sem métricas":** o lema é a única ocorrência permitida de "XP" no texto da seção; qualquer outro XP, LV, % ou ★ continua reprovando.
 - **Fatos preservados (ScoutEvo):** 2018; maratona de inovação ligada ao Flamengo, vencida pela equipe; o Eduardo cuidou da arquitetura, do app de coleta (Unity/C#), do frontend web (ASP.NET/C#) e do design das interfaces; o banco de dados ficou com outro integrante.
 
 **Pontos para o Eduardo:**
 
-1. Nome e assinatura do CHAPTER 02, e se ele terá período e fechamento como o 01.
-2. **Linha profissional MOCK em desenvolvimento:** depois do ScoutEvo aparecem as entradas MOCK (2014–2018, 2019–2022, 2023–2025, "desde 2025"), com cronologia que não bate com os capítulos reais. Elas não são fatos e vão sair conforme os capítulos reais chegarem.
-3. **ScoutEvo como projeto e a vitória como achievement:** mesma questão do Aedes Revenge (§14), ou seja, MC-CART no Inventory e Achievements sem repetir o Campaign Log.
-4. ~~Link público~~ **feito:** a reportagem do O Globo sobre a maratona (10/04/2018, "Flamengo faz 'maratona' de inovação em São Paulo para aprimorar gestão") está linkada dentro da história. A matéria trata do evento, não do resultado, e é fechada para assinantes.
-5. **Imagem integrada (decisão do Eduardo, 2026-10-17):** a colagem enviada por ele (reportagem do O Globo, anúncio "And the winner is: ScoutEvo" do FUTEBOOM, escudo do Flamengo, logo do ScoutEvo) foi usada **como ele mandou**, como evidência documental da vitória, dentro da história completa. Arquivos: `public/assets/campaign-log/scoutevo/scoutevo-win-{480,894}.webp` (43/93 KB), na proporção original, sem metadados. Alt bilíngue descreve o conteúdo; largura limitada a 24rem.
+1. Nome e assinatura do CHAPTER 02, e se ele terá período (o fechamento já é CURRENT QUEST — EM ANDAMENTO).
+2. **Linha profissional MOCK em desenvolvimento:** depois do fechamento do CHAPTER 02 aparecem as entradas MOCK (2014–2018, 2019–2022, 2023–2025, "Comunidade On desde 2025"), com cronologia que não bate com os capítulos reais; a última agora duplica o checkpoint real. Elas não são fatos e devem sair quando os capítulos forem aprovados.
+3. **Sobreposição com outras seções:** o Player Status já mostra a campanha atual e o Current Main Quest (D-055) ainda está com MOCK. Vale decidir se o Current Main Quest repete, aprofunda ou é absorvido pelo checkpoint Comunidade ON.
+4. **ScoutEvo como projeto e a vitória como achievement:** mesma questão do Aedes Revenge (§14), ou seja, MC-CART no Inventory e Achievements sem repetir o Campaign Log.
+5. ~~Link público~~ **feito:** a reportagem do O Globo sobre a maratona (10/04/2018, "Flamengo faz 'maratona' de inovação em São Paulo para aprimorar gestão") está linkada dentro da história. A matéria trata do evento, não do resultado, e é fechada para assinantes.
+6. **Imagem integrada (decisão do Eduardo, 2026-10-17):** a colagem enviada por ele (reportagem do O Globo, anúncio "And the winner is: ScoutEvo" do FUTEBOOM, escudo do Flamengo, logo do ScoutEvo) foi usada **como ele mandou**, como evidência documental da vitória, dentro da história completa. Arquivos: `public/assets/campaign-log/scoutevo/scoutevo-win-{480,894}.webp` (43/93 KB), na proporção original, sem metadados. Alt bilíngue descreve o conteúdo; largura limitada a 24rem.
