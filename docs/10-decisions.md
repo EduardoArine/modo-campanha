@@ -866,3 +866,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Correção:** `.story p` → `.story > p` devolve o estilo de rótulo e nota às referências (regressão desde fa5adc0; sem efeito no CHAPTER 00 de produção).
 - **Auditoria:** repetições entre seções, entradas MOCK da linha profissional e recomendações para o Current Main Quest em `docs/15` §16.4–§16.6.
 - **Status:** só em desenvolvimento, **aguardando aprovação visual e editorial do Eduardo**. A liberação em produção é uma etapa separada.
+
+## D-074 — Campaign Log: conteúdo real canônico e linha profissional MOCK aposentada
+
+- **Data:** 2026-10-17
+- **Decisão do Eduardo:** os CHAPTERS 00, 01 e 02 estão aprovados editorialmente como base da versão de produção. Eles são agora o **conteúdo canônico do Campaign Log**: uma fonte única (`CAMPAIGN_LOG_CHAPTERS`), a mesma em desenvolvimento, testes, produção e GitHub Pages, sem `fileReplacements` nem `isDevMode()`. A autorização vale só para o Campaign Log.
+- **MOCK aposentado:** as quatro entradas fictícias da antiga linha profissional (D-049) saíram da experiência real. Saíram o caminho de renderização (`CampaignLogEntry`, `CampaignLogKind`, bloco do template, markers e rótulos de dicionário sem uso), o arquivo de dados e o `fileReplacements`; os testes foram substituídos por testes da fonte canônica. O deploy guard `mock-campaign-log` fica.
+- **Ajustes editoriais:** grafia pública "Comunidade ON" no Campaign Log; en "Digital Games" no lugar de "Game Development"; en "Axia Intelligence" para a evolução do produto; Axia c. 2020/2021 como estimativa do Eduardo; EOS com a Unicamp (set/2019) como marco público e a autoria do artigo preservada.
+- **Links:** sai a página inicial da Arppen, que substituía a página da Axia (404). Nenhuma URL nova.
+- **Visual e outras seções:** sem mudança na linguagem aprovada (D-050). Hero, teaser, Player Status, Skill Loadout, Project Inventory, Achievements, Current Main Quest, Side Quests, Final Checkpoint e footer não mudaram.
+- **Status:** no build de produção e do GitHub Pages, **sem deploy**; aguardando a validação visual final do Eduardo. Detalhes em `docs/15` §17.

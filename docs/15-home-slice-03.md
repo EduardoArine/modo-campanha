@@ -1,17 +1,15 @@
 # 15 — Home Slice 03: Campaign Log
 
-> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. **03-B — CAMPAIGN LOG VISUAL: APPROVED** e congelado (D-050). Estado: **STRUCTURE / VISUAL: APPROVED** · **EDITORIAL CONTENT: PENDING FACTUAL REVIEW**.
+> Status: **plano aprovado (D-048).** Direção visual **A + C — Checkpoint Log Editorial** aprovada. **03-B — CAMPAIGN LOG VISUAL: APPROVED** e congelado (D-050). **Conteúdo real publicado (D-074):** os CHAPTERS 00, 01 e 02 são o conteúdo canônico do Campaign Log, em todos os ambientes.
 >
-> | Etapa | Estado                                                              |
-> | ----- | ------------------------------------------------------------------- |
-> | 03-0  | MOCK content for development (histórico real pendente)              |
-> | 03-A  | model / data infrastructure done                                    |
-> | 03-B  | visual approved (frozen)                                            |
-> | 03-C  | editorial content pending (não bloqueia as próximas partes da Home) |
+> | Etapa | Estado                                                        |
+> | ----- | ------------------------------------------------------------- |
+> | 03-0  | histórico real recebido em capítulos (§13–§16)                |
+> | 03-A  | model / data infrastructure done                              |
+> | 03-B  | visual approved (frozen)                                      |
+> | 03-C  | editorial content approved: CHAPTERS 00, 01 e 02 (D-074, §17) |
 >
-> ⚠️ **Capturas do ambiente de desenvolvimento nunca devem circular como fato**: este MOCK tem períodos e nomes plausíveis (D-062).
->
-> ⚠️ **CAMPAIGN LOG CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os entries em `src/app/data/campaign-log.data.development.ts` não são fatos sobre o Eduardo. Só existem em desenvolvimento e testes; a produção usa `campaign-log.data.ts` (vazio) e não renderiza a seção.
+> A linha profissional MOCK (D-049, quatro entradas fictícias) foi **aposentada** em D-074 (§17): dados, `fileReplacements`, modelo `CampaignLogEntry`, bloco do template e testes saíram. As seções §1–§12 abaixo documentam o plano original e a linha profissional como histórico.
 
 Abre a **FASE 4 — Career Content**.
 
@@ -396,3 +394,50 @@ O checkpoint da Comunidade ON já conta o quê, o porquê e o papel do Eduardo. 
 5. Sugestões en para os textos dele (§16.3) e a grafia ON/On (§16.4).
 6. Destino das entradas MOCK e da linha profissional (§16.5).
 7. Current Main Quest (§16.6).
+
+## 17. Liberação do conteúdo real (D-074, 2026-10-17)
+
+> Estado: **CHAPTERS 00, 01 e 02 aprovados editorialmente pelo Eduardo e no build de produção e do GitHub Pages**. Gerar o build não é deploy: nada foi publicado. Aguardando a validação visual final do Eduardo.
+
+**Estrutura canônica** (`src/app/data/campaign-log.data.ts` → `CAMPAIGN_LOG_CHAPTERS`, a mesma lista em desenvolvimento, testes, produção e GitHub Pages; sem `fileReplacements` e sem `isDevMode()`):
+
+| Capítulo                   | Período      | Checkpoints                                                              | Fechamento                          |
+| -------------------------- | ------------ | ------------------------------------------------------------------------ | ----------------------------------- |
+| 00 — ORIGIN                | —            | 5 (c. 1991 → vida adulta)                                                | —                                   |
+| 01 — DO CONTROLE AO CÓDIGO | 2013 — 2017  | 5 (FATEC, Aedes Revenge, prêmios 2016/2017, TCC)                         | CHECKPOINT COMPLETE — 2017          |
+| 02 — DO CÓDIGO AO PRODUTO  | 2018 — ATUAL | 4 (ScoutEvo 2018, EOS 2019, Axia c. 2020/2021, Comunidade ON desde 2025) | CURRENT QUEST — EM ANDAMENTO + lema |
+
+**Linha profissional MOCK aposentada.** Auditoria (§16.5) e o que saiu:
+
+| Onde                          | Antes                                                                                    | Agora                                                                                                                                                                                                                                                                |
+| ----------------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Dados                         | `campaign-log.data.development.ts` (4 entradas `mock-campaign-log-*`)                    | arquivo removido                                                                                                                                                                                                                                                     |
+| Build                         | `fileReplacements` em `angular.json` (dev/testes)                                        | removido: uma fonte só                                                                                                                                                                                                                                               |
+| Modelo                        | `CampaignLogKind`, `CampaignLogEntry`                                                    | removidos (`CampaignLogPeriod` fica, usado pelos capítulos)                                                                                                                                                                                                          |
+| Componente / template         | `entries` + bloco `@for (entry of entries)`                                              | removidos (sem condicional nem CSS escondendo)                                                                                                                                                                                                                       |
+| CSS                           | markers `.entry--origin` e `.entry--current`                                             | removidos; o fechamento em andamento mantém o marker de status                                                                                                                                                                                                       |
+| Dicionário                    | `campaignLog.kind` (NEW GAME / CHECKPOINT / CAMPANHA ATUAL), `links.company`             | removidos (sem uso)                                                                                                                                                                                                                                                  |
+| Home                          | `hasCampaignLog` lia `CAMPAIGN_LOG`                                                      | lê `CAMPAIGN_LOG_CHAPTERS`                                                                                                                                                                                                                                           |
+| Testes                        | MOCK (`campaign-log.data.spec.ts`) e linha profissional (`campaign-log-section.spec.ts`) | substituídos por testes da fonte canônica (ids únicos sem `mock`, cronologia, só o último capítulo aberto, textos nos dois idiomas, sem métricas) e da seção (nada fora dos capítulos, eixo termina no CURRENT QUEST, paridade pt/en, nenhuma chave técnica visível) |
+| Deploy guard                  | `mock-campaign-log` na regex                                                             | mantido como proteção                                                                                                                                                                                                                                                |
+| Showcase `/dev/design-system` | não usava                                                                                | —                                                                                                                                                                                                                                                                    |
+
+**Ajustes editoriais autorizados (D-074):**
+
+- **Marca:** a grafia pública no Campaign Log é **Comunidade ON** (já era nos textos; um comentário foi alinhado). O Player Status ainda mostra "Comunidade On" e ficou fora desta rodada (seção congelada; tratar em etapa própria).
+- **en, curso:** "that led me to study Game Development" → "that led me to study Digital Games" (Comunidade ON, §5).
+- **en, Axia:** "including the development of Axia's intelligence capabilities" → "including its evolution into Axia Intelligence" (o pt já dizia "Inteligência Axia").
+- **Axia, período:** c. 2020/2021, estimativa do Eduardo sobre o início da participação dele, não data documental.
+- **EOS:** a notícia da Unicamp (27/09/2019) segue como marco público; a autoria do artigo segue com Bellotti e Françoso.
+
+**Links (todos verificados no navegador em 2026-10-17):** TCC (CPS), O Globo, Unicamp FECFAU, Portal Afya, OpenAlex e InfraFM respondem 200 na URL publicada. O DOI redireciona para o próprio artigo no ScienceDirect (redirecionamento canônico do DOI). O ScienceDirect mostra uma verificação anti-robô ("Um momento…") a navegadores automatizados; não é link quebrado. **Saiu:** a página inicial da Arppen, que substituía a página da Axia (`arppen.com/axia.html`, 404). A Axia fica só com a reportagem da InfraFM até haver uma página específica funcional. Nenhum fato do relato foi removido.
+
+**Visual:** sem mudança na linguagem aprovada. O eixo termina no marker do fechamento CURRENT QUEST, e a seção seguinte em produção é o Final Checkpoint; não sobra espaço vazio onde ficavam os MOCKs.
+
+**Pendentes (fora desta rodada):**
+
+1. **Jornada** no header (`#campaign-log`): o conteúdo real já está publicado, mas o header não mudou nesta rodada.
+2. Grafia "Comunidade On" no Player Status (§16.4).
+3. Página específica da Axia, se voltar a existir.
+4. Achievements, Current Main Quest e Side Quests seguem com MOCK só em desenvolvimento (etapas próprias, §16.4 e §16.6).
+5. Seta de link externo que pode quebrar sozinha em rótulos longos (§16.7).

@@ -126,40 +126,18 @@ Dados:
 - `src/app/data/achievements.data.ts`: **publicado** (produção). Vazio até haver fatos aprovados.
 - `src/app/data/achievements.data.development.ts`: **MOCK de desenvolvimento visual** (D-051), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
 
-## CampaignLogEntry (Home Slice 03, D-048/D-049)
+## Campaign Log (Home Slice 03; capítulos D-070–D-074)
 
-`src/app/models/campaign-log.model.ts`
+`src/app/models/campaign-log.model.ts`. A linha profissional `CampaignLogEntry` (D-048/D-049) e o MOCK de desenvolvimento foram **aposentados em D-074**: o Campaign Log é feito só de capítulos reais.
+
+### CampaignLogChapter (D-070–D-074, docs/15 §13–§17)
 
 ```ts
-type CampaignLogKind = 'origin' | 'checkpoint' | 'current';
-
 interface CampaignLogPeriod {
   start: number; // ano real
-  end?: number | 'present'; // ausente = ano único
+  end?: number | 'present'; // ausente = ano único; present = em aberto (ATUAL)
 }
 
-interface CampaignLogEntry {
-  id: string;
-  kind: CampaignLogKind;
-  period: CampaignLogPeriod;
-  title: Localized;
-  context?: Localized; // organização/ambiente, só quando útil e aprovado
-  summary: Localized; // 1–2 frases: o que mudou
-}
-```
-
-- `kind` é semântica; o rótulo (NEW GAME / CHECKPOINT / CAMPANHA ATUAL) vem do dicionário de UI (`campaignLog.kind`).
-- Fora do modelo: technologies, tags, highlights, results, XP, progress, level, logos, métricas.
-- Substitui `CampaignCheckpoint` (FASE 0).
-
-Dados:
-
-- `src/app/data/campaign-log.data.ts`: **publicado** (produção). Vazio até o histórico real ser aprovado; vazio = seção não renderizada.
-- `src/app/data/campaign-log.data.development.ts`: **MOCK de desenvolvimento visual** (D-049), trocado via `fileReplacements` só em desenvolvimento e testes. **Não é conteúdo factual.**
-
-### CampaignLogChapter (D-070–D-072, docs/15 §13–§15)
-
-```ts
 // Ano confirmado, intervalo confirmado, "desde" (em aberto), ano aproximado ("c. 1991") ou época
 // em texto; nunca ano inventado.
 type CampaignLogWhen =
@@ -208,9 +186,9 @@ interface CampaignLogChapter {
 }
 ```
 
-- Capítulos antecedem a linha profissional no mesmo eixo; não substituem `CampaignLogEntry`.
+- Os capítulos são todo o conteúdo do Campaign Log, numa única linha cronológica.
 - O número do checkpoint (01, 02...) é derivado da ordem, nunca do dado.
-- Dados: `campaign-log.chapters.data.ts` (conteúdo real, `ORIGIN_CHAPTER`). A publicação passa por `CAMPAIGN_LOG_CHAPTERS`: vazio em produção até o Eduardo congelar o capítulo; `[ORIGIN_CHAPTER]` em desenvolvimento.
+- Dados: `campaign-log.chapters.data.ts` (conteúdo real: `ORIGIN_CHAPTER`, `FATEC_CHAPTER`, `CHAPTER_02`). A publicação passa por `CAMPAIGN_LOG_CHAPTERS` (`campaign-log.data.ts`), a mesma lista em todos os ambientes (D-074), sem `fileReplacements`.
 
 ## CurrentQuest (Home Slice 06, D-055)
 

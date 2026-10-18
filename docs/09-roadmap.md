@@ -115,11 +115,11 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 ## FASE 4 — CAREER CONTENT 🟡 (estrutura ✅ D-057; conteúdo editorial pendente)
 
-### Home Slice 03 — Campaign Log 🟡 (plano aprovado, D-048; `docs/15-home-slice-03.md`)
+### Home Slice 03 — Campaign Log ✅ (D-048; conteúdo real D-070–D-074; `docs/15-home-slice-03.md`)
 
-- 🟡 03-0 MOCK content for development (histórico real pendente) · ✅ 03-A model / data infrastructure (D-049) · ✅ 03-B visual (**APPROVED**, congelado, D-050) · ⬜ 03-C editorial content (pendente de revisão factual; não bloqueia o resto da Home)
+- ✅ 03-0 histórico real em capítulos (CHAPTERS 00, 01 e 02) · ✅ 03-A model / data infrastructure (D-049) · ✅ 03-B visual (**APPROVED**, congelado, D-050) · ✅ 03-C editorial content (**aprovado**, D-074; linha profissional MOCK aposentada) · aguardando validação visual final do Eduardo · sem deploy
 
-- 🟡 Campaign Log (Slice 03)
+- ✅ Campaign Log (Slice 03, D-074)
 - 🟡 Achievements (Slice 04)
 
 ### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
@@ -217,7 +217,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 | Preferência de idioma em localStorage (sem sobrepor a URL)                                                          | futuro   |
 | Desenho do monograma MC                                                                                             | 2        |
 | Campaign XP: regras reais de pontuação (product exploration)                                                        | futuro   |
-| Itens de navegação do header: Sobre / Projetos / Contato (D-054); Jornada volta com o conteúdo real do Campaign Log | 4        |
+| Itens de navegação do header: Sobre / Projetos / Contato (D-054); Jornada pendente (conteúdo real publicado, D-074) | 4        |
 | Páginas dedicadas por case (`/projects/:slug`)                                                                      | 5+       |
 | ~~Upgrade para Angular 22~~ ✅ Angular 22.2 + TypeScript 6.0, Node 24 (D-061)                                       | qualquer |
 | Domínio próprio                                                                                                     | 9        |
