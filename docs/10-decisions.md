@@ -1041,7 +1041,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   10. **Cores:** só tokens existentes. Verde `--mc-status-online` e turquesa `--mc-cool`, mais sóbrios que o verde e o ciano saturados do mockup. Bordas internas em `--mc-border-subtle`.
   11. **Altura:** o painel tem 1200 × 470 em 1440 (2,55 : 1, contra ~3 : 1 no mockup). Os textos têm o mesmo tamanho medido no mockup (~14 px). Só os valores de "Estado atual" são menores no mockup (~12,5 px). Aqui ficam em 14 px, e "Como profissional e pessoa" quebra em duas linhas, o que define a altura da linha da grade. O card com a foto 10 : 9 limita o mínimo a ~434 px.
   12. **Rótulos em pt:** ORIGEM / CAMPANHA ATUAL / FOCO, os já aprovados. O mockup mostrava os termos em inglês; no en são ORIGIN / CURRENT CAMPAIGN / FOCUS.
-- **Conteúdo:** "Sobre a jornada", o lema, os estados e a frase são os textos aprovados pelo Eduardo. **As traduções en desses textos novos foram escritas nesta etapa e aguardam revisão:** "…and meaningful experiences", "Impactful solutions", "Every day", "Professionally and personally", "SAME ESSENCE, NEW LEVELS.", "Technology for real people." Grafia pública "Comunidade ON".
+- **Conteúdo:** "Sobre a jornada", o lema, os estados e a frase são os textos aprovados pelo Eduardo. **As traduções en desses textos novos foram aprovadas pelo Eduardo (D-083):** "…and meaningful experiences", "Impactful solutions", "Every day", "Professionally and personally", "SAME ESSENCE, NEW LEVELS.", "Technology for real people." Grafia pública "Comunidade ON".
 - **REVIEWER (com ressalvas, corrigidas):**
   - quebras de "PLAYER 01" e do nome entre 1200 e 1289 px (placa `auto minmax(0, 1fr)`, `nowrap`);
   - altura (espaçamentos de "Estado atual");
@@ -1056,4 +1056,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Layout:** sem rolagem horizontal; CLS 0.
   - **Lighthouse local, HTTP/1.1 sem compressão:** mobile 82 → 79 (+14 KB de JS sem compressão); desktop 99.
   - **Lighthouse em HTTP/2 + gzip (como o GitHub Pages):** mobile 97–98 → 98, desktop 100 → 100 (FCP e LCP iguais).
-- **Status:** implementado na branch `feat/hero-refinement`, **aguardando aprovação visual do Eduardo**. Sem merge e sem deploy.
+- **Status:** **APPROVED / FROZEN** (D-083). Sem merge e sem deploy.
+
+## D-083 — Player Status: aprovação final
+
+- **Data:** 2026-10-18
+- **Aprovação do Eduardo:** o **Player Status** está aprovado oficialmente, conforme a implementação atual e a D-082. Isso inclui o resultado visual, a fotografia, a responsividade, os textos e as traduções en.
+- **Congelado:** `features/player-status/`, `mc-player-card`, os ícones pixel do `mc-icon`, o papel `display-player`, a foto e os derivados em `public/assets/player/`, e o conteúdo do Player Status em `profile.data.ts` e nos dicionários. Sem novos ajustes visuais; alterar só para corrigir regressão objetiva, relatada.
+- **Status:** **APPROVED / FROZEN** na branch `feat/hero-refinement`; sem merge e sem deploy.

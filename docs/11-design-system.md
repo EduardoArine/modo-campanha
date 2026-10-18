@@ -17,7 +17,7 @@
 | 8   | Buttons / Actions        | ✅ Implementado (D-027): `mcAction` primary/secondary/text     |
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
-| 11  | Player Card              | ✅ Aprovado (D-031); redesenhado em D-082, aguardando aprovação visual |
+| 11  | Player Card              | ✅ Aprovado (D-031); redesenhado em D-082, **APPROVED / FROZEN** (D-083) |
 | 12  | MC-CART                  | ✅ Aprovado, incluindo construção física 4.2 (D-032, D-034)    |
 | 13  | CRT                      | ✅ Aprovado, incluindo refinamento físico e `--mc-radius-glass` (D-033) |
 | 14  | XP                       | ⏸ regras conceituais em D-021; Campaign XP exige regras reais  |
