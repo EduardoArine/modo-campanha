@@ -961,3 +961,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 
   O resíduo leve das scanlines perto de 3 px por faixa fica registrado em §8.1. O botão de pausa ainda pode anunciar "Pausar" ~0,9 s antes do movimento em rede lenta, enquanto o chunk e a arte carregam; a correção completa exigiria um sinal de "pronto" da tela do teaser congelado.
 - **Status:** etapas 1 e 2 concluídas na branch `feat/hero-refinement`. A substituição da imagem aguarda a nova arte do Eduardo. Sem merge e sem deploy.
+
+## D-080 — Tubo transparente: telas atrás da imagem (Hero e CRT do Inventory)
+
+- **Data:** 2026-10-18
+- **Pedido do Eduardo:** usar imagens com o tubo do CRT transparente (Hero e CRT do H2) e colocar as telas digitais atrás delas, para acabar com os ajustes de recorte nos cantos e no cartucho.
+- **Decisão:** a imagem fica na frente (`z-index`, sem capturar o ponteiro) e a tela digital atrás, vista pelo tubo.
+  - **Hero:**
+    - teaser na caixa do vidro com folga só lateral (x 1152–1477 · y 151–405), o que não mexe na escala do teaser nem no HUD;
+    - sem `clip-path` e sem `--screen-radius`;
+    - antes do teaser, a TV aparece desligada.
+  - **`mc-crt-front`:**
+    - camada digital atrás do render, cobrindo o furo + 2 px;
+    - sem o raio elíptico;
+    - standby em vidro preto liso.
+  - **Engine, roteiro e timings do teaser intactos.** Estados, transições e textos do Inventory também.
+- **Assets:** os mockups do Eduardo substituem `design/source/hero/hero-background.png` (mesma foto, provisória) e `design/source/mc-01/crt-front.png` (render novo do mesmo CRT). O alfa foi normalizado: o corpo tinha 240–254. Os derivados WebP foram regerados, todos do mesmo tamanho ou menores.
+- **Alternativas:**
+  - Folga em todas as bordas: rejeitada, porque ampliava o teaser em 3–5% e escondia "PLAYER 01" e o último slot do HUD sob o aro.
+  - Manter a tela por cima com `clip-path` e raio aproximado: era o problema a resolver.
+- **Contrato da nova imagem (D-079):** o mestre já vem com o tubo transparente (`docs/21` §8.2 e §9).
+- **Status:** implementado na branch `feat/hero-refinement`, aguardando revisão visual do Eduardo. Sem merge e sem deploy.

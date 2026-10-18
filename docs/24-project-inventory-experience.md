@@ -212,7 +212,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 - **Ocultação:** a borda superior da frente (y = 434) é opaca em toda a largura do slot (alfa 253–254). A frente esconde de verdade a base do cartucho: 66 px quando encaixado. Não foi preciso `clip-path` nem `mask-image`.
 - **Conferência:** o console montado, com o cartucho encaixado e renderizado a 1254 px, comparado à referência dá diferença média de 2 a 5 níveis (de 255) por região, efeito da compressão WebP. Visualmente idêntico (`scratchpad/inventory/h2/h2-assembly-seated-1254.png`).
 - **Halos:** 0,8 a 1,4% dos pixels são semitransparentes, só nas bordas. Nenhum halo visível sobre o fundo escuro.
-- **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render.
+- **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render. **Atualizado em D-080:** o render tem o tubo transparente; a camada fica **atrás** dele, cobrindo o furo + 2 px (118, 117, 868 × 662), sem raio. O aro recorta a curvatura.
 
 ### 16.2 Sistema de camadas (reutilizável)
 
@@ -336,7 +336,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 | Inventory         | `features/project-inventory/project-inventory-section.*` | Compõe editorial, `mc-console`, `mc-crt-front`, controles e case; agenda as transições (620 / 450 / 600 ms); foco, rolagem e anúncios.                                      |
 | Case              | `features/project-inventory/project-case.*`              | Fora do vidro: minha contribuição, stack, aprendizados, evidências.                                                                                                         |
 | MC-01 físico      | `shared/signature/console/`                              | Três camadas oficiais com geometria do console (`console.geometry.ts`); só `transform`. Decorativo; avisa falha de camada.                                                  |
-| CRT frontal       | `shared/signature/crt-front/`                            | Render + camada digital no vidro; `standby` escurece o vidro. Avisa falha.                                                                                                  |
+| CRT frontal       | `shared/signature/crt-front/`                            | Render na frente (tubo transparente, D-080) + camada digital atrás; `standby` = vidro escuro. Avisa falha.                                                                  |
 | Projetos          | `INVENTORY_PROJECTS`                                     | Produção: `inventoryProjects`. Laboratório e testes: fixtures isoladas.                                                                                                     |
 
 ### 17.2 Estados (um único estado decide tudo)

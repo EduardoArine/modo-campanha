@@ -35,13 +35,16 @@ export const MC01_CONSOLE = {
 
 export type McConsolePose = keyof typeof MC01_CONSOLE.poses;
 
-/** Vidro do CRT frontal (recorte de 1108 × 1013): área da camada digital. */
+/**
+ * Vidro do CRT frontal (recorte de 1108 × 1013): área da camada digital, ATRÁS do render. O tubo é
+ * transparente no render (D-080); a camada cobre o furo inteiro + 2 px e o aro esconde a sobra.
+ */
 export const MC01_CRT = {
   src: `${A}crt-front-1108.webp`,
   srcset: `${A}crt-front-560.webp 560w, ${A}crt-front-800.webp 800w, ${A}crt-front-1108.webp 1108w`,
   width: 1108,
   height: 1013,
-  glass: { left: 121, top: 120, width: 862, height: 656 },
+  glass: { left: 118, top: 117, width: 868, height: 662 },
 } as const;
 
 const pct = (value: number, total: number) => `${(value / total) * 100}%`;

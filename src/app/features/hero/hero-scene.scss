@@ -1,5 +1,5 @@
-// Cena da Hero (D-067 + D-068, docs/21 §7, docs/22). Fundo aprovado recortado por faixa e, sobre o
-// vidro do CRT da imagem, a tela do SYSTEM HORIZON. O palco (.stage) tem a proporção da imagem
+// Cena da Hero (D-067 + D-068 + D-080, docs/21 §7–§9, docs/22). Fundo aprovado recortado por faixa
+// e, atrás do tubo transparente do CRT da imagem, a tela do SYSTEM HORIZON. O palco (.stage) tem a proporção da imagem
 // mostrada e é recortado pela moldura como um `object-fit: cover` com `object-position: --pos`;
 // assim a tela usa coordenadas da própria imagem em todas as larguras. As bordas da moldura
 // sempre se dissolvem no fundo da página (nunca um retângulo).
@@ -14,10 +14,10 @@
   // Imagem mostrada: recorte quadrado no mobile (HERO_BACKGROUND.mobile, x 628–1569 da fonte).
   --ar: 1;
   --pos: 50%;
-  // Caixa do vidro do CRT na imagem mostrada (fonte 1672 × 941: x 1157–1473, y 151–405); os
-  // cantos dentro dela (perspectiva da TV) estão em HERO_CRT_GLASS.
-  --sx: 56.22%;
-  --sw: 33.58%;
+  // Caixa da tela na imagem mostrada (fonte 1672 × 941: x 1152–1477, y 151–405; folga só lateral);
+  // os cantos dentro dela (perspectiva da TV) estão em HERO_CRT_GLASS.
+  --sx: 55.69%;
+  --sw: 34.54%;
   // Máscara (local): opaca entre --x1/--x2 e --y1/--y2, dissolvendo até --x0 e as bordas.
   --x0: 0%;
   --x1: 12%;
@@ -30,8 +30,8 @@
     aspect-ratio: 3 / 2;
     --ar: 1672 / 941;
     --pos: 80%;
-    --sx: 69.2%;
-    --sw: 18.9%;
+    --sx: 68.9%;
+    --sw: 19.44%;
   }
 
   // Desktop compacto: ao lado do texto (colunas 7–12), sangrando só à direita.
@@ -79,22 +79,24 @@
   translate: calc(-1 * var(--pos)) 0;
 }
 
+// A imagem fica na frente: o tubo é transparente e o aro, o cartucho e os cantos curvos da foto
+// recortam a tela naturalmente (sem clip-path nem raio).
 img {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 100%;
   height: 100%;
 }
 
-// Tela do SYSTEM HORIZON exatamente sobre o vidro; o cartucho do console cobre o canto inferior
-// esquerdo do vidro na imagem, então a tela é recortada ali.
+// Tela do SYSTEM HORIZON atrás do tubo. Antes do teaser, o tubo mostra o fundo escuro (TV
+// desligada); o teaser entra ligando o CRT.
 .crt {
   position: absolute;
   left: var(--sx);
   top: 16.05%;
   width: var(--sw);
   height: 26.99%;
-  --screen-radius: 4% / 5%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 23.4% 100%, 23.4% 90.9%, 0 90.9%);
 }
 
 // Pausar/reproduzir (WCAG 2.2.2): pequeno, no canto inferior do visual, sem competir com os CTAs.

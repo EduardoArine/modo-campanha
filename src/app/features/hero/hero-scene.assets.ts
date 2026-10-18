@@ -27,13 +27,15 @@ export const HERO_BACKGROUND = {
 };
 
 /**
- * Cantos do vidro do CRT na imagem de fundo, em frações da caixa x 1157–1473, y 151–405 da fonte
- * (posicionada em `hero-scene.scss`). A TV está levemente girada: o lado direito da tela é mais
- * alto (topo 161 → 151, base 400 → 405). A tela do SYSTEM HORIZON é projetada nesses cantos.
+ * Cantos da tela do SYSTEM HORIZON, em frações da caixa x 1152–1477, y 151–405 da fonte
+ * (posicionada em `hero-scene.scss`). O tubo do CRT é transparente na imagem (D-080) e a tela fica
+ * ATRÁS dela. A folga é só lateral (~4,5 px além do vidro), porque a tela 4:3 escala pela altura:
+ * folga vertical ampliaria o teaser e levaria o HUD para baixo do aro. Em cima e embaixo, onde o
+ * tubo é abaulado, sobram até ~3 px de vidro escuro. A TV está levemente girada (lado direito mais alto).
  */
 export const HERO_CRT_GLASS: ScreenQuad = [
-  [0, 0.0394],
+  [0, 0.04],
   [1, 0],
-  [0.9937, 1],
-  [0, 0.9803],
+  [0.994, 1],
+  [0, 0.98],
 ];
