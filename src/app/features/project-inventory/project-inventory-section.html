@@ -67,8 +67,8 @@
             [motion]="v.motion"
             [lifted]="lifted()"
             [class.is-idle]="v.insert === 'enabled'"
-            sizes="(min-width: 1200px) 590px, (min-width: 768px) 46vw, 92vw"
-            cartSizes="(min-width: 1200px) 330px, (min-width: 768px) 26vw, 52vw"
+            sizes="(min-width: 1200px) 507px, (min-width: 768px) 40vw, 80vw"
+            cartSizes="(min-width: 1200px) 283px, (min-width: 768px) 22vw, 45vw"
             (failed)="assetsFailed()"
             (click)="v.insert === 'enabled' && insert()"
             (pointerenter)="lifted.set(true)"
@@ -107,7 +107,7 @@
         >
           <mc-crt-front
             [standby]="v.screen === 'standby'"
-            sizes="(min-width: 1200px) 590px, (min-width: 768px) 46vw, 92vw"
+            sizes="(min-width: 1200px) 645px, (min-width: 768px) 50vw, 92vw"
             (failed)="assetsFailed()"
           >
             @switch (v.screen) {
@@ -138,7 +138,7 @@
                     class="glass-art"
                     [src]="art.src"
                     [attr.srcset]="art.srcset ?? null"
-                    sizes="(min-width: 1200px) 460px, (min-width: 768px) 36vw, 72vw"
+                    sizes="(min-width: 1200px) 502px, (min-width: 768px) 39vw, 72vw"
                     [width]="art.width"
                     [height]="art.height"
                     alt=""

@@ -17,11 +17,23 @@ ul {
   margin: 0;
 }
 
+// Proporção dos aparelhos: a TV é a protagonista e o console, o aparelho que roda o cartucho.
+// Duas colunas a partir do tablet: 45/55 (820) e 44/56 (≥ 1024), com 48 px entre os aparelhos;
+// em 1440 a TV fica ~1,27× mais larga que o console. Mobile: console a 85%, TV na largura toda.
 .h2 {
   @include columns;
   row-gap: space(5);
   margin-top: var(--mc-space-section-head);
   align-items: end;
+
+  @include mq(md) {
+    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+    column-gap: space(7);
+  }
+
+  @include mq(lg) {
+    grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  }
 }
 
 .intro {
@@ -30,7 +42,7 @@ ul {
   gap: space(2);
 
   @include mq(lg) {
-    grid-column: 1 / span 6;
+    grid-column: 1;
     grid-row: 1;
     align-self: start;
   }
@@ -57,18 +69,22 @@ ul {
   color: var(--mc-text);
 }
 
+// O console escala inteiro (as três camadas juntas) com a largura da coluna.
 .console-area,
 .fallback {
   grid-column: 1 / -1;
   display: grid;
   gap: space(4);
+  justify-self: center;
+  width: 85%;
 
   @include mq(md) {
-    grid-column: 1 / span 4;
+    grid-column: 1;
+    justify-self: stretch;
+    width: auto;
   }
 
   @include mq(lg) {
-    grid-column: 1 / span 6;
     grid-row: 2;
   }
 }
@@ -90,11 +106,10 @@ ul {
   gap: space(4);
 
   @include mq(md) {
-    grid-column: 5 / span 4;
+    grid-column: 2;
   }
 
   @include mq(lg) {
-    grid-column: 7 / span 6;
     grid-row: 1 / span 2;
   }
 }
