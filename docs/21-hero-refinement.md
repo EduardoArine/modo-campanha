@@ -230,7 +230,7 @@ Zonas:
 #### G. CRT e tela
 
 - **Modelo:** o CRT do H2 (`crt-front.png`) em perspectiva. Sem outro modelo de TV, sem grade de ventilação lateral e sem botões diferentes.
-- **Vidro, posição:** de preferência **exatamente** na caixa x 1157–1473 · y 151–405 (316 × 254, ~1,24 : 1), com os cantos de `HERO_CRT_GLASS` e tolerância de ±2 px no 1× (±4 px no 2×).
+- **Vidro, posição:** de preferência **exatamente** na caixa x 1157–1473 · y 151–405 (316 × 254, ~1,24 : 1), com os cantos do vidro de hoje (TL y 161, TR y 151, BR y 405, BL y 400; `HERO_CRT_GLASS` = esses cantos + a folga lateral de D-080) e tolerância de ±2 px no 1× (±4 px no 2×).
 - **Vidro, se a identidade pedir outra proporção:** a tela do `crt-front` é mais larga (~1,33–1,38 : 1) e tem cantos mais arredondados. A proporção do vidro **na foto** pode ficar entre 1,24 e **1,333 (4 : 3)**, com o remedimento de K. Acima de 4 : 3, a tela do teaser (4 : 3, cobrindo pela altura) deixa faixas da foto nas laterais. Cobrir pela largura cortaria o HUD (y 4–18, `docs/22` §4.0) e mudaria o teaser congelado. Com o leve giro, a tela oficial fica dentro desse limite.
 - **Tubo transparente (D-080, §9):** o mestre vem com o vidro **transparente** (alfa 0 dentro do tubo, borda suavizada de 1–2 px e alfa 255 em todo o resto, nunca 240–254). A tela do teaser fica atrás da imagem, e o aro recorta a curvatura.
 - **Na frente do vidro:** o cartucho pode cobrir o canto inferior esquerdo, como hoje (x 1157–1232 · y ≈ 382–405): a imagem recorta a tela sozinha. Não cobrir o topo (HUD, y 4–18 nativo) nem o centro.
@@ -272,15 +272,15 @@ Textos pequenos demais para ler no tamanho final podem virar marcas lisas, nunca
 
 Se o vidro ficar na caixa atual, dentro da tolerância de G, **nada é remedido**: só os quatro cantos e o furo são conferidos. Se mudar, estes valores precisam ser remedidos (fonte W × H = 1672 × 941; vidro de x0 a x1 e de y0 a y1). Desde D-080 (§9), a caixa da tela é o vidro com **folga só lateral**, até cobrir o furo: x0 e x1 recuam ~4,5 px, y0 e y1 ficam no vidro. Uma folga vertical ampliaria o teaser e levaria o HUD para baixo do aro.
 
-| Valor                                               | Onde                     | Fórmula                                                                                                      |
-| --------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------ |
-| `HERO_CRT_GLASS` (4 cantos) e o comentário da caixa | `hero-scene.assets.ts`   | cantos do vidro em frações da caixa (x0–x1, y0–y1)                                                           |
-| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (hoje 16,05% / 26,99%, vidro y 151–405)                                               |
-| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (hoje 68,9% / 19,44%, caixa x 1152–1477)                                              |
-| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − m0) / (m1 − m0) · (x1 − x0) / (m1 − m0), recorte mobile de m0 a m1 (hoje 628–1569: 55,69% / 34,54%)    |
-| Furo coberto                                        | medição do alfa (< 128)  | nenhum pixel do furo fora da caixa nas laterais; em cima e embaixo, sobra de ≤ 3 px aceitável (vidro escuro) |
-| Área segura do teaser                               | `docs/22` §4.0           | proporção do vidro (1,24 a 1,333): em 1,24 : 1 cortam-se ~6 px de cada lado; em 4 : 3, nada                  |
-| Recorte mobile                                      | `HERO_BACKGROUND.mobile` | x do quadrado que contém MC-01, vidro e controle                                                             |
+| Valor                                               | Onde                     | Fórmula                                                                                                         |
+| --------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
+| `HERO_CRT_GLASS` (4 cantos) e o comentário da caixa | `hero-scene.assets.ts`   | cantos do vidro em frações da caixa (x0–x1, y0–y1)                                                              |
+| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (hoje 16,05% / 26,99%, vidro y 151–405)                                                  |
+| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (hoje 68,9% / 19,44%, caixa x 1152–1477)                                                 |
+| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − m0) / (m1 − m0) · (x1 − x0) / (m1 − m0), recorte mobile de m0 a m1 (hoje 628–1569: 55,69% / 34,54%)       |
+| Furo coberto                                        | medição do alfa (< 128)  | nenhum pixel do furo fora da caixa nas laterais; em cima e embaixo, sobra de ≤ ~3,5 px aceitável (vidro escuro) |
+| Área segura do teaser                               | `docs/22` §4.0           | proporção do vidro (1,24 a 1,333): em 1,24 : 1 cortam-se ~6 px de cada lado; em 4 : 3, nada                     |
+| Recorte mobile                                      | `HERO_BACKGROUND.mobile` | x do quadrado que contém MC-01, vidro e controle                                                                |
 
 A engine, o roteiro, os timings e a câmera do teaser não mudam em nenhum caso.
 
@@ -290,9 +290,9 @@ Gerados a partir do mestre:
 
 | Derivado                              | Hoje                  | Na substituição                                        |
 | ------------------------------------- | --------------------- | ------------------------------------------------------ |
-| `background-{640,960,1280,1672}.webp` | 34 / 62 / 92 / 140 KB | regerados                                              |
+| `background-{640,960,1280,1672}.webp` | 32 / 58 / 87 / 128 KB | regerados                                              |
 | `background-{2560,3344}.webp`         | não existem           | novos 2×: ~260 / ~380 KB, orçamento a validar pelo LCP |
-| `background-mobile-{480,800}.webp`    | 42 / 86 KB            | regerados, mais um novo `1200` para 390 @ 3×           |
+| `background-mobile-{480,800}.webp`    | 39 / 78 KB            | regerados, mais um novo `1200` para 390 @ 3×           |
 
 - **Por que os 2×:** hoje, em telas 2×, a imagem é ampliada: 1,76× em 1440 @ 2×, 2,16× em 1920 @ 2× e 2,9× em 2560 @ 2×. O 3344 resolve até ~1672 px de largura de cena em 2×. Acima disso continua ampliado, mas bem menos.
 - **Código:** atualizar `HERO_BACKGROUND` e os `sizes`.
@@ -347,7 +347,7 @@ A pedido do Eduardo, o tubo do CRT ficou **transparente** nas imagens, e as tela
   - Em cima e embaixo, onde o tubo é abaulado, sobram até ~3 px de vidro escuro, lidos como a borda escura do tubo.
   - Antes do teaser (~1 s depois do `load`), o tubo mostra a **TV desligada**, e o teaser entra ligando o CRT. Antes, a tela da foto mostrava a arte. Se o teaser falhar, a TV fica desligada.
 - **Project Inventory (`mc-crt-front`):** `design/source/mc-01/crt-front.png` é um render novo do mesmo CRT do H2, com o tubo transparente. A identidade é a mesma (glifo, rótulos, LED); o aro laranja ficou mais forte, e os reflexos quentes do vidro saíram junto com o tubo.
-  - A camada digital (arte, teaser, carregamento, falha) fica atrás do render, cobrindo o furo + 2 px (118, 117, 868 × 662 no recorte de 1108 × 1013). O render não captura o ponteiro.
+  - A camada digital (arte, teaser, carregamento, falha) fica atrás do render, cobrindo o furo inteiro, com folga de 1 a 8 px conforme a borda (118, 117, 868 × 662 no recorte de 1108 × 1013). O render não captura o ponteiro.
   - Sem o raio 6% / 8%. No **standby**, o vidro agora é preto liso (antes, cinza com os reflexos do render).
 - **Alfa:** os PNGs recebidos tinham o corpo com alfa 240–254 (a foto inteira 1–4% transparente). Foi normalizado com `alfa' = min(255, alfa × 255 / 240)`: corpo opaco, bordas suaves do tubo e da silhueta preservadas, RGB intacto.
 - **Derivados:**
@@ -357,4 +357,11 @@ A pedido do Eduardo, o tubo do CRT ficou **transparente** nas imagens, e as tela
   - Lighthouse inalterado: mobile 82, desktop 99, LCP 4045 / 900 ms, acessibilidade 100, CLS 0 / 0,0003.
   - Testes e builds passam.
   - HUD, legendas e quadro-chave nas mesmas posições.
+- **Revisão independente:** sem bloqueantes.
+  - **Hero:** a fresta máxima no topo é de 3,36 px na fonte (≤ 3,3 px CSS) e não aparece no tamanho real. A etiqueta "PLAYER 01" encosta no canto curvo do aro (~1% sob ele), mas o texto fica inteiro.
+  - **Inventory, em aberto:** o canto do tubo novo é mais curvo que o antigo raio de 6% / 8%. O aro cobre ~13% do último slot do HUD do teaser e ~1% da etiqueta "PLAYER 01". Opções, a decidir pelo Eduardo:
+    - recuar ligeiramente o teaser só no Inventory;
+    - um render com cantos menos curvos;
+    - aceitar.
+  - **Standby:** o vidro em espera é translúcido e mostra o fundo atrás do CRT (preto liso). O visual também está em aberto.
 - **Próxima arte:** o contrato (§8.2 G, K e N) pede o mestre já com o tubo transparente.

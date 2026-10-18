@@ -42,7 +42,8 @@
   }
 }
 
-// Em espera: o vidro do render aparece, escurecido (expectativa, não grande área vazia).
+// Em espera: vidro escuro e translúcido. Com o tubo transparente (D-080), aparece o fundo atrás do
+// CRT, quase igual ao da tela ligada; o visual do standby está em aberto (docs/21 §9).
 :host(.is-standby) .glass {
   background: var(--mc-material-groove);
 }

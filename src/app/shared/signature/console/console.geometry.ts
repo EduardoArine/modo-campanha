@@ -37,7 +37,7 @@ export type McConsolePose = keyof typeof MC01_CONSOLE.poses;
 
 /**
  * Vidro do CRT frontal (recorte de 1108 × 1013): área da camada digital, ATRÁS do render. O tubo é
- * transparente no render (D-080); a camada cobre o furo inteiro + 2 px e o aro esconde a sobra.
+ * transparente no render (D-080); a camada cobre o furo inteiro (folga de 1 a 8 px conforme a borda) e o aro esconde a sobra.
  */
 export const MC01_CRT = {
   src: `${A}crt-front-1108.webp`,

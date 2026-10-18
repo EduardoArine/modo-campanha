@@ -15,9 +15,9 @@ import { SystemHorizonScreen } from '../../system-horizon/system-horizon-screen'
 import { HERO_BACKGROUND, HERO_CRT_GLASS } from './hero-scene.assets';
 
 /**
- * Cena da Hero: o fundo aprovado (D-067) e, sobre o vidro do CRT da imagem, o attract mode do
- * SYSTEM HORIZON (D-068, docs/22). O teaser só carrega depois do `load` da página, no idle (não
- * disputa o LCP); antes dele, a tela da foto já mostra o SYSTEM HORIZON. Toca sozinho (até 3
+ * Cena da Hero: o fundo aprovado (D-067) e, atrás do tubo transparente do CRT da imagem (D-080),
+ * o attract mode do SYSTEM HORIZON (D-068, docs/22). O teaser só carrega depois do `load` da
+ * página, no idle (não disputa o LCP); antes dele, o tubo mostra a TV desligada. Toca sozinho (até 3
  * voltas) salvo com `prefers-reduced-motion`; o controle de pausa é o único elemento interativo.
  */
 @Component({

@@ -972,7 +972,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - sem `clip-path` e sem `--screen-radius`;
     - antes do teaser, a TV aparece desligada.
   - **`mc-crt-front`:**
-    - camada digital atrás do render, cobrindo o furo + 2 px;
+    - camada digital atrás do render, cobrindo o furo inteiro;
     - sem o raio elíptico;
     - standby em vidro preto liso.
   - **Engine, roteiro e timings do teaser intactos.** Estados, transições e textos do Inventory também.
@@ -981,4 +981,8 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - Folga em todas as bordas: rejeitada, porque ampliava o teaser em 3–5% e escondia "PLAYER 01" e o último slot do HUD sob o aro.
   - Manter a tela por cima com `clip-path` e raio aproximado: era o problema a resolver.
 - **Contrato da nova imagem (D-079):** o mestre já vem com o tubo transparente (`docs/21` §8.2 e §9).
+- **REVIEWER:** com ressalvas e sem bloqueantes. Alfa e RGB conferidos, teaser intacto, Lighthouse e layout inalterados, a página fora das duas telas idêntica. Em aberto para o Eduardo (`docs/21` §9):
+  - o canto mais curvo do tubo novo cobre ~13% do último slot do HUD no Inventory;
+  - o visual do standby;
+  - a TV desligada por ~1 s na Hero.
 - **Status:** implementado na branch `feat/hero-refinement`, aguardando revisão visual do Eduardo. Sem merge e sem deploy.

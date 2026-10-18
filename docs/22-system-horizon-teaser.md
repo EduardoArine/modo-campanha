@@ -192,11 +192,11 @@ src/app/system-horizon/
 ## 6. Integração na Hero
 
 - `features/hero/hero-scene.*`: fundo aprovado (D-067) + tela do SYSTEM HORIZON + controle de pausa. O layout, os textos, os CTAs e a imagem da Hero não mudaram.
-- O palco tem a proporção da imagem mostrada e é recortado pela moldura como um `object-fit: cover`, então a tela usa coordenadas da própria imagem: caixa do vidro do CRT na fonte 1672 × 941 em **x 1157–1473, y 151–405** (no recorte mobile: x 529–845 de 941). O cartucho do console cobre o canto inferior esquerdo do vidro: a tela é recortada ali (`clip-path`).
+- O palco tem a proporção da imagem mostrada e é recortado pela moldura como um `object-fit: cover`, então a tela usa coordenadas da própria imagem: vidro do CRT na fonte 1672 × 941 em x 1157–1473, y 151–405. Desde D-080, a caixa da tela é **x 1152–1477, y 151–405** (folga lateral para cobrir o tubo transparente; no recorte mobile, x 524–849 de 941). O cartucho cobre o canto inferior esquerdo do vidro e, como a imagem fica na frente, recorta a tela sozinho.
 - **Ângulo da TV:** o vidro da foto é um quadrilátero (a TV está levemente girada: topo 161 → 151, base 400 → 405). A tela recebe os cantos (`HERO_CRT_GLASS`, input `quad`) e é projetada em perspectiva com `matrix3d` (`screen-quad.ts`), recalculado no resize; canvas e textos seguem o mesmo plano. Desde D-080, a tela fica **atrás** da imagem (tubo transparente), e o aro recorta cantos e cartucho, sem `--screen-radius` nem `clip-path` na Hero. Ao trocar a imagem de fundo, medir de novo os quatro cantos e o furo (`docs/21` §8.2 K e §9).
 - A tela 4:3 cobre o vidro (~1,24 : 1) cortando as laterais (área segura, §4.0).
 - Scanlines (CSS): faixas suaves alinhadas às 120 linhas nativas, com densidade de 120/60/40/30 pela largura da tela e pela densidade de pixels, para não formar faixas irregulares (D-079, `docs/21` §8.1). Engine, roteiro e timings intactos.
-- **Carregamento:** chunk próprio (~13,7 KB, ~5,8 KB gzip), só depois do `load`, no idle + 1 s. Antes disso, a tela da foto já mostra o SYSTEM HORIZON.
+- **Carregamento:** chunk próprio (~13,7 KB, ~5,8 KB gzip), só depois do `load`, no idle + 1 s. Antes disso, o tubo transparente mostra a TV desligada (D-080), e o teaser entra ligando o CRT.
 - **Execução:** canvas nativo, redesenho só quando o tick muda (12/s); pausa fora da viewport e com a aba oculta; para sozinho após 3 voltas.
 - **Textos pequenos:** em telas de CRT menores que 220 px (mobile/tablet) somem os secundários (PLAYER 01, rótulos dos itens) e ficam as mensagens principais.
 
