@@ -30,7 +30,6 @@
   overflow: hidden;
   container-type: inline-size;
   background: var(--mc-bg);
-  transition: background-color 300ms ease-out;
 
   // Vinheta nas bordas do vidro (nada essencial fica na borda).
   &::after {
@@ -42,8 +41,15 @@
   }
 }
 
-// Em espera: vidro escuro e translúcido. Com o tubo transparente (D-080), aparece o fundo atrás do
-// CRT, quase igual ao da tela ligada; o visual do standby está em aberto (docs/21 §9).
-:host(.is-standby) .glass {
-  background: var(--mc-material-groove);
+// Em espera (D-081): TV desligada. Vidro escuro com um reflexo estático, quente e muito discreto
+// no alto do tubo, que sugere a curvatura. Sem animação; some quando o conteúdo digital aparece.
+:host(.is-standby) .glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 52% at 6% 34%, var(--mc-material-orange), transparent 70%),
+    radial-gradient(30% 34% at 90% 14%, var(--mc-material-orange), transparent 70%);
+  opacity: 0.12;
 }

@@ -88,6 +88,14 @@ mc-console.is-idle {
   height: 100%;
 }
 
+// Teaser: recuo mínimo medido (2,5%) para o canto curvo do tubo não cobrir o HUD (D-081). A borda
+// preta que sobra é a área útil de uma TV de tubo. Proporção e escala inteira do canvas intactas.
+.glass-fill {
+  inset: 2.5%;
+  width: auto;
+  height: auto;
+}
+
 .glass-art {
   object-fit: cover;
   animation: power-on 280ms ease-out;
