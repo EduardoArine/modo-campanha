@@ -24,11 +24,14 @@
   </div>
 </div>
 
-<button
-  type="button"
-  class="toggle"
-  [attr.aria-label]="playback.playing() ? ui().systemHorizon.pause : ui().systemHorizon.play"
-  (click)="playback.toggle()"
->
-  <mc-icon [name]="playback.playing() ? 'pause' : 'play'" />
-</button>
+<!-- O controle nasce com a tela: antes dela não há o que pausar (nem um "Pausar" sem movimento). -->
+@if (teaserReady()) {
+  <button
+    type="button"
+    class="toggle"
+    [attr.aria-label]="playback.playing() ? ui().systemHorizon.pause : ui().systemHorizon.play"
+    (click)="playback.toggle()"
+  >
+    <mc-icon [name]="playback.playing() ? 'pause' : 'play'" />
+  </button>
+}

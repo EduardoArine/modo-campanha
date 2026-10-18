@@ -1,5 +1,6 @@
 // Fontes self-hosted (SIL Open Font License). Subset latin do Google Fonts: cobre pt-BR e en
-// (validado: ã á é í ó ú ç ê ô õ à â e maiúsculas). Arquivos variáveis; o build gera nomes com hash.
+// (validado: ã á é í ó ú ç ê ô õ à â e maiúsculas). Arquivos variáveis, servidos em media/ sem hash
+// (outputHashing: bundles); a Pixelify Sans tem preload em index.html pelo nome (D-079).
 // Setas (↗ →) não existem nos arquivos: usar ícones SVG.
 
 @font-face {

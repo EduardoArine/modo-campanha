@@ -20,6 +20,17 @@
     />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:locale:alternate" content="en_US" />
+    <!-- Sem SSR, a fonte só seria pedida quando o "MODO CAMPANHA" da Hero já estivesse na tela
+         (troca visível em rede lenta). O preload busca já no HTML (D-079). O nome vem do build
+         sem hash (outputHashing: bundles); ao trocar o arquivo, atualizar aqui. A IBM Plex Sans
+         já chega antes do primeiro render: sem preload. -->
+    <link
+      rel="preload"
+      href="media/pixelify-sans-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>

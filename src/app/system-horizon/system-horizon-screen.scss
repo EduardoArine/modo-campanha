@@ -25,17 +25,71 @@
   translate: -50% 0;
   container-type: inline-size;
 
-  // Scanlines muito leves: uma por linha nativa (120), só textura de vidro.
+  // Scanlines muito leves, só textura de vidro: --lines faixas suaves alinhadas às 120 linhas
+  // nativas (120, 60, 40 ou 30). Cada faixa precisa de ≥ 3 pixels do dispositivo; abaixo disso
+  // as linhas caem entre os pixels e viram faixas irregulares (moiré). Por isso a densidade
+  // depende da largura da tela (container) e da densidade de pixels (D-079).
   &::after {
+    --lines: 30;
     content: '';
     position: absolute;
     inset: 0;
     pointer-events: none;
     background: repeating-linear-gradient(
       to bottom,
-      transparent 0 0.6%,
-      var(--mc-material-groove) 0.6% calc(100% / 120)
+      transparent 0 calc(45% / var(--lines)),
+      var(--mc-material-groove) calc(75% / var(--lines)),
+      transparent calc(100% / var(--lines))
     );
+  }
+}
+
+// Escadas de densidade (largura da .view × pixels do dispositivo); a última que casar vale.
+@container (width >= 160px) {
+  .view::after {
+    --lines: 40;
+  }
+}
+
+@container (width >= 240px) {
+  .view::after {
+    --lines: 60;
+  }
+}
+
+@container (width >= 480px) {
+  .view::after {
+    --lines: 120;
+  }
+}
+
+@media (resolution >= 2x) {
+  .view::after {
+    --lines: 40;
+  }
+
+  @container (width >= 120px) {
+    .view::after {
+      --lines: 60;
+    }
+  }
+
+  @container (width >= 240px) {
+    .view::after {
+      --lines: 120;
+    }
+  }
+}
+
+@media (resolution >= 3x) {
+  .view::after {
+    --lines: 60;
+  }
+
+  @container (width >= 160px) {
+    .view::after {
+      --lines: 120;
+    }
   }
 }
 
