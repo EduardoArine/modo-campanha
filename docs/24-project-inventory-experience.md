@@ -370,7 +370,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
   8. Copy do Eduardo, a experiência guiada por dados e o tipo EXPERIÊNCIA NARRATIVA.
   9. Sem controle.
 
-### 17.4 Identidade do MC-CART: conflito em aberto
+### 17.4 Identidade do MC-CART (resolvida em D-078)
 
 Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpad/review-final/review-final-identity.png`.
 
@@ -384,7 +384,8 @@ Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpa
   - nada no design canônico foi substituído: `renders.front` segue como identidade nos dados;
   - a variante entra como `renders.console`, porque o H2 aprovado depende dela;
   - na Home, o visitante vê só a variante (a pose fora, a inserção e o encaixe).
-- **Decisão do Eduardo:** (a) aceitar a variante como shell oficial do MC-001 para o console, e então atualizar D-065, o `front` e o `threeQuarter` para o mesmo shell; ou (b) pedir um render do console a partir do shell D-065, mantendo a geometria do slot (699 × 500, base de 66 px).
+- **Decisão do Eduardo (D-078):** a carcaça usada no encaixe físico (`renders.console`) é a **referência oficial** do MC-001 na experiência interativa. Os renders anteriores (`front`, `threeQuarter`, D-065) ficam como material de referência, com os arquivos preservados e nenhuma imagem gerada ou substituída.
+- **Regra:** a interface pública não mostra duas identidades do cartucho. Hoje só a carcaça do console aparece. O fallback em CSS do MC-CART só existe se o MC-01 falhar. Quando houver 2 ou mais cartuchos, as miniaturas da escolha devem usar a carcaça do console (hoje usam o `front`; ajuste pendente para quando a escolha for publicada).
 
 ### 17.5 Performance
 
@@ -405,8 +406,8 @@ Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpa
 ### 17.6 Pendências
 
 1. **Harmonização do MC-01 da Hero** (foto cinematográfica) com o MC-01 canônico do H2. A Hero não foi alterada.
-2. **Confirmar o tipo do MC-001:** "EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE".
-3. **Contribuição e aprendizados do MC-001** descrevem o portfólio como um todo; vale revisar se devem falar do SYSTEM HORIZON.
+2. ~~Confirmar o tipo do MC-001~~ **aprovado** (D-078): EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE.
+3. **Aprendizados do MC-001:** revisão editorial futura (D-078), sem bloquear a aprovação. Os rótulos MINHA CONTRIBUIÇÃO, STACK, APRENDIZADOS e EVIDÊNCIAS estão aprovados.
 4. **Telas de alta densidade (2x/3x)** baixam os derivados maiores (424 KB). Um derivado intermediário (~1080 px) economizaria pouco, com risco de nitidez.
 5. **Próximos cartuchos** precisam do render em escala do console (699 × 500) a partir do render frontal aprovado, e as miniaturas da escolha, de um derivado pequeno do `front`.
 

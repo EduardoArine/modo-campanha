@@ -8,6 +8,8 @@
 
 ## 1. MC-001 — Modo Campanha (`publication: approved`)
 
+> **Atualização (D-077/D-078):** no runtime, o MC-001 se chama **SYSTEM HORIZON** (tipo EXPERIÊNCIA NARRATIVA), a primeira experiência narrativa do Modo Campanha; o Modo Campanha é o portfólio. A carcaça oficial na experiência interativa é a do encaixe físico do H2. A ficha abaixo é o registro original (D-041/D-042).
+
 | Campo | pt-BR | en |
 |---|---|---|
 | Public name | Modo Campanha | Modo Campanha |

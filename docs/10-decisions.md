@@ -906,3 +906,12 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Múltiplos cartuchos:** a escolha aparece só com 2 ou mais aprovados (`INVENTORY_PROJECTS`); o laboratório dev-only usa o componente real com fixtures `mock-inventory-*` (deploy guard atualizado).
 - **Proporção (2026-10-18):** a TV passa a ser a protagonista: 44/56 no desktop (CRT ≈ 1,27× o console), 45/55 em 820, console a 85% no mobile. Camadas, coordenadas e animação inalteradas; encaixe e vidro conferidos (`docs/24` §17.8).
 - **Status:** implementado na Home, **aguardando aprovação final do Eduardo**; sem merge e sem deploy.
+
+## D-078 — Project Inventory H2: aprovação final e consolidação
+
+- **Data:** 2026-10-18
+- **Aprovação do Eduardo:** o Project Inventory H2 está **aprovado e consolidado**, incluindo a proporção console × CRT (D-077, `docs/24` §17.8) nas quatro larguras. Ficam como estão a inserção, a ejeção, o teaser sob demanda, a responsividade, a acessibilidade e o tratamento de erros. Não há novos ajustes de tamanho ou composição nesta etapa.
+- **Identidade do MC-001 (resolve o conflito da D-077):** a carcaça do MC-CART usada no encaixe físico do H2 (`renders.console`, fonte `design/source/mc-01/mc-001-console-scale.png`) é a **referência oficial** do cartucho na experiência interativa. Os renders anteriores (`front`, `threeQuarter`, D-065) ficam como material de referência, com os arquivos preservados. Nenhuma imagem é gerada ou substituída. **Regra:** a interface pública não mostra duas identidades do MC-001. Quando a escolha de cartuchos aparecer (2 ou mais aprovados), as miniaturas devem usar a carcaça do console, e não o `front`.
+- **Tipo aprovado:** EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE. Modo Campanha é o portfólio profissional; SYSTEM HORIZON é a experiência narrativa apresentada no cartucho MC-001.
+- **Rótulos aprovados:** MINHA CONTRIBUIÇÃO / MY CONTRIBUTION, STACK, APRENDIZADOS / LEARNINGS e EVIDÊNCIAS / EVIDENCE. O conteúdo dos aprendizados pode passar por revisão editorial futura, o que não bloqueia esta aprovação.
+- **Status:** **APPROVED / consolidado** na branch `feat/hero-refinement`; sem merge e sem deploy.

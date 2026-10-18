@@ -48,9 +48,9 @@ export interface CartridgeRenders {
   threeQuarter?: CartridgeImage;
   /**
    * Render para a inserção física no MC-01 (D-077): frontal, na escala do console (699 × 500; a base
-   * de 66 px fica atrás da frente). No MC-001 é uma variante de SHELL (mesmo rótulo e paleta; topo
-   * escalonado, pegas e janela do rótulo diferentes do `front`): conflito de identidade em aberto,
-   * decisão do Eduardo (docs/24 §17.4). Não substitui o `front` canônico. Sem ela: fallback.
+   * de 66 px fica atrás da frente). No MC-001 é a carcaça OFICIAL da experiência interativa (D-078);
+   * `front`/`threeQuarter` ficam como referência. A interface pública não mostra duas identidades
+   * do cartucho. Sem ela: fallback.
    */
   console?: CartridgeImage;
 }

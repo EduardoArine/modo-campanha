@@ -60,7 +60,7 @@ export const PROJECTS: readonly Project[] = [
       },
       renders: {
         front: { src: 'assets/cartridges/mc-001/front.webp', width: 960, height: 690 },
-        // Render do console (D-077): variante de shell do MC-001, conflito com o `front` em aberto (docs/24 §17.4).
+        // Carcaça oficial do MC-001 na experiência interativa (D-078); `front` fica como referência.
         console: {
           src: 'assets/cartridges/mc-001/console-scale-699.webp',
           srcset:
