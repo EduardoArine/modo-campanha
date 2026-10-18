@@ -66,15 +66,38 @@ export const UI_PT_BR = {
   },
   inventory: {
     subtitle: 'Cartuchos coletados durante a campanha.',
-    // Inserir / ejetar o cartucho no CRT Project Viewer (FASE 5, D-058).
+    // Inserção física no MC-01 (H2, D-077). Estados do slot em linguagem de sistema; ações localizadas.
     insert: 'Inserir cartucho',
     eject: 'Ejetar cartucho',
+    choose: 'Escolher cartucho',
+    slot: {
+      empty: 'SLOT VAZIO',
+      loading: 'CARREGANDO',
+      inserted: 'INSERIDO',
+      ejecting: 'EJETANDO',
+      unavailable: 'MC-01 INDISPONÍVEL',
+    },
+    ready: 'READY',
+    teaser: {
+      play: 'Reproduzir teaser',
+      pause: 'Pausar teaser',
+      unavailable: 'TEASER INDISPONÍVEL',
+    },
+    experience: { available: 'disponível', inDevelopment: 'em desenvolvimento' },
+    // Anúncios (role="status") nas transições; o READY é anunciado pelo foco.
+    status: {
+      loading: 'Carregando cartucho.',
+      ejected: 'Cartucho ejetado.',
+      teaserUnavailable: 'O teaser não carregou. O case do projeto continua disponível.',
+    },
+    fallback: 'A visualização do MC-01 não carregou. O case do projeto continua disponível abaixo.',
   },
-  // Rótulos do case dentro do CRT (FASE 5, D-058).
+  // Case do projeto, fora do CRT (D-077).
   projectCase: {
-    role: 'PAPEL',
+    role: 'MINHA CONTRIBUIÇÃO',
     stack: 'STACK',
     learnings: 'APRENDIZADOS',
+    evidence: 'EVIDÊNCIAS',
   },
   campaignLog: {
     present: 'ATUAL',

@@ -38,7 +38,7 @@ jobs:
       - run: "! grep -rl 'design-system-page' dist/modo-campanha/browser"
 
       # Guarda: conteúdo MOCK (Campaign Log D-049, Achievements D-051, Current Main Quest docs/18, Side Quests docs/19) nunca pode ir para produção.
-      - run: "! grep -rlE 'mock-campaign-log|mock-achievement|mock-current-quest|mock-side-quest' dist/modo-campanha/browser"
+      - run: "! grep -rlE 'mock-campaign-log|mock-achievement|mock-current-quest|mock-side-quest|mock-inventory' dist/modo-campanha/browser"
 
       # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
       # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).

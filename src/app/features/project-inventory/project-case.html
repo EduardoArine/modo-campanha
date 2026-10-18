@@ -1,61 +1,41 @@
-<article class="case" aria-labelledby="project-case-title">
-  <header class="head">
-    <p class="serial">
-      {{ ui().cart.system }} {{ project().serial }} · {{ locale.pick(project().type) }}
-    </p>
-    <h3 class="title" id="project-case-title" tabindex="-1" #heading>
-      {{ locale.pick(project().title) }}
-    </h3>
-  </header>
-
-  @if (project().cartridge.artwork; as artwork) {
-    <img
-      class="artwork"
-      [src]="artwork.src"
-      [alt]="locale.pick(artwork.alt)"
-      [width]="artwork.width"
-      [height]="artwork.height"
-    />
-  }
-
-  <p class="description">{{ locale.pick(project().description) }}</p>
-
-  <dl class="facts">
+<dl class="facts">
+  <div>
+    <dt>{{ ui().projectCase.role }}</dt>
+    <dd>{{ locale.pick(project().role) }}</dd>
+  </div>
+  <div>
+    <dt>{{ ui().projectCase.stack }}</dt>
+    <dd>
+      <ul role="list" class="stack">
+        @for (tech of project().technologies; track tech) {
+          <li>{{ tech }}</li>
+        }
+      </ul>
+    </dd>
+  </div>
+  @if (locale.pick(project().learnings).length) {
     <div>
-      <dt>{{ ui().projectCase.role }}</dt>
-      <dd>{{ locale.pick(project().role) }}</dd>
-    </div>
-    <div>
-      <dt>{{ ui().projectCase.stack }}</dt>
+      <dt>{{ ui().projectCase.learnings }}</dt>
       <dd>
-        <ul role="list" class="stack">
-          @for (tech of project().technologies; track tech) {
-            <li>{{ tech }}</li>
+        <ul role="list" class="list">
+          @for (learning of locale.pick(project().learnings); track learning) {
+            <li>{{ learning }}</li>
           }
         </ul>
       </dd>
     </div>
-    @if (locale.pick(project().learnings).length) {
-      <div>
-        <dt>{{ ui().projectCase.learnings }}</dt>
-        <dd>
-          <ul role="list" class="learnings">
-            @for (learning of locale.pick(project().learnings); track learning) {
-              <li>{{ learning }}</li>
-            }
-          </ul>
-        </dd>
-      </div>
-    }
-  </dl>
-
-  <div class="actions">
-    @for (link of project().links; track link.url) {
-      <a mcAction="secondary" [href]="link.url" target="_blank" rel="noopener noreferrer">
-        {{ locale.pick(link.label) }} <mc-icon name="external" />
-        <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
-      </a>
-    }
-    <button mcAction="text" class="eject" (click)="eject.emit()">{{ ui().inventory.eject }}</button>
-  </div>
-</article>
+  }
+  @if (project().links.length) {
+    <div>
+      <dt>{{ ui().projectCase.evidence }}</dt>
+      <dd class="links">
+        @for (link of project().links; track link.url) {
+          <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+            {{ locale.pick(link.label) }} <mc-icon name="external" />
+            <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+          </a>
+        }
+      </dd>
+    </div>
+  }
+</dl>

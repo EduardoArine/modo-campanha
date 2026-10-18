@@ -1,66 +1,33 @@
-// Project Case (docs/20-game-feel-01.md). Conteúdo dentro do vidro do CRT: UI digital legível,
-// sem efeitos sobre texto ou artwork ("CRT na moldura; clareza no conteúdo").
+// Case do projeto (D-077): fora do CRT; leitura rápida em colunas (1 / 2 / 3).
 @use 'mc' as *;
 
 :host {
   display: block;
 }
 
-.case {
-  display: grid;
-  gap: space(5);
-  align-content: start;
-}
-
-p,
-h3,
 dl,
 dd,
 ul {
   margin: 0;
 }
 
-.head {
-  display: grid;
-  gap: space(2);
-}
-
-.serial {
-  @include type(system);
-  color: var(--mc-accent);
-}
-
-.title {
-  @include type(section-title);
-  color: var(--mc-text);
-
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    @include focus-ring;
-  }
-}
-
-// SYSTEM HORIZON (D-065): 4:3, alta resolução reduzida com suavização (sem nearest-neighbor).
-.artwork {
-  width: 100%;
-  max-width: 20rem;
-  height: auto;
-  aspect-ratio: 4 / 3;
-  border-radius: var(--mc-radius-sm);
-}
-
-.description {
-  max-width: 62ch;
-  @include type(body-l);
-  color: var(--mc-text-secondary);
+ul {
+  padding: 0;
+  list-style: none;
 }
 
 .facts {
   display: grid;
-  gap: space(4);
+  gap: space(5) var(--mc-gutter);
+
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  // 4 fatos: contribuição e aprendizados (textos) mais largos que stack e evidências.
+  @include mq(xl) {
+    grid-template-columns: 2fr 1fr 2fr 1fr;
+  }
 
   dt {
     @include type(label);
@@ -68,16 +35,11 @@ ul {
   }
 
   dd {
-    margin-top: space(1);
+    margin-top: space(2);
     max-width: 62ch;
     @include type(body);
     color: var(--mc-text);
   }
-}
-
-ul {
-  padding: 0;
-  list-style: none;
 }
 
 .stack {
@@ -86,7 +48,7 @@ ul {
   gap: space(1) space(4);
 }
 
-.learnings {
+.list {
   display: grid;
   gap: space(1);
 
@@ -106,9 +68,8 @@ ul {
   }
 }
 
-.actions {
+.links {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
   gap: space(4);
 }

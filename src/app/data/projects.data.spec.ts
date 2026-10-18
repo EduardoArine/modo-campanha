@@ -29,6 +29,7 @@ function fixture(serial: string, publication?: ProjectPublication, withArtwork =
         artwork: { src: 'assets/fixture.png', width: 640, height: 480, alt: text },
       }),
     },
+    experiences: [],
     links: [],
   };
 }
@@ -47,8 +48,12 @@ describe('PROJECTS (runtime data)', () => {
     expect(PROJECTS.every((p) => p.publication === 'approved')).toBe(true);
   });
 
-  it('contains MC-001 Modo Campanha and no project under review', () => {
+  it('contains MC-001 SYSTEM HORIZON and no project under review', () => {
     expect(PROJECTS.map((p) => [p.serial, p.slug])).toEqual([['MC-001', 'modo-campanha']]);
+    // D-077: SYSTEM HORIZON é o primeiro cartucho; Modo Campanha é o portfólio (não o projeto).
+    expect(PROJECTS[0].title).toEqual({ 'pt-BR': 'SYSTEM HORIZON', en: 'SYSTEM HORIZON' });
+    expect(PROJECTS[0].description['pt-BR']).toMatch(/^O primeiro cartucho do Modo Campanha\./);
+    expect(PROJECTS[0].description.en).toMatch(/^The first Modo Campanha cartridge\./);
     expect(JSON.stringify(PROJECTS)).not.toMatch(/MC-002|Paco/);
   });
 
@@ -110,6 +115,31 @@ describe('PROJECTS (runtime data)', () => {
       height: 690,
     });
     expect(renders.threeQuarter?.src).toBe('assets/cartridges/mc-001/three-quarter.webp');
+  });
+
+  it('keeps the canonical front render and adds the console-scale variant for insertion (D-077)', () => {
+    const renders = PROJECTS[0].cartridge.renders!;
+    expect(renders.console).toMatchObject({
+      src: 'assets/cartridges/mc-001/console-scale-699.webp',
+      width: 699,
+      height: 500,
+    });
+    expect(renders.console?.srcset).toContain('console-scale-360.webp 360w');
+    expect(renders.front.src).toBe('assets/cartridges/mc-001/front.webp');
+  });
+
+  it('states what MC-001 offers today: teaser available, playable campaign in development', () => {
+    expect(PROJECTS[0].cartridge.teaser).toBe('system-horizon');
+    expect(PROJECTS[0].experiences.map((e) => [e.kind, e.status])).toEqual([
+      ['teaser', 'available'],
+      ['playable', 'in-development'],
+    ]);
+    // Nada jogável é apresentado como disponível.
+    expect(
+      PROJECTS.flatMap((p) => p.experiences).some(
+        (e) => e.kind === 'playable' && e.status === 'available',
+      ),
+    ).toBe(false);
   });
 
   it('publishes MC-001 in production (approved + approved artwork)', () => {

@@ -1,0 +1,113 @@
+// Project Inventory — detalhes dos aparelhos (D-077): estado do slot, LED, conteúdo do vidro do CRT
+// e fallback. Textos de sistema sempre em etiqueta legível (nunca dentro da imagem).
+@use 'mc' as *;
+
+mc-console.is-idle {
+  cursor: pointer;
+}
+
+.slot-status,
+.tv-status {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  @include type(system);
+  color: var(--mc-text-secondary);
+}
+
+.tv-status:focus {
+  outline: none;
+}
+
+.tv-status:focus-visible {
+  @include focus-ring;
+}
+
+// LED do estado: desligado, ocupado (transição), ligado, falha. Sempre acompanhado de texto.
+.led {
+  flex: none;
+  width: space(2);
+  height: space(2);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-border-default);
+
+  &[data-led='busy'] {
+    background: var(--mc-accent);
+  }
+
+  &[data-led='on'] {
+    background: var(--mc-status-online);
+  }
+
+  &[data-led='fault'] {
+    background: var(--mc-status-danger);
+  }
+}
+
+// Inserir durante a transição: segue focável (aria-disabled), sem parecer clicável.
+[aria-disabled='true'] {
+  cursor: progress;
+  opacity: 0.6;
+}
+
+// ------------------------------------------------------------------ Vidro do CRT
+.glass-system,
+.glass-caption {
+  position: relative;
+  padding: space(1) space(2);
+  @include type(system);
+  font-size: clamp(0.625rem, 3cqw, 0.875rem);
+  color: var(--mc-text-muted);
+}
+
+.glass-caption {
+  background: var(--mc-bg);
+  color: var(--mc-text);
+}
+
+.glass-bar {
+  display: block;
+  width: 40cqw;
+  height: space(1);
+  background: linear-gradient(to right, var(--mc-accent) 0 0) no-repeat var(--mc-border-subtle);
+  background-size: 0 100%;
+  animation: load 450ms linear forwards;
+}
+
+@keyframes load {
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+.glass-art,
+.glass-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glass-art {
+  object-fit: cover;
+  animation: power-on 280ms ease-out;
+}
+
+// A tela liga do centro (linha → quadro), sem flash.
+@keyframes power-on {
+  from {
+    transform: scaleY(0.02);
+    opacity: 0.4;
+  }
+}
+
+// ------------------------------------------------------------------ Fallback
+.fallback {
+  justify-items: start;
+}
+
+.fallback-text {
+  max-width: 44ch;
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}

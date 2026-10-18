@@ -34,6 +34,8 @@ export interface CartridgeImage {
   src: string;
   width: number;
   height: number;
+  /** Derivados por largura (`srcset`), quando existem; `src` é o maior. */
+  srcset?: string;
 }
 
 /**
@@ -44,7 +46,16 @@ export interface CartridgeImage {
 export interface CartridgeRenders {
   front: CartridgeImage;
   threeQuarter?: CartridgeImage;
+  /**
+   * Variante técnica para a inserção física no MC-01 (D-077): o mesmo MC-CART, frontal, na escala e
+   * no enquadramento do console (699 × 500; a base de 66 px fica atrás da frente). Não substitui a
+   * identidade canônica (`front`). Sem ela, o projeto não entra no console (fallback).
+   */
+  console?: CartridgeImage;
 }
+
+/** Tela que o MC-01 sabe rodar para um cartucho (engines existentes; nunca jogo inexistente). */
+export type CartridgeScreen = 'system-horizon';
 
 /** Configuração visual do MC-CART (1:1 com o projeto; sem entidade própria, D-042). */
 export interface ProjectCartridge {
@@ -55,6 +66,16 @@ export interface ProjectCartridge {
   artwork?: CartridgeImage & { alt: Localized };
   /** Renders oficiais do objeto físico (D-065). */
   renders?: CartridgeRenders;
+  /** Teaser que o CRT reproduz sob demanda (D-077). Ausente = só a arte. */
+  teaser?: CartridgeScreen;
+}
+
+/** Experiência oferecida pelo cartucho (D-077), com estado real; o rótulo do estado vem da UI. */
+export interface ProjectExperience {
+  kind: 'teaser' | 'playable' | 'demo' | 'case';
+  /** Nome da experiência neste projeto (ex.: "Campanha jogável"). */
+  label: Localized;
+  status: 'available' | 'in-development';
 }
 
 /**
@@ -88,6 +109,8 @@ export interface Project {
 
   // Cartucho
   cartridge: ProjectCartridge;
+  /** O que o cartucho oferece hoje (D-077). Nada "disponível" que não exista. */
+  experiences: readonly ProjectExperience[];
 
   // Links
   links: readonly ProjectLink[];

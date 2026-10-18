@@ -1,0 +1,77 @@
+// MC-01 em camadas (D-077). Contexto de empilhamento próprio (a ordem é relativa, não global):
+// traseira 1 < sombra 2 < cartucho 3 < frente 4. Posições em % do container (console.geometry.ts).
+// Objeto físico: sombra de contato permitida (só aqui), sem glow.
+@use 'mc' as *;
+
+:host {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+}
+
+.layer {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+.back {
+  z-index: 1;
+  top: var(--back-top);
+  left: 0;
+  width: 100%;
+}
+
+// Sombra de contato do cartucho fora: "paira sobre o slot", não "apoiado na tampa".
+.shadow {
+  z-index: 2;
+  top: var(--shadow-top);
+  left: calc(var(--slot-left) + var(--slot-w) * 0.08);
+  width: calc(var(--slot-w) * 0.84);
+  height: var(--shadow-h);
+  border-radius: var(--mc-radius-round);
+  background: radial-gradient(closest-side, var(--mc-material-groove), transparent);
+  transition: opacity 400ms ease-out;
+}
+
+// Cartucho: só transform. Inserir 620 ms (acelera, desacelera, para firme); ejetar 600 ms.
+.cart {
+  z-index: 3;
+  top: var(--slot-top);
+  left: var(--slot-left);
+  width: var(--slot-w);
+  transform: translateY(var(--y, 0));
+  transition: transform 200ms ease-out;
+}
+
+:host([data-pose='out']) .cart {
+  --y: var(--out);
+}
+
+:host([data-pose='seated']) .shadow {
+  opacity: 0;
+}
+
+// Intenção de inserir: aproxima o cartucho do slot (nunca durante um movimento).
+:host([data-pose='out'][data-motion='none'].is-lifted) .cart {
+  transform: translateY(calc(var(--out) + 4%));
+}
+
+:host([data-motion='insert']) .cart {
+  transition: transform 620ms cubic-bezier(0.5, 0, 0.25, 1);
+}
+
+:host([data-motion='eject']) .cart {
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Frente: cobre a parte inserida; sombra de contato no objeto.
+.front {
+  z-index: 4;
+  top: var(--front-top);
+  left: 0;
+  width: 100%;
+  filter: drop-shadow(0 space(4) space(4) var(--mc-material-groove));
+}

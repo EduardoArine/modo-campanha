@@ -1,6 +1,6 @@
-// Project Inventory (docs/13-home-slice-02.md, 02-C; escala D-065). Grade de cartuchos: até 3 por
-// linha (≥ 1200), 2 (768–1199), 1 (mobile). Sem slots vazios: os itens ocupam os primeiros slots
-// naturais e o restante da linha fica livre.
+// Project Inventory — H2 (D-077, docs/24 §17). Composição: no desktop, editorial + MC-01 à esquerda e
+// CRT frontal à direita, com a mesma largura (6 + 6) e a mesma linha de base; o cartucho, mais alto,
+// é o protagonista do INITIAL. Tablet: 4 + 4. Mobile: editorial → MC-01 → ação → CRT → case.
 @use 'mc' as *;
 
 :host {
@@ -11,86 +11,176 @@
   padding-block: var(--mc-space-section);
 }
 
-.grid {
-  @include columns;
-  row-gap: space(7);
-  margin: var(--mc-space-section-head) 0 0;
-  padding: 0;
-  list-style: none;
-  align-items: start;
+p,
+h3,
+ul {
+  margin: 0;
 }
 
-// Cartucho + Project Summary = uma unidade: o resumo não passa da largura do MC-CART.
-// Com o render oficial (D-065), o cartucho é o segundo grande objeto físico do site (24rem).
-.item {
+.h2 {
+  @include columns;
+  row-gap: space(5);
+  margin-top: var(--mc-space-section-head);
+  align-items: end;
+}
+
+.intro {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(2);
+
+  @include mq(lg) {
+    grid-column: 1 / span 6;
+    grid-row: 1;
+    align-self: start;
+  }
+}
+
+.eyebrow {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.name {
+  @include type(section-title);
+  color: var(--mc-text);
+}
+
+.desc {
+  max-width: 52ch;
+  @include type(body);
+  color: var(--mc-text-secondary);
+}
+
+.experiences {
+  @include type(body-s);
+  color: var(--mc-text);
+}
+
+.console-area,
+.fallback {
   grid-column: 1 / -1;
   display: grid;
   gap: space(4);
-  justify-items: start;
-  max-width: 24rem;
 
   @include mq(md) {
-    grid-column: span 4;
+    grid-column: 1 / span 4;
   }
 
   @include mq(lg) {
-    grid-column: span 6;
+    grid-column: 1 / span 6;
+    grid-row: 2;
+  }
+}
+
+// A linha da ação reserva a altura do botão (no READY ele sai e nada salta). A partir do tablet,
+// a mesma altura dos controles do CRT: console e TV dividem a mesma linha de base.
+// Mobile: botão e estado empilhados, com a altura dos dois reservada (o texto do slot muda de
+// tamanho entre os estados sem quebrar linha nem empurrar a página).
+.action {
+  min-height: calc(#{space(8)} + #{space(3)});
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: space(3) space(4);
+
+  @include mq(md) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
   }
 
   @include mq(xl) {
-    grid-column: span 4;
+    min-height: space(8);
   }
 }
 
-// FASE 5 (D-058): inserir o cartucho. O MC-CART continua um objeto (role="img", não focável);
-// o clique nele é atalho de ponteiro para o botão do resumo. "Sobe da prateleira" ao passar o
-// ponteiro / focar o botão, e fica levantado enquanto inserido. Movimento curto, sem loop;
-// com prefers-reduced-motion as transições somem (regra global em _base.scss).
-.cart {
-  cursor: pointer;
-  transition: transform 150ms ease-out;
-}
-
-// Render oficial (D-065): ocupa a largura do item; sombra de contato discreta (não é card).
-.mc-cart--render {
-  max-width: none;
-  filter: drop-shadow(0 space(3) space(3) var(--mc-material-groove));
-}
-
-.item:has(.cart:hover, .insert:hover, .insert:focus-visible) .cart {
-  transform: translateY(calc(-1 * #{space(1)}));
-}
-
-.item.is-inserted .cart {
-  transform: translateY(calc(-1 * #{space(2)}));
-}
-
-// CRT Project Viewer: abaixo da grade, só com um cartucho inserido. Desktop: 8/12 colunas.
-.viewer-slot {
-  @include columns;
-}
-
-.viewer {
+.tv-area {
   grid-column: 1 / -1;
-  margin-top: space(8);
-  animation: crt-on 220ms ease-out;
+  display: grid;
+  gap: space(4);
+
+  @include mq(md) {
+    grid-column: 5 / span 4;
+  }
 
   @include mq(lg) {
-    grid-column: 1 / span 8;
+    grid-column: 7 / span 6;
+    grid-row: 1 / span 2;
   }
 }
 
-// Liga o CRT: só opacidade e uma subida curta (nada pisca, nada fica em loop).
-@keyframes crt-on {
-  from {
-    opacity: 0;
-    transform: translateY(space(2));
+// Controles do CRT: altura do READY reservada desde o INITIAL (2 linhas < 1200, 1 linha acima).
+.tv-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  min-height: calc(#{space(8)} + #{space(3)});
+
+  @include mq(xl) {
+    min-height: space(8);
   }
 }
 
-.loading {
-  place-self: center;
-  margin: 0;
-  @include type(system);
+.tv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(3) space(4);
+}
+
+.case {
+  grid-column: 1 / -1;
+  margin-top: space(6);
+}
+
+// Escolha do cartucho (2+): itens de biblioteca, não cards de galeria.
+.library {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(3);
+  margin-top: var(--mc-space-section-head);
+  padding: 0;
+  list-style: none;
+}
+
+.library-item {
+  display: grid;
+  grid-template-columns: 4.5rem auto;
+  grid-template-rows: auto auto;
+  column-gap: space(3);
+  align-items: center;
+  padding: space(2) space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+  color: var(--mc-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+
+  img {
+    grid-row: 1 / span 2;
+    width: 100%;
+    height: auto;
+  }
+
+  &[aria-current='true'] {
+    border-color: var(--mc-border-accent);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.library-serial {
+  @include type(label);
   color: var(--mc-text-muted);
+}
+
+.library-title {
+  @include type(body-s);
 }

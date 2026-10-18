@@ -8,65 +8,208 @@
     headingId="project-inventory-title"
   />
 
-  @if (items().length) {
-    <ul class="grid" role="list">
-      @for (item of items(); track item.id) {
-        <li class="item" [class.is-inserted]="selectedId() === item.id">
-          <!-- Atalho de ponteiro: o controle acessível é o botão do resumo (mesma ação). -->
-          <mc-cart
-            class="cart"
-            [serial]="item.serial"
-            [title]="item.title"
-            [type]="item.type"
-            [shell]="item.shell"
-            [accent]="item.accent"
-            [artwork]="item.artwork"
-            [render]="item.render"
-            (click)="toggle(item.id)"
-          />
-          <mc-project-summary
-            [title]="item.title"
-            [description]="item.description"
-            [chips]="item.chips"
-          >
+  <!-- Anúncios das transições (o READY é anunciado pelo foco no estado do sistema). -->
+  <p class="mc-visually-hidden" role="status">{{ announcement() }}</p>
+
+  @if (project(); as project) {
+    @let v = view();
+    @let title = locale.pick(project.title);
+
+    @if (projects.length > 1) {
+      <!-- Escolha do cartucho (só com 2 ou mais aprovados): troca o que espera fora do slot. -->
+      <ul class="library" role="list" [attr.aria-label]="ui().inventory.choose">
+        @for (item of projects; track item.id) {
+          <li>
             <button
-              mcAction="text"
-              class="insert"
-              [id]="'insert-' + item.id"
+              type="button"
+              class="library-item"
+              [attr.aria-current]="item.id === project.id ? 'true' : null"
+              [attr.aria-disabled]="v.selectable ? null : 'true'"
               aria-controls="project-viewer"
-              [attr.aria-label]="
-                (selectedId() === item.id ? ui().inventory.eject : ui().inventory.insert) +
-                ': ' +
-                item.title
-              "
-              (click)="toggle(item.id)"
+              (click)="v.selectable && select(item.id)"
             >
-              @if (selectedId() === item.id) {
-                {{ ui().inventory.eject }}
-              } @else {
-                {{ ui().inventory.insert }} <mc-icon name="arrow-down" />
+              @if (item.cartridge.renders?.front; as thumb) {
+                <img
+                  [src]="thumb.src"
+                  [width]="thumb.width"
+                  [height]="thumb.height"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
               }
+              <span class="library-serial">{{ item.serial }}</span>
+              <span class="library-title">{{ locale.pick(item.title) }}</span>
             </button>
-          </mc-project-summary>
-        </li>
-      }
-    </ul>
-  }
-
-  <!-- Região de status persistente: anuncia o boot de forma confiável (o case recebe o foco). -->
-  <p class="mc-visually-hidden" role="status">
-    {{ phase() === 'loading' ? ui().crt.loading : '' }}
-  </p>
-
-  <div class="viewer-slot" id="project-viewer">
-    @if (selected(); as project) {
-      <mc-crt-project-viewer class="viewer" state="content">
-        @if (phase() === 'loading') {
-          <p class="loading" aria-hidden="true">{{ ui().crt.loading }}</p>
-        } @else {
-          <app-project-case [project]="project" (eject)="eject()" />
+          </li>
         }
-      </mc-crt-project-viewer>
+      </ul>
     }
-  </div>
+
+    <div class="h2" [attr.data-state]="state().kind">
+      <div class="intro">
+        <p class="eyebrow">
+          {{ project.serial }} · {{ ui().brand.name }} · {{ locale.pick(project.type) }}
+        </p>
+        <h3 class="name">{{ title }}</h3>
+        <p class="desc">{{ locale.pick(project.description) }}</p>
+        @if (experiences().length) {
+          <p class="experiences">{{ experiences().join(' · ') }}</p>
+        }
+      </div>
+
+      @if (v.slot !== 'unavailable') {
+        <div class="console-area">
+          <!-- MC-01 físico; o clique no console é atalho de ponteiro do botão "Inserir cartucho". -->
+          <mc-console
+            [cartridge]="cartridge()"
+            [pose]="v.pose"
+            [motion]="v.motion"
+            [lifted]="lifted()"
+            [class.is-idle]="v.insert === 'enabled'"
+            sizes="(min-width: 1200px) 590px, (min-width: 768px) 46vw, 92vw"
+            cartSizes="(min-width: 1200px) 330px, (min-width: 768px) 26vw, 52vw"
+            (failed)="assetsFailed()"
+            (click)="v.insert === 'enabled' && insert()"
+            (pointerenter)="lifted.set(true)"
+            (pointerleave)="lifted.set(false)"
+          />
+          <div class="action">
+            @if (v.insert !== 'hidden') {
+              <button
+                mcAction="primary"
+                type="button"
+                id="inventory-insert"
+                aria-controls="project-viewer"
+                [attr.aria-label]="ui().inventory.insert + ': ' + title"
+                [attr.aria-disabled]="v.insert === 'busy' ? 'true' : null"
+                (click)="v.insert === 'enabled' && insert()"
+                (pointerenter)="lifted.set(true)"
+                (pointerleave)="lifted.set(false)"
+                (focus)="lifted.set(true)"
+                (blur)="lifted.set(false)"
+              >
+                {{ ui().inventory.insert }} <mc-icon name="arrow-down" />
+              </button>
+            }
+            <p class="slot-status">
+              <span class="led" [attr.data-led]="v.slotLed" aria-hidden="true"></span
+              >{{ slotText() }}
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="tv-area"
+          id="project-viewer"
+          role="region"
+          [attr.aria-label]="ui().crt.regionLabel"
+        >
+          <mc-crt-front
+            [standby]="v.screen === 'standby'"
+            sizes="(min-width: 1200px) 590px, (min-width: 768px) 46vw, 92vw"
+            (failed)="assetsFailed()"
+          >
+            @switch (v.screen) {
+              @case ('standby') {
+                @if (v.slot === 'empty') {
+                  <p class="glass-system">{{ ui().crt.empty }}</p>
+                }
+              }
+              @case ('loading') {
+                <p class="glass-system">{{ ui().crt.loading }}</p>
+                <span class="glass-bar" aria-hidden="true"></span>
+              }
+              @case ('teaser') {
+                <div class="glass-fill">
+                  @if (teaserScreen(); as screen) {
+                    <ng-container *ngComponentOutlet="screen; inputs: { playback: playback }" />
+                  }
+                </div>
+              }
+              @default {
+                <!-- READY: arte oficial (padrão); se o teaser falhou, a arte + o aviso. -->
+                @if (project.cartridge.artwork; as art) {
+                  <img
+                    class="glass-art"
+                    [src]="art.src"
+                    [attr.srcset]="art.srcset ?? null"
+                    sizes="(min-width: 1200px) 460px, (min-width: 768px) 36vw, 72vw"
+                    [width]="art.width"
+                    [height]="art.height"
+                    alt=""
+                    decoding="async"
+                  />
+                }
+                @if (v.screen === 'teaser-unavailable') {
+                  <p class="glass-caption">{{ ui().inventory.teaser.unavailable }}</p>
+                }
+              }
+            }
+          </mc-crt-front>
+
+          <div class="tv-controls">
+            @if (v.controls) {
+              <p class="tv-status" id="inventory-status" tabindex="-1">
+                <span class="led" [attr.data-led]="v.screenLed" aria-hidden="true"></span
+                >{{ title }} ·
+                {{
+                  v.screen === 'teaser-unavailable'
+                    ? ui().inventory.teaser.unavailable
+                    : ui().inventory.ready
+                }}
+              </p>
+              <div class="tv-actions">
+                @if (project.cartridge.teaser && v.screen !== 'teaser-unavailable') {
+                  <button
+                    mcAction="secondary"
+                    type="button"
+                    aria-controls="project-viewer"
+                    (click)="toggleTeaser()"
+                  >
+                    @let playing = v.screen === 'teaser' && playback.playing();
+                    <mc-icon [name]="playing ? 'pause' : 'play'" />
+                    {{ playing ? ui().inventory.teaser.pause : ui().inventory.teaser.play }}
+                  </button>
+                }
+                <button
+                  mcAction="text"
+                  type="button"
+                  aria-controls="project-viewer"
+                  [attr.aria-label]="ui().inventory.eject + ': ' + title"
+                  (click)="eject()"
+                >
+                  {{ ui().inventory.eject }}
+                </button>
+              </div>
+            }
+          </div>
+        </div>
+      } @else {
+        <!-- FALLBACK: o MC-01 não carregou. O MC-CART canônico (CSS) e o case seguem acessíveis. -->
+        <div class="fallback">
+          <mc-cart
+            [serial]="project.serial"
+            [title]="title"
+            [type]="locale.pick(project.type)"
+            [shell]="project.cartridge.shell"
+            [accent]="project.cartridge.accent"
+            [artwork]="
+              project.cartridge.artwork
+                ? { src: project.cartridge.artwork.src, alt: '' }
+                : undefined
+            "
+          />
+          <p class="slot-status">
+            <span class="led" [attr.data-led]="v.slotLed" aria-hidden="true"></span>{{ slotText() }}
+          </p>
+          <p class="fallback-text">{{ ui().inventory.fallback }}</p>
+        </div>
+      }
+
+      @if (v.case) {
+        <app-project-case class="case" [project]="project" />
+      }
+    </div>
+  }
 </section>
