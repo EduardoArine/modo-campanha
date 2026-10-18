@@ -442,3 +442,22 @@ Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpa
 - **Folga acima do cartucho encaixado:** ~108 px em 1440.
 - **Case:** só aparece depois do clique em Inserir; sem prerender.
 - **Confirmações editoriais:** EXPERIÊNCIA NARRATIVA; os rótulos MINHA CONTRIBUIÇÃO e EVIDÊNCIAS; o case com conteúdo do portfólio sob o título SYSTEM HORIZON.
+
+### 17.8 Ajuste de proporção console × CRT (2026-10-18)
+
+A pedido do Eduardo, **a TV é a protagonista** e o console, o aparelho que roda o cartucho. Só a composição mudou: as três camadas, as coordenadas, as poses, a animação, os estados e os textos ficaram como estavam.
+
+| Largura | Colunas                           | Console                    | CRT           | CRT / console | Altura da seção (antes → depois) |
+| ------- | --------------------------------- | -------------------------- | ------------- | ------------- | -------------------------------- |
+| 1440    | 44 / 56, 48 px entre os aparelhos | 507 px (42%)               | 645 px (54%)  | 1,27×         | 1152 → 1096                      |
+| 1024    | 44 / 56                           | 393 px                     | 501 px        | 1,27×         | 978 → 964                        |
+| 820     | 45 / 55                           | 318 px                     | 389 px        | 1,22×         | 835 → 839                        |
+| 390     | empilhado                         | 304 px (85%, centralizado) | 358 px (100%) | 1,18×         | 1319 → 1291                      |
+
+- **Escala do console:** o console escala inteiro, as três camadas juntas, porque as posições são % do próprio container.
+- **Encaixe:** continua pixel-exato. Contra a referência em 1254 px, a diferença média é 5,0 no cartucho, 3,65 no slot e 2,17 na frente, os mesmos valores de antes.
+- **Vidro:** a camada digital acompanha o render com erro de 0,01 px em todas as larguras.
+- **Linhas de base:** console e TV seguem na mesma linha (os estados ficam na mesma altura).
+- **Sem regressões:** sem overflow nem CLS ao inserir ou ejetar; a ordem de foco não mudou; Lighthouse dá acessibilidade 100.
+- **`sizes`:** foram atualizados para as novas larguras. O INITIAL em 390@3x caiu de 424 para 299 KB.
+- **Capturas antes × depois:** `scratchpad/inventory/proportion/compare-*.png`.

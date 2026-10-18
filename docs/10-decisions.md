@@ -904,4 +904,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **READY:** a arte oficial é o padrão; o teaser só roda em "Reproduzir teaser" (chunk carregado sob demanda; falha vira estado próprio). O case fica fora do vidro e entra junto com a ação de inserir (sem deslocar a página depois).
 - **Componentes:** `mc-console` e `mc-crt-front` entram no design system como objetos físicos (geometria do console em `console.geometry.ts`). O Inventory deixa de usar a grade de cartuchos, o `mc-crt-project-viewer` e o case dentro do vidro; esses componentes continuam no showcase.
 - **Múltiplos cartuchos:** a escolha aparece só com 2 ou mais aprovados (`INVENTORY_PROJECTS`); o laboratório dev-only usa o componente real com fixtures `mock-inventory-*` (deploy guard atualizado).
+- **Proporção (2026-10-18):** a TV passa a ser a protagonista: 44/56 no desktop (CRT ≈ 1,27× o console), 45/55 em 820, console a 85% no mobile. Camadas, coordenadas e animação inalteradas; encaixe e vidro conferidos (`docs/24` §17.8).
 - **Status:** implementado na Home, **aguardando aprovação final do Eduardo**; sem merge e sem deploy.
