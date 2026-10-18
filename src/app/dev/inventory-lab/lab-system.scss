@@ -1,0 +1,180 @@
+// ⚠️ PROTÓTIPO DEV-ONLY (docs/24): sistema carregado (A/H) e biblioteca (B).
+@use 'mc' as *;
+
+// ---------------------------------------------------------------- A/H: sistema carregado
+.system-layout {
+  @include columns;
+  row-gap: space(6);
+  margin-top: var(--mc-space-section-head);
+  align-items: start;
+  animation: crt-on 220ms ease-out;
+
+  .stage--crt {
+    grid-column: 1 / -1;
+
+    @include mq(lg) {
+      grid-column: 1 / span 7;
+      position: sticky;
+      top: calc(var(--mc-header-block, 4rem) + #{space(4)});
+    }
+  }
+
+  .case {
+    grid-column: 1 / -1;
+
+    @include mq(lg) {
+      grid-column: 8 / span 5;
+    }
+  }
+
+  .strip {
+    grid-column: 1 / -1;
+  }
+}
+
+.stage--crt {
+  place-items: stretch;
+}
+
+@keyframes crt-on {
+  from {
+    opacity: 0;
+    transform: translateY(space(2));
+  }
+}
+
+// ---------------------------------------------------------------- B: biblioteca do sistema
+.library-layout {
+  @include columns;
+  row-gap: space(5);
+  margin-top: var(--mc-space-section-head);
+  align-items: start;
+}
+
+.library {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(3);
+  align-content: start;
+
+  @include mq(lg) {
+    grid-column: 1 / span 4;
+  }
+}
+
+.library-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: space(2);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.lib-item {
+  display: grid;
+  grid-template-columns: 6rem 1fr;
+  grid-template-rows: auto auto;
+  gap: space(1) space(4);
+  align-items: center;
+  width: 100%;
+  padding: space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+  color: var(--mc-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease-out,
+    background-color 150ms ease-out;
+
+  &:hover {
+    background: var(--mc-elevated);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &[aria-pressed='true'] {
+    border-color: var(--mc-border-accent);
+    background: var(--mc-elevated);
+  }
+}
+
+.lib-thumb {
+  grid-row: 1 / span 2;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 space(1) space(1) var(--mc-material-groove));
+    transition: transform 150ms ease-out;
+  }
+}
+
+.lib-item:hover .lib-thumb img,
+.lib-item[aria-pressed='true'] .lib-thumb img {
+  transform: translateY(calc(-1 * #{space(1)}));
+}
+
+.lib-thumb-fallback {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 4 / 3;
+  @include type(label);
+  color: var(--mc-text-muted);
+  border: var(--mc-border-width-default) dashed var(--mc-border-default);
+}
+
+.lib-text {
+  display: grid;
+  gap: space(1);
+}
+
+.serial,
+.lib-type {
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+.lib-title {
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.lib-state {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.system {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: space(4);
+
+  @include mq(lg) {
+    grid-column: 5 / span 8;
+  }
+
+  // Mobile: cartucho → ação → projeto (a faixa com a ação vem antes da tela).
+  .strip {
+    order: -1;
+
+    @include mq(md) {
+      order: 0;
+    }
+  }
+
+  .case {
+    margin-top: space(4);
+
+    .facts {
+      @include mq(lg) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+  }
+}
