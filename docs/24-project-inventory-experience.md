@@ -1,6 +1,6 @@
 # 24 — Project Inventory: refinamento da experiência
 
-> Status: **PROPOSTA, aguardando a escolha de direção do Eduardo** (D-075). Nada da Home mudou: os protótipos são uma rota dev-only (`/dev/inventory-lab`), fora de produção. O congelamento visual do Project Inventory (02-C) foi suspenso por autorização do Eduardo só para esta revisão. Hero, teaser SYSTEM HORIZON, Campaign Log e as demais seções não mudam.
+> Status: **PROPOSTA, aguardando a escolha de direção do Eduardo** (D-075; estudo físico H2 em D-076, §16). Nada da Home mudou: os protótipos são uma rota dev-only (`/dev/inventory-lab`), fora de produção. O congelamento visual do Project Inventory (02-C) foi suspenso por autorização do Eduardo só para esta revisão. Hero, teaser SYSTEM HORIZON, Campaign Log e as demais seções não mudam.
 
 ## 1. Auditoria do estado atual
 
@@ -189,3 +189,139 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 - protótipo com 2 ou mais cartuchos;
 - faixa do slot com 7 colunas presa ao CRT no desktop (sugestão);
 - rótulos assimétricos de pausa.
+
+## 16. H2 — Physical Cartridge Experience (estudo, D-076, 2026-10-18)
+
+> Estado: **protótipo para comparação, não aprovado.** Assets oficiais do Eduardo: o MC-01 em camadas (traseira, cartucho, frente), mais o CRT frontal e o controle frontal. Rota: `/dev/inventory-lab?dir=h2` (`pad=1` liga o controle; `pose=out|aligned|partial|seated` congela o cartucho para capturas).
+
+### 16.1 Assets e montagem
+
+| Arquivo enviado                                                         | No repositório (fonte intacta)                 | Runtime (WebP com alfa, mesma escala)                                          | Tamanho |
+| ----------------------------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------ | ------- |
+| `back.png` (1254 × 229)                                                 | `design/source/mc-01/console-back.png`         | `assets/mc-01/console-back.webp`                                               | 49 KB   |
+| `front.png` (1254 × 640)                                                | `design/source/mc-01/console-front.png`        | `assets/mc-01/console-front.webp`                                              | 170 KB  |
+| `midle.png` (699 × 500): o cartucho                                     | `design/source/mc-01/mc-001-console-scale.png` | `assets/cartridges/mc-001/console-scale.webp`                                  | 109 KB  |
+| `Group 22.png` (1254 × 1074): referência                                | `design/source/mc-01/console-reference.png`    | — (só conferência)                                                             | —       |
+| CRT frontal (1254 × 1254)                                               | `design/source/mc-01/crt-front.png`            | `assets/mc-01/crt-front.webp` (recorte das margens transparentes: 1108 × 1013) | 141 KB  |
+| Controle (é o `design/source/hero/mc-01-controller.png` que já existia) | —                                              | `assets/mc-01/controller.webp` (recorte: 1230 × 867)                           | 175 KB  |
+
+- **Registro por pixels contra a referência:**
+  - a traseira está em y = 205 e a frente em y = 434, as duas recortes exatos (diferença 0);
+  - o cartucho encaixado fica em (277, 0), na escala 1,0 (diferença média de 0,8 na parte visível).
+  - As três camadas compartilham um sistema de coordenadas (a referência), sem escala, sem deformação e sem máscara.
+- **Ocultação:** a borda superior da frente (y = 434) é opaca em toda a largura do slot (alfa 253–254). A frente esconde de verdade a base do cartucho: 66 px quando encaixado. Não foi preciso `clip-path` nem `mask-image`.
+- **Conferência:** o console montado, com o cartucho encaixado e renderizado a 1254 px, comparado à referência dá diferença média de 2 a 5 níveis (de 255) por região, efeito da compressão WebP. Visualmente idêntico (`scratchpad/inventory/h2/h2-assembly-seated-1254.png`).
+- **Halos:** 0,8 a 1,4% dos pixels são semitransparentes, só nas bordas. Nenhum halo visível sobre o fundo escuro.
+- **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render.
+
+### 16.2 Sistema de camadas (reutilizável)
+
+- `mc01-console.ts` guarda a geometria **do console**: traseira, frente, slot e poses. Um container com `aspect-ratio` e `isolation: isolate` cria um contexto de empilhamento próprio (traseira < cartucho < frente). Todas as posições são variáveis CSS em % do container, então as camadas escalam juntas em qualquer largura.
+- **Poses** (px da referência; 0 = encaixado): `out` −230 (fora, acima do slot aberto, com sombra de contato suave na tampa), `aligned` −167 (base na borda traseira do slot), `partial` −33, `seated` 0.
+- **Movimento:** só `transform: translateY` em % da altura do cartucho, 620 ms, `cubic-bezier(0.5, 0, 0.25, 1)` (acelera, desacelera e para firme, sem cauda longa nem bounce; a versão de 750 ms foi revisada, §16.8). Ejetar usa o caminho inverso (600 ms). Reduced motion leva direto à pose final.
+- **Outros cartuchos:** basta um render em escala do console (699 × 500, frontal); nenhuma coordenada é do projeto. Hoje o `midle.png` é o render frontal oficial reduzido: um segundo projeto precisa do mesmo derivado do seu render frontal aprovado.
+
+### 16.3 Comportamento
+
+| Estado    | Console                                                                                      | CRT frontal                                                                                                                                                                                         | Acessibilidade                                                                                                                            |
+| --------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| INITIAL   | Cartucho fora, acima do slot aberto (laranja). "Inserir cartucho" (primário) + "SLOT VAZIO". | Desligado, com "INSERT CARTRIDGE".                                                                                                                                                                  | Botão nativo com o nome do projeto e `aria-controls`; o console é decorativo, e o clique nele é atalho de ponteiro.                       |
+| SELECTED  | Foco ou hover na ação levanta o cartucho 3%.                                                 | —                                                                                                                                                                                                   | Não depende de hover.                                                                                                                     |
+| INSERTING | O cartucho desce (620 ms) e some atrás da frente; o botão fica com `aria-disabled`.          | "LOADING CARTRIDGE..." + barra (450 ms).                                                                                                                                                            | O foco fica no botão; `role="status"` anuncia "Carregando cartucho".                                                                      |
+| READY     | Encaixado; "Ejetar cartucho" + "MC-001 NO SLOT".                                             | **Arte oficial do SYSTEM HORIZON** (liga do centro, 280 ms) e "SYSTEM HORIZON · READY". O teaser só roda em "Reproduzir teaser" (com "Pausar teaser"); "Ejetar cartucho" fica nos controles do CRT. | Rola até o CRT; o foco vai ao estado (sem anúncio duplicado); Tab leva a Reproduzir e depois a Ejetar. Cerca de 1,1 s do clique ao READY. |
+| EJECT     | Movimento inverso até `out`.                                                                 | Desliga.                                                                                                                                                                                            | O foco volta ao Inserir; o status anuncia "Cartucho ejetado".                                                                             |
+| ERROR     | —                                                                                            | Arte estática + TEASER INDISPONÍVEL.                                                                                                                                                                | O case continua fora do vidro.                                                                                                            |
+
+- O teaser **sob demanda** resolve o risco do §13 (o payoff repetia a Hero). O visitante vê a arte oficial e escolhe reproduzir.
+- O case abaixo dos aparelhos não repete o nome nem a proposta (já estão no editorial). Fatos em 3 colunas no desktop.
+
+### 16.4 Composição
+
+- **1440 e 1024:**
+  - à esquerda, o editorial (serial, nome, descrição, NESTE CARTUCHO) e o console com o cartucho, com a ação logo abaixo;
+  - à direita, o CRT frontal, maior, apoiado na mesma linha de base;
+  - o case vem embaixo.
+- **820:** console e CRT lado a lado (4 + 4 colunas), com o editorial acima.
+- **390:** editorial → console com o cartucho (largura total, legível) → ação → CRT → case. A sequência cartucho → ação → projeto se mantém.
+- **Folga acima do cartucho encaixado:** a altura do console inclui o espaço da pose `out`, para a página não pular durante a inserção. No READY isso aparece como respiro acima do cartucho.
+- **Controle (`pad=1`): não recomendado agora.**
+  - No desktop, encosta na base do CRT e o cabo parece ligado à TV.
+  - Disputa atenção com o cartucho e aumenta a altura da seção (+160 px no desktop, +175 no mobile), sem função.
+  - Faz sentido só quando houver uma experiência jogável de verdade, como contexto dela.
+
+### 16.5 Como a montagem física se encaixa em A, B e H
+
+- **A:** o console com o cartucho substitui com vantagem o render ¾ isolado. Responde à crítica de "página de produto": o objeto passa a estar num sistema, não numa vitrine. Na prática, **A + console + CRT = H2**.
+- **B:** a biblioteca permanente ao lado do console e do CRT vira três colunas disputando a largura. Mesmo assim, a seleção de B continua útil para muitos cartuchos: escolher um cartucho na biblioteca troca o que está **fora, acima do slot**. Com um cartucho só, a biblioteca segue vazia.
+- **H:** H2 é a evolução direta de H. O INITIAL ganha o objeto num sistema, e o READY troca o CRT em CSS e a faixa do slot pelos renders oficiais (o próprio console mostra o cartucho encaixado). A biblioteca aparece só com 2 ou mais cartuchos, como seletor do cartucho fora do slot.
+
+### 16.6 Riscos e dependências
+
+1. **Peso:** no INITIAL carregam console (220 KB), cartucho (109 KB) e CRT (141 KB), cerca de 470 KB. Com `loading="lazy"` (a seção fica abaixo da dobra) e derivados menores para o mobile (640 px), o peso cai bastante. O controle não entra.
+2. **Assets públicos não usados em produção:** os WebP do protótipo ficam em `public/` e são copiados para o build (cerca de 640 KB), mas nenhuma página de produção os carrega. Se H2 não for escolhida, saem.
+3. **Novos cartuchos** precisam do derivado em escala do console (699 × 500) a partir do render frontal aprovado.
+4. **O CRT em CSS (`mc-crt-project-viewer`) deixa de ser usado no Inventory** se H2 for escolhida. O componente fica no design system; é uma decisão de direção.
+5. Os pontos pendentes de §13 continuam valendo: nome do MC-001, textos e o modelo `experiences`.
+
+### 16.7 Capturas
+
+`scratchpad/inventory/h2/`:
+
+- **Montagem:** `h2-assembly-seated-1254.png`.
+- **Sequência:** `seq-{out,aligned,partial,seated,ready}-1440.png` e a tira `seq-strip-1440.png`.
+- **Composições:** `h2-{initial,ready}-{pt,en}-{1440,390}.png` e `h2-{initial,ready}-pt-{1024,820}.png`.
+- **Com o controle:** `h2pad-*.png`.
+- **Teaser no vidro:** `h2-teaser-{1440,390}.png`.
+- **Erro:** `h2-ready-err-pt-{1440,390}.png`.
+
+### 16.8 Revisão independente do H2 (REVIEWER, 2026-10-18)
+
+**Veredito:** é a direção com a metáfora mais legível até agora, com montagem tecnicamente impecável. O REVIEWER recomenda H2 para 1 cartucho, **condicionado às decisões D1–D4** e às correções B1–B4.
+
+- **Montagem:** com os PNGs-fonte, pixel-exata (diferença de 0,01; deslocar 1 px já dá cerca de 8). Com os WebP, diferença de 2 a 5 níveis só em detalhe fino do rótulo. A junção traseira/frente não tem fresta em 1440@2x, 1024, 820, 390@3x, 375@2x e 412@2,625 (testado com fundo magenta).
+- **Perspectiva:** de `aligned` a `seated`, lê fisicamente certo; o cartucho passa à frente da parede traseira do slot e atrás do lábio frontal.
+
+**Corrigido no protótipo e conferido de novo:**
+
+| #   | Problema                                                                             | Correção                                                                         | Medição depois                                  |
+| --- | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------- | ----------------------------------------------- |
+| B1  | Ejetar levava 200 ms com hover ou foco (conflito de especificidade com o "levantar") | Estado `is-ejecting` durante a volta                                             | ~515 ms com foco no botão, em todas as larguras |
+| B2  | A TV saltava 80–93 px no READY e ao ejetar (CLS 0,021)                               | Linha da ação e controles do CRT com a altura do READY reservada desde o INITIAL | 0 px em 1440, 1024 e 390; 1 px em 820           |
+| B3  | Anúncio duplo no READY                                                               | Só o foco anuncia                                                                | —                                               |
+| B4  | Ejetar ficava antes do foco (só com Shift+Tab)                                       | Ejetar vai para os controles do CRT, depois de Reproduzir (sem duplicar)         | Ordem: estado → Reproduzir → Ejetar             |
+
+**Também corrigido:**
+
+- o hover/foco agora aproxima o cartucho do slot (antes o afastava);
+- a sombra de contato na pose `out`;
+- o encaixe ficou mais firme (620 ms, sem a cauda de ~190 ms);
+- no erro, o status diz TEASER INDISPONÍVEL (não READY);
+- rótulos simétricos ("Reproduzir teaser" / "Pausar teaser") e `aria-controls` no botão;
+- o `cursor: pointer` do console só no INITIAL;
+- o listener de mudança de reduced motion.
+
+**Decisões do Eduardo (levantadas pelo REVIEWER):**
+
+- **D1 — Qual é o MC-01 canônico.**
+  - O fundo da Hero (D-067) mostra um MC-01 preto e baixo, um CRT preto quadrado e outro controle. O H2 usa um console grafite volumoso com laterais laranja, e um CRT frontal diferente.
+  - Com H2, a página teria **dois desenhos de MC-01**.
+  - Ou um deles vira o canônico (e o outro é ajustado depois), ou a diferença é aceita.
+- **D2 — O MC-001 em escala do console é outro shell.**
+  - O `front.webp` (D-065) reduzido não coincide com o `midle.png` (diferença média de 64): mudam o entalhe do topo, as pegas, a proporção e o recorte do rótulo.
+  - É preciso decidir qual vale. Cada cartucho novo vai precisar de um render dedicado em escala do console (699 × 500, mesma pose e luz, com 66 px de base escondível).
+  - O modelo ganharia `cartridge.renders.console`.
+- **D3 — O READY repete o quadro da Hero:** o console com o SYSTEM HORIZON encaixado e o CRT com a mesma arte (e, com o controle, o mesmo trio).
+- **D4 — Sair do `mc-crt-frame`, do `mc-crt-project-viewer` e do `mc-cart` no Inventory e usar renders.** É uma decisão de design system, não só de layout (os componentes ficam no showcase).
+
+**Pendente (não bloqueante):**
+
+- No INITIAL em 1440, o CRT vazio é o maior elemento (a mesma fraqueza de B).
+- Em 820, TV e console ficam com escalas e linhas de base diferentes.
+- Há uma folga de ~70–90 px acima do cartucho encaixado.
+- Imagens sem `srcset`/`lazy` (481 KB no INITIAL) e o teaser sem `@defer`.
+- Não há fallback se as camadas do console falharem.
+- O READY acumula três "ligar" (LOADING, power-on da arte, boot do teaser).
+- A sombra da pose `out` é muito sutil com o token disponível.
+- **O controle:** descartado nesta etapa. O cabo cobria o status, abria um vão vertical e sugeria jogabilidade.
+
+**Alternativa se D1 ou D4 forem "não":** H com a inserção física do H2 só na faixa do slot, mantendo o MC-01 da Hero e o `mc-crt-frame`.

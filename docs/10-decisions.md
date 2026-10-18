@@ -884,3 +884,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Proposta:** auditoria, diagnóstico e três direções prototipadas em `docs/24`: **A — Featured Cartridge**, **B — System Library** e **H — híbrido (recomendado)**: destaque de A com 1 cartucho, sistema de B no READY (faixa do slot, teaser no CRT, case fora do vidro) e biblioteca de B com 2 ou mais cartuchos aprovados.
 - **Protótipo:** rota dev-only `/dev/inventory-lab` (nunca em produção), com dados reais do MC-001, renders oficiais, MC-CART, CRT e a tela do SYSTEM HORIZON sem modificação.
 - **Pendente:** escolha da direção; nome do MC-001 (dados: "Modo Campanha"; rótulo/brief: SYSTEM HORIZON); teaser no CRT do Inventory; textos; derivados dos renders; modelo `experiences`. Nada implementado na Home; sem merge e sem deploy.
+
+## D-076 — Project Inventory: estudo H2, inserção física do MC-CART (proposta)
+
+- **Data:** 2026-10-18
+- **Pedido do Eduardo:** testar a inserção física com os assets oficiais do MC-01 em camadas (traseira, cartucho, frente), o CRT frontal e o controle, e comparar com A, B e H antes de escolher. H não está aprovada.
+- **Estudo:** `docs/24` §16 e o protótipo dev-only `/dev/inventory-lab?dir=h2`. As camadas registram exatamente contra a referência; a frente esconde a base do cartucho sem máscara; o movimento é só `transform` (750 ms, desacelerando); o CRT frontal recebe a camada digital no vidro (arte oficial, teaser sob demanda, carregamento, fallback); o case fica fora do vidro.
+- **Assets:** fontes intactas em `design/source/mc-01/`; WebP de runtime em `public/assets/mc-01/` e `public/assets/cartridges/mc-001/console-scale.webp`, ainda sem uso em produção.
+- **Status:** aguardando a escolha visual do Eduardo; nada na Home; sem merge e sem deploy.
