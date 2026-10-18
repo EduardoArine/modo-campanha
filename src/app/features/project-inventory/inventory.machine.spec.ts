@@ -111,3 +111,12 @@ describe('inventory machine — indicators', () => {
     expect([view.slot, view.slotLed, view.screenLed]).toEqual(['inserted', 'on', 'fault']);
   });
 });
+
+describe('inventory machine — READY art failure', () => {
+  it('shows the title when the art fails and still allows the teaser', () => {
+    const failed = run([{ type: 'insert', reduced: true }, { type: 'art-failed' }]);
+    expect(failed).toMatchObject({ kind: 'ready', screen: 'art-unavailable' });
+    expect(inventoryView(failed).slot).toBe('inserted');
+    expect(run([{ type: 'play' }], failed)).toMatchObject({ screen: 'teaser' });
+  });
+});

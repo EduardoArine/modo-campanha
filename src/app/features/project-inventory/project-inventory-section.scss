@@ -73,26 +73,15 @@ ul {
   }
 }
 
-// A linha da ação reserva a altura do botão (no READY ele sai e nada salta). A partir do tablet,
-// a mesma altura dos controles do CRT: console e TV dividem a mesma linha de base.
-// Mobile: botão e estado empilhados, com a altura dos dois reservada (o texto do slot muda de
-// tamanho entre os estados sem quebrar linha nem empurrar a página).
+// Estado do slot em cima e ação embaixo, com a altura dos dois reservada em todas as larguras: o
+// texto do slot não muda de lugar entre os estados e nada empurra a página. Mesma altura dos
+// controles do CRT: console e TV dividem a mesma linha de base.
 .action {
   min-height: calc(#{space(8)} + #{space(3)});
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: space(3) space(4);
-
-  @include mq(md) {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-
-  @include mq(xl) {
-    min-height: space(8);
-  }
+  gap: space(3);
 }
 
 .tv-area {
@@ -110,18 +99,14 @@ ul {
   }
 }
 
-// Controles do CRT: altura do READY reservada desde o INITIAL (2 linhas < 1200, 1 linha acima).
+// Controles do CRT: o mesmo padrão do console (estado em cima, ações embaixo), alinhados com ele;
+// altura do READY reservada desde o INITIAL.
 .tv-controls {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
   gap: space(3);
   min-height: calc(#{space(8)} + #{space(3)});
-
-  @include mq(xl) {
-    min-height: space(8);
-  }
 }
 
 .tv-actions {

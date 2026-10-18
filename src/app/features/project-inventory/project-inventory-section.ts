@@ -171,6 +171,23 @@ export class ProjectInventorySection {
     this.dispatch({ type: 'assets-failed' });
   }
 
+  protected artFailed(): void {
+    this.dispatch({ type: 'art-failed' });
+  }
+
+  /** Foco no Inserir: intenção de inserir; por teclado, traz o console inteiro à vista (A3). */
+  protected onInsertFocus(event: FocusEvent): void {
+    this.lifted.set(true);
+    const button = event.target as HTMLElement;
+    if (!button.matches(':focus-visible')) return;
+    const area = button.closest('.console-area');
+    const header =
+      this.window?.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ?? 0;
+    if (area && area.getBoundingClientRect().top < header) {
+      area.scrollIntoView({ block: 'end', behavior: this.reducedMotion() ? 'auto' : 'smooth' });
+    }
+  }
+
   /** Aplica a transição e os efeitos de foco, rolagem e anúncio do novo estado. */
   private dispatch(event: InventoryEvent): void {
     const before = this.state();
@@ -198,9 +215,15 @@ export class ProjectInventorySection {
         this.byId('inventory-status')?.focus({ preventScroll: true });
       });
     }
-    // Ejetado: o foco volta ao "Inserir cartucho" (e a página o traz à vista se preciso).
-    if (after.kind === 'empty' && after.ejected)
+    // Ejetar: o "Inserir cartucho" volta na hora (bloqueado durante a volta) e recebe o foco (A2).
+    const ejectedNow = after.kind === 'empty' && after.ejected && before.kind !== 'ejecting';
+    if (after.kind === 'ejecting' || ejectedNow) {
       this.afterRender(() => this.byId('inventory-insert')?.focus());
+    }
+    // Teaser falhou: o botão Reproduzir sai; o foco vai ao estado da tela, que diz a falha (A1).
+    if (after.kind === 'ready' && after.screen === 'teaser-unavailable') {
+      this.afterRender(() => this.byId('inventory-status')?.focus({ preventScroll: true }));
+    }
   }
 
   private afterRender(fn: () => void): void {

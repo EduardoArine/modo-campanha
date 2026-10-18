@@ -8,7 +8,7 @@
  * Qualquer estado ──assets-failed──▶ unavailable (fallback: case acessível sem o MC-01).
  * Com reduced motion, `insert` vai direto a ready e `eject` direto a empty.
  */
-export type InventoryScreen = 'art' | 'teaser' | 'teaser-unavailable';
+export type InventoryScreen = 'art' | 'art-unavailable' | 'teaser' | 'teaser-unavailable';
 
 export type InventoryState =
   | { readonly kind: 'empty'; readonly cartridge: string; readonly ejected?: true }
@@ -24,6 +24,7 @@ export type InventoryEvent =
   | { readonly type: 'loaded' }
   | { readonly type: 'play' }
   | { readonly type: 'teaser-failed' }
+  | { readonly type: 'art-failed' }
   | { readonly type: 'eject'; readonly reduced: boolean }
   | { readonly type: 'ejected' }
   | { readonly type: 'select'; readonly cartridge: string; readonly reduced: boolean }
@@ -51,7 +52,12 @@ export function nextInventoryState(state: InventoryState, event: InventoryEvent)
     case 'loading':
       return event.type === 'loaded' ? { kind: 'ready', cartridge, screen: 'art' } : state;
     case 'ready':
-      if (event.type === 'play' && state.screen === 'art') return { ...state, screen: 'teaser' };
+      // A arte é o padrão; se ela falhar, a tela mostra o nome e o teaser continua possível.
+      if (event.type === 'art-failed' && state.screen === 'art')
+        return { ...state, screen: 'art-unavailable' };
+      if (event.type === 'play' && (state.screen === 'art' || state.screen === 'art-unavailable')) {
+        return { ...state, screen: 'teaser' };
+      }
       if (event.type === 'teaser-failed') return { ...state, screen: 'teaser-unavailable' };
       if (event.type === 'eject') return eject(state, cartridge, event.reduced);
       // Trocar de cartucho no READY: ejeta o atual e deixa o escolhido fora do slot (D-058 §3).

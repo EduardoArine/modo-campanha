@@ -75,6 +75,10 @@
             (pointerleave)="lifted.set(false)"
           />
           <div class="action">
+            <p class="slot-status">
+              <span class="led" [attr.data-led]="v.slotLed" aria-hidden="true"></span
+              >{{ slotText() }}
+            </p>
             @if (v.insert !== 'hidden') {
               <button
                 mcAction="primary"
@@ -86,16 +90,12 @@
                 (click)="v.insert === 'enabled' && insert()"
                 (pointerenter)="lifted.set(true)"
                 (pointerleave)="lifted.set(false)"
-                (focus)="lifted.set(true)"
+                (focus)="onInsertFocus($event)"
                 (blur)="lifted.set(false)"
               >
                 {{ ui().inventory.insert }} <mc-icon name="arrow-down" />
               </button>
             }
-            <p class="slot-status">
-              <span class="led" [attr.data-led]="v.slotLed" aria-hidden="true"></span
-              >{{ slotText() }}
-            </p>
           </div>
         </div>
 
@@ -120,6 +120,10 @@
                 <p class="glass-system">{{ ui().crt.loading }}</p>
                 <span class="glass-bar" aria-hidden="true"></span>
               }
+              @case ('art-unavailable') {
+                <!-- A arte não carregou: o nome do cartucho no vidro (o teaser continua possível). -->
+                <p class="glass-caption">{{ title }}</p>
+              }
               @case ('teaser') {
                 <div class="glass-fill">
                   @if (teaserScreen(); as screen) {
@@ -139,6 +143,7 @@
                     [height]="art.height"
                     alt=""
                     decoding="async"
+                    (error)="artFailed()"
                   />
                 }
                 @if (v.screen === 'teaser-unavailable') {

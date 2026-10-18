@@ -47,9 +47,10 @@ export interface CartridgeRenders {
   front: CartridgeImage;
   threeQuarter?: CartridgeImage;
   /**
-   * Variante técnica para a inserção física no MC-01 (D-077): o mesmo MC-CART, frontal, na escala e
-   * no enquadramento do console (699 × 500; a base de 66 px fica atrás da frente). Não substitui a
-   * identidade canônica (`front`). Sem ela, o projeto não entra no console (fallback).
+   * Render para a inserção física no MC-01 (D-077): frontal, na escala do console (699 × 500; a base
+   * de 66 px fica atrás da frente). No MC-001 é uma variante de SHELL (mesmo rótulo e paleta; topo
+   * escalonado, pegas e janela do rótulo diferentes do `front`): conflito de identidade em aberto,
+   * decisão do Eduardo (docs/24 §17.4). Não substitui o `front` canônico. Sem ela: fallback.
    */
   console?: CartridgeImage;
 }
