@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { McStatus } from '../ui';
 import { McCart } from './cart/cart';
 import { McCrtFrame } from './crt-frame/crt-frame';
 import { McCrtProjectViewer } from './crt-project-viewer/crt-project-viewer';
@@ -9,16 +8,9 @@ import { McPlayerCard } from './player-card/player-card';
 import { McProjectSummary } from './project-summary/project-summary';
 
 @Component({
-  imports: [McCart, McCrtFrame, McCrtProjectViewer, McPlayerCard, McProjectSummary, McStatus],
+  imports: [McCart, McCrtFrame, McCrtProjectViewer, McPlayerCard, McProjectSummary],
   template: `
-    <mc-player-card
-      id="placeholder"
-      name="Eduardo Arine"
-      [fields]="[{ label: 'CLASS', value: 'Desenvolvedor de Produtos Digitais' }]"
-      statusLabel="STATUS"
-    >
-      <mc-status state="active">ACTIVE</mc-status>
-    </mc-player-card>
+    <mc-player-card id="placeholder" name="Eduardo Arine" [badge]="{ label: 'XP', value: '10+' }" />
     <mc-player-card id="photo" name="Eduardo Arine" [photo]="{ src: 'x.jpg', alt: 'Foto real' }" />
 
     <mc-cart serial="ON-001" title="Projeto" type="PLATAFORMA" shell="light" />
@@ -56,17 +48,22 @@ describe('MC signature components', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('renders the player card as a labelled article with a definition list', () => {
+  it('renders the player card as a labelled article; badge and bar are decorative (D-082)', () => {
     const card = render().querySelector('#placeholder')!;
     const article = card.querySelector('article')!;
     const nameId = article.getAttribute('aria-labelledby')!;
 
     expect(card.querySelector(`#${nameId}`)?.textContent).toBe('Eduardo Arine');
-    expect(card.querySelectorAll('dl dt').length).toBe(2);
-    expect(card.querySelector('dd mc-status')?.textContent?.trim()).toBe('ACTIVE');
+    expect(card.querySelector('.player')?.textContent).toBe('PLAYER 01');
     expect(card.querySelector('.placeholder')?.textContent).toBe('FOTO DO EDUARDO');
     expect(card.querySelector('img')).toBeNull();
-    expect(card.querySelectorAll('.bracket[aria-hidden="true"]').length).toBe(4);
+    expect(card.querySelector('.badge')?.getAttribute('aria-hidden')).toBe('true');
+    expect(Array.from(card.querySelectorAll('.badge > span'), (s) => s.textContent)).toEqual([
+      'XP',
+      '10+',
+    ]);
+    expect(card.querySelector('.bar')?.getAttribute('aria-hidden')).toBe('true');
+    expect(card.querySelector('.capsule')?.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('uses the real photo with its alt text when provided', () => {

@@ -17,7 +17,7 @@
 | 8   | Buttons / Actions        | ✅ Implementado (D-027): `mcAction` primary/secondary/text     |
 | 9   | Labels / Chips           | ✅ Implementado (D-027): `mc-chip` warm/cool                   |
 | 10  | Status                   | ✅ Implementado (D-027): `mc-status` active/in-progress        |
-| 11  | Player Card              | ✅ Aprovado (D-031)                                            |
+| 11  | Player Card              | ✅ Aprovado (D-031); redesenhado em D-082, aguardando aprovação visual |
 | 12  | MC-CART                  | ✅ Aprovado, incluindo construção física 4.2 (D-032, D-034)    |
 | 13  | CRT                      | ✅ Aprovado, incluindo refinamento físico e `--mc-radius-glass` (D-033) |
 | 14  | XP                       | ⏸ regras conceituais em D-021; Campaign XP exige regras reais  |
@@ -177,6 +177,7 @@ Fluida entre viewport 360 px e 1200 px (`clamp()` em `rem`). Custom property: `-
 | Papel             | Família | Mobile → Desktop | Line-height | Tracking  | Peso | Caixa | Aplicação                                         |
 | ----------------- | ------- | ---------------- | ----------- | --------- | ---- | ----- | ------------------------------------------------- |
 | `display-hero`    | Pixelify | 48 → 96 px      | 0.95        | 0         | **500 → 700 (md)** | UPPER | Só "MODO CAMPANHA" (único uso validado; 700 só a partir de 768 px, ~71 px+) |
+| `display-player`  | Pixelify | 22 → 26 px      | 1.1         | 0.04em    | 700  | UPPER | Só o nome do jogador no Player Card e o valor do selo ("EDUARDO ARINE", "10+"; validados no tamanho real, D-082). Nunca em textos com "C"/"c" |
 | `section-title`   | Plex    | 24 → 32 px       | 1.15        | 0.06em    | 600  | UPPER | PLAYER STATUS, PROJECT INVENTORY, CURRENT MAIN QUEST |
 | `cart-title`      | Plex    | 14 → 16 px       | 1.15        | 0.04em    | 600  | UPPER | Nome do projeto no rótulo do MC-CART              |
 | `system`          | Plex    | 14 px            | 1.3         | 0.08em    | 500  | UPPER | MC-01, MC-CART, ON-001 em tamanho pequeno         |
@@ -397,6 +398,7 @@ Duas famílias, sem biblioteca:
 
 | Família           | Ícones                                     | Estilo                                                                                   |
 | ----------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Pixel icons (D-082) | `player`, `gamepad`, `xp`, `flag`, `target`, `gear`, `book`, `bars`, `glyph` | pixel art em grade de 12, sempre a 24 px (2 px por pixel), preenchidos, `crispEdges`. Uso: Player Status. |
 | MC system icons   | `arrow-down`, `external`, `document`, `language`, `pause`, `play` | desenhados para o Modo Campanha: grade 16 px, traço 1.5, pontas retas, só 0/45/90° (curvas viram chanfros). Técnico, levemente pixel, sem cara de sprite. |
 | Brand icons       | `github`, `linkedin`                       | marcas oficiais monocromáticas (GitHub Octicons "mark-github", MIT; LinkedIn via Simple Icons, CC0). **Sem pixelização.** |
 
@@ -550,41 +552,38 @@ Aliases semânticos de cores **já existentes** na paleta D-014 (nenhum HEX novo
 
 Os quatro pares tinta/material entraram nos contratos de contraste.
 
-### 14. Player Card (`mc-player-card`, D-031)
+### 14. Player Card (`mc-player-card`, D-031 → D-082)
 
-Perfil profissional lido pela linguagem de um sistema de videogame. **Não é carta de RPG.** Base: Concept 03-A.
+Perfil profissional lido pela linguagem de um sistema de videogame. **Não é carta de RPG.** Desde D-082 segue o mockup aprovado do Player Status: a foto real é o elemento principal.
 
 Anatomia:
 
 ```
-┌╴                         ╶┐  ← cantos de mira (2 px, border-accent) — exclusivos do Player Card
-  PLAYER 01                     ← label (dicionário)
-  ┌───────────────────────┐
-  │   FOTO DO EDUARDO     │     ← foto real 4:3 (object-position topo) ou placeholder explícito
-  └───────────────────────┘
-  EDUARDO ARINE                 ← title-m, caixa alta (id → aria-labelledby do <article>)
-  CLASS                         ← <dl>: dt label / dd body-s
-  Desenvolvedor de Produtos Digitais
-  XP
-  10+ anos em tecnologia
-  STATUS
-  ● ACTIVE                      ← <mc-status> projetado
-└╴                         ╶┘
+┌───────────────────────────┐  ← moldura 1 px --mc-border-accent, fundo --mc-bg, sem raio
+│ ┌───────────────────────┐ │
+│ │ ◖        FOTO   ┌XP──┐│ │  ← foto real (object-fit, boné inteiro); cápsula e selo decorativos
+│ │                 │10+ ││ │     selo = dado real em forma curta (nunca LV)
+│ └───────────────────────┘ │
+│ ┌───────────────────────┐ │
+│ │ EDUARDO ARINE          │ │  ← display-player (Pixelify, validado), id → aria-labelledby
+│ │ PLAYER 01   ▮▮▮▮▮▮▮▮▮▯▯│ │  ← system; barra segmentada decorativa (sem valor)
+│ └───────────────────────┘ │
+└───────────────────────────┘
 ```
 
 API:
 
-| Input         | Tipo                         | Uso                                                              |
-| ------------- | ---------------------------- | ---------------------------------------------------------------- |
-| `name`        | `string` (obrigatório)       | nome                                                             |
-| `fields`      | `{ label; value }[]`         | linhas reais (CLASS, XP...), já traduzidas                        |
-| `photo`       | `{ src; alt }`               | foto real aprovada; ausente = placeholder "FOTO DO EDUARDO"       |
-| `statusLabel` | `string`                     | label da linha de status; valor = `<mc-status>` projetado        |
+| Input    | Tipo                                         | Uso                                                                 |
+| -------- | -------------------------------------------- | ------------------------------------------------------------------- |
+| `name`   | `string` (obrigatório)                       | nome                                                                |
+| `photo`  | `{ src; srcset?; width?; height?; alt }`     | foto real aprovada; ausente = placeholder "FOTO DO EDUARDO"         |
+| `sizes`  | `string`                                     | largura exibida da foto por faixa (vale com `srcset`)              |
+| `badge`  | `{ label; value }`                           | selo do canto: dado real em forma curta (ex.: XP 10+), decorativo   |
 
-- UI digital: `--mc-panel`, moldura `--mc-border-subtle`, cantos de mira `--mc-border-accent` (decorativos). **Sem sombra.** (Ajuste de execução: a cor de acento ficou só nos cantos; a moldura sutil reproduz melhor o 03-A.)
-- Semântica: `<article aria-labelledby>` + `<dl>`; foto real com `alt` traduzido; placeholder e cantos `aria-hidden`.
-- **Proibido:** LV, HP, MP, STR, INT, barras de atributos, estrelas, rankings, qualquer métrica não real.
-- Largura definida pelo layout (4/12 no desktop, 4/8 no tablet, total no mobile). Sem versão compacta: não houve necessidade real.
+- UI digital: **sem sombra**, cantos retos (`--mc-radius-none`). A moldura laranja é decorativa (nunca indicador de estado). Os cantos de mira saíram em D-082 (não estão no mockup).
+- Semântica: `<article aria-labelledby>`; foto real com `alt` traduzido; cápsula, selo, barra e placeholder `aria-hidden`.
+- **Proibido:** LV, HP, MP, STR, INT, barras de atributos com valor, estrelas, rankings, qualquer métrica não real. A barra segmentada é metáfora visual sem número.
+- Largura definida pelo layout do Player Status (1ª de 4 áreas no desktop, metade no tablet, total no mobile); a foto cresce com a linha da grade.
 
 ### 15. MC-CART (`mc-cart`, D-032)
 

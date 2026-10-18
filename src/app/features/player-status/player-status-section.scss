@@ -1,6 +1,7 @@
-// Player Status (docs/12-home-slice-01.md, §10; D-038). 03-A: aberto, poucas caixas.
-// Desktop: Player Card 1–4 + dados 6–12 (coluna 5 vazia como respiro; o grid não obriga simetria).
-// Tablet: card 1–3 + dados 4–8. Mobile: empilhado, card primeiro.
+// Player Status (D-082): painel único do mockup aprovado. Esta folha: painel, cabeçalho e grade.
+// As caixas internas estão em player-status-panels.scss (orçamento de CSS por folha, D-035).
+// Desktop (≥ 1200): quatro áreas na proporção do mockup (461 / 519 / 597 / 435). Tablet e
+// desktop compacto: 2 × 2 (card + dados, jornada + estado). Mobile: empilhado, nesta ordem.
 @use 'mc' as *;
 
 :host {
@@ -11,60 +12,108 @@
   padding-block: var(--mc-space-section);
 }
 
-.layout {
-  @include columns;
-  row-gap: space(7);
-  margin-top: var(--mc-space-section-head);
+.panel {
+  padding: space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-none);
+  background: var(--mc-surface);
 }
 
-.card {
-  grid-column: 1 / -1;
-  max-width: 24rem;
-
-  @include mq(md) {
-    grid-column: 1 / 4;
-    max-width: none;
-  }
-
-  @include mq(lg) {
-    grid-column: 1 / 5;
-  }
-}
-
-// Dados abertos: separados por linhas e espaço, não por caixas.
-.facts {
-  grid-column: 1 / -1;
-  display: grid;
-  align-content: start;
-  margin: 0;
-
-  @include mq(md) {
-    grid-column: 4 / -1;
-  }
-
-  @include mq(lg) {
-    grid-column: 6 / -1;
-  }
-}
-
-.fact {
-  display: grid;
-  gap: space(2);
-  padding-block: space(5);
+// Cabeçalho: emblema, título e subtítulo à esquerda; barra de sistema à direita (quebra no mobile).
+.head {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(3) space(4);
+  padding-bottom: space(4);
+  margin-bottom: space(4);
   border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
 
-  &:first-child {
-    padding-top: 0;
+  // Textura de pontos à esquerda da barra de sistema (só com espaço: desktop).
+  @include mq(xl) {
+    &::after {
+      content: '';
+      position: absolute;
+      top: space(2);
+      right: 26rem;
+      width: 10rem;
+      height: space(7);
+      background: radial-gradient(var(--mc-border-subtle) 1px, transparent 1.5px) 0 0 / 6px 6px;
+      pointer-events: none;
+    }
+  }
+}
+
+.emblem {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+  background: var(--mc-accent);
+  color: var(--mc-text-on-accent);
+}
+
+// Base 0: o subtítulo quebra dentro do bloco, sem empurrar o título para baixo do emblema.
+.titles {
+  flex: 1 1 0;
+  min-width: 12rem;
+}
+
+.title,
+.subtitle {
+  margin: 0;
+}
+
+.title {
+  @include type(section-title);
+  color: var(--mc-text);
+}
+
+.subtitle {
+  margin-top: space(1);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+// Barra de sistema (MC-01 | MODO CAMPANHA | ● ONLINE): sem versão, o projeto não tem release.
+.system {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: space(2) 0;
+  list-style: none;
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-bg);
+  @include type(system);
+  color: var(--mc-text-secondary);
+
+  li {
+    padding-inline: space(2);
+
+    @include mq(md) {
+      padding-inline: space(4);
+    }
+
+    & + li {
+      border-left: var(--mc-border-width-default) solid var(--mc-border-subtle);
+    }
+  }
+}
+
+.body {
+  display: grid;
+  gap: space(4);
+
+  @include mq(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  dt {
-    @include type(label);
-    color: var(--mc-text-muted);
-  }
-
-  dd {
-    margin: 0;
-    @include type(title-l);
-    color: var(--mc-text);
+  @include mq(xl) {
+    grid-template-columns: minmax(0, 461fr) minmax(0, 519fr) minmax(0, 597fr) minmax(0, 435fr);
   }
 }

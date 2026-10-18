@@ -1007,3 +1007,45 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - Página inteira idêntica fora do vidro do Inventory; Lighthouse inalterado.
   - Registro pré-existente, fora do escopo: com a arte indisponível, "Reproduzir teaser" não responde (`toggleTeaser` só age a partir de `art`).
 - **Status:** **APPROVED / consolidado** na branch `feat/hero-refinement`; sem merge e sem deploy.
+
+## D-082 — Player Status definitivo (mockup aprovado) e foto real
+
+- **Data:** 2026-10-18
+- **Pedido do Eduardo:** substituir o Player Status pelo mockup visual aprovado ("Painel de Status do Jogador"), com a fotografia oficial no lugar do placeholder. Fidelidade alta, sem novo concept. Tudo em HTML/Angular/SCSS, com textos acessíveis. Escopo restrito ao Player Status.
+- **Implementação:** um painel único.
+  - **Cabeçalho:** emblema pixel, PLAYER STATUS, PERFIL DO JOGADOR // DADOS DA CAMPANHA ATUAL e a barra de sistema MC-01 | MODO CAMPANHA | ● ONLINE.
+  - **Quatro áreas:** Player Card com a foto real; dados do jogador; Sobre a jornada; Estado atual com a frase final.
+  - **Grade responsiva:**
+    - ≥ 1200 px: proporção do mockup, 461 / 519 / 597 / 435;
+    - 768–1199 px: 2 × 2 (card + dados, jornada + estado);
+    - < 768 px: empilhado, na ordem pedida.
+  - **Conteúdo:** em `PlayerProfile` (`journey`, `tagline`, `currentState`, `quote`, `photo`, `status.xp.short`); rótulos no dicionário (`ui.playerStatus`).
+  - **Ícones pixel:** 9 ícones novos no `mc-icon` (estilo `pixel`, grade de 12, sempre a 24 px).
+  - **Montanhas em pixel:** geradas em `player-status.art.ts` e agrupadas em poucos `<path>`.
+  - **Removido:** o `status.state` (ATIVO), que saiu do card.
+- **Foto:**
+  - **Fonte intacta:** `design/source/player/eduardo-arine.png` (1254 × 1254, 1,96 MB), sem regeneração nem filtro.
+  - **Derivados WebP:** `public/assets/player/eduardo-arine-{400,640,960}.webp` = 18 / 35 / 64 KB.
+  - **Exibição:** `sizes` igual à largura real exibida (1440: 236 px → 400 em 1×, 640 em 2×; 390 @ 3× → 960); `loading="lazy"`, largura e altura declaradas.
+  - **Recorte:** só `object-fit` (boné inteiro, posição 50% 12%).
+- **Adaptações ao design system (mínimas, registradas):**
+  1. **"LV 99" → selo "XP 10+":** LV é proibido (D-017, D-031) e o projeto não tem regra de progressão. O selo mantém a forma e a posição do mockup e mostra o XP real, em forma curta e decorativo (`aria-hidden`), porque o dado já aparece em texto.
+  2. **Barra segmentada:** metáfora visual, sem valor (13 segmentos, 11 acesos, `aria-hidden`), como pedido.
+  3. **Pixelify Sans só no nome "EDUARDO ARINE":** o novo papel `display-player` foi validado no tamanho real. O "C" e o "c" da Pixelify leem como "O" e "o" em "CURRENT CAMPAIGN", "FOCUS", "CONSTRUINDO" e "Tecnologia" (D-029). Títulos, rótulos, lema e frase ficam em IBM Plex Sans; PLAYER STATUS segue o `section-title`, como as outras seções. Os rótulos monoespaçados do mockup viraram o estilo `system` (sem terceira família).
+  4. **ONLINE na barra de sistema:** o card não tem mais a linha STATUS, então o status aparece uma única vez, como estado do sistema MC-01, e não como status profissional. Isso substitui o posicionamento da D-039 neste layout.
+  5. **Versão omitida:** o `package.json` está em 0.0.0, sem release; nenhuma versão foi inventada (o mockup tinha "v1.0.0").
+  6. **Alien do mockup → glifo de sistema (quatro quadrados) em pixel**, porque alien e space invader são proibidos.
+  7. **Player Card sem cantos de mira:** o mockup não tem cantos de mira. A moldura laranja fina (`--mc-border-accent`) e a placa com o nome substituem o desenho anterior.
+  8. **Cantos retos:** pela escala de raios, painéis e Player Card usam 0; 4 px só na barra de sistema, que funciona como chip. O mockup tem cantos arredondados.
+  9. **Caixas internas:** são exceção deliberada ao princípio "espaço e linhas antes de caixas", porque são a estrutura do mockup aprovado.
+  10. **Cores:** só tokens existentes. Verde `--mc-status-online` e turquesa `--mc-cool`, mais sóbrios que o verde e o ciano saturados do mockup. Bordas internas em `--mc-border-subtle`.
+  11. **Texto a 14 px:** no mockup é ~12 px. Para legibilidade, o painel tem 1200 × 490 em 1440 (proporção 2,45 : 1, contra ~3 : 1 no mockup), e duas linhas quebram ("Como profissional e pessoa", e "IA aplicada…" em algumas larguras).
+  12. **Rótulos em pt:** ORIGEM / CAMPANHA ATUAL / FOCO, os já aprovados. O mockup mostrava os termos em inglês; no en são ORIGIN / CURRENT CAMPAIGN / FOCUS.
+- **Conteúdo:** "Sobre a jornada", o lema, os estados e a frase são os textos aprovados pelo Eduardo. **As traduções en desses textos novos foram escritas nesta etapa e aguardam revisão.** Grafia pública "Comunidade ON".
+- **Validação:**
+  - **Testes e builds:** 174 testes; tsc; builds de produção, GitHub Pages e dev; Prettier.
+  - **axe (WCAG 2.2 AA):** 0 violações em 4 larguras, pt e en. O contraste vem dos pares do contrato, verificados no build.
+  - **Layout:** sem rolagem horizontal; CLS 0.
+  - **Lighthouse local, HTTP/1.1 sem compressão:** mobile 82 → 79 (+14 KB de JS sem compressão); desktop 99.
+  - **Lighthouse em HTTP/2 + gzip (como o GitHub Pages):** mobile 97 → 98, desktop 100 → 100.
+- **Status:** implementado na branch `feat/hero-refinement`, **aguardando aprovação visual do Eduardo**. Sem merge e sem deploy.

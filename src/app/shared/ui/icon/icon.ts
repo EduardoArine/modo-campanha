@@ -41,6 +41,10 @@ import { MC_ICONS, McIconDefinition, McIconName, McIconSize } from './icons';
     :host(.mc-icon--fill) path {
       fill: currentColor;
     }
+    :host(.mc-icon--pixel) path {
+      fill: currentColor;
+      shape-rendering: crispEdges;
+    }
   `,
   host: {
     '[class]': '"mc-icon mc-icon--" + definition().style',

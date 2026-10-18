@@ -51,6 +51,19 @@ $type-roles: (
         ),
       case: uppercase,
     ),
+  // Nome do jogador no Player Card (D-082). Uso validado no tamanho real: "EDUARDO ARINE" (nome
+  // próprio, sem "C", igual nos dois idiomas). Não usar para outros textos.
+  display-player: (
+      family: display,
+      size: (
+        22px,
+        26px,
+      ),
+      line-height: 1.1,
+      tracking: 0.04em,
+      weight: 700,
+      case: uppercase,
+    ),
   // IBM Plex Sans
   // Títulos de seção: linguagem de game via caixa alta, peso, tracking e composição do header.
   section-title: (

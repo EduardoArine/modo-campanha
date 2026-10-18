@@ -5,6 +5,7 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import { PlayerStatusSection } from './player-status-section';
 
+// Player Status definitivo (D-082): painel do mockup aprovado, conteúdo real nos dois idiomas.
 describe('PlayerStatusSection', () => {
   async function renderAt(url: string): Promise<HTMLElement> {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
@@ -18,46 +19,87 @@ describe('PlayerStatusSection', () => {
   const texts = (root: Element, selector: string) =>
     Array.from(root.querySelectorAll(selector)).map((el) => el.textContent?.trim());
 
-  it('renders the Player Card with approved fields and status only inside the card', async () => {
+  it('renders the header with the section title and the system bar (no invented version)', async () => {
     const el = await renderAt('/');
-    const card = el.querySelector('mc-player-card')!;
 
-    expect(card.querySelector('.name')?.textContent).toBe('Eduardo Arine');
-    expect(texts(card, 'dt')).toEqual(['CLASS', 'XP', 'STATUS']);
-    expect(texts(card, 'dd')).toEqual([
-      'Desenvolvedor de Produtos Digitais',
-      '10+ anos em tecnologia',
-      'ATIVO',
-    ]);
-    expect(card.querySelector('.placeholder')?.textContent).toBe('FOTO DO EDUARDO');
-    expect(el.querySelector('mc-section-header mc-status')).toBeNull();
+    expect(el.querySelector('h2#player-status-title')?.textContent?.trim()).toBe('PLAYER STATUS');
+    expect(el.querySelector('.subtitle')?.textContent?.trim()).toBe(
+      'PERFIL DO JOGADOR // DADOS DA CAMPANHA ATUAL',
+    );
+    expect(texts(el, '.system > li')).toEqual(['MC-01', 'MODO CAMPANHA', 'ONLINE']);
+    expect(el.querySelector('.system')?.textContent).not.toMatch(/v\d/);
   });
 
-  it('renders the complementary facts as an open list (pt-BR)', async () => {
+  it('renders the Player Card with the real photo, PLAYER 01 and the real XP badge (no LV)', async () => {
+    const el = await renderAt('/');
+    const card = el.querySelector('mc-player-card')!;
+    const img = card.querySelector('img')!;
+
+    expect(card.querySelector('.name')?.textContent).toBe('Eduardo Arine');
+    expect(card.querySelector('.player')?.textContent).toBe('PLAYER 01');
+    expect(img.getAttribute('src')).toBe('assets/player/eduardo-arine-640.webp');
+    expect(img.getAttribute('srcset')).toContain('eduardo-arine-960.webp 960w');
+    expect(img.getAttribute('alt')).toMatch(/^Eduardo Arine, de boné turquesa/);
+    expect(card.querySelector('.placeholder')).toBeNull();
+    expect(texts(card, '.badge > span')).toEqual(['XP', '10+']);
+    expect(card.querySelector('.badge')?.getAttribute('aria-hidden')).toBe('true');
+    expect(card.querySelector('.bar')?.getAttribute('aria-hidden')).toBe('true');
+    expect(el.textContent).not.toMatch(/\bLV\b|\b99\b/);
+  });
+
+  it('renders the player facts with the public spelling "Comunidade ON" (pt-BR)', async () => {
     const el = await renderAt('/');
     const facts = el.querySelector('.facts')!;
 
     expect(facts.tagName).toBe('DL');
-    expect(texts(facts, 'dt')).toEqual(['ORIGEM', 'CAMPANHA ATUAL', 'FOCO']);
+    expect(texts(facts, 'dt')).toEqual(['ORIGEM', 'XP', 'CAMPANHA ATUAL', 'FOCO']);
     expect(texts(facts, 'dd')).toEqual([
       'Tecnologia em Jogos Digitais',
-      'Comunidade On',
+      '10+ anos em tecnologia',
+      'Comunidade ON',
       'IA aplicada ao desenvolvimento',
     ]);
   });
 
-  it('renders the en version and no unapproved journey block', async () => {
+  it('renders the journey, the current state and the closing quote as real text', async () => {
+    const el = await renderAt('/');
+
+    expect(texts(el, '.box-title')).toEqual(['SOBRE A JORNADA', 'ESTADO ATUAL']);
+    expect(texts(el, '.journey .text')).toHaveLength(2);
+    expect(el.querySelector('.journey .text')?.textContent).toMatch(
+      /^Sou desenvolvedor de produtos digitais com mais de 10 anos/,
+    );
+    expect(el.querySelector('.tagline')?.textContent?.trim()).toBe(
+      'Tecnologia para pessoas reais.',
+    );
+    expect(texts(el, '.states dt')).toEqual(['CONSTRUINDO', 'APRENDENDO', 'EVOLUINDO']);
+    expect(texts(el, '.states dd')).toEqual([
+      'Soluções com impacto',
+      'Todos os dias',
+      'Como profissional e pessoa',
+    ]);
+    expect(el.querySelector('.quote q')?.textContent).toBe('MESMA ESSÊNCIA, NOVOS NÍVEIS.');
+    expect(el.querySelector('.journey .mountains')?.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('renders the English version', async () => {
     const el = await renderAt('/en');
 
+    expect(el.querySelector('.subtitle')?.textContent?.trim()).toBe(
+      'PLAYER PROFILE // CURRENT CAMPAIGN DATA',
+    );
     expect(texts(el.querySelector('.facts')!, 'dt')).toEqual([
       'ORIGIN',
+      'XP',
       'CURRENT CAMPAIGN',
       'FOCUS',
     ]);
-    expect(texts(el.querySelector('.facts')!, 'dd')).toContain(
-      'AI applied to software development',
+    expect(texts(el, '.box-title')).toEqual(['ABOUT THE JOURNEY', 'CURRENT STATE']);
+    expect(el.querySelector('.tagline')?.textContent?.trim()).toBe('Technology for real people.');
+    expect(texts(el, '.states dt')).toEqual(['BUILDING', 'LEARNING', 'EVOLVING']);
+    expect(el.querySelector('.quote q')?.textContent).toBe('SAME ESSENCE, NEW LEVELS.');
+    expect(el.querySelector('mc-player-card img')?.getAttribute('alt')).toMatch(
+      /^Eduardo Arine in a turquoise cap/,
     );
-    expect(el.querySelector('mc-player-card mc-status')?.textContent?.trim()).toBe('ACTIVE');
-    expect(el.textContent).not.toMatch(/Sobre a jornada|About the journey/);
   });
 });

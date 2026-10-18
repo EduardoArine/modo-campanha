@@ -48,14 +48,11 @@ export class DesignSystemPage {
   protected readonly ui = this.locale.ui;
   protected readonly profileName = PLAYER_PROFILE.name;
 
-  // Player Card: valores reais já aprovados (cargo, XP profissional), via dicionário.
-  protected readonly playerFields = computed(() => [
-    { label: this.ui().playerCard.classLabel, value: this.locale.pick(PLAYER_PROFILE.role) },
-    {
-      label: this.ui().playerCard.xpLabel,
-      value: this.locale.pick(PLAYER_PROFILE.status.xp.value),
-    },
-  ]);
+  // Player Card (D-082): selo com o XP real em forma curta; foto em placeholder no showcase.
+  protected readonly playerBadge = computed(() => ({
+    label: this.ui().playerCard.xpLabel,
+    value: this.locale.pick(PLAYER_PROFILE.status.xp.short ?? PLAYER_PROFILE.status.xp.value),
+  }));
 
   protected readonly typeRoles = [
     { role: 'display-hero', sample: 'Modo Campanha' },

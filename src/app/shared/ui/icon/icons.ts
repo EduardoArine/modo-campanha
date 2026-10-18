@@ -4,14 +4,33 @@
 // pontas retas e só ângulos de 0/45/90° (curvas viram chanfros): técnico e levemente pixel.
 // Criar apenas ícones usados por componentes reais.
 //
+// PIXEL ICONS (D-082): pixel art em grade de 12, sempre em 24 px (2 px por pixel, nítido em 1×).
+// Desenhados como mapas ('#' = pixel aceso) e convertidos em retângulos; `shape-rendering: crispEdges`.
+//
 // BRAND ICONS: marcas oficiais monocromáticas, sem pixelização.
 // GitHub: Octicons "mark-github" (MIT, GitHub Inc.). LinkedIn: Simple Icons (CC0).
 
 export interface McIconDefinition {
   viewBox: string;
-  /** `stroke`: ícones de sistema (traço). `fill`: marcas de terceiros. */
-  style: 'stroke' | 'fill';
+  /** `stroke`: ícones de sistema (traço). `fill`: marcas de terceiros. `pixel`: pixel art. */
+  style: 'stroke' | 'fill' | 'pixel';
   paths: readonly string[];
+}
+
+/** Mapa de pixel 12 × 12 → ícone `pixel` (um retângulo por sequência horizontal de pixels). */
+function pixel(rows: readonly string[]): McIconDefinition {
+  const paths = rows.flatMap((row, y) => {
+    const runs: string[] = [];
+    for (let x = 0; x < row.length; x++) {
+      if (row[x] !== '#') continue;
+      let end = x;
+      while (row[end] === '#') end++;
+      runs.push(`M${x} ${y}h${end - x}v1h${x - end}z`);
+      x = end;
+    }
+    return runs;
+  });
+  return { viewBox: '0 0 12 12', style: 'pixel', paths: [paths.join('')] };
 }
 
 export const MC_ICONS = {
@@ -51,6 +70,142 @@ export const MC_ICONS = {
     style: 'stroke',
     paths: ['M4.75 2.75v10.5L12.75 8z'],
   },
+  // Pixel (Player Status, D-082)
+  // Emblema do Player Status.
+  player: pixel([
+    '...######...',
+    '..########..',
+    '.##########.',
+    '###..##..###',
+    '###..##..###',
+    '############',
+    '##.######.##',
+    '###.####.###',
+    '.###....###.',
+    '..########..',
+    '...######...',
+    '............',
+  ]),
+  // ORIGEM.
+  gamepad: pixel([
+    '............',
+    '............',
+    '.##########.',
+    '############',
+    '##.#####.###',
+    '#...###.#.##',
+    '##.#####.###',
+    '############',
+    '####....####',
+    '###......###',
+    '............',
+    '............',
+  ]),
+  // XP.
+  xp: pixel([
+    '............',
+    '............',
+    '.##########.',
+    '##.#.##...##',
+    '##.#.##.#.##',
+    '###.###...##',
+    '##.#.##.####',
+    '##.#.##.####',
+    '############',
+    '.##########.',
+    '............',
+    '............',
+  ]),
+  // CAMPANHA ATUAL.
+  flag: pixel([
+    '............',
+    '..#.........',
+    '..#######...',
+    '..#########.',
+    '..########..',
+    '..#######...',
+    '..#.........',
+    '..#.........',
+    '..#.........',
+    '..#.........',
+    '.###........',
+    '............',
+  ]),
+  // FOCO.
+  target: pixel([
+    '.....##.....',
+    '...##..##...',
+    '..#......#..',
+    '.#...##...#.',
+    '.#..####..#.',
+    '##.######.##',
+    '##.######.##',
+    '.#..####..#.',
+    '.#...##...#.',
+    '..#......#..',
+    '...##..##...',
+    '.....##.....',
+  ]),
+  // CONSTRUINDO.
+  gear: pixel([
+    '.....##.....',
+    '.##.####.##.',
+    '.##########.',
+    '..########..',
+    '.####..####.',
+    '####....####',
+    '####....####',
+    '.####..####.',
+    '..########..',
+    '.##########.',
+    '.##.####.##.',
+    '.....##.....',
+  ]),
+  // APRENDENDO.
+  book: pixel([
+    '............',
+    '.####..####.',
+    '#....##....#',
+    '#.##.##.##.#',
+    '#....##....#',
+    '#.##.##.##.#',
+    '#....##....#',
+    '#.##.##.##.#',
+    '#....##....#',
+    '.####..####.',
+    '.....##.....',
+    '............',
+  ]),
+  // EVOLUINDO.
+  bars: pixel([
+    '............',
+    '..........##',
+    '..........##',
+    '.......##.##',
+    '.......##.##',
+    '....##.##.##',
+    '....##.##.##',
+    '.##.##.##.##',
+    '.##.##.##.##',
+    '.##.##.##.##',
+    '............',
+    '............',
+  ]),
+  // Glifo de sistema (quatro quadrados), frase final do Player Status.
+  glyph: pixel([
+    '............',
+    '.####..####.',
+    '.####..####.',
+    '.####..####.',
+    '.####..####.',
+    '............',
+    '............',
+    '.####..####.',
+    '.####..####.',
+    '.####..####.',
+    '.####..####.',
+    '............',
+  ]),
   // Brand
   github: {
     viewBox: '0 0 16 16',

@@ -1,0 +1,200 @@
+// Player Status (D-082): caixas internas. Ícones em ladrilhos chanfrados (moldura de 1 px feita por
+// duas camadas com o mesmo recorte). Tons dos estados: verde, frio e laranja, só tokens de status.
+@use 'mc' as *;
+
+.box {
+  position: relative;
+  min-width: 0;
+  padding: space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-none);
+  background: var(--mc-bg);
+}
+
+.box-title {
+  margin: 0 0 space(2);
+  padding-bottom: space(2);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  @include type(title-m);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mc-accent);
+}
+
+// Linhas rótulo/valor com o ladrilho à esquerda (dados do jogador e estados).
+.facts,
+.states {
+  display: grid;
+  margin: 0;
+}
+
+// Dados: linhas iguais preenchem a altura da linha da grade. Estados: altura natural (a coluna
+// mais alta define a linha; linhas iguais ali só esticariam o painel).
+.facts {
+  grid-auto-rows: 1fr;
+  padding-block: space(1);
+}
+
+.row {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: space(1);
+  min-height: 3.25rem;
+  padding: space(2) 0 space(2) calc(2.5rem + #{space(3)});
+
+  & + & {
+    border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  }
+
+  dt {
+    @include type(system);
+    font-weight: 600;
+    color: var(--row-label, var(--mc-text));
+  }
+
+  dd {
+    margin: 0;
+    @include type(body-s);
+    color: var(--mc-text-secondary);
+  }
+}
+
+.tile {
+  --cut: polygon(
+    7px 0,
+    calc(100% - 7px) 0,
+    100% 7px,
+    100% calc(100% - 7px),
+    calc(100% - 7px) 100%,
+    7px 100%,
+    0 calc(100% - 7px),
+    0 7px
+  );
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  translate: 0 -50%;
+  clip-path: var(--cut);
+  background: var(--tile-edge, var(--mc-border-accent));
+  color: var(--tile-icon, var(--mc-accent));
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    clip-path: var(--cut);
+    background: var(--mc-bg);
+  }
+
+  mc-icon {
+    position: relative;
+  }
+}
+
+[data-state='building'] {
+  --row-label: var(--mc-status-online);
+  --tile-icon: var(--mc-status-online);
+}
+
+[data-state='learning'] {
+  --row-label: var(--mc-cool);
+  --tile-icon: var(--mc-cool);
+  --tile-edge: var(--mc-cool);
+}
+
+[data-state='evolving'] {
+  --row-label: var(--mc-cool);
+}
+
+// Sobre a jornada: texto real; lema com o marcador triangular; montanhas em pixel na base.
+.journey {
+  display: flex;
+  flex-direction: column;
+  gap: space(3);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: space(4);
+    right: space(4);
+    width: 4.5rem;
+    height: space(5);
+    background: radial-gradient(var(--mc-border-subtle) 1px, transparent 1.5px) 0 0 / 6px 6px;
+  }
+
+  .box-title {
+    margin-bottom: 0;
+  }
+}
+
+.text {
+  margin: 0;
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+
+  & + & {
+    margin-top: calc(-1 * #{space(3)});
+  }
+}
+
+.tagline {
+  position: relative;
+  max-width: 62%;
+  margin: auto 0 0;
+  padding: space(3) 0 0 space(6);
+  @include type(title-m);
+  color: var(--mc-accent);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: calc(#{space(3)} + 0.3em);
+    left: 0;
+    width: 0.75rem;
+    height: 0.875rem;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    background: var(--mc-accent);
+  }
+}
+
+.mountains {
+  position: absolute;
+  right: space(3);
+  bottom: space(3);
+  width: 50%;
+  max-width: 12rem;
+  height: auto;
+  fill: var(--mc-accent);
+  pointer-events: none;
+}
+
+// Estado atual + frase final (mesma coluna).
+.side {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: space(4);
+  min-width: 0;
+}
+
+.quote {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  margin: 0;
+  padding: space(4);
+  outline: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  outline-offset: calc(-1 * #{space(2)});
+  @include type(system);
+  color: var(--mc-text-muted);
+}
+
+.glyph {
+  color: var(--mc-text-muted);
+}

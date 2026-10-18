@@ -46,9 +46,16 @@ export const UI_EN: UiDictionary = {
   playerCard: {
     player: 'PLAYER 01',
     photoPlaceholder: 'PHOTO OF EDUARDO',
-    classLabel: 'CLASS',
     xpLabel: 'XP',
-    statusLabel: 'STATUS',
+  },
+  playerStatus: {
+    subtitle: 'PLAYER PROFILE // CURRENT CAMPAIGN DATA',
+    systemLabel: 'System',
+    console: 'MC-01',
+    brand: 'MODO CAMPANHA',
+    online: 'ONLINE',
+    journey: 'ABOUT THE JOURNEY',
+    state: 'CURRENT STATE',
   },
   cart: {
     system: 'MC-CART',

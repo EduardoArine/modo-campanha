@@ -46,9 +46,17 @@ export const UI_PT_BR = {
   playerCard: {
     player: 'PLAYER 01',
     photoPlaceholder: 'FOTO DO EDUARDO',
-    classLabel: 'CLASS',
     xpLabel: 'XP',
-    statusLabel: 'STATUS',
+  },
+  // Player Status (D-082): rótulos do painel; o conteúdo humano está em profile.data.ts.
+  playerStatus: {
+    subtitle: 'PERFIL DO JOGADOR // DADOS DA CAMPANHA ATUAL',
+    systemLabel: 'Sistema',
+    console: 'MC-01',
+    brand: 'MODO CAMPANHA',
+    online: 'ONLINE',
+    journey: 'SOBRE A JORNADA',
+    state: 'ESTADO ATUAL',
   },
   cart: {
     system: 'MC-CART',

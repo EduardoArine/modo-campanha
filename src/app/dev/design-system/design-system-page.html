@@ -40,17 +40,11 @@
         headingId="sig-player"
         code="SIG-01"
         [level]="3"
-        subtitle="UI digital (sem sombra). Cantos de mira exclusivos. Foto: placeholder explícito."
+        subtitle="UI digital (sem sombra). Foto real dominante (D-082); aqui, placeholder explícito."
       />
       <div class="mc-columns">
         <div class="span-player">
-          <mc-player-card
-            [name]="profileName"
-            [fields]="playerFields()"
-            [statusLabel]="ui().playerCard.statusLabel"
-          >
-            <mc-status state="active">{{ ui().status.active }}</mc-status>
-          </mc-player-card>
+          <mc-player-card [name]="profileName" [badge]="playerBadge()" />
         </div>
       </div>
     </section>

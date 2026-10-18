@@ -2,25 +2,29 @@ import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core
 
 import { LocaleService } from '../../../core/i18n';
 
-export interface McPlayerField {
-  /** Label de sistema traduzido (ex.: `CLASS`). */
-  label: string;
-  /** Valor real e traduzido (ex.: `Desenvolvedor de Produtos Digitais`). Nunca métrica inventada. */
-  value: string;
-}
-
 export interface McPhoto {
   src: string;
+  /** Derivados por largura (`srcset`); com eles, `sizes` do card vale. */
+  srcset?: string;
+  width?: number;
+  height?: number;
   /** Texto alternativo traduzido, descrevendo a foto real. */
   alt: string;
+}
+
+/** Selo do canto da foto: sempre um dado real em forma curta (ex.: XP 10+), nunca LV inventado. */
+export interface McPlayerBadge {
+  label: string;
+  value: string;
 }
 
 let nextId = 0;
 
 /**
- * Player Card: perfil profissional lido pela linguagem do MC System (D-031).
- * UI digital (sem sombra de objeto). Único componente com cantos de mira.
- * Sem LV, HP, atributos, estrelas ou rankings: XP real, sem personagem.
+ * Player Card (D-031, redesenhado em D-082): a foto real como elemento principal, o nome do
+ * jogador e PLAYER 01. UI digital (sem sombra de objeto). A cápsula, o selo e a barra segmentada
+ * são identidade visual: decorativos (`aria-hidden`), sem valor de progresso. O selo repete um dado
+ * real que precisa estar em texto em outro lugar da página. Sem LV, HP, atributos ou rankings.
  */
 @Component({
   selector: 'mc-player-card',
@@ -30,12 +34,11 @@ let nextId = 0;
 })
 export class McPlayerCard {
   readonly name = input.required<string>();
-  /** Linhas de dados reais (CLASS, XP...). */
-  readonly fields = input<readonly McPlayerField[]>([]);
   /** Foto real aprovada. Ausente = placeholder explícito "FOTO DO EDUARDO". */
   readonly photo = input<McPhoto>();
-  /** Label da linha de status; o valor entra por projeção (`<mc-status>`). */
-  readonly statusLabel = input<string>();
+  /** `sizes` da foto (largura exibida por faixa); só vale com `srcset`. */
+  readonly sizes = input('100vw');
+  readonly badge = input<McPlayerBadge>();
 
   protected readonly ui = inject(LocaleService).ui;
   protected readonly nameId = `mc-player-name-${nextId++}`;

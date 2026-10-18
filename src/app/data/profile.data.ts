@@ -34,10 +34,12 @@ export const PLAYER_PROFILE: PlayerProfile = {
     xp: {
       label: { 'pt-BR': 'XP', en: 'XP' },
       value: { 'pt-BR': '10+ anos em tecnologia', en: '10+ years in tech' },
+      // Selo do Player Card (D-082): o mesmo XP real, no lugar do "LV 99" do mockup (D-017).
+      short: { 'pt-BR': '10+', en: '10+' },
     },
     currentCampaign: {
       label: { 'pt-BR': 'CAMPANHA ATUAL', en: 'CURRENT CAMPAIGN' },
-      value: { 'pt-BR': 'Comunidade On', en: 'Comunidade On' },
+      value: { 'pt-BR': 'Comunidade ON', en: 'Comunidade ON' },
     },
     focus: {
       label: { 'pt-BR': 'FOCO', en: 'FOCUS' },
@@ -46,9 +48,54 @@ export const PLAYER_PROFILE: PlayerProfile = {
         en: 'AI applied to software development',
       },
     },
-    state: {
-      label: { 'pt-BR': 'STATUS', en: 'STATUS' },
-      value: { 'pt-BR': 'ATIVO', en: 'ACTIVE' },
+  },
+  // Player Status definitivo (D-082). Texto aprovado por Eduardo em 2026-10-18.
+  journey: {
+    'pt-BR': [
+      'Sou desenvolvedor de produtos digitais com mais de 10 anos de experiência, atuando na interseção entre tecnologia, produto, desenvolvimento e gamificação.',
+      'Acredito em soluções que unem pessoas, tecnologia e propósito, gerando impacto real e experiências que fazem sentido.',
+    ],
+    en: [
+      "I'm a digital product developer with more than 10 years of experience, working at the intersection of technology, product, development, and gamification.",
+      'I believe in solutions that bring people, technology, and purpose together, creating real impact and experiences that make sense.',
+    ],
+  },
+  tagline: {
+    'pt-BR': 'Tecnologia para pessoas reais.',
+    en: 'Technology for real people.',
+  },
+  currentState: [
+    {
+      id: 'building',
+      label: { 'pt-BR': 'CONSTRUINDO', en: 'BUILDING' },
+      value: { 'pt-BR': 'Soluções com impacto', en: 'Solutions with impact' },
+    },
+    {
+      id: 'learning',
+      label: { 'pt-BR': 'APRENDENDO', en: 'LEARNING' },
+      value: { 'pt-BR': 'Todos os dias', en: 'Every day' },
+    },
+    {
+      id: 'evolving',
+      label: { 'pt-BR': 'EVOLUINDO', en: 'EVOLVING' },
+      value: { 'pt-BR': 'Como profissional e pessoa', en: 'As a professional and as a person' },
+    },
+  ],
+  quote: {
+    'pt-BR': 'MESMA ESSÊNCIA, NOVOS NÍVEIS.',
+    en: 'SAME ESSENCE, NEW LEVELS.',
+  },
+  // Foto oficial (D-082): fonte intacta em design/source/player/eduardo-arine.png (1254 × 1254).
+  photo: {
+    src: 'assets/player/eduardo-arine-640.webp',
+    srcset:
+      'assets/player/eduardo-arine-400.webp 400w, assets/player/eduardo-arine-640.webp 640w, assets/player/eduardo-arine-960.webp 960w',
+    width: 960,
+    height: 960,
+    alt: {
+      'pt-BR':
+        'Eduardo Arine, de boné turquesa e camiseta preta, com uma cidade em luz laranja ao fundo',
+      en: 'Eduardo Arine in a turquoise cap and a black T-shirt, with an orange-lit city behind him',
     },
   },
 };

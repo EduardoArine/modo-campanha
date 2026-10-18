@@ -1,23 +1,83 @@
 <section id="player-status" class="mc-page-grid section" aria-labelledby="player-status-title">
-  <mc-section-header [heading]="ui().sections.playerStatus" headingId="player-status-title" />
+  <div class="panel">
+    <header class="head">
+      <span class="emblem" aria-hidden="true"><mc-icon name="player" [size]="24" /></span>
+      <div class="titles">
+        <h2 id="player-status-title" class="title">{{ ui().sections.playerStatus }}</h2>
+        <p class="subtitle">{{ ui().playerStatus.subtitle }}</p>
+      </div>
+      <ul class="system" [attr.aria-label]="ui().playerStatus.systemLabel">
+        <li>{{ ui().playerStatus.console }}</li>
+        <li>{{ ui().playerStatus.brand }}</li>
+        <li>
+          <mc-status state="active">{{ ui().playerStatus.online }}</mc-status>
+        </li>
+      </ul>
+    </header>
 
-  <div class="layout">
-    <mc-player-card
-      class="card"
-      [name]="profile.name"
-      [fields]="cardFields()"
-      [statusLabel]="locale.pick(profile.status.state.label)"
-    >
-      <mc-status state="active">{{ locale.pick(profile.status.state.value) }}</mc-status>
-    </mc-player-card>
+    <div class="body">
+      <mc-player-card
+        class="card"
+        [name]="profile.name"
+        [photo]="photo()"
+        [badge]="badge()"
+        sizes="(min-width: 1200px) 238px, (min-width: 768px) calc(50vw - 64px), calc(100vw - 88px)"
+      />
 
-    <dl class="facts">
-      @for (fact of facts(); track fact.label) {
-        <div class="fact">
-          <dt>{{ fact.label }}</dt>
-          <dd>{{ fact.value }}</dd>
+      <dl class="box facts">
+        @for (fact of facts(); track fact.icon) {
+          <div class="row">
+            <dt>
+              <span class="tile" aria-hidden="true"
+                ><mc-icon [name]="fact.icon" [size]="24"
+              /></span>
+              {{ fact.label }}
+            </dt>
+            <dd>{{ fact.value }}</dd>
+          </div>
+        }
+      </dl>
+
+      <div class="box journey">
+        <h3 class="box-title">{{ ui().playerStatus.journey }}</h3>
+        @for (paragraph of journey(); track $index) {
+          <p class="text">{{ paragraph }}</p>
+        }
+        <p class="tagline">{{ locale.pick(profile.tagline) }}</p>
+        <svg
+          class="mountains"
+          [attr.viewBox]="'0 0 ' + mountains.cols + ' ' + mountains.rows"
+          aria-hidden="true"
+          focusable="false"
+        >
+          @for (layer of mountains.layers; track layer.opacity) {
+            <path [attr.d]="layer.d" [attr.opacity]="layer.opacity" />
+          }
+        </svg>
+      </div>
+
+      <div class="side">
+        <div class="box state">
+          <h3 class="box-title">{{ ui().playerStatus.state }}</h3>
+          <dl class="states">
+            @for (state of states(); track state.id) {
+              <div class="row" [attr.data-state]="state.id">
+                <dt>
+                  <span class="tile" aria-hidden="true"
+                    ><mc-icon [name]="state.icon" [size]="24"
+                  /></span>
+                  {{ state.label }}
+                </dt>
+                <dd>{{ state.value }}</dd>
+              </div>
+            }
+          </dl>
         </div>
-      }
-    </dl>
+        <p class="box quote">
+          <q>{{ locale.pick(profile.quote) }}</q>
+          <mc-icon class="glyph" name="glyph" [size]="24" />
+        </p>
+      </div>
+    </div>
   </div>
 </section>

@@ -67,7 +67,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 ### Fundamentos restantes (estado em 2026-10-11)
 
-- ✅ Player Card (D-031; foto real aguarda o Eduardo, D-017)
+- ✅ Player Card (D-031; foto real entrou em D-082)
 - ✅ MC-CART System (D-032, D-034)
 - ✅ CRT (D-033; uso na Home em D-058)
 - ⏸ XP (XP profissional vs. Campaign XP, D-021): Campaign XP exige regras reais (decisão do Eduardo)
@@ -90,8 +90,8 @@ Backlog:
 
 - 🟡 **Hero refinement (D-063 → D-066 → D-067 → D-079, `docs/21` §7–§8)**: fundo aprovado do setup MC-01 usado direto (recorte próprio no mobile), **provisório** até a nova arte externa (contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
-- ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
-- ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
+- 🟡 **Player Status definitivo (D-082):** painel do mockup aprovado com a foto real; implementado, aguardando aprovação visual do Eduardo (inclui o equilíbrio do card com a foto)
+- 🟡 Bloco "Sobre a jornada" no Player Status: texto aprovado e implementado (D-082); traduções en aguardam revisão
 
 ### Home Slice 02 ✅ (**APPROVED**, D-047; `docs/13-home-slice-02.md`)
 
@@ -174,7 +174,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 ## FASE 7 — CONTENT ⏸ (conteúdo real do Eduardo; ver relatório da branch `feat/autonomous-site-completion`)
 
 - ⬜ Textos finais em pt-BR **e** en
-- ⬜ Foto real do Eduardo para o Player Card
+- ✅ Foto real do Eduardo para o Player Card (D-082)
 - ⬜ Projetos reais
 - ⬜ Screenshots
 - ⬜ Links (LinkedIn, email)
