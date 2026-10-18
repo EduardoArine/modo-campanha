@@ -129,3 +129,18 @@
   align-self: stretch;
   background: var(--mc-border-subtle);
 }
+
+// H2: case abaixo dos aparelhos, fatos em 3 colunas no desktop.
+.h2-case {
+  margin-top: space(8);
+
+  .facts {
+    @include mq(md) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include mq(lg) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+}

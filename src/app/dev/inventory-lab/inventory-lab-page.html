@@ -2,7 +2,7 @@
 @if (!clean) {
   <nav class="lab-bar" aria-label="Inventory lab">
     <span class="lab-tag">LAB</span>
-    @for (d of ['a', 'b', 'h']; track d) {
+    @for (d of ['a', 'b', 'h', 'h2']; track d) {
       <button type="button" [attr.aria-pressed]="direction() === d" (click)="setDirection($any(d))">
         {{ d === 'h' ? 'H (híbrido)' : d.toUpperCase() }}
       </button>
@@ -14,6 +14,7 @@
       </button>
     }
     <button type="button" [attr.aria-pressed]="error()" (click)="toggleError()">error</button>
+    <button type="button" [attr.aria-pressed]="pad()" (click)="pad.set(!pad())">pad</button>
     <span class="lab-sep"></span>
     <a routerLink="/dev/inventory-lab">pt</a>
     <a routerLink="/en/dev/inventory-lab">en</a>
@@ -33,6 +34,13 @@
   <p class="mc-visually-hidden" role="status">{{ status() }}</p>
 
   @switch (direction()) {
+    @case ('h2') {
+      <!-- H2 — PHYSICAL CARTRIDGE EXPERIENCE: MC-01 em camadas + CRT frontal; case fora do vidro. -->
+      <app-lab-physical [(phase)]="phase" [error]="error()" [pad]="pad()" [pose]="pose" />
+      @if (phase() === 'ready') {
+        <div class="h2-case"><ng-container [ngTemplateOutlet]="case" /></div>
+      }
+    }
     @case ('b') {
       <!-- DIREÇÃO B — SYSTEM LIBRARY: o MC-01 está sempre presente; a biblioteca prepara o sistema. -->
       <div class="library-layout">
@@ -277,11 +285,18 @@
 
 <!-- Case do projeto: fora do vidro, legível, sem repetir o Campaign Log. -->
 <ng-template #case>
-  <article class="case" aria-labelledby="lab-case-title">
-    <p class="eyebrow">
-      {{ ui().cart.system }} {{ project.serial }} · {{ locale.pick(project.type) }}
-    </p>
-    <h3 class="case-title" id="lab-case-title" tabindex="-1" #caseTitle>{{ copy().title }}</h3>
+  <article
+    class="case"
+    [attr.aria-labelledby]="direction() !== 'h2' ? 'lab-case-title' : null"
+    [attr.aria-label]="direction() === 'h2' ? copy().title : null"
+  >
+    <!-- H2: o editorial acima dos aparelhos já tem serial, nome e proposta (sem repetir). -->
+    @if (direction() !== 'h2') {
+      <p class="eyebrow">
+        {{ ui().cart.system }} {{ project.serial }} · {{ locale.pick(project.type) }}
+      </p>
+      <h3 class="case-title" id="lab-case-title" tabindex="-1" #caseTitle>{{ copy().title }}</h3>
+    }
     @if (direction() === 'a') {
       <!-- A não tem a faixa do slot: pausa do teaser (WCAG 2.2.2) e ejetar ficam no case. -->
       <div class="case-actions">
@@ -309,10 +324,12 @@
       </div>
     }
     <dl class="facts">
-      <div>
-        <dt>{{ copy().proposal }}</dt>
-        <dd>{{ locale.pick(project.description) }}</dd>
-      </div>
+      @if (direction() !== 'h2') {
+        <div>
+          <dt>{{ copy().proposal }}</dt>
+          <dd>{{ locale.pick(project.description) }}</dd>
+        </div>
+      }
       <div>
         <dt>{{ copy().contribution }}</dt>
         <dd>{{ locale.pick(project.role) }}</dd>
@@ -339,7 +356,15 @@
       </div>
       <div>
         <dt>{{ copy().experience }}</dt>
-        <dd>{{ error() ? copy().fallbackText : copy().experienceNow }}</dd>
+        <dd>
+          {{
+            error()
+              ? copy().fallbackText
+              : direction() === 'h2'
+                ? copy().experienceOnDemand
+                : copy().experienceNow
+          }}
+        </dd>
       </div>
       <div>
         <dt>{{ copy().evidence }}</dt>

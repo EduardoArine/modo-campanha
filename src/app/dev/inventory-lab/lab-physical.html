@@ -1,0 +1,163 @@
+<!-- ⚠️ PROTÓTIPO DEV-ONLY — H2 (docs/24 §16). -->
+<p class="mc-visually-hidden" role="status">{{ status() }}</p>
+
+<div
+  class="h2"
+  [class.with-pad]="pad()"
+  [class.is-ejecting]="ejecting()"
+  [attr.data-phase]="phase()"
+>
+  <div class="intro">
+    <p class="eyebrow">{{ copy().publisher }} · {{ locale.pick(project.type) }}</p>
+    <h3 class="name">{{ copy().title }}</h3>
+    <p class="desc">{{ locale.pick(project.description) }}</p>
+    <p class="contents">
+      <span class="label">{{ copy().available }}</span>
+      {{ copy().availableItems.join(' · ') }}
+    </p>
+  </div>
+
+  <div class="console-area">
+    <!-- MC-01 em camadas: traseira < cartucho < frente. Clique = atalho de ponteiro do botão. -->
+    <div
+      class="console"
+      [style]="consoleStyle"
+      [class.is-idle]="phase() === 'initial'"
+      [class.is-posed]="pose() !== null"
+      aria-hidden="true"
+      (click)="insert()"
+    >
+      <img
+        class="layer back"
+        [src]="back.src"
+        [width]="back.width"
+        [height]="back.height"
+        alt=""
+        decoding="async"
+      />
+      <span class="layer cart-shadow" [style.opacity]="shadow()"></span>
+      <img
+        class="layer cart"
+        [src]="cart"
+        [width]="slot.width"
+        [height]="slot.height"
+        [style.--y]="cartY()"
+        alt=""
+        decoding="async"
+      />
+      <img
+        class="layer front"
+        [src]="front.src"
+        [width]="front.width"
+        [height]="front.height"
+        alt=""
+        decoding="async"
+      />
+    </div>
+
+    <div class="action">
+      @if (phase() !== 'ready') {
+        <button
+          mcAction="primary"
+          type="button"
+          id="lab-h2-insert"
+          aria-controls="lab-h2-tv"
+          [attr.aria-label]="ui().inventory.insert + ': ' + copy().title"
+          [attr.aria-disabled]="phase() === 'inserting' ? 'true' : null"
+          (click)="insert()"
+        >
+          {{ ui().inventory.insert }} <mc-icon name="arrow-down" />
+        </button>
+      }
+      <p class="slot-status">
+        <span class="led" [class.is-on]="phase() === 'ready'" aria-hidden="true"></span>
+        {{
+          phase() === 'ready'
+            ? copy().slot.loaded
+            : phase() === 'inserting'
+              ? copy().slot.loading
+              : copy().slot.empty
+        }}
+      </p>
+    </div>
+  </div>
+
+  <div class="tv-area" id="lab-h2-tv">
+    <div class="tv" [style]="glassStyle" role="region" [attr.aria-label]="ui().crt.regionLabel">
+      <img
+        class="tv-body"
+        [src]="crt.src"
+        [width]="crt.width"
+        [height]="crt.height"
+        alt=""
+        decoding="async"
+      />
+      <!-- Camada digital no vidro: independente da imagem do televisor. -->
+      <div class="glass" [attr.data-screen]="screen()">
+        @switch (screen()) {
+          @case ('off') {
+            <p class="glass-system">{{ ui().crt.empty }}</p>
+          }
+          @case ('loading') {
+            <p class="glass-system">{{ ui().crt.loading }}</p>
+            <span class="glass-bar" aria-hidden="true"></span>
+          }
+          @case ('art') {
+            <img class="glass-art" [src]="artwork.src" alt="" />
+          }
+          @case ('teaser') {
+            <app-system-horizon-screen class="glass-teaser" [playback]="playback" />
+          }
+          @case ('error') {
+            <img class="glass-art" [src]="artwork.src" alt="" />
+            <p class="glass-caption">{{ copy().fallbackTitle }}</p>
+          }
+        }
+      </div>
+    </div>
+
+    <div class="tv-controls">
+      @if (phase() === 'ready') {
+        <p class="tv-status" id="lab-h2-status" tabindex="-1">
+          <span class="led" [class.is-on]="!error()" aria-hidden="true"></span>{{ copy().title }} ·
+          {{ error() ? copy().fallbackTitle : copy().ready }}
+        </p>
+        <div class="tv-actions">
+          @if (!error()) {
+            <button
+              mcAction="secondary"
+              type="button"
+              aria-controls="lab-h2-tv"
+              (click)="toggleTeaser()"
+            >
+              <mc-icon [name]="teaser() && playback.playing() ? 'pause' : 'play'" />
+              {{ teaser() && playback.playing() ? copy().pauseTeaser : copy().playTeaser }}
+            </button>
+          }
+          <button
+            mcAction="text"
+            type="button"
+            aria-controls="lab-h2-tv"
+            [attr.aria-label]="ui().inventory.eject + ': ' + copy().title"
+            (click)="eject()"
+          >
+            {{ ui().inventory.eject }}
+          </button>
+        </div>
+      }
+    </div>
+  </div>
+
+  @if (pad()) {
+    <!-- Controle MC-01: contexto visual, decorativo, não interativo. -->
+    <img
+      class="pad"
+      [src]="controller.src"
+      [width]="controller.width"
+      [height]="controller.height"
+      alt=""
+      aria-hidden="true"
+      decoding="async"
+    />
+  }
+</div>

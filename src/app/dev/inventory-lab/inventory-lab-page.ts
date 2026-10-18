@@ -20,9 +20,11 @@ import { McAction, McChip, McIcon, McSectionHeader } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { SystemHorizonScreen } from '../../system-horizon/system-horizon-screen';
 import { LAB_COPY } from './lab-copy';
+import { LabPhysical } from './lab-physical';
+import { Mc01Pose } from './mc01-console';
 
 /** Direções do checkpoint visual (docs/24): A, B e o híbrido recomendado. */
-export type LabDirection = 'a' | 'b' | 'h';
+export type LabDirection = 'a' | 'b' | 'h' | 'h2';
 /** Estados explícitos da experiência (brief §5). `error` = asset ou teaser falhou. */
 export type LabPhase = 'initial' | 'selected' | 'inserting' | 'ready';
 
@@ -48,6 +50,7 @@ const INSERT_MS = 600;
     McChip,
     McIcon,
     SystemHorizonScreen,
+    LabPhysical,
   ],
   templateUrl: './inventory-lab-page.html',
   // Quatro folhas (orçamento de 4 kB por folha): destaque, sistema, tela + faixa, case.
@@ -76,13 +79,18 @@ export class InventoryLabPage {
   protected readonly threeQuarter = this.project.cartridge.renders!.threeQuarter!;
   protected readonly artwork = this.project.cartridge.artwork!;
 
-  protected readonly direction = signal<LabDirection>(this.param('dir', ['a', 'b', 'h'], 'h'));
+  protected readonly direction = signal<LabDirection>(
+    this.param('dir', ['a', 'b', 'h', 'h2'], 'h'),
+  );
   protected readonly phase = signal<LabPhase>(
     this.param('state', ['initial', 'selected', 'inserting', 'ready'], 'initial'),
   );
   /** Falha simulada: render do cartucho e teaser indisponíveis (fallback textual). */
   protected readonly error = signal(this.query.get('error') === '1');
   protected readonly clean = this.query.get('clean') === '1';
+  /** H2: controle MC-01 na composição (`pad=1`) e pose fixa do cartucho para capturas. */
+  protected readonly pad = signal(this.query.get('pad') === '1');
+  protected readonly pose = this.query.get('pose') as Mc01Pose | null;
   protected readonly status = signal('');
   protected readonly playback = new AttractPlayback();
 

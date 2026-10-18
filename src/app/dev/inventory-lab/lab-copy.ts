@@ -24,7 +24,11 @@ export interface LabCopy {
   evidence: string;
   experience: string;
   experienceNow: string;
+  /** H2: a tela mostra a arte; o teaser roda só quando o visitante pede. */
+  experienceOnDemand: string;
   fallbackTitle: string;
+  playTeaser: string;
+  pauseTeaser: string;
   fallbackText: string;
   status: { selected: string; loading: string; ready: string; ejected: string };
 }
@@ -56,7 +60,11 @@ export const LAB_COPY: Record<Locale, LabCopy> = {
     experience: 'EXPERIÊNCIA',
     experienceNow:
       'Teaser em execução no MC-01 e case do projeto. A experiência jogável ainda não está disponível.',
+    experienceOnDemand:
+      'Arte oficial e teaser do SYSTEM HORIZON no MC-01, sob demanda, e o case do projeto. A experiência jogável ainda não está disponível.',
     fallbackTitle: 'TEASER INDISPONÍVEL',
+    playTeaser: 'Reproduzir teaser',
+    pauseTeaser: 'Pausar teaser',
     fallbackText: 'O case do projeto continua disponível fora da tela do MC-01.',
     status: {
       selected: 'SYSTEM HORIZON selecionado.',
@@ -91,7 +99,11 @@ export const LAB_COPY: Record<Locale, LabCopy> = {
     experience: 'EXPERIENCE',
     experienceNow:
       'Teaser running on the MC-01 and the project case. The playable experience is not available yet.',
+    experienceOnDemand:
+      'Official SYSTEM HORIZON artwork and teaser on the MC-01, on demand, plus the project case. The playable experience is not available yet.',
     fallbackTitle: 'TEASER UNAVAILABLE',
+    playTeaser: 'Play teaser',
+    pauseTeaser: 'Pause teaser',
     fallbackText: 'The project case is still available outside the MC-01 screen.',
     status: {
       selected: 'SYSTEM HORIZON selected.',
