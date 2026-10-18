@@ -195,6 +195,7 @@ src/app/system-horizon/
 - O palco tem a proporção da imagem mostrada e é recortado pela moldura como um `object-fit: cover`, então a tela usa coordenadas da própria imagem: caixa do vidro do CRT na fonte 1672 × 941 em **x 1157–1473, y 151–405** (no recorte mobile: x 529–845 de 941). O cartucho do console cobre o canto inferior esquerdo do vidro: a tela é recortada ali (`clip-path`).
 - **Ângulo da TV:** o vidro da foto é um quadrilátero (a TV está levemente girada: topo 161 → 151, base 400 → 405). A tela recebe os cantos (`HERO_CRT_GLASS`, input `quad`) e é projetada em perspectiva com `matrix3d` (`screen-quad.ts`), recalculado no resize; canvas, textos e cantos arredondados (`--screen-radius`) seguem o mesmo plano. Ao trocar a imagem de fundo, medir de novo os quatro cantos.
 - A tela 4:3 cobre o vidro (~1,24 : 1) cortando as laterais (área segura, §4.0).
+- Scanlines (CSS): faixas suaves alinhadas às 120 linhas nativas, com densidade de 120/60/40/30 pela largura da tela e pela densidade de pixels, para não formar faixas irregulares (D-079, `docs/21` §8.1). Engine, roteiro e timings intactos.
 - **Carregamento:** chunk próprio (~13,7 KB, ~5,8 KB gzip), só depois do `load`, no idle + 1 s. Antes disso, a tela da foto já mostra o SYSTEM HORIZON.
 - **Execução:** canvas nativo, redesenho só quando o tick muda (12/s); pausa fora da viewport e com a aba oculta; para sozinho após 3 voltas.
 - **Textos pequenos:** em telas de CRT menores que 220 px (mobile/tablet) somem os secundários (PLAYER 01, rótulos dos itens) e ficam as mensagens principais.

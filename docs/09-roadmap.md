@@ -88,7 +88,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 Backlog:
 
-- 🟡 **Hero refinement (D-063 → D-066 → D-067, `docs/21` §7)**: fundo aprovado do setup MC-01 usado direto (recorte próprio no mobile); aguardando revisão visual do Eduardo. Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- 🟡 **Hero refinement (D-063 → D-066 → D-067 → D-079, `docs/21` §7–§8)**: fundo aprovado do setup MC-01 usado direto (recorte próprio no mobile), **provisório** até a nova arte externa (contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ⬜ Revisar o equilíbrio visual do Player Card após a entrada da fotografia real do Eduardo
 - ⬜ Bloco "Sobre a jornada" no Player Status (quando houver texto aprovado)
@@ -159,7 +159,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - 🟡 **SYSTEM HORIZON — MVP interativo: proposta** (D-069, `docs/23`); aguardando aprovação; implementação só depois (e lançamento recomendado após o Campaign Log real, 03-0)
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ **Project Inventory — H2, Physical Cartridge Experience** (D-075–D-077, `docs/24` §17): MC-01 em camadas, inserção física, CRT frontal com a arte oficial e teaser sob demanda, case fora do vidro, estado de domínio único; **APPROVED / consolidado** (D-078), sem deploy
-- ⏳ Harmonização visual do MC-01 da Hero (foto cinematográfica anterior) com o MC-01 canônico do H2 (D-077)
+- ⏳ Harmonização visual do MC-01 da Hero com o MC-01 canônico do H2 (D-077): contrato da nova imagem pronto (D-079, `docs/21` §8.2); aguardando a arte externa do Eduardo para a substituição
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
@@ -187,7 +187,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ SEO bilíngue: `hreflang` + canonical + `<html lang>` dinâmicos (D-060)
 - ⏸ Prerender estático das duas versões (`@angular/ssr` só em build): dependência nova, **decisão do Eduardo**
 - 🟡 Metadata: Open Graph por idioma ✅; `og:image` e favicon próprio aguardam o monograma MC
-- 🟡 Performance: mobile 87 / desktop 100 (Lighthouse); preload da fonte do Hero pendente (D-023)
+- 🟡 Performance: mobile 87 / desktop 100 (Lighthouse); ✅ preload da fonte do Hero (D-079)
 - ✅ Lighthouse: a11y / best practices / SEO 100 em mobile e desktop
 - ✅ Redução de movimento
 - ✅ Teclado (ordem de foco, skip link, foco nunca sob o header)

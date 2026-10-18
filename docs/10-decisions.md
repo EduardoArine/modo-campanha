@@ -915,3 +915,39 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Tipo aprovado:** EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE. Modo Campanha é o portfólio profissional; SYSTEM HORIZON é a experiência narrativa apresentada no cartucho MC-001.
 - **Rótulos aprovados:** MINHA CONTRIBUIÇÃO / MY CONTRIBUTION, STACK, APRENDIZADOS / LEARNINGS e EVIDÊNCIAS / EVIDENCE. O conteúdo dos aprendizados pode passar por revisão editorial futura, o que não bloqueia esta aprovação.
 - **Status:** **APPROVED / consolidado** na branch `feat/hero-refinement`; sem merge e sem deploy.
+
+## D-079 — Hero: acabamento final (Direção B) e contrato da nova imagem
+
+- **Data:** 2026-10-18
+- **Decisão do Eduardo:** seguir a Direção B da auditoria, preservando integralmente a proposta visual. Composição, atmosfera, textos, CTAs e hierarquia ficam como estão.
+- **Imagem atual:** provisória. A D-078 não ganha exceção permanente.
+- **Nova arte:** produzida **externamente**, com o MC-01, o MC-CART e, de preferência, o CRT do H2 como referências oficiais. Proporção 1672 : 941, de preferência em 2×, com versões otimizadas. Nada é gerado no repositório, e os PNGs oficiais não são recompostos sobre a fotografia atual.
+- **Teaser:**
+  - o personagem provisório está aprovado para a primeira publicação;
+  - o ícone do MC-CART pode continuar estilizado, desde que não conflite com a identidade física no tamanho real de exibição;
+  - correção das scanlines autorizada só em CSS.
+- **Etapa 1, ajustes técnicos (concluída, `docs/21` §8.1):**
+  - **Scanlines:** faixas suaves alinhadas às 120 linhas nativas, com densidade de 120, 60, 40 ou 30 conforme a largura da tela e a densidade de pixels (≥ 3 px do dispositivo por faixa). O batimento caiu de até 0,64 para ≤ 0,05, e o escurecimento ficou uniforme.
+  - **Fonte:** preload da Pixelify Sans no `index.html`, com `outputHashing: "bundles"` (fontes sem hash, nome estável; JS e CSS continuam com hash). Some o FOUT do "MODO CAMPANHA" em rede lenta. A IBM Plex Sans não precisa de preload.
+  - **Pausa:** o controle é renderizado junto com o teaser, então não anuncia mais "Pausar" ~1 s antes do movimento.
+  - **Sem regressões:** CLS por fonte não reproduzido (0 em 32 rodadas). Fora do CRT, zero pixel de diferença. Lighthouse inalterado.
+- **Etapa 2, contrato da nova imagem (`docs/21` §8.2):**
+  - referências oficiais;
+  - formato 3344 × 1882;
+  - composição e tolerâncias;
+  - perspectiva e escala real (CRT ≈ 1,27× o console);
+  - luz e materiais;
+  - área escura à esquerda (x 560–900 com luminância ≤ 0,05);
+  - CRT e tela (vidro de preferência em x 1157–1473 · y 151–405, nada na frente);
+  - textos permitidos e proibições;
+  - recortes responsivos;
+  - lista exata do que precisa ser remedido se o vidro mudar;
+  - derivados, inclusive 2× e mobile 1200;
+  - aceite e briefing em inglês.
+
+  Diagramas em `design/source/hero/contract/`.
+- **Alternativas:**
+  - Manter as 120 linhas com perfil suave, mas sem regra de densidade: rejeitado, porque abaixo de 2 px do dispositivo o padrão continua formando faixas.
+  - Preload pelo nome com hash: rejeitado, porque quebraria em silêncio a cada mudança do build.
+  - Preload também da IBM Plex Sans: sem ganho, porque ela já chega antes do primeiro render.
+- **Status:** etapas 1 e 2 concluídas na branch `feat/hero-refinement`. A substituição da imagem aguarda a nova arte do Eduardo. Sem merge e sem deploy.

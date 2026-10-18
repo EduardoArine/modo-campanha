@@ -166,7 +166,7 @@ src/app/core/i18n/
 - Rota principal com lazy loading (`loadComponent`).
 - Budgets do `angular.json` mantidos (500 kB warning / 1 MB erro inicial).
 - Imagens otimizadas (WebP/AVIF), `NgOptimizedImage` quando houver screenshots.
-- Fontes self-hosted (`src/styles/fonts/`, WOFF2 variável, subset latin, ~57 kB no total), empacotadas com hash pelo build (D-023), `font-display: swap`. Preload da fonte do Hero na FASE 8. Sem Google Fonts em runtime e sem pacote npm de fontes.
+- Fontes self-hosted (`src/styles/fonts/`, WOFF2 variável, subset latin, ~57 kB no total), empacotadas pelo build em `media/` sem hash (`outputHashing: "bundles"`, D-079; antes com hash, D-023), `font-display: swap`. Preload da Pixelify Sans (fonte do Hero) no `index.html` (D-079). Sem Google Fonts em runtime e sem pacote npm de fontes.
 - Meta Lighthouse ≥ 90 em todas as categorias (FASE 8). Medido (D-060): desktop 100 em tudo; mobile performance 87 (FCP ≈ 2,8 s em 4G simulado, limite de SPA sem prerender), a11y / best practices / SEO 100.
 
 ## GitHub Pages

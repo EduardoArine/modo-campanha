@@ -140,7 +140,7 @@ Restrições aprovadas (`#C96A1B` nunca como texto pequeno; `#C44536` nunca como
 - Fonte: Google Fonts (SIL OFL), subset **latin** (U+0000–00FF + pontuação): cobre pt-BR e en sem precisar de latin-ext.
 - **Validado** (fontkit): `ã á é í ó ú ç ê ô õ à â` e maiúsculas presentes nas duas famílias. **Ausentes:** `↗ →` (e `↓` na Pixelify) → usar ícones SVG.
 - Cada família é **um único arquivo variável** (o Google não serve estáticos separados); pesos usados de fato: Pixelify 500/700 (só `display-hero`), Plex 400/500/600.
-- Empacotadas pelo build (`url()` relativo no Sass → `media/<nome>-<hash>.woff2`), o que dá cache longo e funciona com qualquer `base-href`. Sem Google Fonts em runtime e sem pacote npm (D-023).
+- Empacotadas pelo build (`url()` relativo no Sass → `media/<nome>.woff2`, sem hash desde D-079 para o preload da Pixelify Sans no `index.html`), o que funciona com qualquer `base-href`. Sem Google Fonts em runtime e sem pacote npm (D-023).
 - `font-display: swap`; `font-synthesis: none` no `body` (sem negrito/itálico falso).
 
 Fallbacks (`--mc-font-display`, `--mc-font-text`):
