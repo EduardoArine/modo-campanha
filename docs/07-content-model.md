@@ -41,13 +41,24 @@ interface CartridgeImage {
   src: string;
   width: number;
   height: number;
+  srcset?: string; // derivados por largura (D-077)
 }
 
 interface ProjectCartridge {
   shell: McCartShell; // dark | light | orange | cool (fallback em CSS)
   accent: McCartAccent; // warm | cool | special (fallback em CSS)
   artwork?: CartridgeImage & { alt: Localized }; // MC-001: SYSTEM HORIZON, 4:3 (D-065)
-  renders?: { front: CartridgeImage; threeQuarter?: CartridgeImage }; // renders oficiais (D-065)
+  // front = identidade canônica (D-065); console = variante técnica para a inserção física no MC-01
+  // (699 × 500, mesma escala do console; sem ela, o projeto não entra no console: fallback) (D-077)
+  renders?: { front: CartridgeImage; threeQuarter?: CartridgeImage; console?: CartridgeImage };
+  teaser?: 'system-horizon'; // tela que o CRT reproduz sob demanda (engine existente)
+}
+
+// O que o cartucho oferece hoje (D-077); o rótulo do estado vem do dicionário.
+interface ProjectExperience {
+  kind: 'teaser' | 'playable' | 'demo' | 'case';
+  label: Localized; // ex.: "Campanha jogável"
+  status: 'available' | 'in-development';
 }
 
 interface Project {
@@ -58,13 +69,14 @@ interface Project {
   publication?: ProjectPublication;
   title: Localized;
   description: Localized;
-  type: Localized; // texto do cartucho (ex.: PORTFÓLIO INTERATIVO)
+  type: Localized; // tipo (MC-001: EXPERIÊNCIA NARRATIVA, D-077)
   role: Localized;
   technologies: readonly string[];
   learnings: Localized<readonly string[]>;
   year?: number; // só com dado real
   tags: ProjectTags;
   cartridge: ProjectCartridge;
+  experiences: readonly ProjectExperience[]; // nada "disponível" que não exista
   links: readonly ProjectLink[];
 }
 ```

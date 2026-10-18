@@ -158,6 +158,8 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ SYSTEM HORIZON — pickups, HUD e MC-CART em pixel art no repositório (`docs/22` §14); aguardando validação conjunta do Eduardo
 - 🟡 **SYSTEM HORIZON — MVP interativo: proposta** (D-069, `docs/23`); aguardando aprovação; implementação só depois (e lançamento recomendado após o Campaign Log real, 03-0)
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
+- ✅ **Project Inventory — H2, Physical Cartridge Experience** (D-075–D-077, `docs/24` §17): MC-01 em camadas, inserção física, CRT frontal com a arte oficial e teaser sob demanda, case fora do vidro, estado de domínio único; implementado na Home, **aguardando aprovação final do Eduardo** (sem deploy)
+- ⏳ Harmonização visual do MC-01 da Hero (foto cinematográfica anterior) com o MC-01 canônico do H2 (D-077)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)

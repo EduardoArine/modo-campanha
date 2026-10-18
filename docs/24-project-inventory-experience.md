@@ -1,6 +1,6 @@
 # 24 — Project Inventory: refinamento da experiência
 
-> Status: **PROPOSTA, aguardando a escolha de direção do Eduardo** (D-075; estudo físico H2 em D-076, §16). Nada da Home mudou: os protótipos são uma rota dev-only (`/dev/inventory-lab`), fora de produção. O congelamento visual do Project Inventory (02-C) foi suspenso por autorização do Eduardo só para esta revisão. Hero, teaser SYSTEM HORIZON, Campaign Log e as demais seções não mudam.
+> Status: **H2 aprovado e implementado na Home (D-077), aguardando a aprovação final do Eduardo.** O histórico das propostas (A, B, H, H2 no laboratório) fica nas seções 1–16; a implementação está no §17. Sem merge e sem deploy.
 
 ## 1. Auditoria do estado atual
 
@@ -325,3 +325,120 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 - **O controle:** descartado nesta etapa. O cabo cobria o status, abria um vão vertical e sugeria jogabilidade.
 
 **Alternativa se D1 ou D4 forem "não":** H com a inserção física do H2 só na faixa do slot, mantendo o MC-01 da Hero e o `mc-crt-frame`.
+
+## 17. Implementação do H2 na Home (D-077, 2026-10-18)
+
+### 17.1 Arquitetura
+
+| Peça              | Onde                                                     | Papel                                                                                                                                                                       |
+| ----------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Estado de domínio | `features/project-inventory/inventory.machine.ts`        | Transições puras e `inventoryView(state)`: pose, movimento, texto do slot, LEDs (slot e tela), tela do CRT, botões, case, escolha e anúncio. Nada derivado de flags soltas. |
+| Inventory         | `features/project-inventory/project-inventory-section.*` | Compõe editorial, `mc-console`, `mc-crt-front`, controles e case; agenda as transições (620 / 450 / 600 ms); foco, rolagem e anúncios.                                      |
+| Case              | `features/project-inventory/project-case.*`              | Fora do vidro: minha contribuição, stack, aprendizados, evidências.                                                                                                         |
+| MC-01 físico      | `shared/signature/console/`                              | Três camadas oficiais com geometria do console (`console.geometry.ts`); só `transform`. Decorativo; avisa falha de camada.                                                  |
+| CRT frontal       | `shared/signature/crt-front/`                            | Render + camada digital no vidro; `standby` escurece o vidro. Avisa falha.                                                                                                  |
+| Projetos          | `INVENTORY_PROJECTS`                                     | Produção: `inventoryProjects`. Laboratório e testes: fixtures isoladas.                                                                                                     |
+
+### 17.2 Estados (um único estado decide tudo)
+
+| Estado                          | Slot                               | LED do slot / da tela | CRT                                   | Controles                                           | Case  | Anúncio                  |
+| ------------------------------- | ---------------------------------- | --------------------- | ------------------------------------- | --------------------------------------------------- | ----- | ------------------------ |
+| INITIAL (`empty`)               | SLOT VAZIO / EMPTY SLOT            | apagado / apagado     | standby escurecido + INSERT CARTRIDGE | Inserir cartucho                                    | —     | —                        |
+| INSERTING (`inserting`, 620 ms) | CARREGANDO MC-001 / LOADING MC-001 | laranja / laranja     | standby                               | Inserir bloqueado (`aria-disabled`, focável)        | entra | "Carregando cartucho."   |
+| (`loading`, 450 ms)             | CARREGANDO MC-001                  | laranja / laranja     | LOADING CARTRIDGE... + barra          | idem                                                | sim   | —                        |
+| READY (`ready`, art)            | MC-001 INSERIDO / MC-001 INSERTED  | verde / verde         | arte oficial                          | SYSTEM HORIZON · READY · Reproduzir teaser · Ejetar | sim   | foco no estado           |
+| READY (teaser)                  | MC-001 INSERIDO                    | verde / verde         | teaser (sob demanda)                  | Pausar/Reproduzir teaser · Ejetar                   | sim   | —                        |
+| ERRO do teaser                  | MC-001 INSERIDO                    | verde / vermelho      | arte + TEASER INDISPONÍVEL            | SYSTEM HORIZON · TEASER INDISPONÍVEL · Ejetar       | sim   | "O teaser não carregou…" |
+| EJECTING (600 ms)               | EJETANDO MC-001 / EJECTING MC-001  | laranja / apagado     | standby                               | —                                                   | sai   | —                        |
+| ERRO de asset (`unavailable`)   | MC-01 INDISPONÍVEL                 | vermelho              | — (MC-CART canônico em CSS)           | —                                                   | sim   | —                        |
+
+- **Reduced motion:** `insert` vai direto a READY e `eject` direto a INITIAL.
+- **Foco:** no READY, a página rola até o CRT e o foco vai a "SYSTEM HORIZON · READY", depois Tab: Reproduzir → Ejetar. Ao ejetar, o foco volta a "Inserir cartucho", visível.
+- **Troca (2+ cartuchos):** escolher outro no READY ejeta o atual e deixa o escolhido fora do slot.
+
+### 17.3 Comparação com o H2 do laboratório
+
+- **Mantido:** a montagem em camadas, as poses, a inserção de 620 ms, o caminho inverso, o CRT frontal, a arte oficial como padrão, o teaser sob demanda, o case fora do vidro, a ordem de foco e as alturas reservadas.
+- **Mudou, por aprovação ou correção:**
+  1. "MC-001 NO SLOT" virou **MC-001 INSERIDO**, e o estado do ejetar tem texto próprio, **EJETANDO**.
+  2. Composição 6 + 6: o CRT tem a mesma largura do console (antes 7/12) e o vidro em espera é escurecido, então o cartucho é o protagonista do INITIAL.
+  3. LED do slot e LED da tela separados: no erro do teaser, o cartucho segue "inserido" (verde) e só a tela fica vermelha.
+  4. O case entra junto com o clique de inserir, não 1,1 s depois. Isso evitou um CLS de 0,046 no desktop.
+  5. No mobile, botão e estado ficam empilhados com altura reservada. O texto mais longo de CARREGANDO quebrava linha e deslocava a TV (CLS 0,018 → 0,001).
+  6. Linhas de base iguais a partir do tablet: a ação e os controles do CRT têm a mesma altura.
+  7. O fallback de asset agora existe de fato: se uma camada falha, aparece o MC-CART canônico em CSS e o case.
+  8. Copy do Eduardo, a experiência guiada por dados e o tipo EXPERIÊNCIA NARRATIVA.
+  9. Sem controle.
+
+### 17.4 Identidade do MC-CART: conflito em aberto
+
+Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpad/review-final/review-final-identity.png`.
+
+- **Iguais:** o rótulo (arte, SYSTEM HORIZON, MC-CART, MC-001, MODO CAMPANHA, glifo), os trilhos laterais laranja, a fenda laranja à direita, o triângulo, a paleta e a tipografia.
+- **Diferentes, e estruturais:**
+  - **Topo:** o canônico (D-065) tem um entalhe central rebaixado; a variante tem um topo escalonado, com blocos laterais elevados e uma placa central.
+  - **Pegas laterais:** têm outro desenho.
+  - **Janela do rótulo:** tem outra proporção, cerca de 4% maior e mais baixa, e a arte tem outro recorte.
+- **Leitura revisada:** a primeira auditoria falava em "mesmo modelo, câmera mais alta". A revisão independente mostrou que os dois renders são frontais, com a mesma proporção (1,39 e 1,40), e uma câmera mais alta não muda a silhueta. É o mesmo design (rótulo, paleta, lockup) em **outro shell**.
+- **O que foi feito:**
+  - nada no design canônico foi substituído: `renders.front` segue como identidade nos dados;
+  - a variante entra como `renders.console`, porque o H2 aprovado depende dela;
+  - na Home, o visitante vê só a variante (a pose fora, a inserção e o encaixe).
+- **Decisão do Eduardo:** (a) aceitar a variante como shell oficial do MC-001 para o console, e então atualizar D-065, o `front` e o `threeQuarter` para o mesmo shell; ou (b) pedir um render do console a partir do shell D-065, mantendo a geometria do slot (699 × 500, base de 66 px).
+
+### 17.5 Performance
+
+|                            | 1x (1440)                                                   | 2x (1440) / 3x (390)                   |
+| -------------------------- | ----------------------------------------------------------- | -------------------------------------- |
+| Antes de rolar até a seção | 0 imagens do Inventory (`lazy`)                             | 0                                      |
+| INITIAL                    | **151 KB** (traseira 16, frente 40, cartucho 31, CRT 64)    | 424 KB (derivados de 1254/1108/699 px) |
+| READY (arte)               | +94 KB (arte de 640 px)                                     | +215 KB (arte de 960 px)               |
+| Teaser                     | chunk de 15 KB, só em "Reproduzir teaser" (o mesmo da Hero) | idem                                   |
+
+- **Comparação:** o laboratório carregava 481 KB no INITIAL em qualquer tela. Sem downloads duplicados.
+- **CLS:** 0,0007 (1440) e 0,0013 (390) somando inserir e ejetar.
+- **Lighthouse:**
+  - acessibilidade 100 (mobile pt, mobile en e desktop), sem auditoria falhando;
+  - performance mobile 81, o mesmo nível de antes desta rodada (82);
+  - performance desktop 99.
+
+### 17.6 Pendências
+
+1. **Harmonização do MC-01 da Hero** (foto cinematográfica) com o MC-01 canônico do H2. A Hero não foi alterada.
+2. **Confirmar o tipo do MC-001:** "EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE".
+3. **Contribuição e aprendizados do MC-001** descrevem o portfólio como um todo; vale revisar se devem falar do SYSTEM HORIZON.
+4. **Telas de alta densidade (2x/3x)** baixam os derivados maiores (424 KB). Um derivado intermediário (~1080 px) economizaria pouco, com risco de nitidez.
+5. **Próximos cartuchos** precisam do render em escala do console (699 × 500) a partir do render frontal aprovado, e as miniaturas da escolha, de um derivado pequeno do `front`.
+
+### 17.7 Revisão independente (REVIEWER, 2026-10-18)
+
+**Veredito: APROVADO COM RESSALVAS.**
+
+**Conferido pelo REVIEWER:**
+
+- **Montagem pixel-exata:** diferença de 2,0 a 5,1 contra a referência; com 1 px de deslocamento sobe para 7,5 a 13,5.
+- **Linhas de base iguais** em 1440, 1024 e 820.
+- **Estados:** nenhum contraditório nas amostras a cada 30–40 ms, em pt e en, nas quatro larguras, incluindo reduced motion e falhas de camada, de teaser e do laboratório.
+- **Lighthouse:** acessibilidade 1,0.
+- **Contraste:** novos textos de 5,4 a 8,6.
+- **Peso:** 151 KB a 1x no INITIAL; nada carrega antes de rolar; sem duplicatas.
+- **CLS fora de interação:** de 0,0003 a 0,0013.
+- **Áreas congeladas:** intactas.
+- **Build:** sem warnings.
+
+**Corrigido depois da revisão** (conferido de novo com teclado e mouse em 1440 e 390):
+
+1. **A1:** quando o teaser falhava, o foco caía no `body`. Agora vai ao estado "SYSTEM HORIZON · TEASER INDISPONÍVEL".
+2. **A2:** durante o ejetar, o foco ficava no `body`. Agora o "Inserir cartucho" volta na hora, bloqueado, e recebe o foco.
+3. **A3:** o Tab até o Inserir deixava o cartucho sob o header. Agora o foco por teclado traz o console inteiro à vista.
+4. **Falha da arte do READY:** o vidro ficava preto. Agora a falha tem estado próprio (`art-unavailable`): o nome no vidro, com o teaser ainda possível.
+5. **Texto do slot:** pulava ~208 px no READY e quebrava linha em 820. Agora o estado fica em cima, a ação embaixo, e a mesma altura de 76 px é reservada em todas as larguras: o texto não se move e nada desloca a página.
+6. **Identidade do MC-CART:** a descrição imprecisa no código e nos docs foi corrigida e o conflito ficou registrado como aberto (§17.4).
+
+**Observações mantidas:**
+
+- **Capturas `seq-*`:** congelam a pose com os textos do INITIAL. São só estudo de movimento, não um estado do runtime.
+- **Chunk do teaser:** é o mesmo da Hero, que já o baixa no idle; "sob demanda" no Inventory quer dizer montagem sob demanda.
+- **Folga acima do cartucho encaixado:** ~108 px em 1440.
+- **Case:** só aparece depois do clique em Inserir; sem prerender.
+- **Confirmações editoriais:** EXPERIÊNCIA NARRATIVA; os rótulos MINHA CONTRIBUIÇÃO e EVIDÊNCIAS; o case com conteúdo do portfólio sob o título SYSTEM HORIZON.
