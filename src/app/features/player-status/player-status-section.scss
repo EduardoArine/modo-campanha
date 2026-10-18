@@ -36,8 +36,8 @@
       content: '';
       position: absolute;
       top: space(2);
-      right: 26rem;
-      width: 10rem;
+      right: 23.5rem;
+      width: 6rem;
       height: space(7);
       background: radial-gradient(var(--mc-border-subtle) 1px, transparent 1.5px) 0 0 / 6px 6px;
       pointer-events: none;
@@ -54,6 +54,10 @@
   clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
   background: var(--mc-accent);
   color: var(--mc-text-on-accent);
+
+  mc-icon {
+    scale: 1.5;
+  }
 }
 
 // Base 0: o subtítulo quebra dentro do bloco, sem empurrar o título para baixo do emblema.
@@ -74,6 +78,7 @@
 
 .subtitle {
   margin-top: space(1);
+  text-wrap: balance;
   @include type(label);
   color: var(--mc-text-muted);
 }

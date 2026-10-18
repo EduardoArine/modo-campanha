@@ -40,7 +40,7 @@
   display: grid;
   align-content: center;
   gap: space(1);
-  min-height: 3.25rem;
+  min-height: 3rem;
   padding: space(2) 0 space(2) calc(2.5rem + #{space(3)});
 
   & + & {
@@ -117,19 +117,30 @@
   flex-direction: column;
   gap: space(3);
   overflow: hidden;
+  container-type: inline-size;
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: space(4);
-    right: space(4);
-    width: 4.5rem;
-    height: space(5);
-    background: radial-gradient(var(--mc-border-subtle) 1px, transparent 1.5px) 0 0 / 6px 6px;
-  }
-
+  // Textura de pontos ao lado do título, só quando cabem os dois (sem quebrar o título).
   .box-title {
+    display: flex;
+    align-items: center;
+    gap: space(3);
     margin-bottom: 0;
+
+    &::after {
+      content: '';
+      display: none;
+      flex: none;
+      width: 3rem;
+      height: space(5);
+      margin-left: auto;
+      background: radial-gradient(var(--mc-border-subtle) 1px, transparent 1.5px) 0 0 / 6px 6px;
+    }
+  }
+}
+
+@container (width >= 18.5rem) {
+  .journey .box-title::after {
+    display: block;
   }
 }
 
@@ -145,8 +156,9 @@
 
 .tagline {
   position: relative;
-  max-width: 62%;
+  max-width: 70%;
   margin: auto 0 0;
+  text-wrap: pretty;
   padding: space(3) 0 0 space(6);
   @include type(title-m);
   color: var(--mc-accent);
@@ -165,10 +177,10 @@
 
 .mountains {
   position: absolute;
-  right: space(3);
-  bottom: space(3);
-  width: 50%;
-  max-width: 12rem;
+  right: 0;
+  bottom: 0;
+  width: 55%;
+  max-width: 13rem;
   height: auto;
   fill: var(--mc-accent);
   pointer-events: none;
@@ -178,8 +190,16 @@
 .side {
   display: grid;
   grid-template-rows: 1fr auto;
-  gap: space(4);
+  gap: space(3);
   min-width: 0;
+}
+
+.state {
+  padding-block: space(3);
+
+  .row {
+    min-height: 0;
+  }
 }
 
 .quote {
@@ -188,7 +208,7 @@
   justify-content: space-between;
   gap: space(3);
   margin: 0;
-  padding: space(4);
+  padding: space(3) space(4);
   outline: var(--mc-border-width-default) solid var(--mc-border-subtle);
   outline-offset: calc(-1 * #{space(2)});
   @include type(system);

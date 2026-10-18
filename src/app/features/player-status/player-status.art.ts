@@ -29,7 +29,7 @@ const PEAKS = [
 const noise = (x: number, y: number) => ((((x * 73856093) ^ (y * 19349663)) >>> 0) % 1000) / 1000;
 
 function ridgeHeight(x: number): number {
-  return Math.max(0, ...PEAKS.map((p) => p.h - Math.abs(x - p.x) * 1.15));
+  return Math.max(0, ...PEAKS.map((p) => p.h - Math.abs(x - p.x) * 1.6));
 }
 
 function build(): readonly PixelDot[] {

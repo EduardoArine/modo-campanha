@@ -177,7 +177,7 @@ Fluida entre viewport 360 px e 1200 px (`clamp()` em `rem`). Custom property: `-
 | Papel             | Família | Mobile → Desktop | Line-height | Tracking  | Peso | Caixa | Aplicação                                         |
 | ----------------- | ------- | ---------------- | ----------- | --------- | ---- | ----- | ------------------------------------------------- |
 | `display-hero`    | Pixelify | 48 → 96 px      | 0.95        | 0         | **500 → 700 (md)** | UPPER | Só "MODO CAMPANHA" (único uso validado; 700 só a partir de 768 px, ~71 px+) |
-| `display-player`  | Pixelify | 22 → 26 px      | 1.1         | 0.04em    | 700  | UPPER | Só o nome do jogador no Player Card e o valor do selo ("EDUARDO ARINE", "10+"; validados no tamanho real, D-082). Nunca em textos com "C"/"c" |
+| `display-player`  | Pixelify | 22 → 26 px      | 1.1         | 0.02em    | 700  | UPPER | Só o nome do jogador no Player Card e o valor do selo ("EDUARDO ARINE", "10+"; validados no tamanho real, D-082). Nunca em textos com "C"/"c" |
 | `section-title`   | Plex    | 24 → 32 px       | 1.15        | 0.06em    | 600  | UPPER | PLAYER STATUS, PROJECT INVENTORY, CURRENT MAIN QUEST |
 | `cart-title`      | Plex    | 14 → 16 px       | 1.15        | 0.04em    | 600  | UPPER | Nome do projeto no rótulo do MC-CART              |
 | `system`          | Plex    | 14 px            | 1.3         | 0.08em    | 500  | UPPER | MC-01, MC-CART, ON-001 em tamanho pequeno         |

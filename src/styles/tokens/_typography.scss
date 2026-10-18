@@ -51,8 +51,8 @@ $type-roles: (
         ),
       case: uppercase,
     ),
-  // Nome do jogador no Player Card (D-082). Uso validado no tamanho real: "EDUARDO ARINE" (nome
-  // próprio, sem "C", igual nos dois idiomas). Não usar para outros textos.
+  // Player Card (D-082). Usos validados no tamanho real: o nome "EDUARDO ARINE" e o valor do selo
+  // ("10+"), sem "C"/"c" e iguais nos dois idiomas. Não usar para outros textos.
   display-player: (
       family: display,
       size: (
@@ -60,7 +60,7 @@ $type-roles: (
         26px,
       ),
       line-height: 1.1,
-      tracking: 0.04em,
+      tracking: 0.02em,
       weight: 700,
       case: uppercase,
     ),

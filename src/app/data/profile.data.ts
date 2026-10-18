@@ -57,7 +57,7 @@ export const PLAYER_PROFILE: PlayerProfile = {
     ],
     en: [
       "I'm a digital product developer with more than 10 years of experience, working at the intersection of technology, product, development, and gamification.",
-      'I believe in solutions that bring people, technology, and purpose together, creating real impact and experiences that make sense.',
+      'I believe in solutions that bring people, technology, and purpose together, creating real impact and meaningful experiences.',
     ],
   },
   tagline: {
@@ -68,7 +68,7 @@ export const PLAYER_PROFILE: PlayerProfile = {
     {
       id: 'building',
       label: { 'pt-BR': 'CONSTRUINDO', en: 'BUILDING' },
-      value: { 'pt-BR': 'Soluções com impacto', en: 'Solutions with impact' },
+      value: { 'pt-BR': 'Soluções com impacto', en: 'Impactful solutions' },
     },
     {
       id: 'learning',
@@ -78,7 +78,7 @@ export const PLAYER_PROFILE: PlayerProfile = {
     {
       id: 'evolving',
       label: { 'pt-BR': 'EVOLUINDO', en: 'EVOLVING' },
-      value: { 'pt-BR': 'Como profissional e pessoa', en: 'As a professional and as a person' },
+      value: { 'pt-BR': 'Como profissional e pessoa', en: 'Professionally and personally' },
     },
   ],
   quote: {
@@ -89,9 +89,9 @@ export const PLAYER_PROFILE: PlayerProfile = {
   photo: {
     src: 'assets/player/eduardo-arine-640.webp',
     srcset:
-      'assets/player/eduardo-arine-400.webp 400w, assets/player/eduardo-arine-640.webp 640w, assets/player/eduardo-arine-960.webp 960w',
-    width: 960,
-    height: 960,
+      'assets/player/eduardo-arine-400.webp 400w, assets/player/eduardo-arine-640.webp 640w, assets/player/eduardo-arine-960.webp 960w, assets/player/eduardo-arine-1254.webp 1254w',
+    width: 1254,
+    height: 1254,
     alt: {
       'pt-BR':
         'Eduardo Arine, de boné turquesa e camiseta preta, com uma cidade em luz laranja ao fundo',
