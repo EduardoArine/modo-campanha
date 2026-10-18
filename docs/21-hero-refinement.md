@@ -115,6 +115,8 @@ Todos medidos no build de produção, antes × depois.
 - **Problema:** com 120 linhas fixas, o período ficava em 0,9–2,3 px do dispositivo em DPR 1 e 1,25 (e em 390 até DPR 2). As linhas caíam entre os pixels e formavam faixas: batimento de 0,22–0,64 e escurecimento médio variando de 7 a 14.
 - **Correção:** faixas suaves alinhadas às 120 linhas nativas, com densidade de 120, 60, 40 ou 30 conforme a largura da tela e a densidade de pixels, para cada faixa ter ≥ 3 px do dispositivo. Engine, timings e roteiro intactos.
 - **Resultado:** batimento ≤ 0,05 (a maioria ≤ 0,014) e escurecimento uniforme (13,3–13,9) nas 16 combinações de 1440/1024/820/390 × DPR 1/1,25/2/3. O CRT do Inventory usa a mesma tela e também melhora (0,65 → ≤ 0,05), sem nenhuma mudança no Inventory.
+- **Métrica:** "batimento" é o coeficiente de variação do perfil vertical de escurecimento (faixa central da tela, com canvas e legendas ocultos), suavizado por uma gaussiana de σ = 1,5 período. Mede as faixas lentas (moiré); 0 = regular.
+- **Revisão independente:** com outra métrica (média móvel de 3 períodos, 10 larguras × DPR 1–3, Hero e Inventory), o pior caso caiu de 4,7 para 0,19. O resíduo fica perto do limiar de 3,0–3,15 px por faixa (1200 e 1280 em @1 e @2, 360 em @1 e @2) e é quase imperceptível no tamanho real. Se precisar de folga, o mínimo pode subir para ~3,5 px, com linhas mais grossas em parte do desktop.
 
 **Pixelify Sans**
 
@@ -172,21 +174,21 @@ Para quem vai produzir a arte. **A imagem atual não é substituída até a nova
 - **Objetos:** luminária no canto superior direito, plantas, porta-canetas, caderno no canto inferior direito e cadeira no canto inferior esquerdo.
 - **Ausentes:** teclado e mouse (D-067).
 
-| Elemento        | Caixa atual (aprox., 1×) | Tolerância                 |
-| --------------- | ------------------------ | -------------------------- |
-| Vidro do CRT    | x 1157–1473 · y 151–405  | ver G e K                  |
-| Gabinete do CRT | x 1115–1545 · y 93–500   | ±3% da largura da imagem   |
-| MC-01 + MC-CART | x 805–1342 · y 375–645   | ±3%                        |
-| Controle        | x 1215–1597 · y 588–768  | ±3%                        |
-| Luminária       | x 1495–1672 · y 0–130    | livre, sem invadir o vidro |
+| Elemento        | Caixa atual (aprox., 1×)                                                                 | Tolerância                 |
+| --------------- | ---------------------------------------------------------------------------------------- | -------------------------- |
+| Vidro do CRT    | x 1157–1473 · y 151–405                                                                  | ver G e K                  |
+| Gabinete do CRT | x 1115–1545 · y 93–500                                                                   | ±3% da largura da imagem   |
+| MC-01 + MC-CART | x 805–1342 · y 375–645 (topo do cartucho na lateral; sobre o vidro, a partir de y ≈ 382) | ±3%                        |
+| Controle        | x 1215–1597 · y 588–768                                                                  | ±3%                        |
+| Luminária       | x 1495–1672 · y 0–130                                                                    | livre, sem invadir o vidro |
 
 **Câmera:** na altura de quem está sentado, um pouco acima da mesa e olhando levemente para baixo. Lente normal, sem grande-angular exagerada. Equipamentos nítidos e fundo com desfoque suave.
 
 #### D. Perspectiva e proporção
 
-- **Escala real** (H2, D-077, `docs/24` §17.8): o gabinete do CRT tem ≈ 1,27× a largura do console, e o MC-CART ≈ 0,56× (`console-reference`). Na foto, o console está mais perto da câmera e pode parecer do tamanho atual. As proporções reais entre os objetos continuam as mesmas.
+- **Escala real** (alvo, a partir do H2: D-077, `docs/24` §17.8): o gabinete do CRT tem ≈ 1,27× a largura do console (proporção do layout do H2 em 1440, não uma medida física), e o MC-CART ≈ 0,56× (`console-reference`). Na foto, o console está mais perto da câmera e pode parecer do tamanho atual. As proporções reais entre os objetos continuam as mesmas.
 - **MC-01 em três quartos:** frente e topo visíveis, levemente girado, como hoje. O MC-001 fica encaixado com a etiqueta voltada para a câmera.
-- **CRT:** quase frontal, com o leve giro atual. O lado direito do vidro fica ~4% mais alto (topo 161 → 151, base 400 → 405).
+- **CRT:** quase frontal, com o leve giro atual. O lado direito do vidro fica ~6% mais alto (254 contra 239 px; topo 161 → 151, base 400 → 405).
 - **Carcaças oficiais sem deformação:** nada esticado, achatado ou com proporções inventadas.
 
 #### E. Iluminação e materiais
@@ -208,26 +210,29 @@ Para quem vai produzir a arte. **A imagem atual não é substituída até a nova
 
 No desktop (≥ 1200), o texto da Hero fica **sobre** a imagem:
 
-- **Alcance do texto:** chega a **x ≈ 830** (en em 1200; ≈ 700–750 de 1280 a 2560) e desce até y ≈ 900.
-- **Máscara:** esconde x 0–560 e dissolve x 568–1037.
+- **Alcance do texto visível:** chega a **x ≈ 784** (o resumo em en, a 1200; ≈ 690–730 de 1240 a 2560) e desce até y ≈ 880.
+- **Máscara:** transparente em x 0–568, dissolve de 568 a 1037.
 
 Zonas:
 
-- **x 560–900, altura inteira:**
+- **x 560–800, altura inteira:**
   - luminância relativa ≤ **0,05** (≈ #3f3f3f) em qualquer ponto;
   - sem pontos de luz (velas, LEDs, lâmpadas).
 
-  Com a máscara, isso garante ≥ 4,5 : 1 para o texto mais fraco (`cream-500`). Na imagem atual, as velas da estante (x ≈ 640–830) deixam o contraste no limite: 4,45 : 1 em en, de 1200 a 1239.
+  Com a máscara, isso garante ≥ 4,5 : 1 para o texto mais fraco (`cream-500`): 5,15 : 1 em x 830 no pior caso, um cinza. Sem a máscara, 0,05 daria só 3,8 : 1. Na imagem atual, as velas da estante (x ≈ 640–830) deixam o contraste no limite: 4,45 : 1 no resumo em en, de 1200 a 1219 (pré-existente, resolvido na troca, aceite M4).
+
+- **x 800–900, transição:** pode ter a borda esquerda do MC-01 (a partir de x ≈ 805), com o rim light, e o começo da janela (≈ 885), mas não pontos de luz.
 
 - **x 0–560:** escuro e com pouco detalhe. Fica oculto no desktop, mas aparece no tablet (x ≥ 208).
 - **A partir de x ≈ 900:** objetos claros e protagonismo.
+- **1200–1239:** a cena tem 1244 px e começa em −44 px, então ~59 px da esquerda da fonte ficam fora da tela. Isso cai dentro da área já oculta.
 
 #### G. CRT e tela
 
 - **Modelo:** o CRT do H2 (`crt-front.png`) em perspectiva. Sem outro modelo de TV, sem grade de ventilação lateral e sem botões diferentes.
 - **Vidro, posição:** de preferência **exatamente** na caixa x 1157–1473 · y 151–405 (316 × 254, ~1,24 : 1), com os cantos de `HERO_CRT_GLASS` e tolerância de ±2 px no 1× (±4 px no 2×).
-- **Vidro, se a identidade pedir outra proporção:** a tela do `crt-front` é mais larga (~1,35 : 1) e tem cantos mais arredondados. Nesse caso vale a identidade: a proporção pode ficar entre 1,24 e 1,36, com o remedimento de K.
-- **Nada na frente do vidro:** o topo do MC-CART fica abaixo da borda inferior do vidro. Hoje o cartucho cobre x 1157–1232 · y 375–405, o que obriga um recorte na tela do teaser.
+- **Vidro, se a identidade pedir outra proporção:** a tela do `crt-front` é mais larga (~1,33–1,38 : 1) e tem cantos mais arredondados. A proporção do vidro **na foto** pode ficar entre 1,24 e **1,333 (4 : 3)**, com o remedimento de K. Acima de 4 : 3, a tela do teaser (4 : 3, cobrindo pela altura) deixa faixas da foto nas laterais. Cobrir pela largura cortaria o HUD (y 4–18, `docs/22` §4.0) e mudaria o teaser congelado. Com o leve giro, a tela oficial fica dentro desse limite.
+- **Nada na frente do vidro:** o topo do MC-CART fica abaixo da borda inferior do vidro. Hoje o cartucho cobre x 1157–1232 · y ≈ 382–405 (o `clip-path` recorta em 90,9% da altura), o que obriga um recorte na tela do teaser.
 - **Conteúdo da tela:** o cenário do SYSTEM HORIZON (pôr do sol, montanhas, lago, trilha), em pixel art e sem texto, HUD ou personagem. Ele aparece antes de o teaser carregar e quando o teaser falha.
 - **Reflexos:** o teaser cobre o vidro inteiro, então reflexos e brilho ficam no aro e no gabinete, nunca dentro do vidro.
 
@@ -259,22 +264,23 @@ Textos pequenos demais para ler no tamanho final podem virar marcas lisas, nunca
 | 768–1023  | 3:2, x 208–1620                        | x 377–1450 · y 169–734     | MC-01, CRT, controle                                  |
 | < 768     | quadrado x 628–1569 (derivado próprio) | x 741–1456 · y 169–734     | MC-01, vidro do CRT, controle (pode cortar à direita) |
 
-Se os equipamentos saírem da tolerância de C, o recorte `background-mobile-*` (x 628–1569) e as posições `--pos` são revistos na substituição.
+- **Topo do vidro:** em y 151, fica dentro da dissolução vertical no tablet, no mobile e em 1024–1199, onde a área opaca começa em y 169 ou 207. É o comportamento atual.
+- **Equipamentos fora da tolerância de C:** o recorte `background-mobile-*` (x 628–1569) e as posições `--pos` são revistos na substituição.
 
 #### K. Coordenadas que dependem da imagem
 
 Se o vidro ficar na caixa atual, dentro da tolerância de G, **nada é remedido**: só os quatro cantos são conferidos. Se mudar, estes valores precisam ser remedidos (fonte W × H = 1672 × 941; vidro de x0 a x1 e de y0 a y1):
 
-| Valor                                               | Onde                     | Fórmula                                                                                  |
-| --------------------------------------------------- | ------------------------ | ---------------------------------------------------------------------------------------- |
-| `HERO_CRT_GLASS` (4 cantos) e o comentário da caixa | `hero-scene.assets.ts`   | cantos do vidro em frações da caixa (x0–x1, y0–y1)                                       |
-| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (hoje 16,05% / 26,99%)                                            |
-| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (hoje 69,2% / 18,9%)                                              |
-| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − 628) / 941 · (x1 − x0) / 941 (hoje 56,22% / 33,58%)                                |
-| `clip-path` da `.crt`                               | `hero-scene.scss`        | área do vidro coberta pelo cartucho; sem sobreposição, o recorte sai                     |
-| `--screen-radius`                                   | `hero-scene.scss`        | raio dos cantos do vidro em % da caixa (hoje 4% / 5%)                                    |
-| Área segura do teaser                               | `docs/22` §4.0           | proporção do vidro: em 1,24 : 1 cortam-se ~6 px de cada lado; perto de 4 : 3, quase nada |
-| Recorte mobile                                      | `HERO_BACKGROUND.mobile` | x do quadrado que contém MC-01, vidro e controle                                         |
+| Valor                                               | Onde                     | Fórmula                                                                                                   |
+| --------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------- |
+| `HERO_CRT_GLASS` (4 cantos) e o comentário da caixa | `hero-scene.assets.ts`   | cantos do vidro em frações da caixa (x0–x1, y0–y1)                                                        |
+| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (hoje 16,05% / 26,99%)                                                             |
+| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (hoje 69,2% / 18,9%)                                                               |
+| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − m0) / (m1 − m0) · (x1 − x0) / (m1 − m0), recorte mobile de m0 a m1 (hoje 628–1569: 56,22% / 33,58%) |
+| `clip-path` da `.crt`                               | `hero-scene.scss`        | área do vidro coberta pelo cartucho; sem sobreposição, o recorte sai                                      |
+| `--screen-radius`                                   | `hero-scene.scss`        | raio dos cantos do vidro em % da caixa (hoje 4% / 5%)                                                     |
+| Área segura do teaser                               | `docs/22` §4.0           | proporção do vidro (1,24 a 1,333): em 1,24 : 1 cortam-se ~6 px de cada lado; em 4 : 3, nada               |
+| Recorte mobile                                      | `HERO_BACKGROUND.mobile` | x do quadrado que contém MC-01, vidro e controle                                                          |
 
 A engine, o roteiro, os timings e a câmera do teaser não mudam em nenhum caso.
 
@@ -288,7 +294,7 @@ Gerados a partir do mestre:
 | `background-{2560,3344}.webp`         | não existem           | novos 2×: ~260 / ~380 KB, orçamento a validar pelo LCP |
 | `background-mobile-{480,800}.webp`    | 42 / 86 KB            | regerados, mais um novo `1200` para 390 @ 3×           |
 
-- **Por que os 2×:** hoje, em telas 2×, a imagem é ampliada até 1,76×.
+- **Por que os 2×:** hoje, em telas 2×, a imagem é ampliada: 1,76× em 1440 @ 2×, 2,16× em 1920 @ 2× e 2,9× em 2560 @ 2×. O 3344 resolve até ~1672 px de largura de cena em 2×. Acima disso continua ampliado, mas bem menos.
 - **Código:** atualizar `HERO_BACKGROUND` e os `sizes`.
 - **Mestre:** substitui `design/source/hero/hero-background.png`. A versão atual vai para o histórico com o sufixo `-v1`.
 
@@ -304,7 +310,7 @@ Gerados a partir do mestre:
 
 #### N. Briefing para o gerador (en)
 
-> Cinematic photo-real still of a dark wooden desk at sunset, 3344 × 1882 px (16:9, exactly 1672:941).
+> Cinematic photo-real still of a dark wooden desk at sunset, 3344 × 1882 px (exactly 1672:941, close to 16:9).
 >
 > **Composition (keep the existing one).** A window with mountains at the back-center. A compact CRT TV on the right. The MC-01 console in three-quarter view, in front of the TV and to its left, with the MC-001 cartridge inserted and its label facing the camera. A wired controller at the front right, connected to the console. A warm desk lamp at the top right. Plants and a pen cup. A sketchbook at the bottom right (sketches only, no lettering). The edge of a chair at the bottom left.
 >
@@ -317,11 +323,11 @@ Gerados a partir do mestre:
 >
 > Real-world scale: the CRT cabinet is about 1.27× the console width; the cartridge is about 0.56× the console width.
 >
-> **CRT and screen.** The CRT is nearly frontal. Its glass sits at x 2314–2946, y 302–810, with the right side slightly taller, and nothing overlaps it. The screen shows the SYSTEM HORIZON pixel-art sunset landscape (lake, mountains, trail) with no text.
+> **CRT and screen.** The CRT is nearly frontal. It is the official model only: no side ventilation grille, no other knobs. Its glass sits at x 2314–2946, y 302–810, with the right side slightly taller (about 6%), and its aspect ratio stays between 1.24:1 and 4:3. Nothing overlaps it: the top of the cartridge stays below the bottom edge of the glass. Keep reflections and glow on the bezel and cabinet, not inside the glass. The screen shows the SYSTEM HORIZON pixel-art sunset landscape (lake, mountains, trail) with no text.
 >
-> **Light and materials.** Warm sunset and lamp light, orange rim light, matte graphite plastic, deep shadows. No neon.
+> **Light and materials.** Warm sunset and lamp light, orange rim light, matte graphite plastic, deep shadows. Orange POWER LED and white RESET LED on the console. No neon.
 >
-> **Dark left side.** The left half (x < 1800) must stay very dark and low-detail, with no light sources.
+> **Dark left side.** The band x 1120–1600 (full height) must stay very dark (relative luminance ≤ 0.05) with no light sources; x < 1120 dark and low-detail. Between x 1600 and 1800 only the console's left edge, its rim light and the start of the window may appear, with no point lights.
 >
 > **Text.** The only legible text allowed:
 >

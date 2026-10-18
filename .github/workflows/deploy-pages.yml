@@ -40,6 +40,13 @@ jobs:
       # Guarda: conteúdo MOCK (Campaign Log D-049, Achievements D-051, Current Main Quest docs/18, Side Quests docs/19) nunca pode ir para produção.
       - run: "! grep -rlE 'mock-campaign-log|mock-achievement|mock-current-quest|mock-side-quest|mock-inventory' dist/modo-campanha/browser"
 
+      # Guarda: todo preload do index.html (Pixelify Sans, D-079) aponta para um arquivo do build.
+      - run: |
+          cd dist/modo-campanha/browser
+          for f in $(grep -o 'rel="preload" href="[^"]*"' index.html | sed 's/.*href="//; s/"$//'); do
+            test -f "$f" || { echo "preload sem arquivo: $f"; exit 1; }
+          done
+
       # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
       # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).
       - run: |

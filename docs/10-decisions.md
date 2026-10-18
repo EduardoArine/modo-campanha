@@ -233,6 +233,8 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 
 ## D-023 — Fontes self-hosted empacotadas pelo build
 
+> **Parcialmente substituída (D-079):** as fontes saem do build sem hash (`outputHashing: "bundles"`) para o preload da Pixelify Sans no `index.html`. O cache longo por hash deixa de valer para elas, um custo desprezível no GitHub Pages (~10 min de cache para todos os arquivos).
+
 - **Data:** 2026-10-08
 - **Decisão:** os WOFF2 (subset latin, variáveis) ficam em `src/styles/fonts/` e são referenciados por `url()` relativo no Sass; o build do Angular os copia para `media/` com hash no nome. Substitui a ideia anterior de `public/fonts/` (`docs/06`).
 - **Contexto:** o site roda sob `base-href` variável (`/` local, `/modo-campanha/` no Pages, possivelmente `/` com domínio próprio).
@@ -950,4 +952,12 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - Manter as 120 linhas com perfil suave, mas sem regra de densidade: rejeitado, porque abaixo de 2 px do dispositivo o padrão continua formando faixas.
   - Preload pelo nome com hash: rejeitado, porque quebraria em silêncio a cada mudança do build.
   - Preload também da IBM Plex Sans: sem ganho, porque ela já chega antes do primeiro render.
+- **Custo:** as fontes perdem o cache longo por hash. É desprezível no GitHub Pages (~10 min de cache), e a guarda do deploy falha se o arquivo do preload não existir no build (D-023 marcada como parcialmente substituída).
+- **REVIEWER:** aprovado com ressalvas. As ressalvas do contrato foram corrigidas em `docs/21` §8.2:
+  - zona escura em x 560–800, sem conflito com o MC-01 e a janela;
+  - vidro limitado a 4 : 3;
+  - números revistos;
+  - briefing completo.
+
+  O resíduo leve das scanlines perto de 3 px por faixa fica registrado em §8.1. O botão de pausa ainda pode anunciar "Pausar" ~0,9 s antes do movimento em rede lenta, enquanto o chunk e a arte carregam; a correção completa exigiria um sinal de "pronto" da tela do teaser congelado.
 - **Status:** etapas 1 e 2 concluídas na branch `feat/hero-refinement`. A substituição da imagem aguarda a nova arte do Eduardo. Sem merge e sem deploy.

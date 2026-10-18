@@ -187,7 +187,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ SEO bilíngue: `hreflang` + canonical + `<html lang>` dinâmicos (D-060)
 - ⏸ Prerender estático das duas versões (`@angular/ssr` só em build): dependência nova, **decisão do Eduardo**
 - 🟡 Metadata: Open Graph por idioma ✅; `og:image` e favicon próprio aguardam o monograma MC
-- 🟡 Performance: mobile 87 / desktop 100 (Lighthouse); ✅ preload da fonte do Hero (D-079)
+- 🟡 Performance: mobile 82 / desktop 99 (Lighthouse local, HTTP/1.1, 2026-10-18; antes 87 / 100); ✅ preload da fonte do Hero (D-079)
 - ✅ Lighthouse: a11y / best practices / SEO 100 em mobile e desktop
 - ✅ Redução de movimento
 - ✅ Teclado (ordem de foco, skip link, foco nunca sob o header)
