@@ -5,8 +5,9 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import { CampaignLogSection } from './campaign-log-section';
 
-// Testes rodam na configuração `development`: CHAPTER 00 — ORIGIN e CHAPTER 01 — DO CONTROLE AO
-// CÓDIGO (conteúdo real, docs/15 §13–§14), seguidos da linha profissional MOCK (D-049).
+// O Campaign Log usa a mesma fonte canônica em todos os ambientes (D-074): CHAPTER 00 — ORIGIN,
+// CHAPTER 01 — DO CONTROLE AO CÓDIGO e CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §13–§17).
+// A antiga linha profissional MOCK (D-049) foi aposentada.
 describe('CampaignLogSection', () => {
   async function renderAt(url: string): Promise<HTMLElement> {
     TestBed.configureTestingModule({ providers: [provideRouter(routes)] });
@@ -22,18 +23,16 @@ describe('CampaignLogSection', () => {
       el.textContent?.replace(/\s+/g, ' ').trim(),
     );
 
-  /** Entradas da linha profissional (fora dos capítulos). */
-  const PRO = '.entry:not(.entry--chapter):not(.entry--story)';
   const STORY = '.entry--story';
 
-  it('uses one ordered list: chapters (h3 + h4s + closing), then professional checkpoints (h3)', async () => {
+  it('uses one ordered list: chapter header (h3), checkpoints (h4) and closing per chapter', async () => {
     const section = (await renderAt('/')).querySelector('section#campaign-log')!;
 
     expect(section.querySelector('h2')?.textContent).toBe('CAMPAIGN LOG');
     expect(section.querySelectorAll('ol[role="list"]').length).toBe(1);
-    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 4 + fechamento · MOCK: 4.
-    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 6 + 4);
-    expect(texts(section, 'h3').slice(0, 3)).toEqual([
+    // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 4 + fechamento.
+    expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 6);
+    expect(texts(section, 'h3')).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
       'CHAPTER 02 — DO CÓDIGO AO PRODUTO',
@@ -54,10 +53,25 @@ describe('CampaignLogSection', () => {
       'Da ideia à inteligência operacional',
       'Quando os games viraram uma linguagem de produto',
     ]);
-    expect(texts(section, `${PRO} h3`)[0]).toBe('Da tecnologia para o desenvolvimento');
   });
 
-  it('opens each chapter with its signature and closes CHAPTER 01 with CHECKPOINT COMPLETE', async () => {
+  it('renders only the real chapters: no professional line, no item after the open closing', async () => {
+    const el = await renderAt('/');
+    const items = Array.from(el.querySelectorAll('ol > li'));
+
+    // Todo item pertence a um capítulo (cabeçalho, checkpoint ou fechamento).
+    expect(items.every((li) => li.matches('.entry--chapter, .entry--story'))).toBe(true);
+    expect(el.querySelectorAll('.entry--origin, .entry--checkpoint, .entry--current').length).toBe(
+      0,
+    );
+    // O eixo termina no último item: o fechamento CURRENT QUEST do CHAPTER 02, sem rastro vazio.
+    expect(items.at(-1)?.classList).toContain('entry--ongoing');
+    expect(el.textContent).not.toMatch(
+      /Da tecnologia para o desenvolvimento|IA entrou no workflow|Construindo produtos de ponta a ponta/,
+    );
+  });
+
+  it('opens each chapter with its signature and closes it (COMPLETE or IN PROGRESS)', async () => {
     const el = await renderAt('/');
 
     expect(texts(el, '.signature')).toEqual([
@@ -78,6 +92,20 @@ describe('CampaignLogSection', () => {
       chapterItems[2].querySelector('.chapter-name')?.textContent?.replace(/\s+/g, ' ').trim(),
     ).toBe('CHECKPOINT COMPLETE — 2017');
     expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017', '2018 — ATUAL']);
+  });
+
+  it('keeps Comunidade ON as the open current campaign, last in the log', async () => {
+    const el = await renderAt('/');
+    const stories = el.querySelectorAll(STORY);
+    const on = stories[stories.length - 1];
+
+    expect(on.querySelector('.kind')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+      'CHECKPOINT 04 · COMUNIDADE ON',
+    );
+    expect(on.querySelector('.period')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
+      'DESDE 2025',
+    );
+    expect(on.nextElementSibling?.classList).toContain('entry--ongoing');
   });
 
   it('numbers chapter checkpoints from their order; codenames only where they exist', async () => {
@@ -180,36 +208,23 @@ describe('CampaignLogSection', () => {
     ).toBe(true);
   });
 
-  it('resolves professional system labels from the UI dictionary', async () => {
+  it('links Axia only to the working InfraFM report (no homepage stand-in)', async () => {
     const el = await renderAt('/');
+    const axia = el.querySelectorAll('.entry--story')[12];
 
-    expect(texts(el, `${PRO} .kind`)).toEqual([
-      'CHECKPOINT',
-      'CHECKPOINT',
-      'CHECKPOINT',
-      'CAMPANHA ATUAL',
-    ]);
+    expect(Array.from(axia.querySelectorAll('.refs a')).map((a) => a.getAttribute('href'))).toEqual(
+      [
+        'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
+      ],
+    );
+    expect(el.innerHTML).not.toContain('arppen.com');
   });
 
-  it('renders real time elements; the open current entry reads "since"', async () => {
-    const el = await renderAt('/');
-
-    expect(texts(el, `${PRO} .period`)).toEqual([
-      '2014 — 2018',
-      '2019 — 2022',
-      '2023 — 2025',
-      'DESDE 2025',
-    ]);
-    expect(el.querySelector(`${PRO} .period time`)?.getAttribute('datetime')).toBe('2014');
-    expect(el.querySelectorAll('li:last-child .period time').length).toBe(1);
-  });
-
-  it('shows context only when present', async () => {
+  it('shows chapter context only when present', async () => {
     const el = await renderAt('/');
 
     expect(texts(el, '.entry > .context')).toEqual([
       'Tecnologia em Jogos Digitais · FATEC Americana',
-      'Comunidade On',
     ]);
   });
 
@@ -222,7 +237,7 @@ describe('CampaignLogSection', () => {
       ),
     ).toBe(true);
     expect(el.querySelectorAll('button, [tabindex], [role="button"]').length).toBe(0);
-    expect(el.querySelectorAll('a').length).toBe(9);
+    expect(el.querySelectorAll('a').length).toBe(8);
     expect(el.querySelectorAll('summary').length).toBe(14);
     // O lema aprovado ("XP real, sem personagem.") é a única ocorrência permitida de XP.
     expect(el.textContent?.replace('XP real, sem personagem.', '')).not.toMatch(
@@ -233,13 +248,14 @@ describe('CampaignLogSection', () => {
   it('renders the en labels and content', async () => {
     const el = await renderAt('/en');
 
-    expect(texts(el, 'h3').slice(0, 3)).toEqual([
+    expect(texts(el, 'h3')).toEqual([
       'CHAPTER 00 — ORIGIN',
       'CHAPTER 01 — FROM CONTROLLER TO CODE',
       'CHAPTER 02 — FROM CODE TO PRODUCT',
     ]);
     expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017', '2018 — PRESENT']);
     expect(texts(el, '.entry--ongoing .chapter-name')).toEqual(['CURRENT QUEST — IN PROGRESS']);
+    expect(texts(el, '.entry--ongoing .signature')).toEqual(['Real XP. No persona.']);
     expect(texts(el, `${STORY} .summary`).at(-1)).toBe(
       'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
     );
@@ -252,12 +268,35 @@ describe('CampaignLogSection', () => {
     expect(texts(el, '.signature')[0]).toBe('The campaign started long before the code.');
     expect(texts(el, `${STORY} .period`)[1]).toBe('SNES era');
     expect(texts(el, `${STORY} .period`)[6]).toBe('During college');
+    expect(texts(el, `${STORY} .period`).slice(-2)).toEqual(['c. 2020/2021', 'SINCE 2025']);
     expect(texts(el, `${STORY} h4`)[3]).toBe('Earned Through Work');
     expect(el.querySelector(`${STORY} summary .open`)?.textContent).toBe('Read the full story');
     expect(texts(el, '.context')[0]).toBe('Digital Games Technology · FATEC Americana');
     expect(texts(el, '.refs .kind')[0]).toBe('ACADEMIC DOCUMENT');
-    expect(texts(el, `${PRO} .kind`).at(-1)).toBe('CURRENT CAMPAIGN');
-    expect(texts(el, `${PRO} .period`).at(-1)).toBe('SINCE 2025');
-    expect(texts(el, `${PRO} h3`).at(-1)).toBe('Building products end to end');
+  });
+
+  it('keeps pt-BR and en in parity: same structure and order, every text translated', async () => {
+    const pt = await renderAt('/');
+    TestBed.resetTestingModule();
+    const en = await renderAt('/en');
+
+    // Mesma estrutura e ordem: itens, codinomes, datas (time) e links.
+    expect(en.querySelectorAll('ol > li').length).toBe(pt.querySelectorAll('ol > li').length);
+    expect(texts(en, `${STORY} > .kind`)).toEqual(texts(pt, `${STORY} > .kind`));
+    const attrs = (root: Element, selector: string, name: string) =>
+      Array.from(root.querySelectorAll(selector)).map((n) => n.getAttribute(name));
+    expect(attrs(en, 'time', 'datetime')).toEqual(attrs(pt, 'time', 'datetime'));
+    expect(attrs(en, '.refs a', 'href')).toEqual(attrs(pt, '.refs a', 'href'));
+    // Nada sem tradução: títulos, resumos e parágrafos diferem entre os idiomas, nenhum vazio.
+    for (const selector of [`${STORY} h4`, `${STORY} .summary`, '.story > p', '.signature']) {
+      const a = texts(pt, selector);
+      const b = texts(en, selector);
+      expect(b.length).toBe(a.length);
+      expect(b.every((t, i) => !!t && t !== a[i])).toBe(true);
+    }
+    // Nenhuma chave técnica ou valor indefinido visível.
+    for (const root of [pt, en]) {
+      expect(root.textContent).not.toMatch(/campaignLog\.|undefined|null|\[object/);
+    }
   });
 });

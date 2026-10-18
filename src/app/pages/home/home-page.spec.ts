@@ -5,17 +5,17 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import {
   ACHIEVEMENTS,
-  CAMPAIGN_LOG,
+  CAMPAIGN_LOG_CHAPTERS,
   CURRENT_QUEST,
   SIDE_QUESTS,
   shouldRenderAchievements,
 } from '../../data';
 import { HomePage } from './home-page';
 
-// Os testes rodam na configuração `development`, onde Campaign Log (D-049), Achievements
-// (D-051), Current Main Quest (docs/18) e Side Quests (docs/19) usam MOCK. Em produção os
-// dados publicados são vazios e as seções não são renderizadas.
-const hasCampaignLog = CAMPAIGN_LOG.length > 0;
+// Os testes rodam na configuração `development`, onde Achievements (D-051), Current Main Quest
+// (docs/18) e Side Quests (docs/19) usam MOCK; em produção esses dados são vazios e as seções não
+// são renderizadas. O Campaign Log usa a mesma fonte real em todos os ambientes (D-074).
+const hasCampaignLog = CAMPAIGN_LOG_CHAPTERS.length > 0;
 const hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
 const hasCurrentQuest = CURRENT_QUEST !== null;
 const hasSideQuests = SIDE_QUESTS.length > 0;

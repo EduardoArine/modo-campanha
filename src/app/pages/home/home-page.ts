@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SiteFooter } from '../../core/layout/site-footer/site-footer';
 import {
   ACHIEVEMENTS,
-  CAMPAIGN_LOG,
   CAMPAIGN_LOG_CHAPTERS,
   CURRENT_QUEST,
   SIDE_QUESTS,
@@ -66,7 +65,7 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomePage {
-  protected readonly hasCampaignLog = CAMPAIGN_LOG.length > 0 || CAMPAIGN_LOG_CHAPTERS.length > 0;
+  protected readonly hasCampaignLog = CAMPAIGN_LOG_CHAPTERS.length > 0;
   protected readonly hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
   protected readonly hasCurrentQuest = CURRENT_QUEST !== null;
   protected readonly hasSideQuests = SIDE_QUESTS.length > 0;

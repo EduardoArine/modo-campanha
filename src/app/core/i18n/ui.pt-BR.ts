@@ -77,11 +77,6 @@ export const UI_PT_BR = {
     learnings: 'APRENDIZADOS',
   },
   campaignLog: {
-    kind: {
-      origin: 'NEW GAME',
-      checkpoint: 'CHECKPOINT',
-      current: 'CAMPANHA ATUAL',
-    },
     present: 'ATUAL',
     since: 'DESDE',
     // Capítulos (docs/15 §13): rótulos de sistema em inglês; ações localizadas.
@@ -96,7 +91,6 @@ export const UI_PT_BR = {
       press: 'IMPRENSA',
       record: 'REGISTRO BIBLIOGRÁFICO',
       academic: 'DOCUMENTO ACADÊMICO',
-      company: 'REGISTRO DA EMPRESA',
     },
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },

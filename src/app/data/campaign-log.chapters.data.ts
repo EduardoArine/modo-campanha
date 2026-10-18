@@ -307,9 +307,9 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   },
 };
 
-// CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §15): do ScoutEvo (2018) até hoje. Textos pt/en dos
-// checkpoints fornecidos pelo Eduardo (2026-10-17). Nome, período e assinatura pt definidos por ele
-// na consolidação (D-073); as versões en do nome e da assinatura são propostas, a aprovar.
+// CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §15–§16): do ScoutEvo (2018) até hoje, em aberto.
+// Textos pt/en dos checkpoints fornecidos pelo Eduardo (2026-10-17). Nome, período e assinatura
+// definidos por ele (D-073); aprovado editorialmente para produção (D-074).
 export const CHAPTER_02: CampaignLogChapter = {
   id: 'chapter-02',
   number: '02',
@@ -466,9 +466,10 @@ export const CHAPTER_02: CampaignLogChapter = {
       ],
     },
     {
-      // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração. Data (D-073): início
-      // aproximado em 2020/2021, segundo o Eduardo, e evolução posterior, sem ano final. As fontes
-      // públicas dão 2021 como ponto de partida (Arppen) e citam o desenvolvimento em 2022 (InfraFM).
+      // Textos pt/en fornecidos pelo Eduardo (2026-10-17); no en, "Axia Intelligence" nomeia a
+      // evolução do produto (D-074). Data (D-073): início aproximado da participação dele em
+      // 2020/2021, segundo o próprio relato (estimativa, não data documental), e evolução posterior,
+      // sem ano final. A InfraFM cita o desenvolvimento em 2022.
       id: 'axia',
       code: 'AXIA',
       when: { approx: [2020, 2021] },
@@ -492,30 +493,17 @@ export const CHAPTER_02: CampaignLogChapter = {
         ],
         en: [
           'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to improve cleaning and facilities management through technology, data, and connected devices.',
-          "I contributed throughout the product's evolution, from its initial concept and engineering to subsequent improvements and expansions, including the development of Axia's intelligence capabilities.",
+          "I contributed throughout the product's evolution, from its initial concept and engineering to subsequent improvements and expansions, including its evolution into Axia Intelligence.",
           "My work covered several parts of the solution: architecture, the Angular web application, .NET WebAPI with C#, SQL Server, interface design, and contributions to the devices' embedded C code.",
           'Although I worked across nearly every area, my primary focus remained on the web platform, APIs, and user experience.',
           "Being involved in Axia across multiple development cycles was an important experience. The challenge wasn't simply connecting different technologies, but turning real operational needs into a consistent product that could evolve as new challenges and opportunities emerged.",
           "This project strengthened my approach to digital product development: contributing to decisions, building solutions, understanding how they're used, and continuously improving the product.",
         ],
       },
-      // Fontes enviadas pelo Eduardo, verificadas em 2026-10-17. `arppen.com/axia.html` retorna 404;
-      // a página inicial da Arppen traz a seção da Axia e a linha do tempo pública. Nenhuma das duas
-      // fontes cita o Eduardo.
+      // Fonte pública funcional, verificada em 2026-10-17 (não cita o Eduardo). A página do produto
+      // na Arppen (`arppen.com/axia.html`) está em 404 e não é substituída pela página inicial da
+      // empresa (D-074): volta quando houver uma página específica funcional.
       links: [
-        {
-          kind: 'company',
-          label: {
-            'pt-BR': 'Arppen: a Axia e sua linha do tempo',
-            en: 'Arppen: Axia and its timeline (in Portuguese)',
-          },
-          url: 'https://www.arppen.com/',
-          note: {
-            'pt-BR':
-              'Linha do tempo pública: ponto de partida em 2021, protótipos e testes em 2022 e a Inteligência Axia no mercado em 2024.',
-            en: 'Public timeline: starting point in 2021, prototypes and field tests in 2022, and Axia Intelligence on the market in 2024.',
-          },
-        },
         {
           kind: 'press',
           label: {
@@ -534,8 +522,8 @@ export const CHAPTER_02: CampaignLogChapter = {
     },
     {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
-      // Descrição pública escrita por ele; nada interno da Comunidade On. O resumo do card é próprio
-      // (D-073), não a primeira frase da história.
+      // Descrição pública escrita por ele; nada interno da Comunidade ON. O resumo do card é próprio
+      // (D-073), não a primeira frase da história. "Digital Games" no en (D-074).
       id: 'comunidade-on',
       code: 'COMUNIDADE ON',
       when: { since: 2025 },
@@ -564,7 +552,7 @@ export const CHAPTER_02: CampaignLogChapter = {
           'ON aims to rethink the relationship between brands and consumers by bringing technology, artificial intelligence, and people together in a customer service platform.',
           'My work involves developing web applications, integrating services and APIs, and, especially, designing and improving user experiences. I work with Angular, TypeScript, .NET, and C#, connecting technical decisions with product needs and the people using the platform.',
           'But this project brought something particularly meaningful back into my career: gamification.',
-          'The passion for video games that led me to study Game Development found a practical application in my everyday work. Concepts such as progression, challenges, achievements, feedback, and recognition became part of how I think about and build digital experiences.',
+          'The passion for video games that led me to study Digital Games found a practical application in my everyday work. Concepts such as progression, challenges, achievements, feedback, and recognition became part of how I think about and build digital experiences.',
           "The challenge isn't simply adding game elements to an interface. It's using that language to make work and learning experiences clearer, more engaging, and more meaningful without sacrificing usability or operational efficiency.",
           'At Comunidade ON, I get to work at the intersection of engineering, product design, artificial intelligence, and gamification.',
           "This is an ongoing campaign — and perhaps one of the projects that best reflects the professional I've become.",

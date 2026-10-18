@@ -75,11 +75,6 @@ export const UI_EN: UiDictionary = {
     learnings: 'LEARNINGS',
   },
   campaignLog: {
-    kind: {
-      origin: 'NEW GAME',
-      checkpoint: 'CHECKPOINT',
-      current: 'CURRENT CAMPAIGN',
-    },
     present: 'PRESENT',
     since: 'SINCE',
     chapter: 'CHAPTER',
@@ -93,7 +88,6 @@ export const UI_EN: UiDictionary = {
       press: 'PRESS',
       record: 'BIBLIOGRAPHIC RECORD',
       academic: 'ACADEMIC DOCUMENT',
-      company: 'COMPANY RECORD',
     },
     story: { open: 'Read the full story', close: 'Collapse the story' },
   },

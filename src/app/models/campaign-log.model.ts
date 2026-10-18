@@ -1,30 +1,9 @@
 import type { Localized } from '../core/i18n';
 
-/**
- * Semântica do checkpoint (D-048). O rótulo temático (NEW GAME, CHECKPOINT, CAMPANHA ATUAL)
- * é apresentação e vem do dicionário de UI, nunca do dado.
- */
-export type CampaignLogKind = 'origin' | 'checkpoint' | 'current';
-
-/** Período em anos reais. `end` ausente = ano único; `'present'` = até hoje. */
+/** Período em anos reais de um capítulo. `end` ausente = ano único; `'present'` = até hoje. */
 export interface CampaignLogPeriod {
   start: number;
   end?: number | 'present';
-}
-
-/**
- * Checkpoint do Campaign Log: uma mudança da trajetória, não um item de currículo.
- * Sem tecnologias, tags, highlights, resultados, XP, níveis ou métricas (D-048).
- */
-export interface CampaignLogEntry {
-  id: string;
-  kind: CampaignLogKind;
-  period: CampaignLogPeriod;
-  title: Localized;
-  /** Organização/ambiente, só quando útil e aprovado. */
-  context?: Localized;
-  /** 1–2 frases: o que mudou. */
-  summary: Localized;
 }
 
 /**
@@ -52,9 +31,9 @@ export interface CampaignLogPhoto {
 
 /**
  * Tipo da referência externa (o rótulo vem do dicionário): lançamento institucional, publicação
- * científica, imprensa, registro bibliográfico, documento acadêmico ou registro público da empresa.
+ * científica, imprensa, registro bibliográfico ou documento acadêmico.
  */
-export type CampaignLogLinkKind = 'launch' | 'paper' | 'press' | 'record' | 'academic' | 'company';
+export type CampaignLogLinkKind = 'launch' | 'paper' | 'press' | 'record' | 'academic';
 
 /** Referência externa verificável de um checkpoint (abre em nova aba). */
 export interface CampaignLogLink {
@@ -86,8 +65,8 @@ export interface CampaignLogChapterEntry {
 }
 
 /**
- * Capítulo do Campaign Log: um arco que agrupa checkpoints antes ou fora da linha profissional.
- * Não substitui as entradas profissionais (`CampaignLogEntry`), só as antecede.
+ * Capítulo do Campaign Log (D-070–D-074): um arco da trajetória real que agrupa checkpoints. Os
+ * capítulos são todo o conteúdo do Campaign Log; não há linha profissional à parte.
  */
 export interface CampaignLogChapter {
   id: string;

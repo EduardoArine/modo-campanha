@@ -62,7 +62,7 @@
   }
 }
 
-// Markers quadrados: origin warm discreto, checkpoint estrutural neutro, current active.
+// Markers quadrados: checkpoint estrutural neutro; capítulo warm vazado; em andamento = status.
 .marker {
   position: absolute;
   z-index: 1;
@@ -75,12 +75,6 @@
   background: var(--mc-bg);
 }
 
-.entry--origin .marker {
-  border-color: var(--mc-accent-active);
-  background: var(--mc-accent-active);
-}
-
-.entry--current .marker,
 .entry--chapter.entry--ongoing .marker {
   border-color: var(--mc-status-online);
   background: var(--mc-status-online);
@@ -140,8 +134,8 @@ h4 {
   color: var(--mc-text-secondary);
 }
 
-// Capítulo (docs/15 §13): cabeçalho no mesmo eixo, marker warm vazado (o origin profissional
-// continua o único warm cheio). Os checkpoints do capítulo usam a tipografia aprovada (D-050).
+// Capítulo (docs/15 §13): cabeçalho no mesmo eixo, marker warm vazado. Os checkpoints do capítulo
+// usam a tipografia aprovada (D-050).
 .entry--chapter .marker {
   border-color: var(--mc-accent-active);
 }

@@ -1,6 +1,6 @@
 import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 import { PLAYER_PROFILE } from './profile.data';
-import { CAMPAIGN_LOG_CHAPTERS as DEV_CHAPTERS } from './campaign-log.data.development';
+import { CAMPAIGN_LOG_CHAPTERS } from './campaign-log.data';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
 // factuais (nada de anos inventados, nada de métrica) e a fidelidade ao texto fornecido.
@@ -62,8 +62,8 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
     }
   });
 
-  it('appears in development next to CHAPTER 01 (production publishes CHAPTER 00 only)', () => {
-    expect(DEV_CHAPTERS).toEqual([ORIGIN_CHAPTER, FATEC_CHAPTER, CHAPTER_02]);
+  it('opens the canonical Campaign Log, followed by CHAPTERS 01 and 02 (D-074)', () => {
+    expect(CAMPAIGN_LOG_CHAPTERS).toEqual([ORIGIN_CHAPTER, FATEC_CHAPTER, CHAPTER_02]);
   });
 });
 
@@ -221,15 +221,15 @@ describe('Campaign Log — CHAPTER 02 (Axia)', () => {
     );
   });
 
-  it('links the Arppen public timeline (axia.html is a 404) and the InfraFM report', () => {
+  it('links only the working InfraFM report; no homepage stands in for the product page', () => {
     expect(axia.links?.map((l) => [l.kind, l.url])).toEqual([
-      ['company', 'https://www.arppen.com/'],
       [
         'press',
         'https://infrafm.com.br/Textos/3/23644/Como-um-pequeno-dispositivo-pode-acabar-com-ruidos-operacionais-e-prever-afastamentos',
       ],
     ]);
-    expect(JSON.stringify(axia.links)).not.toContain('axia.html');
+    expect(JSON.stringify(axia.links)).not.toContain('arppen.com');
+    expect(axia.story.en.join(' ')).toContain('including its evolution into Axia Intelligence');
     // As fontes não citam o Eduardo; as notas separam início (2021), desenvolvimento (2022) e
     // mercado (2024), sem atribuir a ele funcionalidades ou resultados.
     expect(JSON.stringify(axia.links)).not.toMatch(/Eduardo|Arine/);
@@ -283,5 +283,8 @@ describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
       expect(on.story[locale].length).toBe(8);
     }
     expect(on.story['pt-BR'][0]).toMatch(/^Depois de experiências com jogos/);
+    // O curso se chama Digital Games em todo o en (D-074).
+    expect(on.story.en.join(' ')).toContain('that led me to study Digital Games');
+    expect(on.story.en.join(' ')).not.toContain('Game Development');
   });
 });
