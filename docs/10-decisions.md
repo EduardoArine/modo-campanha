@@ -974,7 +974,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **`mc-crt-front`:**
     - camada digital atrás do render, cobrindo o furo inteiro;
     - sem o raio elíptico;
-    - standby em vidro preto liso.
+    - standby em vidro preto liso (refinado em D-081).
   - **Engine, roteiro e timings do teaser intactos.** Estados, transições e textos do Inventory também.
 - **Assets:** os mockups do Eduardo substituem `design/source/hero/hero-background.png` (mesma foto, provisória) e `design/source/mc-01/crt-front.png` (render novo do mesmo CRT). O alfa foi normalizado: o corpo tinha 240–254. Os derivados WebP foram regerados, todos do mesmo tamanho ou menores.
 - **Alternativas:**
@@ -986,3 +986,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - o visual do standby;
   - a TV desligada por ~1 s na Hero.
 - **Status:** implementado na branch `feat/hero-refinement`, aguardando revisão visual do Eduardo. Sem merge e sem deploy.
+
+## D-081 — CRT do Inventory: HUD do teaser dentro do tubo e reflexo do standby
+
+- **Data:** 2026-10-18
+- **Aprovação do Eduardo:** D-080 aprovada, inclusive os PNGs com o tubo transparente. Na Hero, a TV fica desligada ~1 s antes do teaser, sem imagem provisória nem mudança na transição.
+- **HUD (opção escolhida pelo Eduardo):** o conteúdo do teaser recua discretamente, **só no CRT do Inventory**.
+  - O recuo é de `.glass-fill { inset: 2.5% }`, o menor valor medido que deixa os quatro slots, o mini-cartucho e "PLAYER 01" 100% visíveis em 390, 820, 1024 e 1440. 2% falha; o limite fica entre 2,3% e 2,4%.
+  - Proporção 4:3, escala inteira do canvas e área segura preservadas.
+  - Fica uma borda preta discreta, a área útil de uma TV de tubo.
+  - Engine, roteiro, sprites, timings e a Hero não mudam.
+- **Standby:** vidro escuro com um reflexo estático, quente e muito discreto nas laterais altas do tubo, que sugere a curvatura.
+  - Feito com dois `radial-gradient` de `--mc-material-orange` a 12% num `::before`. Sem animação e sem alterar PNGs.
+  - Só aparece em `is-standby`; some quando o conteúdo digital aparece.
+  - Pico de luminância de 0,017: a tela não parece acesa.
+- **Alternativas** (registradas em D-080, não escolhidas): render com cantos menos curvos; aceitar o corte.
+- **REVIEWER:** aprovado.
+  - Cobertura do HUD 0% em todas as larguras e quadros.
+  - CLS 0, foco e movimento reduzido corretos.
+  - Página inteira idêntica fora do vidro do Inventory; Lighthouse inalterado.
+  - Registro pré-existente, fora do escopo: com a arte indisponível, "Reproduzir teaser" não responde (`toggleTeaser` só age a partir de `art`).
+- **Status:** **APPROVED / consolidado** na branch `feat/hero-refinement`; sem merge e sem deploy.

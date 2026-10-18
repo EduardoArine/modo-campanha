@@ -5,7 +5,7 @@ import { crtVars, MC01_CRT } from '../console/console.geometry';
 /**
  * CRT frontal do MC-01 (D-077): o render oficial é a estrutura física; o conteúdo entra numa camada
  * digital independente ATRÁS do render, visto pelo tubo transparente (D-080): o aro recorta a
- * curvatura. Em `standby` o vidro fica mais escuro (tela em espera, sem competir com o cartucho).
+ * curvatura. Em `standby`, TV desligada com um reflexo estático e discreto no vidro (D-081).
  * Presentational: quem usa decide semântica, textos e estados; `failed` avisa se o render falhar.
  */
 @Component({

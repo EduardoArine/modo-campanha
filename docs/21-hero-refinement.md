@@ -359,9 +359,26 @@ A pedido do Eduardo, o tubo do CRT ficou **transparente** nas imagens, e as tela
   - HUD, legendas e quadro-chave nas mesmas posições.
 - **Revisão independente:** sem bloqueantes.
   - **Hero:** a fresta máxima no topo é de 3,36 px na fonte (≤ 3,3 px CSS) e não aparece no tamanho real. A etiqueta "PLAYER 01" encosta no canto curvo do aro (~1% sob ele), mas o texto fica inteiro.
-  - **Inventory, em aberto:** o canto do tubo novo é mais curvo que o antigo raio de 6% / 8%. O aro cobre ~13% do último slot do HUD do teaser e ~1% da etiqueta "PLAYER 01". Opções, a decidir pelo Eduardo:
-    - recuar ligeiramente o teaser só no Inventory;
-    - um render com cantos menos curvos;
-    - aceitar.
-  - **Standby:** o vidro em espera é translúcido e mostra o fundo atrás do CRT (preto liso). O visual também está em aberto.
+  - **Inventory:** o canto do tubo novo é mais curvo que o antigo raio de 6% / 8%. O aro cobria ~13% do último slot do HUD do teaser e ~1% da etiqueta "PLAYER 01". **Resolvido em D-081 (§10).**
+  - **Standby:** o vidro em espera ficou preto liso. **Resolvido em D-081 (§10).**
+- **Aprovação (Eduardo):** D-080 aprovada, inclusive os PNGs com o tubo transparente e a TV desligada por ~1 s antes do teaser na Hero, sem imagem provisória.
 - **Próxima arte:** o contrato (§8.2 G, K e N) pede o mestre já com o tubo transparente.
+
+## 10. Acabamento do CRT do Inventory (D-081)
+
+Dois refinamentos pedidos pelo Eduardo, só no `mc-crt-front` do Project Inventory. A Hero e o teaser (engine, roteiro, sprites, timings) não mudaram.
+
+- **HUD do teaser:** a camada do teaser (`.glass-fill`, `project-inventory-devices.scss`) recua **2,5%** dentro do tubo. É o menor valor medido que deixa os quatro slots, o mini-cartucho (x 140–152 · y 4–19 nativos) e "PLAYER 01" 100% fora do aro em 390, 820, 1024 e 1440, inclusive durante a animação.
+  - Medição pelo alfa do render: 2% falha (0,2–0,3% sob o aro), e o limite fica entre 2,3% e 2,4%. Os 2,5% passam com folga, com menos de 1 px de diferença.
+  - Proporção 4:3 e resolução interna do canvas (escala inteira) inalteradas. A escala na tela cai ~5% (1440: 3,21 → 3,05 px CSS por pixel nativo), sem perda perceptível de nitidez. A área segura (x 8–152) não é cortada.
+  - Sobra uma borda preta discreta, mais grossa no meio de cada lado porque o tubo é abaulado (1440: 3–11 px; 390: 2–6 px). É a área útil de uma TV de tubo. A direita fica ~2 px mais grossa porque o furo do render não está centrado. A arte do READY continua ocupando o tubo inteiro.
+- **Standby (antes de inserir):** vidro escuro (`--mc-bg`) com um reflexo **estático**, quente e muito discreto nas laterais altas do tubo, sugerindo a curvatura. São dois `radial-gradient` de `--mc-material-orange` a 12% de opacidade, num `::before` dentro do vidro.
+  - Sem animação e sem mudar os PNGs. Aparece só com `is-standby` (inicial, inserindo, depois de ejetar) e some em carregamento, READY, teaser e falhas.
+  - A tela não parece acesa: o pico é rgb(47, 32, 18), com luminância relativa 0,017 contra 0,006 do fundo. O texto "INSERT CARTRIDGE" mantém 6,8 : 1.
+  - Saiu a `transition` de cor do vidro, sem efeito desde a D-080.
+- **Validação (BUILDER + REVIEWER):**
+  - 390, 820, 1024 e 1440, pt e en, com movimento reduzido;
+  - inserção, ejeção, reprodução e pausa (botão e Espaço), foco, CLS 0;
+  - página inteira idêntica fora do vidro do Inventory;
+  - Lighthouse inalterado: mobile 82, desktop 99, acessibilidade 100;
+  - testes e builds passam, sem aviso de orçamento de CSS.

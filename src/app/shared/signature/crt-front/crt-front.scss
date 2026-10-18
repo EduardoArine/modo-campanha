@@ -42,7 +42,7 @@
 }
 
 // Em espera (D-081): TV desligada. Vidro escuro com um reflexo estático, quente e muito discreto
-// no alto do tubo, que sugere a curvatura. Sem animação; some quando o conteúdo digital aparece.
+// nas laterais altas do tubo, que sugere a curvatura. Sem animação; some quando o conteúdo digital aparece.
 :host(.is-standby) .glass::before {
   content: '';
   position: absolute;

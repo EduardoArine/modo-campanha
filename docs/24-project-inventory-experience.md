@@ -212,7 +212,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 - **Ocultação:** a borda superior da frente (y = 434) é opaca em toda a largura do slot (alfa 253–254). A frente esconde de verdade a base do cartucho: 66 px quando encaixado. Não foi preciso `clip-path` nem `mask-image`.
 - **Conferência:** o console montado, com o cartucho encaixado e renderizado a 1254 px, comparado à referência dá diferença média de 2 a 5 níveis (de 255) por região, efeito da compressão WebP. Visualmente idêntico (`scratchpad/inventory/h2/h2-assembly-seated-1254.png`).
 - **Halos:** 0,8 a 1,4% dos pixels são semitransparentes, só nas bordas. Nenhum halo visível sobre o fundo escuro.
-- **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render. **Atualizado em D-080:** o render tem o tubo transparente; a camada fica **atrás** dele, cobrindo o furo + 2 px (118, 117, 868 × 662), sem raio. O aro recorta a curvatura.
+- **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render. **Atualizado em D-080:** o render tem o tubo transparente; a camada fica **atrás** dele, cobrindo o furo + 2 px (118, 117, 868 × 662), sem raio. O aro recorta a curvatura. **D-081:** o teaser recua 2,5% (borda preta discreta, HUD inteiro), e o standby ganha um reflexo estático e discreto (`docs/21` §10).
 
 ### 16.2 Sistema de camadas (reutilizável)
 
