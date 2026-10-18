@@ -876,3 +876,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Links:** sai a página inicial da Arppen, que substituía a página da Axia (404). Nenhuma URL nova.
 - **Visual e outras seções:** sem mudança na linguagem aprovada (D-050). Hero, teaser, Player Status, Skill Loadout, Project Inventory, Achievements, Current Main Quest, Side Quests, Final Checkpoint e footer não mudaram.
 - **Status:** no build de produção e do GitHub Pages, **sem deploy**; aguardando a validação visual final do Eduardo. Detalhes em `docs/15` §17.
+
+## D-075 — Project Inventory: refinamento da experiência (proposta)
+
+- **Data:** 2026-10-18
+- **Pedido do Eduardo:** transformar o Project Inventory numa experiência de exploração de projetos ("cada projeto é um cartucho; o MC-01 apresenta essas experiências"), com estados explícitos (INITIAL, SELECTED, INSERTING, READY, ERROR/FALLBACK). O congelamento visual do Inventory (02-C) fica suspenso só para esta revisão.
+- **Proposta:** auditoria, diagnóstico e três direções prototipadas em `docs/24`: **A — Featured Cartridge**, **B — System Library** e **H — híbrido (recomendado)**: destaque de A com 1 cartucho, sistema de B no READY (faixa do slot, teaser no CRT, case fora do vidro) e biblioteca de B com 2 ou mais cartuchos aprovados.
+- **Protótipo:** rota dev-only `/dev/inventory-lab` (nunca em produção), com dados reais do MC-001, renders oficiais, MC-CART, CRT e a tela do SYSTEM HORIZON sem modificação.
+- **Pendente:** escolha da direção; nome do MC-001 (dados: "Modo Campanha"; rótulo/brief: SYSTEM HORIZON); teaser no CRT do Inventory; textos; derivados dos renders; modelo `experiences`. Nada implementado na Home; sem merge e sem deploy.

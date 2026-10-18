@@ -87,6 +87,7 @@ Registro da evolução profissional, portfólio, vitrine de projetos, ferramenta
 | `21-hero-refinement.md`             | Hero: refinamento (D-063), renders (D-066, histórico) e fundo aprovado direto (D-067, §7)  |
 | `22-system-horizon-teaser.md`       | SYSTEM HORIZON: teaser do CRT da Hero (attract mode), arquitetura e especificação dos assets (D-068) |
 | `23-system-horizon-mvp.md`          | SYSTEM HORIZON: proposta do MVP interativo (visão dos dados, 5 atos, rota /system-horizon, a11y), D-069, aguardando aprovação |
+| `24-project-inventory-experience.md` | Project Inventory: auditoria, direções A / B / H (híbrido recomendado), estados de inserção, viewer, múltiplos cartuchos; protótipo dev-only `/dev/inventory-lab`; D-075, aguardando escolha |
 
 Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atualize os checkboxes.
 
