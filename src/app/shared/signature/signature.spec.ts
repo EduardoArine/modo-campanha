@@ -54,7 +54,7 @@ describe('MC signature components', () => {
     const nameId = article.getAttribute('aria-labelledby')!;
 
     expect(card.querySelector(`#${nameId}`)?.textContent).toBe('Eduardo Arine');
-    expect(card.querySelector('.player')?.textContent).toBe('PLAYER 01');
+    expect(card.querySelector('.player')?.textContent).toBe('JOGADOR 01');
     expect(card.querySelector('.placeholder')?.textContent).toBe('FOTO DO EDUARDO');
     expect(card.querySelector('img')).toBeNull();
     expect(card.querySelector('.badge')?.getAttribute('aria-hidden')).toBe('true');
@@ -80,7 +80,7 @@ describe('MC signature components', () => {
     expect(cart.getAttribute('aria-label')).toBe('MC-CART ON-001: Projeto, PLATAFORMA');
     expect(cart.classList).toContain('mc-cart--light');
     expect(cart.getAttribute('tabindex')).toBeNull();
-    expect(cart.querySelector('.art-placeholder')?.textContent).toBe('PROJECT ARTWORK');
+    expect(cart.querySelector('.art-placeholder')?.textContent).toBe('ARTE DO PROJETO');
   });
 
   it('uses the CSS construction as fallback and the official render as the object (D-065)', () => {
@@ -111,7 +111,7 @@ describe('MC signature components', () => {
 
     expect(empty.getAttribute('role')).toBe('region');
     expect(empty.getAttribute('aria-label')).toBe('Visualizador de projetos');
-    expect(empty.querySelector('.empty')?.textContent).toBe('INSERT CARTRIDGE');
+    expect(empty.querySelector('.empty')?.textContent).toBe('INSIRA UM CARTUCHO');
     expect(empty.querySelector('.fx')?.getAttribute('aria-hidden')).toBe('true');
     expect(content.querySelector('.demo')?.textContent).toBe('Conteúdo');
     expect(content.querySelector('.empty')).toBeNull();

@@ -24,9 +24,9 @@ describe('CurrentQuestSection', () => {
     const h2 = section.querySelector('h2')!;
 
     expect(section.getAttribute('aria-labelledby')).toBe(h2.id);
-    expect(h2.textContent).toBe('CURRENT MAIN QUEST');
+    expect(h2.textContent).toBe('MISSÃO PRINCIPAL ATUAL');
     expect(section.querySelector('mc-status.mc-status--in-progress')?.textContent).toContain(
-      'IN PROGRESS',
+      'EM ANDAMENTO',
     );
     expect(texts(section, 'h3')).toEqual(['Campanha de exemplo']);
   });

@@ -62,7 +62,7 @@
           <p class="kind">
             {{ ui().campaignLog.checkpoint }} {{ code(i) }}
             @if (entry.code; as name) {
-              · {{ name }}
+              · {{ locale.pick(name) }}
             }
           </p>
           <h4 class="title">{{ locale.pick(entry.title) }}</h4>

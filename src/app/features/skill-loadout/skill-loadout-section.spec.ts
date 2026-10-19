@@ -22,8 +22,8 @@ describe('SkillLoadoutSection', () => {
     const el = await renderAt('/');
     const section = el.querySelector('section#skill-loadout')!;
 
-    expect(section.querySelector('h2')?.textContent).toBe('SKILL LOADOUT');
-    expect(texts(section, 'h3')).toEqual(['BUILD', 'PRODUCT', 'AI', 'GAME DNA']);
+    expect(section.querySelector('h2')?.textContent).toBe('ARSENAL DE HABILIDADES');
+    expect(texts(section, 'h3')).toEqual(['CONSTRUÇÃO', 'PRODUTO', 'IA', 'DNA DE GAMES']);
     expect(section.querySelectorAll('ul[role="list"]').length).toBe(4);
     expect(section.querySelectorAll('li').length).toBe(18);
     expect(texts(section.querySelector('ul')!, 'li')).toContain('PostgreSQL / SQL Server');
@@ -32,7 +32,7 @@ describe('SkillLoadoutSection', () => {
   it('keeps group codes decorative', async () => {
     const codes = Array.from((await renderAt('/')).querySelectorAll('.code'));
 
-    expect(codes.map((code) => code.textContent?.trim())).toEqual(['BLD', 'PRD', 'AI', 'GDN']);
+    expect(codes.map((code) => code.textContent?.trim())).toEqual(['CON', 'PRD', 'IA', 'DNA']);
     expect(codes.every((code) => code.getAttribute('aria-hidden') === 'true')).toBe(true);
   });
 

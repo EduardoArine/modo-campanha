@@ -8,12 +8,19 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
   const entries = ORIGIN_CHAPTER.entries;
 
   it('has five checkpoints in the approved order', () => {
-    expect(entries.map((e) => e.code)).toEqual([
+    expect(entries.map((e) => e.code?.en)).toEqual([
       'FIRST CONTACT',
       'THE RENTAL STORE YEARS',
       'THE LADYBUG WISH',
       'EARNED, NOT GIVEN',
       'BUILT FROM MEMORIES',
+    ]);
+    expect(entries.map((e) => e.code?.['pt-BR'])).toEqual([
+      'PRIMEIRO CONTATO',
+      'OS ANOS DE LOCADORA',
+      'O PEDIDO À JOANINHA',
+      'CONQUISTADO, NÃO GANHO',
+      'FEITO DE MEMÓRIAS',
     ]);
     expect(new Set(entries.map((e) => e.id)).size).toBe(5);
   });
@@ -162,7 +169,7 @@ describe('Campaign Log — CHAPTER 02 (EOS)', () => {
   const eos = CHAPTER_02.entries[1];
 
   it('is the second checkpoint of CHAPTER 02, in 2019', () => {
-    expect(CHAPTER_02.entries.map((e) => e.code).slice(0, 2)).toEqual(['SCOUTEVO', 'EOS']);
+    expect(CHAPTER_02.entries.map((e) => e.code?.en).slice(0, 2)).toEqual(['SCOUTEVO', 'EOS']);
     expect(eos.when).toEqual({ year: 2019 });
   });
 
@@ -202,7 +209,7 @@ describe('Campaign Log — CHAPTER 02 (Axia)', () => {
   const axia = CHAPTER_02.entries[2];
 
   it('is the third checkpoint of CHAPTER 02: approximate start (2020/2021), no end year', () => {
-    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual([
+    expect(CHAPTER_02.entries.map((e) => e.code?.en)).toEqual([
       'SCOUTEVO',
       'EOS',
       'AXIA',
@@ -248,7 +255,7 @@ describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
   const on = CHAPTER_02.entries[3];
 
   it('is the fourth checkpoint, open since 2025, and keeps CHAPTER 02 in progress', () => {
-    expect(CHAPTER_02.entries.map((e) => e.code)).toEqual([
+    expect(CHAPTER_02.entries.map((e) => e.code?.en)).toEqual([
       'SCOUTEVO',
       'EOS',
       'AXIA',

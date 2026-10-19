@@ -20,7 +20,7 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
-> **A Home renderiza só as seções construídas (D-047).** Em produção: Hero, Player Status, Skill Loadout, Project Inventory e **Final Checkpoint** (#9, sempre a última, D-052), seguidos do **footer** da Home (fora do `<main>`). Campaign Log, Achievements, Current Main Quest e Side Quests só aparecem quando há conteúdo publicado (hoje, MOCK dev-only). Nenhum placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos / Contato** (en: About / Projects / Contact; Contato → `#final-checkpoint`); Jornada volta quando o Campaign Log tiver conteúdo real.
+> **A Home renderiza só as seções construídas (D-047).** Em produção: Hero, Player Status, Skill Loadout, Project Inventory e **Final Checkpoint** (#9, sempre a última, D-052), seguidos do **footer** da Home (fora do `<main>`). Campaign Log, Achievements, Current Main Quest e Side Quests só aparecem quando há conteúdo publicado (hoje, MOCK dev-only). Nenhum placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos / Jornada / Contato** (en: About / Projects / Journey / Contact; Jornada → `#campaign-log`, Contato → `#final-checkpoint`; D-084). Em pt os títulos das seções são em português (STATUS DO JOGADOR, ARSENAL DE HABILIDADES, INVENTÁRIO DE PROJETOS, DIÁRIO DE CAMPANHA, A CAMPANHA CONTINUA...).
 
 ## Header (aprovado no Concept 03)
 

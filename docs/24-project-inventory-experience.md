@@ -15,7 +15,7 @@
 | Dados              | `PROJECTS` tem só o MC-001, com `publication: 'approved'`. `inventoryProjects(isDevMode())` aceita placeholder só em dev.                                                              | **O MC-001 se chama "Modo Campanha" nos dados** (PORTFÓLIO INTERATIVO). O rótulo do render diz SYSTEM HORIZON.                     |
 | Teclado / toque    | Botões nativos (Enter/Space), nada só por hover, toque funciona.                                                                                                                       | Base de acessibilidade sólida (D-058).                                                                                             |
 
-Capturas do estado atual: `scratchpad/inventory/current-{initial,ready}-{1440,1024,820,390}.png`.
+Capturas do estado atual: locais da revisão (fora do repositório).
 
 ## 2. O que preservar
 
@@ -162,7 +162,7 @@ Só CSS (transições e `@keyframes`) e signals; sem biblioteca de animação. T
 - **Rota:** `npm start` → `/dev/inventory-lab` (e `/en/dev/inventory-lab`). Só no build de desenvolvimento (`dev.routes.development.ts`), nunca em produção.
 - **Parâmetros:** `dir=a|b|h`, `state=initial|selected|inserting|ready`, `error=1` (render e teaser indisponíveis), `clean=1` (sem a barra do laboratório). A barra no canto inferior direito troca direção, estado, erro e idioma.
 - **Código:** `src/app/dev/inventory-lab/` usa o `PROJECTS[0]` real, os renders oficiais, `mc-cart`, `mc-crt-project-viewer` e `app-system-horizon-screen` sem modificá-los. Os textos de protótipo ficam em `lab-copy.ts`. **Não é a implementação definitiva.**
-- **Capturas:** `scratchpad/inventory/lab/<dir>-<state>-<lang>-<largura>.png` (A, B e H; todos os estados em 1440 e 390; INITIAL e READY em 1024 e 820; en em 1440 e 390; erro em 1440 e 390).
+- **Capturas:** capturas locais da revisão (fora do repositório) (A, B e H; todos os estados em 1440 e 390; INITIAL e READY em 1024 e 820; en em 1440 e 390; erro em 1440 e 390).
 
 ## 15. Revisão independente (REVIEWER, 2026-10-18)
 
@@ -210,7 +210,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
   - o cartucho encaixado fica em (277, 0), na escala 1,0 (diferença média de 0,8 na parte visível).
   - As três camadas compartilham um sistema de coordenadas (a referência), sem escala, sem deformação e sem máscara.
 - **Ocultação:** a borda superior da frente (y = 434) é opaca em toda a largura do slot (alfa 253–254). A frente esconde de verdade a base do cartucho: 66 px quando encaixado. Não foi preciso `clip-path` nem `mask-image`.
-- **Conferência:** o console montado, com o cartucho encaixado e renderizado a 1254 px, comparado à referência dá diferença média de 2 a 5 níveis (de 255) por região, efeito da compressão WebP. Visualmente idêntico (`scratchpad/inventory/h2/h2-assembly-seated-1254.png`).
+- **Conferência:** o console montado, com o cartucho encaixado e renderizado a 1254 px, comparado à referência dá diferença média de 2 a 5 níveis (de 255) por região, efeito da compressão WebP. Visualmente idêntico (capturas locais da revisão (fora do repositório)).
 - **Halos:** 0,8 a 1,4% dos pixels são semitransparentes, só nas bordas. Nenhum halo visível sobre o fundo escuro.
 - **CRT:** o vidro está em (121, 120, 862 × 656) no recorte, ≈ 4:3. A camada digital (arte, teaser, carregamento, fallback) fica num elemento próprio sobre o vidro, com raio elíptico (6% / 8%) que acompanha a curvatura do render. **Atualizado em D-080:** o render tem o tubo transparente; a camada fica **atrás** dele, cobrindo o furo + 2 px (118, 117, 868 × 662), sem raio. O aro recorta a curvatura. **D-081:** o teaser recua 2,5% (borda preta discreta, HUD inteiro), e o standby ganha um reflexo estático e discreto (`docs/21` §10).
 
@@ -265,7 +265,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 
 ### 16.7 Capturas
 
-`scratchpad/inventory/h2/`:
+Capturas locais da revisão (fora do repositório):
 
 - **Montagem:** `h2-assembly-seated-1254.png`.
 - **Sequência:** `seq-{out,aligned,partial,seated,ready}-1440.png` e a tira `seq-strip-1440.png`.
@@ -372,7 +372,7 @@ Testes com entrada real (Tab, Enter, Space, clique e toque), reduced motion emul
 
 ### 17.4 Identidade do MC-CART (resolvida em D-078)
 
-Comparação lado a lado: `scratchpad/inventory/mc001-identity.png` e `scratchpad/review-final/review-final-identity.png`.
+Comparação lado a lado: capturas locais da revisão (fora do repositório).
 
 - **Iguais:** o rótulo (arte, SYSTEM HORIZON, MC-CART, MC-001, MODO CAMPANHA, glifo), os trilhos laterais laranja, a fenda laranja à direita, o triângulo, a paleta e a tipografia.
 - **Diferentes, e estruturais:**
@@ -461,4 +461,4 @@ A pedido do Eduardo, **a TV é a protagonista** e o console, o aparelho que roda
 - **Linhas de base:** console e TV seguem na mesma linha (os estados ficam na mesma altura).
 - **Sem regressões:** sem overflow nem CLS ao inserir ou ejetar; a ordem de foco não mudou; Lighthouse dá acessibilidade 100.
 - **`sizes`:** foram atualizados para as novas larguras. O INITIAL em 390@3x caiu de 424 para 299 KB.
-- **Capturas antes × depois:** `scratchpad/inventory/proportion/compare-*.png`.
+- **Capturas antes × depois:** capturas locais da revisão (fora do repositório).

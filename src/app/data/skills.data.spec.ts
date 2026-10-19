@@ -8,7 +8,8 @@ const names = (locale: 'pt-BR' | 'en') =>
 describe('SKILL_LOADOUT (runtime data)', () => {
   it('has exactly the four approved groups, in order', () => {
     expect(SKILL_LOADOUT.map((group) => group.id)).toEqual(['build', 'product', 'ai', 'game-dna']);
-    expect(SKILL_LOADOUT.map((group) => group.code)).toEqual(['BLD', 'PRD', 'AI', 'GDN']);
+    expect(SKILL_LOADOUT.map((group) => group.code.en)).toEqual(['BLD', 'PRD', 'AI', 'GDN']);
+    expect(SKILL_LOADOUT.map((group) => group.code['pt-BR'])).toEqual(['CON', 'PRD', 'IA', 'DNA']);
     expect(SKILL_LOADOUT.map((group) => group.title.en)).toEqual([
       'BUILD',
       'PRODUCT',

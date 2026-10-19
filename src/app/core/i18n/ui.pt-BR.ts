@@ -1,5 +1,6 @@
 // Dicionário de UI em pt-BR. Define a forma (`UiDictionary`) que o inglês precisa seguir.
-// Labels de sistema podem ficar em inglês por decisão de conteúdo (D-018), nunca por hardcode.
+// Tudo em português (D-084): inglês só em nomes próprios e identidade (MODO CAMPANHA, MC-01,
+// MC-CART, SYSTEM HORIZON, XP, ONLINE, GitHub, LinkedIn). Nunca por hardcode.
 // Textos humanos (cargo, resumo, motto, dados do Player Status) vivem em data/profile.data.ts.
 export const UI_PT_BR = {
   meta: {
@@ -16,7 +17,8 @@ export const UI_PT_BR = {
   brand: {
     name: 'MODO CAMPANHA',
     monogram: 'MC',
-    homeLabel: 'Modo Campanha, voltar ao topo',
+    // Contém o texto visível "MC MODO CAMPANHA" (WCAG 2.5.3).
+    homeLabel: 'MC Modo Campanha, voltar ao topo',
   },
   nav: {
     label: 'Navegação principal',
@@ -40,11 +42,11 @@ export const UI_PT_BR = {
     linkedin: 'LinkedIn',
   },
   status: {
-    active: 'ACTIVE',
-    inProgress: 'IN PROGRESS',
+    active: 'ATIVO',
+    inProgress: 'EM ANDAMENTO',
   },
   playerCard: {
-    player: 'PLAYER 01',
+    player: 'JOGADOR 01',
     photoPlaceholder: 'FOTO DO EDUARDO',
     xpLabel: 'XP',
   },
@@ -60,17 +62,17 @@ export const UI_PT_BR = {
   },
   cart: {
     system: 'MC-CART',
-    artworkPlaceholder: 'PROJECT ARTWORK',
+    artworkPlaceholder: 'ARTE DO PROJETO',
   },
   sections: {
-    playerStatus: 'PLAYER STATUS',
-    skillLoadout: 'SKILL LOADOUT',
-    projectInventory: 'PROJECT INVENTORY',
-    campaignLog: 'CAMPAIGN LOG',
-    achievements: 'ACHIEVEMENTS',
-    currentQuest: 'CURRENT MAIN QUEST',
-    sideQuests: 'SIDE QUESTS',
-    finalCheckpoint: 'CAMPAIGN CONTINUES...',
+    playerStatus: 'STATUS DO JOGADOR',
+    skillLoadout: 'ARSENAL DE HABILIDADES',
+    projectInventory: 'INVENTÁRIO DE PROJETOS',
+    campaignLog: 'DIÁRIO DE CAMPANHA',
+    achievements: 'CONQUISTAS',
+    currentQuest: 'MISSÃO PRINCIPAL ATUAL',
+    sideQuests: 'MISSÕES SECUNDÁRIAS',
+    finalCheckpoint: 'A CAMPANHA CONTINUA...',
   },
   inventory: {
     subtitle: 'Cartuchos coletados durante a campanha.',
@@ -85,7 +87,7 @@ export const UI_PT_BR = {
       ejecting: 'EJETANDO',
       unavailable: 'MC-01 INDISPONÍVEL',
     },
-    ready: 'READY',
+    ready: 'PRONTO',
     teaser: {
       play: 'Reproduzir teaser',
       pause: 'Pausar teaser',
@@ -103,18 +105,18 @@ export const UI_PT_BR = {
   // Case do projeto, fora do CRT (D-077).
   projectCase: {
     role: 'MINHA CONTRIBUIÇÃO',
-    stack: 'STACK',
+    stack: 'TECNOLOGIAS',
     learnings: 'APRENDIZADOS',
     evidence: 'EVIDÊNCIAS',
   },
   campaignLog: {
     present: 'ATUAL',
     since: 'DESDE',
-    // Capítulos (docs/15 §13): rótulos de sistema em inglês; ações localizadas.
-    chapter: 'CHAPTER',
-    checkpoint: 'CHECKPOINT',
-    complete: 'CHECKPOINT COMPLETE',
-    ongoing: 'CURRENT QUEST — EM ANDAMENTO',
+    // Capítulos (docs/15 §13): rótulos de sistema em português (D-084).
+    chapter: 'CAPÍTULO',
+    checkpoint: 'MARCO',
+    complete: 'MARCO CONCLUÍDO',
+    ongoing: 'MISSÃO ATUAL — EM ANDAMENTO',
     approx: 'c.',
     links: {
       launch: 'LANÇAMENTO INSTITUCIONAL',
@@ -126,7 +128,7 @@ export const UI_PT_BR = {
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
   },
   achievements: {
-    code: 'ACH',
+    code: 'CONQ',
     evidence: 'EVIDÊNCIA',
   },
   currentQuest: {
@@ -135,7 +137,7 @@ export const UI_PT_BR = {
   // Tipo de side quest: categoria do trabalho, nunca dificuldade ou raridade.
   sideQuests: {
     kind: {
-      game: 'GAME DEV',
+      game: 'DESENVOLVIMENTO DE JOGOS',
       art: 'ARTE',
       ai: 'IA',
       interface: 'INTERFACE',
@@ -144,7 +146,7 @@ export const UI_PT_BR = {
   },
   // Único detalhe MC-01 do encerramento (D-052).
   finalCheckpoint: {
-    save: 'SAVE COMPLETE',
+    save: 'PROGRESSO SALVO',
   },
   // Footer da Home (05-C): nome do site no copyright, em caixa normal (a marca do header é caixa alta).
   footer: {
@@ -152,18 +154,18 @@ export const UI_PT_BR = {
   },
   crt: {
     regionLabel: 'Visualizador de projetos',
-    empty: 'INSERT CARTRIDGE',
-    loading: 'LOADING CARTRIDGE...',
+    empty: 'INSIRA UM CARTUCHO',
+    loading: 'CARREGANDO CARTUCHO...',
     identification: 'MC-01',
   },
-  // SYSTEM HORIZON (D-068): linguagem de sistema do MC-01, em inglês nos dois idiomas;
-  // só os controles (pausar/reproduzir) são localizados.
+  // SYSTEM HORIZON (D-068, localizado em D-084): textos da tela em português; o título é nome
+  // próprio. Os itens repetem os grupos do Arsenal de Habilidades.
   systemHorizon: {
-    player: 'PLAYER 01',
-    items: { build: 'BUILD', product: 'PRODUCT', ai: 'AI', gameDna: 'GAME DNA' },
+    player: 'JOGADOR 01',
+    items: { build: 'CONSTRUÇÃO', product: 'PRODUTO', ai: 'IA', gameDna: 'DNA DE GAMES' },
     title: 'SYSTEM HORIZON',
-    unlocked: 'CAMPAIGN UNLOCKED',
-    continues: 'CAMPAIGN CONTINUES...',
+    unlocked: 'CAMPANHA DESBLOQUEADA',
+    continues: 'A CAMPANHA CONTINUA...',
     pause: 'Pausar demonstração',
     play: 'Reproduzir',
   },

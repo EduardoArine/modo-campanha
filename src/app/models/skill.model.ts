@@ -15,8 +15,8 @@ export interface Skill {
 
 export interface SkillGroup {
   id: SkillGroupId;
-  /** Código de sistema decorativo (ex.: `BLD`). Sem numeração: não sugere ordem nem nível. */
-  code: string;
+  /** Código de sistema decorativo (ex.: `CON` / `BLD`). Sem numeração: não sugere ordem nem nível. */
+  code: Localized;
   title: Localized;
   skills: readonly Skill[];
 }

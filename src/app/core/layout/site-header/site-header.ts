@@ -34,11 +34,12 @@ export class SiteHeader {
 
   protected readonly navItems = computed(() => {
     const nav = this.ui().nav;
-    // Só destinos que existem na Home de produção. Jornada (#campaign-log) volta quando o
-    // Campaign Log tiver conteúdo real (D-050); Contato aponta para o Final Checkpoint (D-052).
+    // Só destinos que existem na Home de produção, na ordem da página. Jornada aponta para o
+    // Diário de Campanha (conteúdo real desde D-074); Contato, para o Final Checkpoint (D-052).
     return [
       { label: nav.about, fragment: 'player-status' },
       { label: nav.projects, fragment: 'project-inventory' },
+      { label: nav.journey, fragment: 'campaign-log' },
       { label: nav.contact, fragment: 'final-checkpoint' },
     ];
   });

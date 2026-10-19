@@ -5,8 +5,8 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import { CampaignLogSection } from './campaign-log-section';
 
-// O Campaign Log usa a mesma fonte canônica em todos os ambientes (D-074): CHAPTER 00 — ORIGIN,
-// CHAPTER 01 — DO CONTROLE AO CÓDIGO e CHAPTER 02 — DO CÓDIGO AO PRODUTO (docs/15 §13–§17).
+// O Campaign Log usa a mesma fonte canônica em todos os ambientes (D-074): CAPÍTULO 00 — ORIGEM,
+// CAPÍTULO 01 — DO CONTROLE AO CÓDIGO e CAPÍTULO 02 — DO CÓDIGO AO PRODUTO (docs/15 §13–§17).
 // A antiga linha profissional MOCK (D-049) foi aposentada.
 describe('CampaignLogSection', () => {
   async function renderAt(url: string): Promise<HTMLElement> {
@@ -28,14 +28,14 @@ describe('CampaignLogSection', () => {
   it('uses one ordered list: chapter header (h3), checkpoints (h4) and closing per chapter', async () => {
     const section = (await renderAt('/')).querySelector('section#campaign-log')!;
 
-    expect(section.querySelector('h2')?.textContent).toBe('CAMPAIGN LOG');
+    expect(section.querySelector('h2')?.textContent).toBe('DIÁRIO DE CAMPANHA');
     expect(section.querySelectorAll('ol[role="list"]').length).toBe(1);
     // 00: cabeçalho + 5 · 01: cabeçalho + 5 + fechamento · 02: cabeçalho + 4 + fechamento.
     expect(section.querySelectorAll('ol > li').length).toBe(6 + 7 + 6);
     expect(texts(section, 'h3')).toEqual([
-      'CHAPTER 00 — ORIGIN',
-      'CHAPTER 01 — DO CONTROLE AO CÓDIGO',
-      'CHAPTER 02 — DO CÓDIGO AO PRODUTO',
+      'CAPÍTULO 00 — ORIGEM',
+      'CAPÍTULO 01 — DO CONTROLE AO CÓDIGO',
+      'CAPÍTULO 02 — DO CÓDIGO AO PRODUTO',
     ]);
     expect(texts(section, `${STORY} h4`)).toEqual([
       'Primeiro contato',
@@ -86,11 +86,11 @@ describe('CampaignLogSection', () => {
     expect(chapterItems[4].classList).toContain('entry--ongoing');
     expect(chapterItems[4].querySelector('time')).toBeNull();
     expect(chapterItems[4].querySelector('.chapter-name')?.textContent?.trim()).toBe(
-      'CURRENT QUEST — EM ANDAMENTO',
+      'MISSÃO ATUAL — EM ANDAMENTO',
     );
     expect(
       chapterItems[2].querySelector('.chapter-name')?.textContent?.replace(/\s+/g, ' ').trim(),
-    ).toBe('CHECKPOINT COMPLETE — 2017');
+    ).toBe('MARCO CONCLUÍDO — 2017');
     expect(texts(el, '.entry--chapter .period')).toEqual(['2013 — 2017', '2018 — ATUAL']);
   });
 
@@ -100,7 +100,7 @@ describe('CampaignLogSection', () => {
     const on = stories[stories.length - 1];
 
     expect(on.querySelector('.kind')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
-      'CHECKPOINT 04 · COMUNIDADE ON',
+      'MARCO 04 · COMUNIDADE ON',
     );
     expect(on.querySelector('.period')?.textContent?.replace(/\s+/g, ' ').trim()).toBe(
       'DESDE 2025',
@@ -112,20 +112,20 @@ describe('CampaignLogSection', () => {
     const el = await renderAt('/');
 
     expect(texts(el, `${STORY} > .kind`)).toEqual([
-      'CHECKPOINT 01 · FIRST CONTACT',
-      'CHECKPOINT 02 · THE RENTAL STORE YEARS',
-      'CHECKPOINT 03 · THE LADYBUG WISH',
-      'CHECKPOINT 04 · EARNED, NOT GIVEN',
-      'CHECKPOINT 05 · BUILT FROM MEMORIES',
-      'CHECKPOINT 01',
-      'CHECKPOINT 02',
-      'CHECKPOINT 03',
-      'CHECKPOINT 04',
-      'CHECKPOINT 05',
-      'CHECKPOINT 01 · SCOUTEVO',
-      'CHECKPOINT 02 · EOS',
-      'CHECKPOINT 03 · AXIA',
-      'CHECKPOINT 04 · COMUNIDADE ON',
+      'MARCO 01 · PRIMEIRO CONTATO',
+      'MARCO 02 · OS ANOS DE LOCADORA',
+      'MARCO 03 · O PEDIDO À JOANINHA',
+      'MARCO 04 · CONQUISTADO, NÃO GANHO',
+      'MARCO 05 · FEITO DE MEMÓRIAS',
+      'MARCO 01',
+      'MARCO 02',
+      'MARCO 03',
+      'MARCO 04',
+      'MARCO 05',
+      'MARCO 01 · SCOUTEVO',
+      'MARCO 02 · EOS',
+      'MARCO 03 · AXIA',
+      'MARCO 04 · COMUNIDADE ON',
     ]);
   });
 
@@ -282,7 +282,18 @@ describe('CampaignLogSection', () => {
 
     // Mesma estrutura e ordem: itens, codinomes, datas (time) e links.
     expect(en.querySelectorAll('ol > li').length).toBe(pt.querySelectorAll('ol > li').length);
-    expect(texts(en, `${STORY} > .kind`)).toEqual(texts(pt, `${STORY} > .kind`));
+    // Rótulos dos marcos: mesma numeração e mesmos nomes próprios; o resto, em cada idioma.
+    const kinds = (root: Element) => texts(root, `${STORY} > .kind`);
+    expect(kinds(en).map((k) => k?.replace(/^CHECKPOINT/, 'MARCO'))).toEqual(
+      kinds(pt).map((k) =>
+        k
+          ?.replace('PRIMEIRO CONTATO', 'FIRST CONTACT')
+          .replace('OS ANOS DE LOCADORA', 'THE RENTAL STORE YEARS')
+          .replace('O PEDIDO À JOANINHA', 'THE LADYBUG WISH')
+          .replace('CONQUISTADO, NÃO GANHO', 'EARNED, NOT GIVEN')
+          .replace('FEITO DE MEMÓRIAS', 'BUILT FROM MEMORIES'),
+      ),
+    );
     const attrs = (root: Element, selector: string, name: string) =>
       Array.from(root.querySelectorAll(selector)).map((n) => n.getAttribute(name));
     expect(attrs(en, 'time', 'datetime')).toEqual(attrs(pt, 'time', 'datetime'));

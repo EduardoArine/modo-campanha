@@ -24,7 +24,7 @@ describe('AchievementsSection', () => {
   it('uses an h2 section, one list and one h3 per achievement', async () => {
     const section = (await renderAt('/')).querySelector('section#achievements')!;
 
-    expect(section.querySelector('h2')?.textContent).toBe('ACHIEVEMENTS');
+    expect(section.querySelector('h2')?.textContent).toBe('CONQUISTAS');
     expect(section.querySelectorAll('ul[role="list"]').length).toBe(1);
     expect(section.querySelectorAll('ul > li').length).toBe(4);
     expect(texts(section, 'h3')[0]).toBe('MARCO DE EXEMPLO A');
@@ -34,10 +34,10 @@ describe('AchievementsSection', () => {
     const codes = Array.from((await renderAt('/')).querySelectorAll('.code'));
 
     expect(codes.map((c) => c.textContent?.trim())).toEqual([
-      'ACH-01',
-      'ACH-02',
-      'ACH-03',
-      'ACH-04',
+      'CONQ-01',
+      'CONQ-02',
+      'CONQ-03',
+      'CONQ-04',
     ]);
     expect(codes.every((c) => c.getAttribute('aria-hidden') === 'true')).toBe(true);
   });

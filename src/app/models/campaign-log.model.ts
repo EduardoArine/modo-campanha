@@ -47,8 +47,8 @@ export interface CampaignLogLink {
 /** Checkpoint dentro de um capítulo (docs/15 §13–§14). Relato pessoal real. */
 export interface CampaignLogChapterEntry {
   id: string;
-  /** Codinome de sistema do MC-01, igual nos dois idiomas (ex.: FIRST CONTACT); opcional. */
-  code?: string;
+  /** Codinome de sistema do MC-01 (ex.: PRIMEIRO CONTATO / FIRST CONTACT); nomes próprios iguais. */
+  code?: Localized;
   when: CampaignLogWhen;
   title: Localized;
   /**

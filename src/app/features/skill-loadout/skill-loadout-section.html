@@ -4,7 +4,7 @@
   <div class="modules">
     @for (group of groups; track group.id) {
       <div class="module">
-        <p class="code" aria-hidden="true">{{ group.code }}</p>
+        <p class="code" aria-hidden="true">{{ locale.pick(group.code) }}</p>
         <h3 class="title" [id]="'skill-group-' + group.id">{{ locale.pick(group.title) }}</h3>
         <ul class="skills" role="list" [attr.aria-labelledby]="'skill-group-' + group.id">
           @for (skill of group.skills; track skill.id) {

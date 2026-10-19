@@ -22,7 +22,9 @@ describe('PlayerStatusSection', () => {
   it('renders the header with the section title and the system bar (no invented version)', async () => {
     const el = await renderAt('/');
 
-    expect(el.querySelector('h2#player-status-title')?.textContent?.trim()).toBe('PLAYER STATUS');
+    expect(el.querySelector('h2#player-status-title')?.textContent?.trim()).toBe(
+      'STATUS DO JOGADOR',
+    );
     expect(el.querySelector('.subtitle')?.textContent?.trim()).toBe(
       'PERFIL DO JOGADOR // DADOS DA CAMPANHA ATUAL',
     );
@@ -36,7 +38,7 @@ describe('PlayerStatusSection', () => {
     const img = card.querySelector('img')!;
 
     expect(card.querySelector('.name')?.textContent).toBe('Eduardo Arine');
-    expect(card.querySelector('.player')?.textContent).toBe('PLAYER 01');
+    expect(card.querySelector('.player')?.textContent).toBe('JOGADOR 01');
     expect(img.getAttribute('src')).toBe('assets/player/eduardo-arine-640.webp');
     expect(img.getAttribute('srcset')).toContain('eduardo-arine-960.webp 960w');
     expect(img.getAttribute('alt')).toMatch(/^Eduardo Arine, de boné turquesa/);

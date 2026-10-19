@@ -52,7 +52,7 @@ describe('ProjectInventorySection', () => {
     reducedMotion(false);
     const el = await renderAt('/');
 
-    expect(el.querySelector('h2')?.textContent).toBe('PROJECT INVENTORY');
+    expect(el.querySelector('h2')?.textContent).toBe('INVENTÁRIO DE PROJETOS');
     expect(text(el, '.eyebrow')).toBe('MC-001 · MODO CAMPANHA · EXPERIÊNCIA NARRATIVA');
     expect(text(el, 'h3')).toBe('SYSTEM HORIZON');
     expect(text(el, '.desc')).toMatch(/^O primeiro cartucho do Modo Campanha\./);
@@ -62,7 +62,7 @@ describe('ProjectInventorySection', () => {
     expect(el.querySelector('mc-console')?.getAttribute('aria-hidden')).toBe('true');
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
     expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
-    expect(text(el, '.glass')).toBe('INSERT CARTRIDGE');
+    expect(text(el, '.glass')).toBe('INSIRA UM CARTUCHO');
     const insert = el.querySelector('#inventory-insert')!;
     expect(insert.getAttribute('aria-label')).toBe('Inserir cartucho: SYSTEM HORIZON');
     expect(insert.getAttribute('aria-controls')).toBe('project-viewer');
@@ -85,12 +85,12 @@ describe('ProjectInventorySection', () => {
 
     vi.advanceTimersByTime(620);
     fixture.detectChanges();
-    expect(text(el, '.glass-system')).toBe('LOADING CARTRIDGE...');
+    expect(text(el, '.glass-system')).toBe('CARREGANDO CARTUCHO...');
 
     vi.advanceTimersByTime(450);
     fixture.detectChanges();
     expect(text(el, '.slot-status')).toBe('MC-001 INSERIDO');
-    expect(text(el, '.tv-status')).toBe('SYSTEM HORIZON · READY');
+    expect(text(el, '.tv-status')).toBe('SYSTEM HORIZON · PRONTO');
     expect(el.querySelector('.glass-art')?.getAttribute('src')).toBe(
       'assets/cartridges/mc-001/system-horizon.webp',
     );
@@ -110,7 +110,7 @@ describe('ProjectInventorySection', () => {
     const labels = Array.from(el.querySelectorAll('app-project-case dt')).map((d) =>
       d.textContent?.trim(),
     );
-    expect(labels).toEqual(['MINHA CONTRIBUIÇÃO', 'STACK', 'APRENDIZADOS', 'EVIDÊNCIAS']);
+    expect(labels).toEqual(['MINHA CONTRIBUIÇÃO', 'TECNOLOGIAS', 'APRENDIZADOS', 'EVIDÊNCIAS']);
     expect(el.querySelector('.glass app-project-case, .glass dl')).toBeNull();
     const link = el.querySelector<HTMLAnchorElement>('app-project-case a')!;
     expect(link.getAttribute('href')).toBe('https://github.com/EduardoArine/modo-campanha');

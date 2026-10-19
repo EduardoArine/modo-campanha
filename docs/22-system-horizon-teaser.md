@@ -20,7 +20,7 @@ O teaser é o **attract mode** (modo demonstração) do futuro SYSTEM HORIZON: u
 |---|---|
 | HUD | **PLAYER 01 + 4 slots de inventário**. Sem "XP 10+" nem qualquer pontuação: os "10+ anos" seguem como dado profissional da página, não mecânica do jogo. |
 | Jogador | Figura humana pequena representando o Eduardo: cabelo escuro, óculos, roupa escura, silhueta simples; sem retrato detalhado. Avatar do jogador no SYSTEM HORIZON, não persona profissional fictícia. |
-| Linguagem de sistema | PLAYER 01, BUILD, PRODUCT, AI, GAME DNA, CAMPAIGN UNLOCKED, MC-001, SYSTEM HORIZON, CAMPAIGN CONTINUES... em **inglês nos dois idiomas** (vêm do dicionário, `ui.systemHorizon`). Controles de interface localizados: *Pausar demonstração / Pause demo*, *Reproduzir / Play*. |
+| Linguagem de sistema (en; em pt desde D-084: JOGADOR 01, CONSTRUÇÃO, PRODUTO, IA, DNA DE GAMES, CAMPANHA DESBLOQUEADA, A CAMPANHA CONTINUA...) | PLAYER 01, BUILD, PRODUCT, AI, GAME DNA, CAMPAIGN UNLOCKED, MC-001, SYSTEM HORIZON, CAMPAIGN CONTINUES... em **inglês nos dois idiomas** (vêm do dicionário, `ui.systemHorizon`). Controles de interface localizados: *Pausar demonstração / Pause demo*, *Reproduzir / Play*. |
 | Texto na tela | Sempre texto real (IBM Plex) sobre o canvas, nunca desenhado nos pixels (i18n, D-029: Pixelify troca "C" por "O"). |
 | Pausa | Ícone pause/play pequeno no canto inferior do visual, nome acessível localizado, foco visível; parada automática depois de **3 voltas** (WCAG 2.2.2). |
 | Loop | ~7 s, 12 fps. O CRT **liga** (linha que se abre) só no primeiro play da página; as voltas seguintes reiniciam com **2 quadros de interferência**, sem tela preta nem flash. |

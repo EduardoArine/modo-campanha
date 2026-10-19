@@ -19,13 +19,15 @@ describe('SiteHeader', () => {
     const el = await renderAt('/');
     const navLinks = Array.from(el.querySelectorAll('nav a')).map((a) => a.textContent?.trim());
 
+    // O nome acessível contém o texto visível "MC MODO CAMPANHA" (WCAG 2.5.3).
     expect(el.querySelector('.brand')?.getAttribute('aria-label')).toBe(
-      'Modo Campanha, voltar ao topo',
+      'MC Modo Campanha, voltar ao topo',
     );
-    expect(navLinks).toEqual(['Sobre', 'Projetos', 'Contato']);
+    expect(navLinks).toEqual(['Sobre', 'Projetos', 'Jornada', 'Contato']);
     expect(Array.from(el.querySelectorAll('nav a')).map((a) => a.getAttribute('href'))).toEqual([
       '/#player-status',
       '/#project-inventory',
+      '/#campaign-log',
       '/#final-checkpoint',
     ]);
     expect(el.textContent).not.toMatch(/ONLINE|BUILD|VERSION|MC-01/);
@@ -36,7 +38,7 @@ describe('SiteHeader', () => {
     const navLinks = Array.from(el.querySelectorAll('nav a')).map((a) => a.textContent?.trim());
     const current = el.querySelector('.languages [aria-current="true"]')!;
 
-    expect(navLinks).toEqual(['About', 'Projects', 'Contact']);
+    expect(navLinks).toEqual(['About', 'Projects', 'Journey', 'Contact']);
     expect(el.querySelector('nav a')?.getAttribute('href')).toBe('/en#player-status');
     expect(current.getAttribute('lang')).toBe('en');
     expect(current.textContent).toContain('EN');

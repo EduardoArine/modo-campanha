@@ -158,7 +158,7 @@ src/app/core/i18n/
 ### URL, SEO e GitHub Pages
 
 - pt-BR em `/modo-campanha/`, en em `/modo-campanha/en`.
-- O workflow de deploy copia `index.html` para `en/index.html` (resposta 200 em vez do 404 do fallback).
+- O workflow de deploy roda `scripts/pages-postbuild.mjs` com a URL do `configure-pages` (D-084): `en/index.html` com idioma, título, descrição e Open Graph em inglês (resposta 200 em vez do 404 do fallback); canonical, hreflang e `og:url` estáticos nas duas versões; `sitemap.xml`.
 - **FASE 8 (D-060):** `hreflang`, canonical e Open Graph por idioma implementados no `LocaleService`; Open Graph estático pt-BR no `index.html`; `robots.txt`. **Prerender** estático das duas versões (`@angular/ssr` só em build) continua pendente de decisão: até lá, o HTML estático inicial é pt-BR.
 
 ## Performance
@@ -175,7 +175,8 @@ src/app/core/i18n/
 - **Disparo manual** (`workflow_dispatch`) para não publicar conteúdo incompleto.
 - Build: `npm run build:gh-pages` → `ng build --base-href /modo-campanha/`.
 - Saída: `dist/modo-campanha/browser`.
-- `404.html` = cópia de `index.html` (fallback de SPA para rotas futuras).
+- `404.html` = cópia de `index.html` (fallback de SPA para rotas futuras), gerada pelo `scripts/pages-postbuild.mjs`.
+- O `robots.txt` de `/modo-campanha/` não é lido pelos crawlers (o domínio raiz não é deste repositório): enviar o `sitemap.xml` pelo Search Console.
 
 ### Ativação
 

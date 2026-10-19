@@ -47,14 +47,13 @@ jobs:
             test -f "$f" || { echo "preload sem arquivo: $f"; exit 1; }
           done
 
-      # SPA fallback: o GitHub Pages serve 404.html para rotas desconhecidas.
-      # en/index.html faz /modo-campanha/en responder 200 (rota do inglês, D-020).
-      - run: |
-          cd dist/modo-campanha/browser
-          cp index.html 404.html
-          mkdir -p en && cp index.html en/index.html
+      # URL real do site (base_url), usada no canonical, no hreflang e no sitemap.
+      - id: pages
+        uses: actions/configure-pages@v6
 
-      - uses: actions/configure-pages@v6
+      # 404.html (fallback de SPA), en/index.html já em inglês (rota /en, D-020; prévias sociais),
+      # canonical/hreflang/og:url estáticos e sitemap.xml (D-084).
+      - run: node scripts/pages-postbuild.mjs dist/modo-campanha/browser "${{ steps.pages.outputs.base_url }}"
 
       - uses: actions/upload-pages-artifact@v5
         with:

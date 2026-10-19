@@ -45,7 +45,12 @@ describe('App', () => {
       (a) => a.getAttribute('href')?.split('#')[1],
     );
 
-    expect(fragments).toEqual(['player-status', 'project-inventory', 'final-checkpoint']);
+    expect(fragments).toEqual([
+      'player-status',
+      'project-inventory',
+      'campaign-log',
+      'final-checkpoint',
+    ]);
     for (const id of fragments) {
       expect(el.querySelector(`main section#${id}`)).not.toBeNull();
     }

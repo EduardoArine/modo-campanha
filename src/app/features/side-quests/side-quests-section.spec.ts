@@ -23,13 +23,18 @@ describe('SideQuestsSection', () => {
     const section = (await renderAt('/')).querySelector('section#side-quests')!;
 
     expect(section.getAttribute('aria-labelledby')).toBe(section.querySelector('h2')?.id);
-    expect(section.querySelector('h2')?.textContent).toBe('SIDE QUESTS');
+    expect(section.querySelector('h2')?.textContent).toBe('MISSÕES SECUNDÁRIAS');
     expect(section.querySelectorAll('ul[role="list"] > li').length).toBe(4);
     expect(texts(section, 'h3')[0]).toBe('Experimento de exemplo A');
   });
 
   it('resolves kind labels from the UI dictionary in each language', async () => {
-    expect(texts(await renderAt('/'), '.kind')).toEqual(['GAME DEV', 'IA', 'ESTUDO', 'ARTE']);
+    expect(texts(await renderAt('/'), '.kind')).toEqual([
+      'DESENVOLVIMENTO DE JOGOS',
+      'IA',
+      'ESTUDO',
+      'ARTE',
+    ]);
 
     TestBed.resetTestingModule();
     expect(texts(await renderAt('/en'), '.kind')).toEqual(['GAME DEV', 'AI', 'STUDY', 'ART']);

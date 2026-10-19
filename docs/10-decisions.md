@@ -1064,3 +1064,49 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Aprovação do Eduardo:** o **Player Status** está aprovado oficialmente, conforme a implementação atual e a D-082. Isso inclui o resultado visual, a fotografia, a responsividade, os textos e as traduções en.
 - **Congelado:** `features/player-status/`, `mc-player-card`, os ícones pixel do `mc-icon`, o papel `display-player`, a foto e os derivados em `public/assets/player/`, e o conteúdo do Player Status em `profile.data.ts` e nos dicionários. Sem novos ajustes visuais; alterar só para corrigir regressão objetiva, relatada.
 - **Status:** **APPROVED / FROZEN** na branch `feat/hero-refinement`; sem merge e sem deploy.
+
+## D-084 — Versão pt-BR sem termos em inglês; pacote técnico de pré-lançamento
+
+- **Data:** 2026-10-19
+- **Pedido do Eduardo:** com as duas versões disponíveis, a versão em português não mistura termos em inglês (Campaign Log, Player Status etc.). Os termos propostos foram aprovados ("pode seguir assim").
+- **Revê a D-018 nesse ponto:** rótulos de sistema deixam de ficar em inglês nos dois idiomas. Em pt ficam em português; a versão en não muda.
+- **Mantidos (nomes próprios e identidade):**
+  - MODO CAMPANHA, MC-01, MC-CART, MC-001, SYSTEM HORIZON (nome do jogo) e Comunidade ON;
+  - nomes de tecnologia;
+  - termos correntes em português: XP, ONLINE e STATUS;
+  - GitHub e LinkedIn, além de "teaser" e "Game Design", correntes no Brasil.
+- **Traduzidos (pt-BR):**
+  - **Seções:**
+    - STATUS DO JOGADOR;
+    - ARSENAL DE HABILIDADES (grupos: CONSTRUÇÃO, PRODUTO, IA, DNA DE GAMES; códigos: CON, PRD, IA, DNA);
+    - INVENTÁRIO DE PROJETOS;
+    - DIÁRIO DE CAMPANHA;
+    - A CAMPANHA CONTINUA...;
+    - as seções ocultas, para quando entrarem: CONQUISTAS, MISSÃO PRINCIPAL ATUAL, MISSÕES SECUNDÁRIAS.
+  - **Rótulos:**
+    - JOGADOR 01;
+    - CAPÍTULO 00 — ORIGEM;
+    - MARCO / MARCO CONCLUÍDO;
+    - MISSÃO ATUAL — EM ANDAMENTO;
+    - INSIRA UM CARTUCHO / CARREGANDO CARTUCHO...;
+    - PRONTO;
+    - TECNOLOGIAS;
+    - PROGRESSO SALVO;
+    - ATIVO / EM ANDAMENTO;
+    - ARTE DO PROJETO.
+  - **Codinomes do Capítulo 00 (agora `Localized`):** PRIMEIRO CONTATO, OS ANOS DE LOCADORA, O PEDIDO À JOANINHA, CONQUISTADO, NÃO GANHO, FEITO DE MEMÓRIAS. Os nomes próprios do Capítulo 02 são iguais nos dois idiomas.
+- **Teaser SYSTEM HORIZON (revê a D-068 nesse ponto):** os textos da tela também ficam em português: JOGADOR 01, CONSTRUÇÃO / PRODUTO / IA / DNA DE GAMES, CAMPANHA DESBLOQUEADA, A CAMPANHA CONTINUA... Só os textos do dicionário mudam; engine, roteiro, timings e arte, não.
+  - **Medição:** nenhuma legenda passa da área visível em 1440, 1024, 820, 390 e 360 px, na Hero e no CRT do Inventory.
+- **Pacote técnico de pré-lançamento (sem decisão pendente):**
+  - **Menu:** com Jornada → Diário de Campanha, na ordem da página. Cabe numa linha em 320 px.
+  - **Nome acessível da marca:** "MC Modo Campanha, voltar ao topo", que contém o texto visível (WCAG 2.5.3).
+  - **`scripts/pages-postbuild.mjs` no workflow, com a URL real do `configure-pages`:**
+    - `404.html`;
+    - `en/index.html` com idioma, título, descrição e Open Graph em inglês;
+    - canonical, hreflang e `og:url` estáticos;
+    - `sitemap.xml`.
+
+    O `LocaleService` reaproveita as tags, sem duplicar.
+  - **Docs:** sem referências a capturas locais.
+- **Pendentes de decisão do Eduardo (plano de pré-lançamento):** foto da Hero (D-079), ícone da aba e imagem de compartilhamento, aprovação de pickups e HUD do teaser.
+- **Status:** implementado na branch `feat/hero-refinement`. Sem merge e sem deploy.

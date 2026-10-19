@@ -29,7 +29,7 @@ function photo(
 export const ORIGIN_CHAPTER: CampaignLogChapter = {
   id: 'chapter-00-origin',
   number: '00',
-  name: { 'pt-BR': 'ORIGIN', en: 'ORIGIN' },
+  name: { 'pt-BR': 'ORIGEM', en: 'ORIGIN' },
   signature: {
     'pt-BR': 'A campanha começou muito antes do código.',
     en: 'The campaign started long before the code.',
@@ -37,7 +37,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
   entries: [
     {
       id: 'origin-first-contact',
-      code: 'FIRST CONTACT',
+      code: { 'pt-BR': 'PRIMEIRO CONTATO', en: 'FIRST CONTACT' },
       when: { approx: 1991 },
       title: { 'pt-BR': 'Primeiro contato', en: 'First Contact' },
       summary: {
@@ -58,7 +58,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-rental-store-years',
-      code: 'THE RENTAL STORE YEARS',
+      code: { 'pt-BR': 'OS ANOS DE LOCADORA', en: 'THE RENTAL STORE YEARS' },
       when: { era: { 'pt-BR': 'Época do SNES', en: 'SNES era' } },
       title: { 'pt-BR': 'A escola das locadoras', en: 'The Rental Store Years' },
       summary: {
@@ -78,7 +78,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-ladybug-wish',
-      code: 'THE LADYBUG WISH',
+      code: { 'pt-BR': 'O PEDIDO À JOANINHA', en: 'THE LADYBUG WISH' },
       when: { era: { 'pt-BR': 'Infância', en: 'Childhood' } },
       title: { 'pt-BR': 'O pedido à joaninha', en: 'The Ladybug Wish' },
       summary: {
@@ -98,7 +98,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-earned-not-given',
-      code: 'EARNED, NOT GIVEN',
+      code: { 'pt-BR': 'CONQUISTADO, NÃO GANHO', en: 'EARNED, NOT GIVEN' },
       when: { era: { 'pt-BR': 'Época do PlayStation', en: 'PlayStation era' } },
       title: {
         'pt-BR': 'Uma conquista construída com trabalho',
@@ -122,7 +122,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-built-from-memories',
-      code: 'BUILT FROM MEMORIES',
+      code: { 'pt-BR': 'FEITO DE MEMÓRIAS', en: 'BUILT FROM MEMORIES' },
       when: { era: { 'pt-BR': 'Vida adulta', en: 'Adulthood' } },
       title: { 'pt-BR': 'Uma coleção de histórias', en: 'A Collection of Stories' },
       summary: {
@@ -323,7 +323,7 @@ export const CHAPTER_02: CampaignLogChapter = {
   entries: [
     {
       id: 'scoutevo',
-      code: 'SCOUTEVO',
+      code: { 'pt-BR': 'SCOUTEVO', en: 'SCOUTEVO' },
       when: { year: 2018 },
       title: { 'pt-BR': 'Quando uma ideia entrou em campo', en: 'When an Idea Took the Field' },
       summary: {
@@ -372,7 +372,7 @@ export const CHAPTER_02: CampaignLogChapter = {
     {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
       id: 'eos',
-      code: 'EOS',
+      code: { 'pt-BR': 'EOS', en: 'EOS' },
       when: { year: 2019 },
       title: {
         'pt-BR': 'Tecnologia em que cada minuto importa',
@@ -471,7 +471,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // 2020/2021, segundo o próprio relato (estimativa, não data documental), e evolução posterior,
       // sem ano final. A InfraFM cita o desenvolvimento em 2022.
       id: 'axia',
-      code: 'AXIA',
+      code: { 'pt-BR': 'AXIA', en: 'AXIA' },
       when: { approx: [2020, 2021] },
       title: {
         'pt-BR': 'Da ideia à inteligência operacional',
@@ -525,7 +525,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // Descrição pública escrita por ele; nada interno da Comunidade ON. O resumo do card é próprio
       // (D-073), não a primeira frase da história. "Digital Games" no en (D-074).
       id: 'comunidade-on',
-      code: 'COMUNIDADE ON',
+      code: { 'pt-BR': 'COMUNIDADE ON', en: 'COMUNIDADE ON' },
       when: { since: 2025 },
       title: {
         'pt-BR': 'Quando os games viraram uma linguagem de produto',

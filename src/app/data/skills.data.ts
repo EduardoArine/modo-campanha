@@ -10,8 +10,8 @@ const same = (text: string): Localized => ({ 'pt-BR': text, en: text });
 export const SKILL_LOADOUT: readonly SkillGroup[] = [
   {
     id: 'build',
-    code: 'BLD',
-    title: same('BUILD'),
+    code: { 'pt-BR': 'CON', en: 'BLD' },
+    title: { 'pt-BR': 'CONSTRUÇÃO', en: 'BUILD' },
     skills: [
       { id: 'angular', name: same('Angular') },
       { id: 'typescript', name: same('TypeScript') },
@@ -23,8 +23,8 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'product',
-    code: 'PRD',
-    title: same('PRODUCT'),
+    code: { 'pt-BR': 'PRD', en: 'PRD' },
+    title: { 'pt-BR': 'PRODUTO', en: 'PRODUCT' },
     skills: [
       {
         id: 'product-thinking',
@@ -43,8 +43,8 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'ai',
-    code: 'AI',
-    title: same('AI'),
+    code: { 'pt-BR': 'IA', en: 'AI' },
+    title: { 'pt-BR': 'IA', en: 'AI' },
     skills: [
       {
         id: 'ai-assisted-development',
@@ -63,8 +63,8 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'game-dna',
-    code: 'GDN',
-    title: same('GAME DNA'),
+    code: { 'pt-BR': 'DNA', en: 'GDN' },
+    title: { 'pt-BR': 'DNA DE GAMES', en: 'GAME DNA' },
     skills: [
       { id: 'game-systems', name: { 'pt-BR': 'Sistemas de jogo', en: 'Game systems' } },
       { id: 'gamification', name: { 'pt-BR': 'Gamificação', en: 'Gamification' } },

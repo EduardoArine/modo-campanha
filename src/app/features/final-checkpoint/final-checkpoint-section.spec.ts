@@ -21,8 +21,8 @@ describe('FinalCheckpointSection', () => {
 
     expect(section.getAttribute('aria-labelledby')).toBe(h2.id);
     expect(h2.id).toBe('final-checkpoint-title');
-    expect(h2.textContent).toBe('CAMPAIGN CONTINUES...');
-    expect(section.querySelector('.code')?.textContent).toBe('SAVE COMPLETE');
+    expect(h2.textContent).toBe('A CAMPANHA CONTINUA...');
+    expect(section.querySelector('.code')?.textContent).toBe('PROGRESSO SALVO');
     expect(section.textContent).not.toMatch(/CONTINUE\?|SAVE 01/);
     expect(section.querySelector('mc-status')).toBeNull();
   });

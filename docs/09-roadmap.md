@@ -204,22 +204,22 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## Decisões futuras em aberto
 
-| Tema                                                                                                                | Fase     |
-| ------------------------------------------------------------------------------------------------------------------- | -------- |
-| Efeito do Konami Code                                                                                               | 6        |
-| Localização do `???` / Secret Area                                                                                  | 6        |
-| ~~Estados das skills~~ ✅ sem estados/graduação, D-040                                                              | 3        |
-| ~~Abordagem de animação~~ ✅ CSS, D-058                                                                             | 5        |
-| ~~Paleta definitiva~~ ✅ D-014                                                                                      | 1        |
-| ~~Fontes definitivas~~ ✅ D-022                                                                                     | 2        |
-| ~~Player Card com foto~~ ✅ foto real, D-017                                                                        | 1        |
-| ~~Estratégia de i18n~~ ✅ D-020                                                                                     | 2        |
-| ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                                                       | 3        |
-| ~~Composição final do Player Status~~ ✅ Slice 01, D-039                                                            | 3        |
-| Preferência de idioma em localStorage (sem sobrepor a URL)                                                          | futuro   |
-| Desenho do monograma MC                                                                                             | 2        |
-| Campaign XP: regras reais de pontuação (product exploration)                                                        | futuro   |
-| Itens de navegação do header: Sobre / Projetos / Contato (D-054); Jornada pendente (conteúdo real publicado, D-074) | 4        |
-| Páginas dedicadas por case (`/projects/:slug`)                                                                      | 5+       |
-| ~~Upgrade para Angular 22~~ ✅ Angular 22.2 + TypeScript 6.0, Node 24 (D-061)                                       | qualquer |
-| Domínio próprio                                                                                                     | 9        |
+| Tema                                                                             | Fase     |
+| -------------------------------------------------------------------------------- | -------- |
+| Efeito do Konami Code                                                            | 6        |
+| Localização do `???` / Secret Area                                               | 6        |
+| ~~Estados das skills~~ ✅ sem estados/graduação, D-040                           | 3        |
+| ~~Abordagem de animação~~ ✅ CSS, D-058                                          | 5        |
+| ~~Paleta definitiva~~ ✅ D-014                                                   | 1        |
+| ~~Fontes definitivas~~ ✅ D-022                                                  | 2        |
+| ~~Player Card com foto~~ ✅ foto real, D-017                                     | 1        |
+| ~~Estratégia de i18n~~ ✅ D-020                                                  | 2        |
+| ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                    | 3        |
+| ~~Composição final do Player Status~~ ✅ Slice 01, D-039                         | 3        |
+| Preferência de idioma em localStorage (sem sobrepor a URL)                       | futuro   |
+| Desenho do monograma MC                                                          | 2        |
+| Campaign XP: regras reais de pontuação (product exploration)                     | futuro   |
+| ~~Itens de navegação do header~~ ✅ Sobre / Projetos / Jornada / Contato (D-084) | 4        |
+| Páginas dedicadas por case (`/projects/:slug`)                                   | 5+       |
+| ~~Upgrade para Angular 22~~ ✅ Angular 22.2 + TypeScript 6.0, Node 24 (D-061)    | qualquer |
+| Domínio próprio                                                                  | 9        |
