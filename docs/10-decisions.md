@@ -1163,3 +1163,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Cases:** problema → contribuição → tecnologias → marcos → aprendizados → evidências, condensados do Campaign Log aprovado (D-070–D-074); as evidências são as mesmas referências, importadas de `campaign-log.chapters.data.ts`. O artigo do EOS aparece com a nota de autoria (não é obra do Eduardo). Comunidade ON: só fatos já públicos no Campaign Log, `EM ANDAMENTO`, sem link.
   - **Serial do Paco:** o MC-002 passa a ser AEDES REVENGE (cartucho oficial do Eduardo). O Paco (`review`, `docs/14` §2) recebe um novo serial quando for aprovado.
 - **Status:** implementado na branch `feat/hero-refinement`, **aguardando aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
+
+## D-088 — Biblioteca MC-CART: aprovação e congelamento
+
+- **Data:** 2026-10-19
+- **Aprovação do Eduardo:** a biblioteca MC-CART (D-087, `docs/24` §18) está **APROVADA visualmente e funcionalmente**: os seis cartuchos, a biblioteca horizontal, a proporção console × CRT, a troca automática e os cases profissionais. Sem novo redesign.
+- **Decisões editoriais:**
+  - **Carcaça do MC-001:** a nova carcaça é a **identidade oficial da coleção** (confirma a revisão da D-078 feita na D-087).
+  - **Hero e `og:image`:** a harmonização com a nova carcaça fica como **pendência anterior à publicação**, sem modificá-las agora.
+  - **Tipos impressos:** aprovados para os cinco projetos (JOGO 2D PARA CELULAR, PLATAFORMA DE TALENTOS NO FUTEBOL, LOGÍSTICA DE TRANSPLANTES, INTELIGÊNCIA OPERACIONAL, PLATAFORMA DE ATENDIMENTO).
+  - **Comunidade ON:** apresentação pública em nível profissional e geral, sem informações internas, sem dados confidenciais e sem links inventados.
+  - **Cases e aprendizados:** aprovados nesta versão.
+  - **Evidências do EOS:** permanecem, desde que não atribuam ao Eduardo a autoria dos artigos acadêmicos (a nota de autoria do artigo garante isso).
+  - **Nomes e termos:** preservar o nome documentado "Mostra de Jogos 2017". "facilities" e "webapp" ficam na versão pt.
+  - **Paco:** ainda não recebe código MC-CART.
+  - **Traduções antigas do Campaign Log:** a revisão segue como pendência separada.
+- **Verificação final:**
+  - **Âncora "Projetos":** testada na navegação real; o título fica abaixo do cabeçalho (80 px em 390, 82 px em 820, 112 px em 1440). O corte visto na captura mobile era da ferramenta de captura, não da página; nenhuma mudança foi necessária.
+  - **Case na troca:** o case do cartucho anterior reserva o espaço, invisível e inerte (`aria-hidden`, `inert`), até o novo PRONTO. Nenhum dado do novo projeto aparece antes de ele estar carregado no console.
+  - **Selo CARREGANDO:** o cartucho mostra CARREGANDO na biblioteca enquanto entra e carrega; INSERIDO só no PRONTO. O nome acessível segue a mesma regra ("MC-004 — EOS, carregando").
+  - **Assets:** nenhuma imagem nova; os atuais passam nos critérios de desempenho.
+- **Status:** **APPROVED / FROZEN** na branch `feat/hero-refinement`. Não alterar sem regressão objetiva. Sem merge e sem deploy.

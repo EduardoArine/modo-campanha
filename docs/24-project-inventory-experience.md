@@ -535,3 +535,21 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 - Manter o case montado durante a troca.
 - Selo CARREGANDO até o PRONTO.
 - Miniaturas dedicadas, mais leves.
+
+### 18.7 Aprovação e congelamento (D-088, 2026-10-19)
+
+**Status:** **APPROVED / FROZEN.** Não alterar salvo regressão objetiva. O Eduardo aprovou o visual e o funcionamento: os seis cartuchos, a biblioteca, a proporção console × CRT, a troca automática e os cases.
+
+**Ajustes finais:**
+- **Case durante a troca:** fica reservado (invisível e inerte) até o PRONTO.
+- **Selo da biblioteca:** CARREGANDO enquanto o cartucho entra e carrega.
+- **Âncora "Projetos":** verificada na navegação real, sem correção necessária.
+
+**Altura da seção durante a troca, medida em 1440:**
+- O case mantém 484 px até o PRONTO.
+- A seção varia só os 25 px da linha de controles do CRT, que sai durante a ejeção, como no H2.
+
+**Pendências registradas:**
+- **Antes da publicação:** harmonizar a Hero e a `og:image` com a nova carcaça do MC-001.
+- **Separada:** revisão das traduções antigas do Campaign Log.
+- **Paco:** sem código MC-CART por enquanto.

@@ -159,7 +159,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - 🟡 **SYSTEM HORIZON — MVP interativo: proposta** (D-069, `docs/23`); aguardando aprovação; implementação só depois (e lançamento recomendado após o Campaign Log real, 03-0)
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ **Project Inventory — H2, Physical Cartridge Experience** (D-075–D-077, `docs/24` §17): MC-01 em camadas, inserção física, CRT frontal com a arte oficial e teaser sob demanda, case fora do vidro, estado de domínio único; **APPROVED / consolidado** (D-078), sem deploy
-- 🔄 **Biblioteca MC-CART** (D-087, `docs/24` §18): seis cartuchos oficiais, escolher → inserir → explorar → trocar, cases a partir do Campaign Log; aguardando aprovação visual e funcional do Eduardo
+- ✅ **Biblioteca MC-CART** (D-087, `docs/24` §18): seis cartuchos oficiais, escolher → inserir → explorar → trocar, cases a partir do Campaign Log; **APPROVED / FROZEN** (D-088), sem deploy
 - ⏳ Harmonização visual do MC-01 da Hero com o MC-01 canônico do H2 (D-077): contrato da nova imagem pronto (D-079, `docs/21` §8.2); aguardando a arte externa do Eduardo para a substituição
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
@@ -196,6 +196,8 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## FASE 9 — RELEASE ⏸ (deploy público só com o Eduardo)
 
+- ⬜ **Antes de publicar:** harmonizar a Hero (D-086) e a `og:image` (D-085) com a nova carcaça oficial do MC-001 (D-088)
+- ⬜ Revisão das traduções antigas do Campaign Log (pendência separada, D-088)
 - ⬜ GitHub Pages (ativar e publicar)
 - ⬜ Domínio opcional no futuro
 - ⬜ Adicionar ao LinkedIn
