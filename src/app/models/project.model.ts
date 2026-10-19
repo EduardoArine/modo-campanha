@@ -23,10 +23,25 @@ export interface TagDefinition {
 /** Até 2 tags por projeto, garantido pelo tipo. */
 export type ProjectTags = readonly [] | readonly [TagId] | readonly [TagId, TagId];
 
+/**
+ * Link de evidência do case. Os tipos de imprensa, artigo, documento acadêmico, lançamento e
+ * registro são os mesmos do Campaign Log (D-072), para reaproveitar as mesmas referências.
+ */
 export interface ProjectLink {
-  kind: 'repository' | 'live' | 'case-study' | 'other';
+  kind:
+    | 'repository'
+    | 'live'
+    | 'case-study'
+    | 'press'
+    | 'paper'
+    | 'academic'
+    | 'launch'
+    | 'record'
+    | 'other';
   label: Localized;
   url: string;
+  /** Contexto factual curto (ex.: autoria de um artigo que não é do Eduardo). */
+  note?: Localized;
 }
 
 /** Imagem de runtime com dimensões intrínsecas (evita layout shift). */
@@ -63,8 +78,12 @@ export interface ProjectCartridge {
   /** Material do shell; usado pela construção em CSS quando não há render (fallback). */
   shell: McCartShell;
   accent: McCartAccent;
-  /** Artwork aprovado do rótulo (MC-001: SYSTEM HORIZON, 4:3, D-065). Ausente = placeholder dev. */
-  artwork?: CartridgeImage & { alt: Localized };
+  /**
+   * Arte que o CRT mostra no READY. MC-001: SYSTEM HORIZON (4:3, D-065). Demais (D-087): a
+   * ilustração do rótulo do cartucho (≈ 2:1), mostrada inteira (`fit: 'contain'`, faixas escuras
+   * como uma TV de tubo) para não cortar o título da arte. Ausente = placeholder dev.
+   */
+  artwork?: CartridgeImage & { alt: Localized; fit?: 'cover' | 'contain' };
   /** Renders oficiais do objeto físico (D-065). */
   renders?: CartridgeRenders;
   /** Teaser que o CRT reproduz sob demanda (D-077). Ausente = só a arte. */
@@ -99,11 +118,17 @@ export interface Project {
   description: Localized;
   /** Texto impresso no cartucho (ex.: PORTFÓLIO INTERATIVO). */
   type: Localized;
+  /** Problema / contexto que o projeto resolve (case, D-087). */
+  challenge?: Localized;
   role: Localized;
   technologies: readonly string[];
+  /** Marcos e reconhecimentos documentados (case, D-087). Nunca métricas inventadas. */
+  highlights?: Localized<readonly string[]>;
   learnings: Localized<readonly string[]>;
   /** Só quando houver dado real; nunca inventado. */
   year?: number;
+  /** Campanha atual, em andamento (D-087). */
+  ongoing?: true;
 
   // Tags
   tags: ProjectTags;

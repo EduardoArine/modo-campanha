@@ -15,9 +15,11 @@ import {
 
 import { LocaleService } from '../../core/i18n';
 import { McCart, McConsole, McCrtFront } from '../../shared/signature';
-import { McAction, McIcon, McSectionHeader } from '../../shared/ui';
+import { McAction, McIcon, McSectionHeader, McStatus } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
+import { CartridgeLibrary } from './cartridge-library';
 import {
+  cartridgeSelection,
   initialInventoryState,
   InventoryEvent,
   inventoryView,
@@ -35,14 +37,17 @@ const EJECT_MS = 600;
  * Project Inventory — H2, Physical Cartridge Experience (D-077, docs/24 §17). O MC-CART é inserido
  * no MC-01 montado em camadas; o CRT frontal mostra a arte oficial e, sob demanda, o teaser; o
  * case fica fora do vidro, em HTML. Um único estado de domínio (`inventory.machine.ts`) decide
- * textos, controles, indicadores e anúncios. Com 2 ou mais cartuchos aprovados, aparece a escolha.
+ * textos, controles, indicadores e anúncios. Com 2 ou mais cartuchos aprovados, aparece a
+ * biblioteca MC-CART (D-087): escolher seleciona; com um cartucho inserido, a mesma escolha troca.
  */
 @Component({
   selector: 'app-project-inventory-section',
   imports: [
     NgComponentOutlet,
     McSectionHeader,
+    McStatus,
     McAction,
+    CartridgeLibrary,
     McIcon,
     McCart,
     McConsole,
@@ -63,8 +68,15 @@ export class ProjectInventorySection {
   protected readonly projects = inject(INVENTORY_PROJECTS);
   protected readonly state = signal(initialInventoryState(this.projects[0]?.id ?? ''));
   protected readonly view = computed(() => inventoryView(this.state()));
+  /** Cartucho FÍSICO (sobre o slot, entrando, encaixado ou saindo): console, CRT, status e case. */
   protected readonly project = computed(
     () => this.projects.find((p) => p.id === this.state().cartridge) ?? this.projects[0],
+  );
+  /** Escolhido × inserido (D-087): diferem só durante a troca e com o slot vazio. */
+  protected readonly selection = computed(() => cartridgeSelection(this.state()));
+  /** Editorial do cartucho ESCOLHIDO (na troca, o que vai entrar). */
+  protected readonly chosenProject = computed(() =>
+    this.projects.find((p) => p.id === this.selection().selected),
   );
   /** Sem render em escala do console, o cartucho não entra no MC-01 (fallback). */
   protected readonly cartridge = computed(() => this.project()?.cartridge.renders?.console ?? null);
@@ -85,10 +97,13 @@ export class ProjectInventorySection {
         return slot.unavailable;
     }
   });
-  /** "Teaser disponível · Campanha jogável em desenvolvimento": rótulo do projeto + estado da UI. */
+  /**
+   * "Teaser disponível · Campanha jogável em desenvolvimento": rótulo do projeto + estado da UI. Faz
+   * parte do editorial, então segue o cartucho ESCOLHIDO (na troca, o que vai entrar).
+   */
   protected readonly experiences = computed(() => {
     const status = this.ui().inventory.experience;
-    return (this.project()?.experiences ?? []).map(
+    return (this.chosenProject()?.experiences ?? []).map(
       (e) =>
         `${this.locale.pick(e.label)} ${e.status === 'available' ? status.available : status.inDevelopment}`,
     );
@@ -97,6 +112,11 @@ export class ProjectInventorySection {
   protected readonly lifted = signal(false);
   /** Anúncio da última transição (role="status"); vazio até o visitante agir. */
   protected readonly announcement = signal('');
+  /**
+   * A troca em curso começou na biblioteca: o READY é anunciado, sem levar o foco nem rolar até o CRT
+   * (o visitante continua na biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
+   */
+  private swapFromLibrary = false;
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -149,6 +169,23 @@ export class ProjectInventorySection {
 
   protected select(id: string): void {
     this.dispatch({ type: 'select', cartridge: id, reduced: this.reducedMotion() });
+  }
+
+  /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
+  protected choose(id: string): void {
+    const before = this.state();
+    this.select(id);
+    const after = this.state();
+    // Só a troca animada chega a um READY posterior (o dispatch do select não lê a marca).
+    this.swapFromLibrary = before.kind === 'ready' && after.kind === 'ejecting';
+    if (after === before) return;
+    const next = this.projects.find((p) => p.id === id);
+    if (!next) return;
+    const s = this.ui().inventory.status;
+    const name = `${next.serial} — ${this.locale.pick(next.title)}`;
+    if (after.kind === 'empty') this.announcement.set(`${s.selected} ${name}.`);
+    else if (after.kind === 'ejecting') this.announcement.set(`${s.swapping} ${name}.`);
+    else if (after.kind === 'ready') this.announcement.set(`${name} ${s.ready}`);
   }
 
   /** Teaser sob demanda: carrega a tela, depois reproduz; falha = estado próprio do READY. */
@@ -206,6 +243,13 @@ export class ProjectInventorySection {
             ? s.teaserUnavailable
             : '',
     );
+    // Troca pela biblioteca: o READY é anunciado em texto; foco e rolagem ficam onde estão.
+    if (after.kind === 'ready' && before.kind !== 'ready' && this.swapFromLibrary) {
+      this.swapFromLibrary = false;
+      const p = this.project();
+      if (p) this.announcement.set(`${p.serial} — ${this.locale.pick(p.title)} ${s.ready}`);
+      return;
+    }
     // READY: rola até o CRT e leva o foco ao estado (o foco anuncia; sem anúncio duplicado).
     if (after.kind === 'ready' && before.kind !== 'ready') {
       this.afterRender(() => {
@@ -217,7 +261,7 @@ export class ProjectInventorySection {
     }
     // Ejetar: o "Inserir cartucho" volta na hora (bloqueado durante a volta) e recebe o foco (A2).
     const ejectedNow = after.kind === 'empty' && after.ejected && before.kind !== 'ejecting';
-    if (after.kind === 'ejecting' || ejectedNow) {
+    if ((after.kind === 'ejecting' && !after.then) || ejectedNow) {
       this.afterRender(() => this.byId('inventory-insert')?.focus());
     }
     // Teaser falhou: o botão Reproduzir sai; o foco vai ao estado da tela, que diz a falha (A1).

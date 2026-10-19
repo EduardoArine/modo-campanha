@@ -24,9 +24,9 @@ ul {
     grid-template-columns: 1fr 1fr;
   }
 
-  // 4 fatos: contribuição e aprendizados (textos) mais largos que stack e evidências.
+  // Até 6 fatos (D-087), em duas linhas de três na ordem de leitura.
   @include mq(xl) {
-    grid-template-columns: 2fr 1fr 2fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   dt {
@@ -69,7 +69,21 @@ ul {
 }
 
 .links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: space(4);
+  display: grid;
+  gap: space(3);
+
+  // Títulos longos (imprensa, artigo) quebram linha, como no Campaign Log; o ícone segue o texto.
+  a {
+    display: inline;
+    white-space: normal;
+  }
+}
+
+p {
+  margin: 0;
+}
+
+.note {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
 }

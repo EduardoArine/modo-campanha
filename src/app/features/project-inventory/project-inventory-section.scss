@@ -136,51 +136,11 @@ ul {
   margin-top: space(6);
 }
 
-// Escolha do cartucho (2+): itens de biblioteca, não cards de galeria.
+// Biblioteca MC-CART (D-087): acima da estação, com o respiro de um cabeçalho de seção.
 .library {
-  display: flex;
-  flex-wrap: wrap;
-  gap: space(3);
   margin-top: var(--mc-space-section-head);
-  padding: 0;
-  list-style: none;
 }
 
-.library-item {
-  display: grid;
-  grid-template-columns: 4.5rem auto;
-  grid-template-rows: auto auto;
-  column-gap: space(3);
-  align-items: center;
-  padding: space(2) space(3);
-  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
-  border-radius: var(--mc-radius-sm);
-  background: var(--mc-panel);
-  color: var(--mc-text);
-  font: inherit;
-  text-align: start;
-  cursor: pointer;
-
-  img {
-    grid-row: 1 / span 2;
-    width: 100%;
-    height: auto;
-  }
-
-  &[aria-current='true'] {
-    border-color: var(--mc-border-accent);
-  }
-
-  &:focus-visible {
-    @include focus-ring;
-  }
-}
-
-.library-serial {
-  @include type(label);
-  color: var(--mc-text-muted);
-}
-
-.library-title {
-  @include type(body-s);
+.ongoing {
+  justify-self: start;
 }

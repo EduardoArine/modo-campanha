@@ -1,9 +1,52 @@
-import { Project } from '../models';
+import type { Localized } from '../core/i18n';
+import { CampaignLogChapter, Project, ProjectCartridge, ProjectLink } from '../models';
+import { CHAPTER_02, FATEC_CHAPTER } from './campaign-log.chapters.data';
 
-// Projetos do Modo Campanha (content inventory: docs/14, D-041/D-042/D-044).
-// Regra: o runtime contém SOMENTE projetos aprovados para publicação. Projetos em revisão
-// (ex.: MC-002) ficam documentados em docs/14 e entram aqui só depois de aprovados.
+// Projetos do Modo Campanha (content inventory: docs/14, D-041/D-042/D-044; coleção MC-CART, D-087).
+// Regra: o runtime contém SOMENTE projetos aprovados para publicação. Projetos em revisão ficam
+// documentados em docs/14 e entram aqui só depois de aprovados.
 // O filtro abaixo continua como defesa conservadora (testado com fixtures).
+
+const CART = 'assets/cartridges/';
+
+/** Carcaça em escala do console (699 × 500; 2× em 1398), gerada por build-collection.mjs. */
+function consoleShell(serial: string) {
+  const dir = `${CART}${serial}/`;
+  return {
+    src: `${dir}console-scale-699.webp`,
+    srcset: [360, 540, 699, 1398].map((w) => `${dir}console-scale-${w}.webp ${w}w`).join(', '),
+    width: 699,
+    height: 500,
+  };
+}
+
+/**
+ * MC-CART da coleção (D-087): a carcaça oficial entra no slot e a ilustração do rótulo vai para o
+ * CRT, inteira (2:1, `contain`). `artHeight` = altura do derivado de 952 px (o recorte varia por
+ * cartucho). Shell/accent só valem para o fallback em CSS.
+ */
+function collectionCartridge(serial: string, artHeight: number, alt: Localized): ProjectCartridge {
+  const dir = `${CART}${serial}/`;
+  const shell = consoleShell(serial);
+  return {
+    shell: 'dark',
+    accent: 'warm',
+    artwork: {
+      src: `${dir}label-art-952.webp`,
+      srcset: `${dir}label-art-640.webp 640w, ${dir}label-art-952.webp 952w`,
+      width: 952,
+      height: artHeight,
+      alt,
+      fit: 'contain',
+    },
+    renders: { front: shell, console: shell },
+  };
+}
+
+/** Evidências do case: as mesmas referências verificadas do checkpoint no Campaign Log (fonte única). */
+function campaignLinks(chapter: CampaignLogChapter, entryId: string): readonly ProjectLink[] {
+  return chapter.entries.find((entry) => entry.id === entryId)?.links ?? [];
+}
 
 export const PROJECTS: readonly Project[] = [
   {
@@ -16,6 +59,11 @@ export const PROJECTS: readonly Project[] = [
     // portfólio e o ecossistema; MC-01, o sistema que apresenta os projetos; MC-CART, a mídia física.
     // Título e descrição do Eduardo; o tipo segue a definição dele ("experiência narrativa").
     title: { 'pt-BR': 'SYSTEM HORIZON', en: 'SYSTEM HORIZON' },
+    challenge: {
+      'pt-BR':
+        'Apresentar uma trajetória profissional real como uma campanha de videogame, sem inventar nada: XP real, sem personagem.',
+      en: 'Present a real professional journey as a video game campaign, without making anything up: real XP, no persona.',
+    },
     description: {
       'pt-BR':
         'O primeiro cartucho do Modo Campanha. Uma jornada narrativa inspirada nos games que transforma experiências e conquistas reais da minha carreira em uma campanha interativa.',
@@ -61,13 +109,8 @@ export const PROJECTS: readonly Project[] = [
       renders: {
         front: { src: 'assets/cartridges/mc-001/front.webp', width: 960, height: 690 },
         // Carcaça oficial do MC-001 na experiência interativa (D-078); `front` fica como referência.
-        console: {
-          src: 'assets/cartridges/mc-001/console-scale-699.webp',
-          srcset:
-            'assets/cartridges/mc-001/console-scale-360.webp 360w, assets/cartridges/mc-001/console-scale-540.webp 540w, assets/cartridges/mc-001/console-scale-699.webp 699w',
-          width: 699,
-          height: 500,
-        },
+        // Coleção (D-087): mesma carcaça da coleção, gerada do cartucho oficial do Eduardo.
+        console: consoleShell('mc-001'),
         threeQuarter: {
           src: 'assets/cartridges/mc-001/three-quarter.webp',
           width: 1244,
@@ -90,6 +133,255 @@ export const PROJECTS: readonly Project[] = [
         url: 'https://github.com/EduardoArine/modo-campanha',
       },
     ],
+  },
+  // ---------------------------------------------------------------------------------------------
+  // Coleção MC-CART (D-087): MC-002 a MC-006. Fatos e fontes do Campaign Log aprovado (D-070–D-074,
+  // `campaign-log.chapters.data.ts`), condensados no formato do case; as evidências são as mesmas
+  // referências do Campaign Log (importadas, não copiadas). Carcaças e ilustrações do rótulo geradas
+  // por design/source/mc-cart/build-collection.mjs a partir dos cartuchos oficiais do Eduardo.
+  {
+    id: 'mc-002',
+    serial: 'MC-002',
+    slug: 'aedes-revenge',
+    origin: 'other',
+    publication: 'approved',
+    title: { 'pt-BR': 'Aedes Revenge', en: 'Aedes Revenge' },
+    description: {
+      'pt-BR':
+        'Jogo 2D para dispositivos móveis que aborda a conscientização sobre a dengue de uma perspectiva diferente: a do próprio mosquito.',
+      en: "A 2D mobile game that approaches dengue awareness from a different perspective — the mosquito's own.",
+    },
+    type: { 'pt-BR': 'JOGO 2D PARA CELULAR', en: '2D MOBILE GAME' },
+    challenge: {
+      'pt-BR':
+        'Tratar a conscientização sobre a dengue com a linguagem de um jogo, desenvolvido durante a graduação em Jogos Digitais na FATEC Americana.',
+      en: 'Address dengue awareness through the language of a game, developed during my Digital Games degree at FATEC Americana.',
+    },
+    role: {
+      'pt-BR':
+        'O projeto começou em grupo; com a saída dos outros integrantes, continuei desenvolvendo o jogo sozinho: mecânicas, interfaces, personagens e os desafios de desenvolvimento.',
+      en: 'The project started as a group effort; after the other members left, I kept developing the game on my own: mechanics, interfaces, characters, and the development challenges.',
+    },
+    technologies: ['Unity', 'C#'],
+    highlights: {
+      'pt-BR': [
+        'Melhor Jogo — Categoria Acadêmica, no FAEL 2016 da FATEC Americana.',
+        'Publicado no Google Play em maio de 2017, em versão beta com três fases jogáveis e um chefe.',
+        'Melhor Jogo — Categoria Acadêmica, na Mostra de Jogos 2017 da FATEC Americana.',
+        'Apresentado como Trabalho de Conclusão de Curso, com nota 10.',
+      ],
+      en: [
+        "Best Game — Academic Category at FATEC Americana's FAEL 2016.",
+        'Launched on Google Play in May 2017, as a beta with three playable levels and a boss.',
+        "Best Game — Academic Category at FATEC Americana's 2017 Game Showcase.",
+        'Presented as my capstone project (TCC), with a perfect 10.',
+      ],
+    },
+    learnings: {
+      'pt-BR': [
+        'Desenvolver não é apenas fazer algo funcionar: é pensar em quem vai usar.',
+        'Avaliações e pesquisas com jogadores reais mostram o que funciona e o que precisa melhorar.',
+      ],
+      en: [
+        "Development isn't just about making something work: it's about thinking about the people who will use it.",
+        'Reviews and surveys with real players show what works and what needs improvement.',
+      ],
+    },
+    tags: ['game-design'],
+    cartridge: collectionCartridge('mc-002', 462, {
+      'pt-BR':
+        'Ilustração em pixel art: um personagem com mochila e arma de jato enfrenta um mosquito gigante ao pôr do sol sobre a cidade, com o título AEDES REVENGE.',
+      en: 'Pixel-art illustration: a character with a backpack and a spray gun faces a giant mosquito at sunset over the city, with the title AEDES REVENGE.',
+    }),
+    experiences: [],
+    links: campaignLinks(FATEC_CHAPTER, 'fatec-two-awards-capstone'),
+  },
+  {
+    id: 'mc-003',
+    serial: 'MC-003',
+    slug: 'scoutevo',
+    origin: 'other',
+    publication: 'approved',
+    title: { 'pt-BR': 'ScoutEvo', en: 'ScoutEvo' },
+    description: {
+      'pt-BR':
+        'Plataforma criada para ajudar a descobrir novos talentos no futebol, reunindo informações de jovens jogadores coletadas por aplicativo.',
+      en: 'A platform designed to help discover young football talent, bringing together information about young players collected through an app.',
+    },
+    type: { 'pt-BR': 'PLATAFORMA DE TALENTOS NO FUTEBOL', en: 'FOOTBALL TALENT PLATFORM' },
+    challenge: {
+      'pt-BR':
+        'Coletar informações de jovens jogadores por meio de um aplicativo e reunir esses dados em uma plataforma que pudesse apoiar a análise de atletas por clubes brasileiros e internacionais.',
+      en: 'Collect scouting information about young players through an app and bring that data together in a platform that could support talent evaluation by clubs in Brazil and abroad.',
+    },
+    role: {
+      'pt-BR':
+        'Arquitetura da solução, desenvolvimento do aplicativo de coleta com Unity e C#, frontend web em ASP.NET com C# e todo o design das interfaces. O banco de dados ficou com outro integrante.',
+      en: 'Solution architecture, the scouting app with Unity and C#, the web frontend with ASP.NET and C#, and the interface design. Database development was handled by another team member.',
+    },
+    technologies: ['Unity', 'C#', 'ASP.NET'],
+    highlights: {
+      'pt-BR': ['Em 2018, a solução venceu uma maratona de inovação ligada ao Flamengo.'],
+      en: ['In 2018, the solution won an innovation competition connected to Flamengo.'],
+    },
+    learnings: {
+      'pt-BR': [
+        'Usar o conhecimento que eu havia construído para criar soluções digitais com outras finalidades, além dos jogos.',
+      ],
+      en: [
+        "Apply what I'd learned to build digital solutions for different purposes, beyond games.",
+      ],
+    },
+    tags: ['product'],
+    cartridge: collectionCartridge('mc-003', 473, {
+      'pt-BR':
+        'Ilustração: um jogador conduz a bola em um estádio iluminado, com um esquema tático sobreposto ao gramado e o título SCOUTEVO.',
+      en: 'Illustration: a player dribbles the ball in a floodlit stadium, with a tactical diagram over the pitch and the title SCOUTEVO.',
+    }),
+    experiences: [],
+    links: campaignLinks(CHAPTER_02, 'scoutevo'),
+  },
+  {
+    id: 'mc-004',
+    serial: 'MC-004',
+    slug: 'eos',
+    origin: 'other',
+    publication: 'approved',
+    title: { 'pt-BR': 'EOS', en: 'EOS' },
+    description: {
+      'pt-BR':
+        'Plataforma Inteligente para Logística de Doação e Transplante de Órgãos, criada para apoiar o planejamento do transporte de órgãos e equipes médicas.',
+      en: 'Intelligent Platform for Organ Donation and Transplant Logistics, designed to support planning the transportation of organs and medical teams.',
+    },
+    type: { 'pt-BR': 'LOGÍSTICA DE TRANSPLANTES', en: 'TRANSPLANT LOGISTICS' },
+    challenge: {
+      'pt-BR':
+        'Planejar o transporte de órgãos e equipes médicas considerando rotas, modalidades de transporte, tempo de deslocamento e os limites de preservação dos órgãos.',
+      en: 'Plan the transportation of organs and medical teams, considering routes, transportation modes, travel times, and organ preservation constraints.',
+    },
+    role: {
+      'pt-BR':
+        'Participei da engenharia da solução e fui responsável por todo o frontend da aplicação web, desenvolvido com ASP.NET e C#.',
+      en: "I contributed to the solution's engineering and was responsible for the entire web application frontend, built with ASP.NET and C#.",
+    },
+    technologies: ['ASP.NET', 'C#'],
+    highlights: {
+      'pt-BR': [
+        'Em setembro de 2019, o sistema foi disponibilizado à Central Estadual de Transplantes de São Paulo e divulgado pela Unicamp.',
+        'A pesquisa que fundamentou a solução foi publicada na revista científica Case Studies on Transport Policy, em 2021.',
+      ],
+      en: [
+        "In September 2019, the system was made available to São Paulo's State Transplant Center and featured by Unicamp.",
+        'The underlying research was published in the journal Case Studies on Transport Policy in 2021.',
+      ],
+    },
+    learnings: {
+      'pt-BR': [
+        'Organizar informações complexas e apresentá-las com clareza para apoiar decisões sob restrição de tempo.',
+        'Desenvolver produtos digitais é entender problemas reais e construir soluções que possam fazer diferença.',
+      ],
+      en: [
+        'Organize complex information and present it clearly to support time-sensitive decisions.',
+        'Building digital products means understanding real problems and creating solutions that can make a difference.',
+      ],
+    },
+    tags: ['product'],
+    cartridge: collectionCartridge('mc-004', 469, {
+      'pt-BR':
+        'Ilustração: à noite, uma rota luminosa atravessa a cidade ligando dois hospitais, com uma van no caminho e o título EOS.',
+      en: 'Illustration: at night, a glowing route crosses the city connecting two hospitals, with a van on the way and the title EOS.',
+    }),
+    experiences: [],
+    // Sem o DOI e o registro do OpenAlex (redundantes com o artigo); a autoria fica na nota do artigo.
+    links: campaignLinks(CHAPTER_02, 'eos').filter(
+      (link) => link.kind !== 'record' && !link.url.includes('doi.org'),
+    ),
+  },
+  {
+    id: 'mc-005',
+    serial: 'MC-005',
+    slug: 'axia',
+    origin: 'other',
+    publication: 'approved',
+    title: { 'pt-BR': 'Axia', en: 'Axia' },
+    description: {
+      'pt-BR':
+        'Plataforma de inteligência operacional desenvolvida pela Ativvus/Arppen para a gestão de limpeza e facilities, com tecnologia, dados e dispositivos conectados.',
+      en: 'An operational intelligence platform developed by Ativvus/Arppen for cleaning and facilities management, with technology, data, and connected devices.',
+    },
+    type: { 'pt-BR': 'INTELIGÊNCIA OPERACIONAL', en: 'OPERATIONAL INTELLIGENCE' },
+    challenge: {
+      'pt-BR':
+        'Transformar necessidades operacionais reais da gestão de limpeza e facilities em um produto consistente, capaz de evoluir conforme novos problemas e oportunidades surgiam.',
+      en: 'Turn real operational needs in cleaning and facilities management into a consistent product that could evolve as new challenges and opportunities emerged.',
+    },
+    role: {
+      'pt-BR':
+        'Participei de toda a evolução do produto, da idealização e engenharia inicial às expansões seguintes, incluindo a evolução para a Inteligência Axia. Minha atuação passou por arquitetura, webapp em Angular, WebAPI em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C. Meu foco principal foi a plataforma web, as APIs e a experiência de uso.',
+      en: "I contributed throughout the product's evolution, from its initial concept and engineering to later expansions, including its evolution into Axia Intelligence. My work spanned architecture, the Angular web application, .NET WebAPI with C#, SQL Server, interface design, and contributions to the devices' embedded C code. My primary focus was the web platform, APIs, and user experience.",
+    },
+    technologies: ['Angular', '.NET', 'C#', 'SQL Server', 'C'],
+    learnings: {
+      'pt-BR': [
+        'O desafio não é só fazer tecnologias diferentes funcionarem juntas, mas transformar necessidades reais em um produto consistente.',
+        'Participar das decisões, construir, entender como a solução é usada e continuar evoluindo o produto.',
+      ],
+      en: [
+        "The challenge isn't just connecting different technologies, but turning real needs into a consistent product.",
+        'Contribute to decisions, build, understand how the solution is used, and keep improving the product.',
+      ],
+    },
+    tags: ['product'],
+    cartridge: collectionCartridge('mc-005', 470, {
+      'pt-BR':
+        'Ilustração isométrica: escritórios e um depósito à noite com sensores conectados a uma base de dados, com o título AXIA.',
+      en: 'Isometric illustration: offices and a warehouse at night with sensors connected to a database, with the title AXIA.',
+    }),
+    experiences: [],
+    links: campaignLinks(CHAPTER_02, 'axia'),
+  },
+  {
+    id: 'mc-006',
+    serial: 'MC-006',
+    slug: 'comunidade-on',
+    origin: 'on-tech',
+    publication: 'approved',
+    title: { 'pt-BR': 'Comunidade ON', en: 'Comunidade ON' },
+    description: {
+      'pt-BR':
+        'Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais.',
+      en: 'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
+    },
+    type: { 'pt-BR': 'PLATAFORMA DE ATENDIMENTO', en: 'CUSTOMER SERVICE PLATFORM' },
+    challenge: {
+      'pt-BR':
+        'Repensar o relacionamento entre marcas e consumidores, combinando tecnologia, inteligência artificial e pessoas em uma plataforma de atendimento.',
+      en: 'Rethink the relationship between brands and consumers by bringing technology, artificial intelligence, and people together in a customer service platform.',
+    },
+    role: {
+      'pt-BR':
+        'Desenvolvimento das aplicações web, integração com serviços e APIs e, principalmente, construção e evolução das experiências de interface, incluindo a gamificação.',
+      en: 'Developing web applications, integrating services and APIs, and, especially, designing and improving user experiences, including gamification.',
+    },
+    technologies: ['Angular', 'TypeScript', '.NET', 'C#'],
+    learnings: {
+      'pt-BR': [
+        'Usar a linguagem dos games para tornar experiências de trabalho e aprendizado mais claras, envolventes e significativas, sem comprometer a usabilidade e a eficiência operacional.',
+      ],
+      en: [
+        'Use the language of games to make work and learning experiences clearer, more engaging, and more meaningful, without sacrificing usability or operational efficiency.',
+      ],
+    },
+    ongoing: true,
+    tags: ['product', 'gamification'],
+    cartridge: collectionCartridge('mc-006', 471, {
+      'pt-BR':
+        'Ilustração: terraços com pessoas trabalhando e conversando ao redor de uma árvore iluminada ao entardecer, com o título COMUNIDADE ON.',
+      en: 'Illustration: terraces with people working and talking around an illuminated tree at dusk, with the title COMUNIDADE ON.',
+    }),
+    experiences: [],
+    // Sem link público aprovado para a Comunidade ON (pendente com o Eduardo).
+    links: [],
   },
 ];
 

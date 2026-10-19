@@ -1,0 +1,168 @@
+// Biblioteca MC-CART (D-087): prateleira de cartuchos, não grid de cards. O objeto (render oficial)
+// é o protagonista; sem fundo próprio por item, sem sombra grande. Selecionado: contorno âmbar,
+// elevação de 2 px e rótulo de texto. Cartuchos visíveis por largura: 6 (≥ 1200) · 4 (≥ 1024) ·
+// 3 (≥ 768) · ~2,3 (mobile: o terço seguinte aparece cortado, sinal de que há mais).
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  column-gap: space(4);
+  row-gap: space(1);
+}
+
+.title {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.count {
+  margin: 0;
+  @include type(label);
+  color: var(--mc-text-muted);
+  text-align: end;
+}
+
+.hint {
+  grid-column: 1;
+  margin: 0;
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+.pager {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  gap: space(2);
+  justify-self: end;
+}
+
+.page {
+  display: grid;
+  place-items: center;
+  width: space(7);
+  height: space(7);
+  padding: 0;
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: transparent;
+  color: var(--mc-text);
+  cursor: pointer;
+
+  &:hover:not([aria-disabled='true']) {
+    background: var(--mc-interactive-hover);
+  }
+
+  // aria-disabled (não disabled): o foco fica no botão quando a faixa chega ao fim.
+  &[aria-disabled='true'] {
+    border-color: var(--mc-disabled-border);
+    color: var(--mc-disabled-text);
+    cursor: default;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.strip {
+  --n: 2.3;
+  display: flex;
+  gap: space(3);
+  margin: space(4) 0 0;
+  // Folga para o contorno e a elevação do selecionado não serem cortados pela rolagem.
+  padding: space(2) space(1) space(3);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: space(1);
+
+  @include mq(md) {
+    --n: 3;
+  }
+
+  @include mq(lg) {
+    --n: 4;
+  }
+
+  @include mq(xl) {
+    --n: 6;
+  }
+}
+
+.slot {
+  flex: 0 0 calc((100% - (var(--n) - 1) * #{space(3)}) / var(--n));
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.cart {
+  display: grid;
+  gap: space(1);
+  width: 100%;
+  padding: space(2);
+  border: var(--mc-border-width-default) solid transparent;
+  border-radius: var(--mc-radius-sm);
+  background: transparent;
+  color: var(--mc-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease-out,
+    transform 160ms ease-out;
+
+  &:hover:not([aria-disabled='true']) {
+    border-color: var(--mc-border-default);
+  }
+
+  &.is-selected {
+    border-color: var(--mc-border-accent);
+    transform: translateY(-2px);
+  }
+
+  &[aria-disabled='true'] {
+    cursor: default;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+.shell {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 699 / 500;
+}
+
+.serial {
+  margin-top: space(1);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+.name {
+  @include type(body-s);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+// Reserva a linha mesmo vazia: selecionar não muda a altura do item (sem layout shift).
+.badge {
+  min-height: 1lh;
+  @include type(label);
+  color: var(--mc-accent);
+}

@@ -101,6 +101,11 @@ mc-console.is-idle {
   animation: power-on 280ms ease-out;
 }
 
+// Arte do rótulo (≈ 2:1) inteira no vidro 4:3, sem corte (D-087).
+.glass-art.is-contain {
+  object-fit: contain;
+}
+
 // A tela liga do centro (linha → quadro), sem flash.
 @keyframes power-on {
   from {

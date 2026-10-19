@@ -5,8 +5,8 @@ import { Project } from '../../models';
 import { McAction, McIcon } from '../../shared/ui';
 
 /**
- * Case do projeto (D-077): fora do CRT, em HTML acessível, para leitura rápida. Só campos aprovados
- * do `Project` (contribuição, stack, aprendizados, links). Nome, proposta e experiências disponíveis ficam
+ * Case do projeto (D-077, D-087): fora do CRT, em HTML acessível, para leitura rápida. Só campos
+ * aprovados do `Project` (problema, contribuição, stack, marcos, aprendizados, links). Nome, proposta e experiências disponíveis ficam
  * no editorial da seção (sem repetir). Não duplica o Campaign Log.
  */
 @Component({

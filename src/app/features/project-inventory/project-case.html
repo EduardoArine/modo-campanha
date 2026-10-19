@@ -1,4 +1,11 @@
+<!-- Ordem do case (D-087): problema → contribuição → tecnologias → marcos → aprendizados → evidências. -->
 <dl class="facts">
+  @if (project().challenge; as challenge) {
+    <div>
+      <dt>{{ ui().projectCase.challenge }}</dt>
+      <dd>{{ locale.pick(challenge) }}</dd>
+    </div>
+  }
   <div>
     <dt>{{ ui().projectCase.role }}</dt>
     <dd>{{ locale.pick(project().role) }}</dd>
@@ -13,6 +20,20 @@
       </ul>
     </dd>
   </div>
+  @if (project().highlights; as highlights) {
+    @if (locale.pick(highlights).length) {
+      <div>
+        <dt>{{ ui().projectCase.highlights }}</dt>
+        <dd>
+          <ul role="list" class="list">
+            @for (highlight of locale.pick(highlights); track highlight) {
+              <li>{{ highlight }}</li>
+            }
+          </ul>
+        </dd>
+      </div>
+    }
+  }
   @if (locale.pick(project().learnings).length) {
     <div>
       <dt>{{ ui().projectCase.learnings }}</dt>
@@ -28,13 +49,21 @@
   @if (project().links.length) {
     <div>
       <dt>{{ ui().projectCase.evidence }}</dt>
-      <dd class="links">
-        @for (link of project().links; track link.url) {
-          <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
-            {{ locale.pick(link.label) }} <mc-icon name="external" />
-            <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
-          </a>
-        }
+      <dd>
+        <ul role="list" class="links">
+          @for (link of project().links; track link.url) {
+            <li>
+              <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+                {{ locale.pick(link.label) }} <mc-icon name="external" />
+                <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+              </a>
+              <!-- Contexto da evidência (ex.: autoria do artigo), sem atribuir a obra a Eduardo. -->
+              @if (link.note; as note) {
+                <p class="note">{{ locale.pick(note) }}</p>
+              }
+            </li>
+          }
+        </ul>
       </dd>
     </div>
   }

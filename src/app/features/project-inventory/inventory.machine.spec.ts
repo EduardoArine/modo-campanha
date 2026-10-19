@@ -1,4 +1,5 @@
 import {
+  cartridgeSelection,
   initialInventoryState,
   InventoryEvent,
   InventoryState,
@@ -54,17 +55,86 @@ describe('inventory machine (D-077)', () => {
     expect(run([{ type: 'loaded' }], inserting)).toBe(inserting);
   });
 
-  it('switches cartridges: select in empty, or eject first when one is seated', () => {
-    expect(run([{ type: 'select', cartridge: 'mc-002', reduced: false }])).toEqual({
-      kind: 'empty',
+  it('selects in empty without inserting (the TV stays off)', () => {
+    const state = run([{ type: 'select', cartridge: 'mc-002', reduced: false }]);
+    expect(state).toEqual({ kind: 'empty', cartridge: 'mc-002' });
+    expect(inventoryView(state).screen).toBe('standby');
+  });
+
+  it('swaps with one selection: eject the seated one, then insert the chosen one (D-087)', () => {
+    const ready = run([{ type: 'insert', reduced: true }]);
+    const swapping = run([{ type: 'select', cartridge: 'mc-002', reduced: false }], ready);
+    expect(swapping).toEqual({
+      kind: 'ejecting',
+      cartridge: 'mc-001',
+      next: 'mc-002',
+      then: 'insert',
+    });
+    // Durante a ejeção a tela já desliga e o case sai: nada do projeto anterior fica na tela.
+    expect(inventoryView(swapping)).toMatchObject({ screen: 'standby', case: false });
+    const states = [swapping];
+    for (const e of [{ type: 'ejected' }, { type: 'seated' }, { type: 'loaded' }] as const) {
+      states.push(nextInventoryState(states.at(-1)!, e));
+    }
+    expect(states.map((x) => x.kind)).toEqual(['ejecting', 'inserting', 'loading', 'ready']);
+    expect(states.at(-1)).toEqual({ kind: 'ready', cartridge: 'mc-002', screen: 'art' });
+  });
+
+  it('swaps straight to the new READY with reduced motion', () => {
+    const ready = run([{ type: 'insert', reduced: true }]);
+    expect(run([{ type: 'select', cartridge: 'mc-006', reduced: true }], ready)).toEqual({
+      kind: 'ready',
+      cartridge: 'mc-006',
+      screen: 'art',
+    });
+  });
+
+  it('swaps from the teaser too, and ignores selecting the seated cartridge', () => {
+    const teaser = run([{ type: 'insert', reduced: true }, { type: 'play' }]);
+    expect(run([{ type: 'select', cartridge: 'mc-001', reduced: false }], teaser)).toBe(teaser);
+    expect(run([{ type: 'select', cartridge: 'mc-003', reduced: false }], teaser)).toMatchObject({
+      kind: 'ejecting',
+      next: 'mc-003',
+    });
+  });
+
+  it('ignores new selections while inserting, loading or ejecting (no double animation)', () => {
+    const inserting = run([{ type: 'insert', reduced: false }]);
+    const loading = run([{ type: 'seated' }], inserting);
+    const ejecting = run(
+      [{ type: 'loaded' }, { type: 'select', cartridge: 'mc-002', reduced: false }],
+      loading,
+    );
+    for (const state of [inserting, loading, ejecting]) {
+      expect(run([{ type: 'select', cartridge: 'mc-005', reduced: false }], state)).toBe(state);
+      expect(inventoryView(state).selectable).toBe(false);
+    }
+    // A troca em curso segue para o cartucho escolhido primeiro.
+    expect(run([{ type: 'ejected' }], ejecting)).toEqual({
+      kind: 'inserting',
       cartridge: 'mc-002',
     });
+  });
+
+  it('tells the selected cartridge apart from the one physically inserted', () => {
+    expect(cartridgeSelection(initialInventoryState('mc-001'))).toEqual({
+      selected: 'mc-001',
+      inserted: null,
+    });
     const ready = run([{ type: 'insert', reduced: true }]);
-    const switching = run([{ type: 'select', cartridge: 'mc-002', reduced: false }], ready);
-    expect(switching).toEqual({ kind: 'ejecting', cartridge: 'mc-001', next: 'mc-002' });
-    expect(run([{ type: 'ejected' }], switching)).toMatchObject({
-      kind: 'empty',
-      cartridge: 'mc-002',
+    expect(cartridgeSelection(ready)).toEqual({ selected: 'mc-001', inserted: 'mc-001' });
+    const swapping = run([{ type: 'select', cartridge: 'mc-004', reduced: false }], ready);
+    expect(cartridgeSelection(swapping)).toEqual({ selected: 'mc-004', inserted: 'mc-001' });
+  });
+
+  it('manual eject keeps the last cartridge selected, slot empty and the TV in standby', () => {
+    const ready = run([{ type: 'insert', reduced: true }]);
+    const empty = run([{ type: 'eject', reduced: true }], ready);
+    expect(empty).toEqual({ kind: 'empty', cartridge: 'mc-001', ejected: true });
+    expect(inventoryView(empty)).toMatchObject({
+      slot: 'empty',
+      screen: 'standby',
+      insert: 'enabled',
     });
   });
 

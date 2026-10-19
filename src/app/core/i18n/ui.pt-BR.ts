@@ -81,7 +81,22 @@ export const UI_PT_BR = {
     // Inserção física no MC-01 (H2, D-077). Estados do slot em linguagem de sistema; ações localizadas.
     insert: 'Inserir cartucho',
     eject: 'Ejetar cartucho',
-    choose: 'Escolher cartucho',
+    // Biblioteca MC-CART (D-087). "MC-CART" é nome próprio; o resto em português (D-084).
+    collection: {
+      title: 'COLEÇÃO MC-CART',
+      count: 'CARTUCHOS',
+      hint: 'Escolha um cartucho para explorar.',
+      hintSwap: 'Escolher outro cartucho troca o que está no MC-01.',
+      busy: 'Aguarde: trocando de cartucho.',
+      select: 'Selecionar',
+      swap: 'Trocar para',
+      selected: 'SELECIONADO',
+      inserted: 'INSERIDO',
+      isSelected: 'selecionado',
+      isInserted: 'inserido',
+      previous: 'Cartuchos anteriores',
+      next: 'Próximos cartuchos',
+    },
     slot: {
       empty: 'SLOT VAZIO',
       loading: 'CARREGANDO',
@@ -101,13 +116,18 @@ export const UI_PT_BR = {
       loading: 'Carregando cartucho.',
       ejected: 'Cartucho ejetado.',
       teaserUnavailable: 'O teaser não carregou. O case do projeto continua disponível.',
+      selected: 'Cartucho selecionado:',
+      swapping: 'Trocando para',
+      ready: 'pronto.',
     },
     fallback: 'A visualização do MC-01 não carregou. O case do projeto continua disponível abaixo.',
   },
   // Case do projeto, fora do CRT (D-077).
   projectCase: {
+    challenge: 'PROBLEMA',
     role: 'MINHA CONTRIBUIÇÃO',
     stack: 'TECNOLOGIAS',
+    highlights: 'MARCOS',
     learnings: 'APRENDIZADOS',
     evidence: 'EVIDÊNCIAS',
   },

@@ -7,6 +7,11 @@
  *   └──────ejected─── ejecting ◀──────────eject───────────────┘  teaser-failed ▶ ready(teaser-unavailable)
  * Qualquer estado ──assets-failed──▶ unavailable (fallback: case acessível sem o MC-01).
  * Com reduced motion, `insert` vai direto a ready e `eject` direto a empty.
+ *
+ * Troca (biblioteca MC-CART, D-087): `select` em READY ejeta o atual e, ao terminar, insere o
+ * escolhido (ejecting{then: insert} ──ejected──▶ inserting). Uma única escolha faz a troca toda; com
+ * reduced motion, vai direto ao READY do novo. Durante inserção, carregamento e ejeção, `select` é
+ * ignorado (nada de duas animações, nem case de um projeto com o cartucho de outro).
  */
 export type InventoryScreen = 'art' | 'art-unavailable' | 'teaser' | 'teaser-unavailable';
 
@@ -15,7 +20,13 @@ export type InventoryState =
   | { readonly kind: 'inserting'; readonly cartridge: string }
   | { readonly kind: 'loading'; readonly cartridge: string }
   | { readonly kind: 'ready'; readonly cartridge: string; readonly screen: InventoryScreen }
-  | { readonly kind: 'ejecting'; readonly cartridge: string; readonly next: string }
+  | {
+      readonly kind: 'ejecting';
+      readonly cartridge: string;
+      readonly next: string;
+      /** Troca: ao terminar de ejetar, insere `next` (D-087). */
+      readonly then?: 'insert';
+    }
   | { readonly kind: 'unavailable'; readonly cartridge: string };
 
 export type InventoryEvent =
@@ -60,15 +71,18 @@ export function nextInventoryState(state: InventoryState, event: InventoryEvent)
       }
       if (event.type === 'teaser-failed') return { ...state, screen: 'teaser-unavailable' };
       if (event.type === 'eject') return eject(state, cartridge, event.reduced);
-      // Trocar de cartucho no READY: ejeta o atual e deixa o escolhido fora do slot (D-058 §3).
+      // Trocar de cartucho no READY (D-087): ejeta o atual e insere o escolhido em seguida.
       if (event.type === 'select' && event.cartridge !== cartridge) {
-        return eject(state, event.cartridge, event.reduced);
+        return event.reduced
+          ? { kind: 'ready', cartridge: event.cartridge, screen: 'art' }
+          : { kind: 'ejecting', cartridge, next: event.cartridge, then: 'insert' };
       }
       return state;
     case 'ejecting':
-      return event.type === 'ejected'
-        ? { kind: 'empty', cartridge: state.next, ejected: true }
-        : state;
+      if (event.type !== 'ejected') return state;
+      return state.then === 'insert'
+        ? { kind: 'inserting', cartridge: state.next }
+        : { kind: 'empty', cartridge: state.next, ejected: true };
     case 'unavailable':
       if (event.type === 'select') return { kind: 'empty', cartridge: event.cartridge };
       return state;
@@ -79,6 +93,25 @@ function eject(state: InventoryState, next: string, reduced: boolean): Inventory
   return reduced
     ? { kind: 'empty', cartridge: next, ejected: true }
     : { kind: 'ejecting', cartridge: state.cartridge, next };
+}
+
+/**
+ * Cartucho escolhido na biblioteca × cartucho fisicamente no MC-01 (D-087). Diferem só durante a
+ * troca (o atual ainda saindo, o escolhido esperando) e no slot vazio (escolhido, nada inserido).
+ */
+export function cartridgeSelection(state: InventoryState): {
+  selected: string;
+  inserted: string | null;
+} {
+  switch (state.kind) {
+    case 'empty':
+    case 'unavailable':
+      return { selected: state.cartridge, inserted: null };
+    case 'ejecting':
+      return { selected: state.next, inserted: state.cartridge };
+    default:
+      return { selected: state.cartridge, inserted: state.cartridge };
+  }
 }
 
 /** O que a interface mostra em cada estado (chaves; os textos vêm do dicionário). */

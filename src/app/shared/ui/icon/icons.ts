@@ -45,6 +45,17 @@ export const MC_ICONS = {
     style: 'stroke',
     paths: ['M4.25 11.75 11.5 4.5', 'M6 4.25h5.75V10'],
   },
+  // Navegação da biblioteca MC-CART (D-087), no mesmo traço da seta.
+  'chevron-left': {
+    viewBox: '0 0 16 16',
+    style: 'stroke',
+    paths: ['M10 3.5 5.5 8l4.5 4.5'],
+  },
+  'chevron-right': {
+    viewBox: '0 0 16 16',
+    style: 'stroke',
+    paths: ['M6 3.5 10.5 8 6 12.5'],
+  },
   document: {
     viewBox: '0 0 16 16',
     style: 'stroke',

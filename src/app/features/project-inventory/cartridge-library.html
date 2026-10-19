@@ -1,0 +1,75 @@
+<div class="library" role="group" aria-labelledby="library-title" aria-describedby="library-hint">
+  <div class="head">
+    <h3 class="title" id="library-title">{{ ui().inventory.collection.title }}</h3>
+    <p class="count">{{ count() }}</p>
+    <p class="hint" id="library-hint">{{ hint() }}</p>
+    @if (overflow()) {
+      <div class="pager">
+        <button
+          type="button"
+          class="page"
+          aria-controls="library-strip"
+          [attr.aria-label]="ui().inventory.collection.previous"
+          [attr.aria-disabled]="atStart() ? 'true' : null"
+          (click)="page(-1)"
+        >
+          <mc-icon name="chevron-left" />
+        </button>
+        <button
+          type="button"
+          class="page"
+          aria-controls="library-strip"
+          [attr.aria-label]="ui().inventory.collection.next"
+          [attr.aria-disabled]="atEnd() ? 'true' : null"
+          (click)="page(1)"
+        >
+          <mc-icon name="chevron-right" />
+        </button>
+      </div>
+    }
+  </div>
+
+  <ul class="strip" role="list" id="library-strip" #strip>
+    @for (project of projects(); track project.id) {
+      @let isInserted = project.id === inserted();
+      @let isSelected = project.id === selected();
+      <li class="slot">
+        <button
+          type="button"
+          class="cart"
+          [attr.aria-controls]="viewer() ? 'project-viewer' : null"
+          [attr.aria-label]="label(project)"
+          [attr.aria-current]="isSelected ? 'true' : null"
+          [attr.aria-disabled]="busy() || !actionable(project) ? 'true' : null"
+          [class.is-selected]="isSelected"
+          [class.is-inserted]="isInserted"
+          (click)="pick(project)"
+        >
+          @if (project.cartridge.renders?.console; as shell) {
+            <img
+              class="shell"
+              [src]="shell.src"
+              [attr.srcset]="shell.srcset ?? null"
+              sizes="(min-width: 1200px) 171px, (min-width: 1024px) 20vw, (min-width: 768px) 27vw, 36vw"
+              [width]="shell.width"
+              [height]="shell.height"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          }
+          <span class="serial" aria-hidden="true">{{ project.serial }}</span>
+          <span class="name" aria-hidden="true">{{ locale.pick(project.title) }}</span>
+          <!-- Estado por texto (não só por cor); o selecionado também sai em aria-current. -->
+          <span class="badge" aria-hidden="true">
+            @if (isInserted) {
+              {{ ui().inventory.collection.inserted }}
+            } @else if (isSelected) {
+              {{ ui().inventory.collection.selected }}
+            }
+          </span>
+        </button>
+      </li>
+    }
+  </ul>
+</div>

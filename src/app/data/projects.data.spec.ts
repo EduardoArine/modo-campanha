@@ -48,13 +48,21 @@ describe('PROJECTS (runtime data)', () => {
     expect(PROJECTS.every((p) => p.publication === 'approved')).toBe(true);
   });
 
-  it('contains MC-001 SYSTEM HORIZON and no project under review', () => {
-    expect(PROJECTS.map((p) => [p.serial, p.slug])).toEqual([['MC-001', 'modo-campanha']]);
+  it('contains the six official MC-CART cartridges, in serial order (D-087)', () => {
+    expect(PROJECTS.map((p) => [p.serial, p.slug])).toEqual([
+      ['MC-001', 'modo-campanha'],
+      ['MC-002', 'aedes-revenge'],
+      ['MC-003', 'scoutevo'],
+      ['MC-004', 'eos'],
+      ['MC-005', 'axia'],
+      ['MC-006', 'comunidade-on'],
+    ]);
     // D-077: SYSTEM HORIZON é o primeiro cartucho; Modo Campanha é o portfólio (não o projeto).
     expect(PROJECTS[0].title).toEqual({ 'pt-BR': 'SYSTEM HORIZON', en: 'SYSTEM HORIZON' });
     expect(PROJECTS[0].description['pt-BR']).toMatch(/^O primeiro cartucho do Modo Campanha\./);
     expect(PROJECTS[0].description.en).toMatch(/^The first Modo Campanha cartridge\./);
-    expect(JSON.stringify(PROJECTS)).not.toMatch(/MC-002|Paco/);
+    // Paco segue fora do runtime (docs/14); o MC-002 passou a ser AEDES REVENGE (D-087).
+    expect(JSON.stringify(PROJECTS)).not.toMatch(/Paco/);
   });
 
   it('keeps serials, slugs and ids unique, with serials in MC-NNN format', () => {
@@ -142,14 +150,82 @@ describe('PROJECTS (runtime data)', () => {
     ).toBe(false);
   });
 
-  it('publishes MC-001 in production (approved + approved artwork)', () => {
-    expect(inventoryProjects(false).map((p) => p.serial)).toEqual(['MC-001']);
+  it('publishes the six cartridges in production (approved + approved artwork)', () => {
+    expect(inventoryProjects(false).map((p) => p.serial)).toEqual([
+      'MC-001',
+      'MC-002',
+      'MC-003',
+      'MC-004',
+      'MC-005',
+      'MC-006',
+    ]);
   });
 
   it('links MC-001 only to its repository', () => {
     expect(PROJECTS[0].links.map((l) => [l.kind, l.url])).toEqual([
       ['repository', 'https://github.com/EduardoArine/modo-campanha'],
     ]);
+  });
+});
+
+describe('MC-CART collection (D-087)', () => {
+  it('gives every cartridge the same console-scale shell (699 × 500, same slot of the MC-01)', () => {
+    for (const p of PROJECTS) {
+      const shell = p.cartridge.renders?.console;
+      const dir = `assets/cartridges/${p.id}/`;
+      expect(shell).toMatchObject({ src: `${dir}console-scale-699.webp`, width: 699, height: 500 });
+      for (const w of [360, 540, 699, 1398]) {
+        expect(shell?.srcset).toContain(`${dir}console-scale-${w}.webp ${w}w`);
+      }
+    }
+  });
+
+  it('shows the label art of MC-002…MC-006 whole on the CRT (contain), with a bilingual alt', () => {
+    for (const p of PROJECTS.slice(1)) {
+      const art = p.cartridge.artwork!;
+      expect(art.src).toBe(`assets/cartridges/${p.id}/label-art-952.webp`);
+      expect(art.fit).toBe('contain');
+      expect(art.srcset).toContain('label-art-640.webp 640w');
+      expect(art.alt['pt-BR'].length).toBeGreaterThan(0);
+      expect(art.alt.en.length).toBeGreaterThan(0);
+      // Sem teaser nem experiência jogável: só a arte estática (D-087).
+      expect(p.cartridge.teaser).toBeUndefined();
+      expect(p.experiences).toEqual([]);
+    }
+  });
+
+  it('tells each case as a problem, with bilingual milestones of equal length', () => {
+    for (const p of PROJECTS) {
+      expect(p.challenge?.['pt-BR'].length).toBeGreaterThan(0);
+      expect(p.challenge?.en.length).toBeGreaterThan(0);
+      if (p.highlights) expect(p.highlights['pt-BR'].length).toBe(p.highlights.en.length);
+    }
+  });
+
+  it('reuses the Campaign Log evidence with https links, never claiming third-party papers', () => {
+    const links = PROJECTS.flatMap((p) => p.links);
+    expect(links.every((l) => l.url.startsWith('https://'))).toBe(true);
+    for (const paper of links.filter((l) => l.kind === 'paper')) {
+      expect(paper.note?.['pt-BR'].length).toBeGreaterThan(0);
+      expect(paper.note?.en.length).toBeGreaterThan(0);
+    }
+    expect(new Set(links.map((l) => l.url)).size).toBe(links.length);
+  });
+
+  it('finds the Campaign Log evidence of each case (no silent empty lookup)', () => {
+    expect(PROJECTS.map((p) => [p.serial, p.links.map((l) => l.kind)])).toEqual([
+      ['MC-001', ['repository']],
+      ['MC-002', ['academic']],
+      ['MC-003', ['press']],
+      ['MC-004', ['launch', 'paper', 'press']],
+      ['MC-005', ['press']],
+      ['MC-006', []],
+    ]);
+  });
+
+  it('marks only Comunidade ON as ongoing, with no public link yet', () => {
+    expect(PROJECTS.filter((p) => p.ongoing).map((p) => p.serial)).toEqual(['MC-006']);
+    expect(PROJECTS[5].links).toEqual([]);
   });
 });
 

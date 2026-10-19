@@ -14,45 +14,32 @@
   @if (project(); as project) {
     @let v = view();
     @let title = locale.pick(project.title);
+    @let chosen = chosenProject() ?? project;
 
     @if (projects.length > 1) {
-      <!-- Escolha do cartucho (só com 2 ou mais aprovados): troca o que espera fora do slot. -->
-      <ul class="library" role="list" [attr.aria-label]="ui().inventory.choose">
-        @for (item of projects; track item.id) {
-          <li>
-            <button
-              type="button"
-              class="library-item"
-              [attr.aria-current]="item.id === project.id ? 'true' : null"
-              [attr.aria-disabled]="v.selectable ? null : 'true'"
-              aria-controls="project-viewer"
-              (click)="v.selectable && select(item.id)"
-            >
-              @if (item.cartridge.renders?.front; as thumb) {
-                <img
-                  [src]="thumb.src"
-                  [width]="thumb.width"
-                  [height]="thumb.height"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-              }
-              <span class="library-serial">{{ item.serial }}</span>
-              <span class="library-title">{{ locale.pick(item.title) }}</span>
-            </button>
-          </li>
-        }
-      </ul>
+      <!-- Biblioteca MC-CART (D-087): escolher seleciona; com um cartucho inserido, troca. -->
+      <app-cartridge-library
+        class="library"
+        [projects]="projects"
+        [selected]="selection().selected"
+        [inserted]="selection().inserted"
+        [busy]="!v.selectable"
+        [viewer]="v.slot !== 'unavailable'"
+        (choose)="choose($event)"
+      />
     }
 
     <div class="h2" [attr.data-state]="state().kind">
+      <!-- Editorial do cartucho ESCOLHIDO (durante a troca, o que vai entrar). -->
       <div class="intro">
         <p class="eyebrow">
-          {{ project.serial }} · {{ ui().brand.name }} · {{ locale.pick(project.type) }}
+          {{ chosen.serial }} · {{ ui().brand.name }} · {{ locale.pick(chosen.type) }}
         </p>
-        <h3 class="name">{{ title }}</h3>
-        <p class="desc">{{ locale.pick(project.description) }}</p>
+        <h3 class="name">{{ locale.pick(chosen.title) }}</h3>
+        <p class="desc">{{ locale.pick(chosen.description) }}</p>
+        @if (chosen.ongoing) {
+          <mc-status class="ongoing" state="in-progress">{{ ui().status.inProgress }}</mc-status>
+        }
         @if (experiences().length) {
           <p class="experiences">{{ experiences().join(' · ') }}</p>
         }
@@ -85,7 +72,7 @@
                 type="button"
                 id="inventory-insert"
                 aria-controls="project-viewer"
-                [attr.aria-label]="ui().inventory.insert + ': ' + title"
+                [attr.aria-label]="ui().inventory.insert + ': ' + locale.pick(chosen.title)"
                 [attr.aria-disabled]="v.insert === 'busy' ? 'true' : null"
                 (click)="v.insert === 'enabled' && insert()"
                 (pointerenter)="lifted.set(true)"
@@ -136,6 +123,7 @@
                 @if (project.cartridge.artwork; as art) {
                   <img
                     class="glass-art"
+                    [class.is-contain]="art.fit === 'contain'"
                     [src]="art.src"
                     [attr.srcset]="art.srcset ?? null"
                     sizes="(min-width: 1200px) 502px, (min-width: 768px) 39vw, 72vw"
