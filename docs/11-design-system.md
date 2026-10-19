@@ -168,7 +168,7 @@ Fallbacks (`--mc-font-display`, `--mc-font-text`):
 - **Pixelify Sans** = brand/game-system display, apenas em usos **visualmente validados**. Hoje o único validado é **"MODO CAMPANHA"** (Hero, 48–96 px, peso 500 abaixo de md e 700 a partir de md). MC / MC-01 / MC-CART / seriais **não** foram validados em nenhum tamanho testado (até 48 px) e ficam em Plex até nova validação; o monograma MC e o wordmark virão como SVG autoral. Todo uso novo de Pixelify exige validação visual dos caracteres no tamanho real.
 - **IBM Plex Sans** = conteúdo humano **e** títulos de seção (PLAYER STATUS, PROJECT INVENTORY, CURRENT MAIN QUEST...), códigos de sistema pequenos (papel `system`), nomes de projeto no MC-CART (`cart-title`), micro-labels, botões, navegação.
 - Nos títulos de seção, a linguagem de game vem de **caixa alta, peso, tracking, marcador ■, divider, code e status** (composição do `mc-section-header`), não da pixel font.
-- **Sem terceira família** tipográfica. **Sem SVG para headings traduzíveis**; SVG autoral só para o monograma MC e o wordmark MODO CAMPANHA (backlog).
+- **Sem terceira família** tipográfica. **Sem SVG para headings traduzíveis**; SVG autoral só para o símbolo da marca (D-085) e o wordmark MODO CAMPANHA (backlog).
 
 ### Escala (papéis em `$type-roles`)
 
@@ -383,7 +383,7 @@ Cores de borda: `--mc-border-subtle` (decorativa), `--mc-border-default` (intera
 ## Backlog registrado para a FASE 3
 
 - **Papel tipográfico `stat-value`** para valores e números reais (ex.: `10+` no XP profissional; futuras métricas reais). Definir família, tamanho e regras na implementação do Player Status.
-- **Wordmark MODO CAMPANHA e monograma MC** como assets próprios (SVG). Pixelify Sans não será forçada a reproduzir o logo do concept.
+- **Wordmark MODO CAMPANHA** como asset próprio (SVG). Pixelify Sans não será forçada a reproduzir o logo do concept. O símbolo da marca já existe (G3, D-085).
 - **H1 semântico = "Eduardo Arine"** (D-026); "MODO CAMPANHA" pode ser visualmente maior sem ser o H1. Validar no Hero.
 
 ---
@@ -636,7 +636,7 @@ Teste de aprovação: escondendo texto e artwork, **a silhueta sozinha lê como 
 
 **Render oficial (D-065).** Com o input `render` (`{ src; width; height }`, fundo transparente), o render **é** o objeto: o componente mostra só a imagem, sem casca, moldura, grips ou sombra interna em CSS; a construção acima fica como fallback para projetos sem render. A silhueta dos renders do MC-001 é a direção física oficial do MC-CART (ombros próprios, encaixe central no topo, laterais estruturadas, área de conexão). Quem usa define largura e sombra de contato (no Inventory: até 24rem, `drop-shadow` discreto). Render 3/4 (`renders.threeQuarter`) é product shot, não entra no grid.
 
-**System / hardware glyph (D-065).** Os quatro quadrados laranja dos renders (MC-01, MC-CART, controle, CRT) são um glifo de hardware, **não o logotipo**: não substituem MODO CAMPANHA nem MC; o monograma MC segue como exploração futura (D-015).
+**Símbolo da marca (D-085):** o glifo dentro da placa com o topo escalonado do MC-CART (G3) é o símbolo do Modo Campanha (favicon e header). **System / hardware glyph (D-065).** Os quatro quadrados laranja dos renders (MC-01, MC-CART, controle, CRT) são um glifo de hardware, **não o logotipo**: não substituem MODO CAMPANHA nem MC; o monograma MC segue como exploração futura (D-015).
 
 ### 16. Project Summary (`mc-project-summary`, D-032)
 

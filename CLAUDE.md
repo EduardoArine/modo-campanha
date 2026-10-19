@@ -19,7 +19,7 @@ Guia para qualquer sessão de IA que trabalhe neste repositório. Leia inteiro a
 - **03-B** (atmosférico): ~30% da atmosfera do Hero (CRT, console MC-01, controle, luz quente) e base dos cartuchos **MC-CART** (shells preto, creme, grafite, laranja).
 - Hero = 70% 03-A + 30% 03-B; interface implementável, não ilustração.
 - Laranja `#F28C28` é a marca; paleta completa em D-014 / `docs/11`. Regra 70% neutros / 20% quentes / 10% complementares-status.
-- Marca: **Modo Campanha**; símbolo futuro: monograma **MC**. **MC-01** é linguagem de sistema, não marca. **Sem alien.**
+- Marca: **Modo Campanha**; símbolo: **glifo de quatro quadrados na placa do MC-CART** (G3, D-085; fonte `design/source/brand/build-symbol.mjs`; favicon e header). O monograma MC em letras não será desenhado. **MC-01** é linguagem de sistema, não marca. **Sem alien.**
 - Player Card com **foto real** (oficial desde D-082: `design/source/player/eduardo-arine.png`, derivados em `public/assets/player/`). Sem levels/XP inventados (o "LV 99" do mockup virou o selo "XP 10+").
 - **Pixelify Sans só em uso visualmente validado** (hoje: "MODO CAMPANHA" no Hero e o nome "EDUARDO ARINE" no Player Card, papel `display-player`, D-082): o "C" maiúsculo vira "O" (até 48 px "MC-01" lê "MO-01"), D-029. Uso novo de Pixelify exige validação visual no tamanho real. **IBM Plex Sans** para todo o resto, inclusive títulos de seção (caixa alta + peso + tracking + marcador). Sem terceira família; sem SVG para headings traduzíveis.
 - Referências de imagem do concept não estão no repositório; as regras derivadas estão em `docs/04` e `docs/11`.

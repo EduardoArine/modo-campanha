@@ -1112,3 +1112,17 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Docs:** sem referências a capturas locais.
 - **Pendentes de decisão do Eduardo (plano de pré-lançamento):** foto da Hero (D-079), ícone da aba e imagem de compartilhamento, aprovação de pickups e HUD do teaser.
 - **Status:** implementado na branch `feat/hero-refinement`. Sem merge e sem deploy.
+
+## D-085 — Símbolo da marca: glifo de quatro quadrados na placa do MC-CART
+
+- **Data:** 2026-10-19
+- **Contexto:** pré-lançamento (D-084): faltavam o ícone da aba e a imagem de compartilhamento, que dependiam do monograma MC (D-015), nunca desenhado. Foram estudadas três direções de monograma em letras (A — Pixel Mark, B — Haste compartilhada, C — Trilha da campanha). O Eduardo preferiu a linha do glifo de quatro quadrados do hardware; foram estudadas três variações (G1 — glifo do MC-01, G2 — glifo + jogador, G3 — glifo no cartucho).
+- **Decisão do Eduardo:** **G3 é o símbolo da marca Modo Campanha.** Placa ink com o topo escalonado do MC-CART e o glifo de quatro quadrados laranja (2 × 2, quadrados arredondados), na grade 16 × 16.
+  - **Revê a D-065 nesse ponto:** o glifo de quatro quadrados, sozinho, continua sendo o *system / hardware glyph* dos objetos (MC-01, MC-CART, CRT, controle) e da barra de sistema do Status do Jogador. **Dentro da placa do MC-CART (G3), ele é o símbolo da marca.**
+  - **Revê a D-015 nesse ponto:** o monograma MC em letras não será desenhado; o símbolo da marca é o G3. MC-01 segue como linguagem de sistema e o nome da marca segue MODO CAMPANHA.
+  - **Header:** o símbolo substitui a placa provisória "MC" (32 × 32, mesmo tamanho; altura do header inalterada). Cores por token (`--mc-bg` na placa, `--mc-accent` no glifo); SVG decorativo (`aria-hidden`). O nome acessível da marca passa a ser "Modo Campanha, voltar ao topo" / "Modo Campanha, back to top", que contém o texto visível (WCAG 2.5.3); a chave `ui.brand.monogram` saiu dos dicionários.
+  - **Ícones:** `public/favicon.svg`, `public/favicon.ico` (16, 32 e 48 px) e `public/apple-touch-icon.png` (180 px, fundo ink-900 opaco e 10% de margem, porque o iOS não respeita transparência), declarados no `index.html`.
+  - **Fonte editável:** `design/source/brand/build-symbol.mjs` (geometria única → SVG mestre `mc-symbol.svg`, PNG mestre `mc-symbol-512.png` e os ícones; sem dependências). Para regerar: `node design/source/brand/build-symbol.mjs`.
+- **Leitura registrada no estudo:** em tamanho grande, o recorte do topo pode lembrar orelhas; abaixo de 32 px o recorte quase some e o símbolo lê como o glifo. Aceito pelo Eduardo.
+- **Próximo passo:** imagem de compartilhamento (`og:image`, 1200 × 630, pt e en) com o MC-001, como escolhido pelo Eduardo; depende de aprovação visual.
+- **Status:** implementado na branch `feat/hero-refinement`. Sem merge e sem deploy.

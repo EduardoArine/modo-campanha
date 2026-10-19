@@ -32,7 +32,7 @@ Família autoral com shells **preto, creme, grafite e laranja**; proporções, a
 
 ### Marca
 
-- Marca: **Modo Campanha**. Símbolo futuro: monograma autoral **MC** (D-015). Ainda não desenhado.
+- Marca: **Modo Campanha**. Símbolo: glifo de quatro quadrados na placa do MC-CART (G3, D-085), no favicon e no header. O monograma MC em letras (D-015) não será desenhado.
 - **MC-01** é linguagem de sistema (MC-01, MC-CART, SAVE 01, PLAYER 01, CAMPAIGN BUILD, SYSTEM ONLINE), não uma segunda marca.
 - **Sem alien** como símbolo (D-016).
 

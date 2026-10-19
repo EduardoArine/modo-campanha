@@ -76,7 +76,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 - 🟡 Responsive behavior: validado nas FASES 4–8 (1440 → 360); sem seção própria no `docs/11`
 - 🟡 Accessibility: D-025 + D-060 aplicados; sem seção própria no `docs/11`
 - ✅ i18n / content behavior (D-020; todos os textos novos pt-BR + en)
-- ⏸ Monograma MC (símbolo, favicon, loading, selo): desenho da marca, decisão do Eduardo (D-015)
+- ✅ Símbolo da marca: glifo na placa do MC-CART (G3, D-085), no favicon e no header; substitui o monograma MC (D-015)
 - ⏸ Pixel assets (ex.: Hero CRT Screen Artwork): produção de arte com aprovação do Eduardo
 
 ## FASE 3 — CORE EXPERIENCE ✅ (encerrada, D-048)
@@ -106,7 +106,7 @@ Backlog:
 - ✅ Skill Loadout (antes "Skill Tree"; sem estados/graduação, D-040) — Slice 02
 - ✅ Project Inventory (MC-001 com artwork aprovado) — Slice 02
 - ➡️ CRT Project Viewer na experiência da Home → **FASE 5** (o componente visual `mc-crt-project-viewer` existe no design system desde a FASE 2)
-- ➡️ Wordmark MODO CAMPANHA + monograma MC em SVG → backlog do design system (não implementado; ver "Monograma MC" na FASE 2)
+- ➡️ Wordmark MODO CAMPANHA em SVG → backlog do design system (não implementado). Símbolo: D-085
 - ➡️ Papel tipográfico `stat-value` → backlog do design system (não implementado; o XP usa texto, `docs/11`)
 
 ### Transferido para a FASE 5 (D-048)
@@ -186,7 +186,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Acessibilidade (Lighthouse a11y 100; skip link; foco visível; status de carregamento; `aria-hidden` em decoração)
 - ✅ SEO bilíngue: `hreflang` + canonical + `<html lang>` dinâmicos (D-060)
 - ⏸ Prerender estático das duas versões (`@angular/ssr` só em build): dependência nova, **decisão do Eduardo**
-- 🟡 Metadata: Open Graph por idioma ✅; `og:image` e favicon próprio aguardam o monograma MC
+- 🟡 Metadata: Open Graph por idioma ✅; favicon próprio ✅ (D-085); `og:image` (MC-001, pt e en) pendente de aprovação visual
 - 🟡 Performance: mobile 82 / desktop 99 (Lighthouse local, HTTP/1.1, 2026-10-18; antes 87 / 100); ✅ preload da fonte do Hero (D-079)
 - ✅ Lighthouse: a11y / best practices / SEO 100 em mobile e desktop
 - ✅ Redução de movimento
@@ -217,7 +217,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 | ~~Inventory no mobile~~ ✅ 1 por linha, D-044                                    | 3        |
 | ~~Composição final do Player Status~~ ✅ Slice 01, D-039                         | 3        |
 | Preferência de idioma em localStorage (sem sobrepor a URL)                       | futuro   |
-| Desenho do monograma MC                                                          | 2        |
+| ~~Desenho do monograma MC~~ ✅ símbolo G3, D-085                                 | 2        |
 | Campaign XP: regras reais de pontuação (product exploration)                     | futuro   |
 | ~~Itens de navegação do header~~ ✅ Sobre / Projetos / Jornada / Contato (D-084) | 4        |
 | Páginas dedicadas por case (`/projects/:slug`)                                   | 5+       |
