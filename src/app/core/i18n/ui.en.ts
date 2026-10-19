@@ -8,6 +8,8 @@ export const UI_EN: UiDictionary = {
     title: 'Modo Campanha — Eduardo Arine',
     description:
       "Eduardo Arine's professional portfolio: a career in development, AI, digital products and gamification, presented as a video game campaign.",
+    imageAlt:
+      'Modo Campanha — Eduardo Arine, Digital Product Developer, with the MC-001 cartridge.',
   },
   language: {
     switcherLabel: 'Language',

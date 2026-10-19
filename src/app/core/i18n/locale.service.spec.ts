@@ -50,12 +50,19 @@ describe('LocaleService', () => {
     expect(og('og:locale:alternate')).toBe('pt_BR');
     expect(og('og:url')).toBe(new URL('en', base).href);
     expect(og('og:description')).toContain("Eduardo Arine's professional portfolio");
+    expect(og('og:image')).toBe(new URL('og-image-en.png', base).href);
+    expect(og('og:image:alt')).toBe(
+      'Modo Campanha — Eduardo Arine, Digital Product Developer, with the MC-001 cartridge.',
+    );
 
     await harness.navigateByUrl('/');
     TestBed.tick();
     expect(href('link[rel="canonical"]')).toBe(new URL('', base).href);
     expect(og('og:locale')).toBe('pt_BR');
     expect(og('og:locale:alternate')).toBe('en_US');
+    expect(og('og:image')).toBe(new URL('og-image-pt-BR.png', base).href);
+    expect(og('og:image:alt')).toContain('Desenvolvedor de Produtos Digitais');
+    expect(head.querySelectorAll('meta[property="og:image"]').length).toBe(1);
     expect(head.querySelectorAll('link[rel="canonical"]').length).toBe(1);
   });
 

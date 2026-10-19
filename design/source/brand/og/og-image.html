@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>og:image — Modo Campanha</title>
+    <style>
+      @font-face {
+        font-family: 'Plex';
+        src: url('../../../../src/styles/fonts/ibm-plex-sans-latin.woff2') format('woff2');
+        font-weight: 100 700;
+      }
+      @font-face {
+        font-family: 'Pixelify';
+        src: url('../../../../src/styles/fonts/pixelify-sans-latin.woff2') format('woff2');
+        font-weight: 400 700;
+      }
+      :root {
+        --bg: #14110f;
+        --surface: #1d1815;
+        --line: rgba(243, 233, 210, 0.12);
+        --text: #f3e9d2;
+        --text-2: #d7cbb5;
+        --muted: #a89a86;
+        --accent: #f28c28;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: var(--bg);
+      }
+      body {
+        position: relative;
+        font-family: 'Plex', sans-serif;
+        color: var(--text);
+      }
+      .copy {
+        position: absolute;
+        left: 80px;
+        top: 0;
+        bottom: 0;
+        width: 560px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .symbol {
+        width: 56px;
+        height: 56px;
+        display: block;
+        margin-bottom: 36px;
+      }
+      .eyebrow {
+        font-size: 18px;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brand {
+        margin-top: 14px;
+        font-family: 'Pixelify', sans-serif;
+        font-weight: 700;
+        font-size: 92px;
+        line-height: 0.95;
+        color: var(--accent);
+      }
+      .name {
+        margin-top: 30px;
+        font-size: 46px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        line-height: 1.1;
+      }
+      .role {
+        margin-top: 10px;
+        font-size: 26px;
+        font-weight: 400;
+        color: var(--text-2);
+      }
+      .motto {
+        margin-top: 28px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 20px;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .motto::before {
+        content: '';
+        width: 10px;
+        height: 10px;
+        background: var(--accent);
+      }
+      .cart {
+        position: absolute;
+        right: 64px;
+        top: 50%;
+        width: 470px;
+        transform: translateY(-50%);
+        filter: drop-shadow(0 24px 32px rgba(0, 0, 0, 0.55));
+      }
+      .rule {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 6px;
+        background: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="copy">
+      <svg class="symbol" viewBox="0 0 16 16" aria-hidden="true">
+        <path
+          fill="#1d1815"
+          d="M3 0H5L6.2 1.6H9.8L11 0H13A3 3 0 0 1 16 3V13A3 3 0 0 1 13 16H3A3 3 0 0 1 0 13V3A3 3 0 0 1 3 0Z"
+        />
+        <g fill="#f28c28">
+          <rect x="3" y="4" width="4" height="4" rx="0.9" />
+          <rect x="9" y="4" width="4" height="4" rx="0.9" />
+          <rect x="3" y="10" width="4" height="4" rx="0.9" />
+          <rect x="9" y="10" width="4" height="4" rx="0.9" />
+        </g>
+      </svg>
+      <p class="eyebrow" id="eyebrow"></p>
+      <p class="brand">MODO<br />CAMPANHA</p>
+      <p class="name">Eduardo Arine</p>
+      <p class="role" id="role"></p>
+      <p class="motto" id="motto"></p>
+    </div>
+    <img class="cart" src="../../mc-01/mc-001-console-scale.png" alt="" />
+    <div class="rule"></div>
+    <script>
+      // Textos aprovados (D-085): ui.*.hero.eyebrow e PLAYER_PROFILE (role, motto). Ao mudar, regerar.
+      const T = {
+        'pt-BR': {
+          eyebrow: 'Portfólio profissional',
+          role: 'Desenvolvedor de Produtos Digitais',
+          motto: 'XP real, sem personagem.',
+        },
+        en: {
+          eyebrow: 'Professional portfolio',
+          role: 'Digital Product Developer',
+          motto: 'Real XP. No persona.',
+        },
+      };
+      const lang = new URLSearchParams(location.search).get('lang') === 'en' ? 'en' : 'pt-BR';
+      document.documentElement.lang = lang;
+      for (const k of Object.keys(T[lang])) document.getElementById(k).textContent = T[lang][k];
+    </script>
+  </body>
+</html>

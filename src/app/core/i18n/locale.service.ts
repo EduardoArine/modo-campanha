@@ -46,7 +46,7 @@ export class LocaleService {
       this.document.documentElement.lang = this.locale();
       this.title.setTitle(ui.meta.title);
       this.meta.updateTag({ name: 'description', content: ui.meta.description });
-      // Open Graph por idioma (sem og:image até a aprovação da imagem de compartilhamento, D-085).
+      // Open Graph por idioma, com a imagem de compartilhamento de cada idioma (D-085).
       const locale = this.locale();
       this.meta.updateTag({ property: 'og:title', content: ui.meta.title });
       this.meta.updateTag({ property: 'og:description', content: ui.meta.description });
@@ -54,6 +54,11 @@ export class LocaleService {
       const other = LOCALES.find((candidate) => candidate !== locale) ?? DEFAULT_LOCALE;
       this.meta.updateTag({ property: 'og:locale:alternate', content: OG_LOCALE[other] });
       this.meta.updateTag({ property: 'og:url', content: this.absoluteUrl(locale) });
+      this.meta.updateTag({
+        property: 'og:image',
+        content: new URL(`og-image-${locale}.png`, this.document.baseURI).href,
+      });
+      this.meta.updateTag({ property: 'og:image:alt', content: ui.meta.imageAlt });
       for (const alternate of LOCALES) {
         this.setLink('alternate', this.absoluteUrl(alternate), alternate);
       }

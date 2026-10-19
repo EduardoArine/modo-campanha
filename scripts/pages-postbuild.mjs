@@ -3,7 +3,8 @@
 // - en/index.html e en.html: a rota /en com idioma, título, descrição e Open Graph em inglês já no
 //   HTML (quem não executa JavaScript, como as prévias de redes sociais, lê o idioma certo). O
 //   en.html deixa /en responder sem o redirecionamento para /en/ (diretório).
-// - canonical, hreflang e og:url estáticos nos dois idiomas; o LocaleService atualiza as mesmas tags.
+// - canonical, hreflang, og:url e og:image (og-image-<idioma>.png, D-085) estáticos nos dois idiomas;
+//   o LocaleService atualiza as mesmas tags.
 // - sitemap.xml com as duas versões.
 // Falha (exit 1) se alguma marcação esperada não existir ou se o build já tiver sido processado:
 // o deploy não sai pela metade nem com tags duplicadas.
@@ -19,7 +20,7 @@ if (!dir || !siteUrlArg) {
 const site = siteUrlArg.replace(/\/+$/, '') + '/';
 const urls = { 'pt-BR': site, en: site + 'en' };
 
-/** Título e descrição do dicionário en (fonte única dos textos). Só literais simples. */
+/** Título, descrição e alt da imagem do dicionário en (fonte única dos textos). Só literais simples. */
 function enMeta() {
   const file = fileURLToPath(new URL('../src/app/core/i18n/ui.en.ts', import.meta.url));
   const block = fs.readFileSync(file, 'utf8').match(/meta:\s*\{([\s\S]*?)\n\s*\},/)?.[1];
@@ -31,7 +32,7 @@ function enMeta() {
     if (m[3]) throw new Error(`meta.${name} concatenado no ui.en.ts: use um literal simples`);
     return m[2].replace(/\\(.)/g, '$1');
   };
-  return { title: field('title'), description: field('description') };
+  return { title: field('title'), description: field('description'), imageAlt: field('imageAlt') };
 }
 
 const escapeHtml = (text) =>
@@ -48,7 +49,7 @@ function replaceOnce(html, pattern, value, label) {
   return html.replace(pattern, () => replacement);
 }
 
-/** canonical + hreflang + og:url antes do </head>. */
+/** canonical + hreflang + og:url + og:image antes do </head>. */
 function withLinks(html, locale) {
   const tags = [
     `<link rel="canonical" href="${urls[locale]}">`,
@@ -56,6 +57,7 @@ function withLinks(html, locale) {
     `<link rel="alternate" hreflang="en" href="${urls.en}">`,
     `<link rel="alternate" hreflang="x-default" href="${urls['pt-BR']}">`,
     `<meta property="og:url" content="${urls[locale]}">`,
+    `<meta property="og:image" content="${site}og-image-${locale}.png">`,
   ].join('');
   return replaceOnce(html, /<\/head>/, `${tags}</head>`, '</head>');
 }
@@ -87,6 +89,12 @@ en = replaceOnce(
   'og:description',
 );
 en = replaceOnce(en, /(<meta property="og:locale" content=")pt_BR(")/, 'en_US', 'og:locale');
+en = replaceOnce(
+  en,
+  /(<meta property="og:image:alt" content=")[^"]*(")/,
+  escapeHtml(meta.imageAlt),
+  'og:image:alt',
+);
 en = replaceOnce(
   en,
   /(<meta property="og:locale:alternate" content=")en_US(")/,

@@ -10,7 +10,8 @@
       content="Portfólio profissional de Eduardo Arine: carreira em desenvolvimento, IA, produtos digitais e gamificação apresentada como uma campanha de videogame."
     />
     <!-- Open Graph estático (pt-BR, D-060): crawlers sociais não executam JS. O LocaleService
-         atualiza por idioma em runtime. Sem og:image até a aprovação da imagem de compartilhamento (D-085). -->
+         atualiza por idioma em runtime. og:image (D-085): a URL absoluta entra no pós-build do
+         Pages (scripts/pages-postbuild.mjs), que conhece o domínio; aqui ficam tipo, tamanho e alt. -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Modo Campanha" />
     <meta property="og:title" content="Modo Campanha — Eduardo Arine" />
@@ -20,6 +21,14 @@
     />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Modo Campanha — Eduardo Arine, Desenvolvedor de Produtos Digitais, com o cartucho MC-001."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <!-- Sem SSR, a fonte só seria pedida quando o "MODO CAMPANHA" da Hero já estivesse na tela
          (troca visível em rede lenta). O preload busca já no HTML (D-079). O nome vem do build
          sem hash (outputHashing: bundles); ao trocar o arquivo, atualizar aqui. A IBM Plex Sans

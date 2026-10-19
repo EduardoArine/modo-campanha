@@ -7,6 +7,9 @@ export const UI_PT_BR = {
     title: 'Modo Campanha — Eduardo Arine',
     description:
       'Portfólio profissional de Eduardo Arine: carreira em desenvolvimento, IA, produtos digitais e gamificação apresentada como uma campanha de videogame.',
+    // Texto alternativo da imagem de compartilhamento (og-image-pt-BR.png, D-085).
+    imageAlt:
+      'Modo Campanha — Eduardo Arine, Desenvolvedor de Produtos Digitais, com o cartucho MC-001.',
   },
   language: {
     switcherLabel: 'Idioma',
