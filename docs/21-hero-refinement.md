@@ -338,6 +338,10 @@ Gerados a partir do mestre:
 >
 > **Exclude.** Any other text or pseudo-text, other cartridges or boxes, brand logos or real console designs, people, a keyboard or mouse, watermarks.
 
+### 8.3 Substituição (D-086, concluída)
+
+A arte final (v2, gerada externamente pelo Eduardo) substituiu a imagem provisória. Medidas novas do vidro, contraste real, LCP e derivados estão no D-086. O mestre anterior ficou em `design/source/hero/hero-background-v1.png`. Derivados: `node design/source/hero/build-background.mjs`.
+
 ## 9. Tubo transparente: telas atrás da imagem (D-080)
 
 A pedido do Eduardo, o tubo do CRT ficou **transparente** nas imagens, e as telas digitais passaram para **trás** delas. O aro, a curvatura e o cartucho da foto recortam a tela naturalmente. Com isso, não há mais `clip-path` para o cartucho nem raio aproximado nos cantos.

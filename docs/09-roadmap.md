@@ -88,7 +88,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 Backlog:
 
-- 🟡 **Hero refinement (D-063 → D-066 → D-067 → D-079, `docs/21` §7–§8)**: fundo aprovado do setup MC-01 usado direto (recorte próprio no mobile), **provisório** até a nova arte externa (contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- ✅ **Hero refinement (D-063 → D-066 → D-067 → D-079 → D-086, `docs/21` §7–§8)**: fundo do setup MC-01 usado direto (recorte próprio no mobile), **arte final com as peças oficiais** (D-086; contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ✅ **Player Status definitivo (D-082): APPROVED / FROZEN** (D-083): painel do mockup aprovado com a foto real, responsivo, pt/en
 - ✅ Bloco "Sobre a jornada" no Player Status: texto e traduções en aprovados (D-082, D-083)

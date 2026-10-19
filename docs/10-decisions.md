@@ -1130,3 +1130,20 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Fonte editável:** `design/source/brand/og/og-image.html` (template, `?lang=pt-BR|en`) e `render-og.mjs` (Chrome headless via DevTools Protocol, sem dependências; variável `CHROME` se o caminho for outro). Para regerar: `node design/source/brand/og/render-og.mjs`. Ao mudar eyebrow, cargo ou lema, regerar.
   - **Tags:** `og:image:type/width/height/alt` e `twitter:card=summary_large_image` estáticos no `index.html`; a URL absoluta do `og:image` entra no `scripts/pages-postbuild.mjs` (que conhece o domínio), por idioma, e o alt en vem do dicionário (`ui.meta.imageAlt`); o `LocaleService` atualiza `og:image` e `og:image:alt` em runtime, sem duplicar.
 - **Status:** implementado na branch `feat/hero-refinement`. Sem merge e sem deploy.
+
+## D-086 — Hero: arte final com as peças oficiais (substitui a imagem provisória)
+
+- **Data:** 2026-10-19
+- **Contexto:** a imagem da Hero era provisória (D-079): mostrava versões antigas do CRT, do MC-01 e do MC-CART, diferentes das oficiais do Project Inventory (D-077, D-078). O Eduardo gerou a nova arte externamente (ChatGPT) com o briefing do `docs/21` §8.2 N.
+- **Rodadas:**
+  - **v1:** reprovada em F (velas e fita de LED na estante atrás do texto) e I (placa do console "ɴcoo CAMPANHA", POWER embaralhado, "MC-001" ausente no cartucho).
+  - **v2:** correções por edição (estante sem luzes, placa "MC-01 —— MODO CAMPANHA", POWER/RESET, "MC-001"). **Aprovada pelo Eduardo como está.**
+- **Aceite (§M):**
+  - Formato 3344 × 1882 RGBA, tubo transparente; alfa normalizado (143 pixels 240–254 → 255).
+  - Identidade comparada a 200% com as referências: console, cartucho e controle conferem. **Aceitos pelo Eduardo:** o CRT sem o aro laranja do `crt-front` (o resto do modelo confere) e legendas minúsculas do CRT levemente irregulares (ilegíveis no tamanho real).
+  - **Vidro remedido (§K):** furo x 1164–1503 · y 150,5–408,5 (1×), proporção 1,314 : 1 (dentro de 1,24–4 : 3); caixa x 1159,5–1507,5 · y 150,5–408,5 (folga lateral 4,5 px). `HERO_CRT_GLASS` = [0,01; 0,038] · [1; 0] · [0,993; 1] · [0; 0,976]; `.crt` top 15,99% / height 27,42%; `--sx/--sw` 69,35% / 20,81% (≥ 768) e 56,48% / 36,98% (mobile, recorte x 628–1569 mantido). Teaser alinhado em 1440 / 1024 / 820 / 390, sem faixa da foto nas bordas.
+  - **Contraste real do texto** (208 linhas, 1200–2560 px, pt e en, pior caso por linha): falhas abaixo de 4,5 : 1 caíram de **11** (imagem antiga) para **3**. "MODO CAMPANHA" passou a passar em todas as larguras (antes 3,8 : 1 de 1200 a 1240). Restam só a 1ª linha do resumo em inglês em 1200–1210 px (2,8–4,2 : 1, encostando na borda iluminada do console), problema pré-existente; o Eduardo optou por não ajustar o layout.
+  - **Peso e LCP** (rede ~Slow 4G, mediana de 3, build de produção): desktop 1440 LCP 3132 → **2952 ms**, mobile 390 igual (3356 ms); imagem 1× 128 → 119 KB (desktop) e 40 → 39 KB (mobile). O LCP é o texto da Hero. Layout e proporções inalterados.
+- **Derivados (§L):** `background-{640,960,1280,1672,2560,3344}.webp` (31 / 58 / 81 / 119 / 194 / 267 KB) e `background-mobile-{480,800,1200}.webp` (39 / 71 / 121 KB), gerados por `design/source/hero/build-background.mjs` (Chrome headless, WebP com alfa, qualidade 0,82). Para regerar: `node design/source/hero/build-background.mjs`. `HERO_BACKGROUND` passa a listar os 2× e o mobile 1200.
+- **Mestre:** `design/source/hero/hero-background.png` (3344 × 1882); o anterior foi para `hero-background-v1.png`.
+- **Status:** **Hero com a arte final, aprovada pelo Eduardo.** A imagem deixa de ser provisória; o contrato do `docs/21` §8.2 vale para trocas futuras. Sem merge e sem deploy.
