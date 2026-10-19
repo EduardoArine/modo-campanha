@@ -2,6 +2,7 @@
 // com o Chrome headless (DevTools Protocol, sem dependências) e grava em public/.
 //
 // Uso (na raiz do repositório): node design/source/brand/og/render-og.mjs
+// Prévia fora do public/: variável OG_OUT com a pasta de saída.
 // Chrome: caminho padrão do Windows/macOS/Linux, ou a variável CHROME.
 import { spawn } from 'node:child_process';
 import fs from 'node:fs';
@@ -89,7 +90,7 @@ try {
       format: 'png',
       clip: { x: 0, y: 0, width: WIDTH, height: HEIGHT, scale: 1 },
     });
-    const out = `public/og-image-${locale}.png`;
+    const out = path.join(process.env.OG_OUT ?? 'public', `og-image-${locale}.png`);
     fs.writeFileSync(out, Buffer.from(shot.data, 'base64'));
     console.log(`ok: ${out} (${Math.round(fs.statSync(out).size / 1024)} KB)`);
   }
