@@ -802,6 +802,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Aprovação (2026-10-12, Eduardo): TEASER TÉCNICO APPROVED e FROZEN.** Engine, roteiro, timings, pause/play, parada após 3 voltas, `prefers-reduced-motion`, responsivo e arquitetura do attract mode não mudam sem regressão objetiva. `ui.boot` removido (busca global sem usos; testes e builds verdes). Próxima etapa: só integrar a arte final conforme `docs/22` §4, sem mudar dimensões, pivots nem layout das folhas, validando **cenário + personagem antes** de pickups e MC-CART (`docs/22` §11). System Horizon jogável fora de escopo.
 - **Rodada do cenário (2026-10-12):** SKY, MOUNTAINS (harmonização técnica do master) e TREES aprovados; GROUND em regeneração externa pela opção A (trilha plana → subida suave → mirante, perfil congelado mantido); paleta única de 16 cores derivada da identidade cromática do Modo Campanha, compartilhada por todas as camadas; sol central preservado (só a legenda MC-001 do quadro-chave pode ser reposicionada). Detalhes e pipeline em docs/22 §12. **Cenário integrado** (GROUND v3 aprovado, translação de 14 px; paleta oficial em `design/source/system-horizon/sh-palette.gpl`; legenda MC-001 ao lado do cartucho); personagem, pickups e MC-CART seguem placeholders. **Personagem provisório (2026-10-13):** quadros aprovados reduzidos 2:1, quadro do personagem revisado para 16 × 24 (pivot 8,23), paleta única recalculada com cenário + personagem, rótulos dos itens 30 px acima da trilha (docs/22 §13). **Pickups, HUD e MC-CART (2026-10-13):** desenhados em pixel art no repositório (fonte editável `design/source/system-horizon/pixel/build-pickups.mjs`), na paleta oficial e no contrato de §4; MC-CART na silhueta oficial (D-065). Toda a arte do teaser integrada (~23 KB); aguardando validação conjunta (docs/22 §14).
 - **Status:** **APPROVED / FROZEN** (base técnica) na branch `feat/hero-refinement`; placeholders em uso até a arte final.
+- **Aprovação para publicação (2026-10-19, Eduardo):** o teaser está aprovado como está, com cenário final, personagem provisório, pickups, HUD e MC-CART em pixel art do repositório (`docs/22` §13–§14). Arte externa futura pode substituir os assets sem mudar o contrato (§4).
 
 ## D-069 — SYSTEM HORIZON: MVP interativo (proposta)
 
@@ -1111,6 +1112,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     O `LocaleService` reaproveita as tags, sem duplicar.
   - **Docs:** sem referências a capturas locais.
 - **Pendentes de decisão do Eduardo (plano de pré-lançamento):** foto da Hero (D-079), ícone da aba e imagem de compartilhamento, aprovação de pickups e HUD do teaser.
+- **Atualização (2026-10-19):** ícone da aba e imagem de compartilhamento resolvidos (D-085). **Teaser SYSTEM HORIZON aprovado pelo Eduardo** como está: cenário, personagem provisório, pickups, HUD e MC-CART em pixel art (D-068, `docs/22` §13–§14). Resta a foto da Hero (D-079).
 - **Status:** implementado na branch `feat/hero-refinement`. Sem merge e sem deploy.
 
 ## D-085 — Símbolo da marca: glifo de quatro quadrados na placa do MC-CART
