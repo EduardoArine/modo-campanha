@@ -71,9 +71,9 @@ describe('HeroSection', () => {
     expect(images.length).toBe(1);
     // Tablet/desktop: a imagem inteira; mobile: recorte da mesma imagem, mais leve.
     expect(frame.querySelector('source')?.getAttribute('srcset')).toMatch(
-      /background-640\.webp 640w, .*background-1672\.webp 1672w$/,
+      /background-640\.webp 640w, .*background-3344\.webp 3344w$/,
     );
-    expect(images[0].getAttribute('src')).toBe('assets/hero/background-mobile-800.webp');
+    expect(images[0].getAttribute('src')).toBe('assets/hero/background-mobile-1200.webp');
     expect(images[0].getAttribute('alt')).toBe('');
     expect(frame.querySelectorAll('a, button, [tabindex]').length).toBe(0);
   });
