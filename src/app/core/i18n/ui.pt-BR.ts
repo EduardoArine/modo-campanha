@@ -164,7 +164,7 @@ export const UI_PT_BR = {
     player: 'JOGADOR 01',
     items: { build: 'CONSTRUÇÃO', product: 'PRODUTO', ai: 'IA', gameDna: 'DNA DE GAMES' },
     title: 'SYSTEM HORIZON',
-    unlocked: 'CAMPANHA DESBLOQUEADA',
+    unlocked: 'CAMPANHA LIBERADA',
     continues: 'A CAMPANHA CONTINUA...',
     pause: 'Pausar demonstração',
     play: 'Reproduzir',

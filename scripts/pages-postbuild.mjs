@@ -1,12 +1,15 @@
 // Pós-build do GitHub Pages (D-084). Uso: node scripts/pages-postbuild.mjs <dir do build> <URL do site>
 // - 404.html: fallback de SPA (o Pages serve 404.html para rotas desconhecidas).
-// - en/index.html: a rota /en com idioma, título, descrição e Open Graph em inglês já no HTML (quem
-//   não executa JavaScript, como as prévias de redes sociais, lê o idioma certo).
+// - en/index.html e en.html: a rota /en com idioma, título, descrição e Open Graph em inglês já no
+//   HTML (quem não executa JavaScript, como as prévias de redes sociais, lê o idioma certo). O
+//   en.html deixa /en responder sem o redirecionamento para /en/ (diretório).
 // - canonical, hreflang e og:url estáticos nos dois idiomas; o LocaleService atualiza as mesmas tags.
 // - sitemap.xml com as duas versões.
-// Falha (exit 1) se alguma marcação esperada não for encontrada: o deploy não sai pela metade.
+// Falha (exit 1) se alguma marcação esperada não existir ou se o build já tiver sido processado:
+// o deploy não sai pela metade nem com tags duplicadas.
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const [dir, siteUrlArg] = process.argv.slice(2);
 if (!dir || !siteUrlArg) {
@@ -16,24 +19,33 @@ if (!dir || !siteUrlArg) {
 const site = siteUrlArg.replace(/\/+$/, '') + '/';
 const urls = { 'pt-BR': site, en: site + 'en' };
 
-/** Título e descrição do dicionário en (fonte única dos textos, D-018/D-020). */
+/** Título e descrição do dicionário en (fonte única dos textos). Só literais simples. */
 function enMeta() {
-  const source = fs.readFileSync(path.resolve('src/app/core/i18n/ui.en.ts'), 'utf8');
-  const block = source.match(/meta:\s*\{([\s\S]*?)\n\s*\},/);
-  const field = (name) =>
-    block?.[1].match(new RegExp(`${name}:\\s*(['"])((?:\\\\.|(?!\\1).)*)\\1`))?.[2];
-  const title = field('title');
-  const description = field('description');
-  if (!title || !description) throw new Error('meta do ui.en.ts não encontrado');
-  return { title, description };
+  const file = fileURLToPath(new URL('../src/app/core/i18n/ui.en.ts', import.meta.url));
+  const block = fs.readFileSync(file, 'utf8').match(/meta:\s*\{([\s\S]*?)\n\s*\},/)?.[1];
+  const field = (name) => {
+    const m = block?.match(
+      new RegExp(`${name}:\\s*(['"])((?:\\\\.|(?!\\1)[^\\\\])*)\\1(\\s*\\+)?`),
+    );
+    if (!m) throw new Error(`meta.${name} não encontrado no ui.en.ts`);
+    if (m[3]) throw new Error(`meta.${name} concatenado no ui.en.ts: use um literal simples`);
+    return m[2].replace(/\\(.)/g, '$1');
+  };
+  return { title: field('title'), description: field('description') };
 }
 
-const escapeAttr = (text) =>
-  text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+const escapeHtml = (text) =>
+  text.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-function replaceOnce(html, pattern, replacement, label) {
-  if (!pattern.test(html)) throw new Error(`marcação não encontrada: ${label}`);
-  return html.replace(pattern, replacement);
+/**
+ * Substitui uma única marcação. Com dois grupos (antes/depois), troca só o miolo. O valor entra por
+ * função, então `$&` ou `$1` no texto não são interpretados.
+ */
+function replaceOnce(html, pattern, value, label) {
+  const match = html.match(pattern);
+  if (!match) throw new Error(`marcação não encontrada: ${label}`);
+  const replacement = match.length === 3 ? `${match[1]}${value}${match[2]}` : value;
+  return html.replace(pattern, () => replacement);
 }
 
 /** canonical + hreflang + og:url antes do </head>. */
@@ -50,42 +62,45 @@ function withLinks(html, locale) {
 
 const indexPath = path.join(dir, 'index.html');
 const pt = fs.readFileSync(indexPath, 'utf8');
+if (/rel="canonical"/.test(pt)) throw new Error('index.html já processado (canonical presente)');
 const meta = enMeta();
 
 let en = pt;
 en = replaceOnce(en, /<html lang="pt-BR"/, '<html lang="en"', 'html lang');
-en = replaceOnce(en, /<title>[^<]*<\/title>/, `<title>${meta.title}</title>`, 'title');
+en = replaceOnce(en, /(<title>)[^<]*(<\/title>)/, escapeHtml(meta.title), 'title');
 en = replaceOnce(
   en,
   /(<meta name="description" content=")[^"]*(")/,
-  `$1${escapeAttr(meta.description)}$2`,
+  escapeHtml(meta.description),
   'description',
 );
 en = replaceOnce(
   en,
   /(<meta property="og:title" content=")[^"]*(")/,
-  `$1${escapeAttr(meta.title)}$2`,
+  escapeHtml(meta.title),
   'og:title',
 );
 en = replaceOnce(
   en,
   /(<meta property="og:description" content=")[^"]*(")/,
-  `$1${escapeAttr(meta.description)}$2`,
+  escapeHtml(meta.description),
   'og:description',
 );
-en = replaceOnce(en, /(<meta property="og:locale" content=")pt_BR(")/, '$1en_US$2', 'og:locale');
+en = replaceOnce(en, /(<meta property="og:locale" content=")pt_BR(")/, 'en_US', 'og:locale');
 en = replaceOnce(
   en,
   /(<meta property="og:locale:alternate" content=")en_US(")/,
-  '$1pt_BR$2',
+  'pt_BR',
   'og:locale:alternate',
 );
 
 const ptOut = withLinks(pt, 'pt-BR');
+const enOut = withLinks(en, 'en');
 fs.writeFileSync(indexPath, ptOut);
 fs.writeFileSync(path.join(dir, '404.html'), ptOut);
 fs.mkdirSync(path.join(dir, 'en'), { recursive: true });
-fs.writeFileSync(path.join(dir, 'en', 'index.html'), withLinks(en, 'en'));
+fs.writeFileSync(path.join(dir, 'en', 'index.html'), enOut);
+fs.writeFileSync(path.join(dir, 'en.html'), enOut);
 
 const alternates = Object.entries(urls)
   .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
@@ -98,4 +113,4 @@ ${Object.values(urls)
 </urlset>
 `;
 fs.writeFileSync(path.join(dir, 'sitemap.xml'), sitemap);
-console.log(`pages-postbuild: 404.html, en/index.html e sitemap.xml para ${site}`);
+console.log(`pages-postbuild: 404.html, en/index.html, en.html e sitemap.xml para ${site}`);

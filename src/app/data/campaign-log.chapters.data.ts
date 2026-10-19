@@ -98,7 +98,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-earned-not-given',
-      code: { 'pt-BR': 'CONQUISTADO, NÃO GANHO', en: 'EARNED, NOT GIVEN' },
+      code: { 'pt-BR': 'CONQUISTADO, NÃO DADO', en: 'EARNED, NOT GIVEN' },
       when: { era: { 'pt-BR': 'Época do PlayStation', en: 'PlayStation era' } },
       title: {
         'pt-BR': 'Uma conquista construída com trabalho',

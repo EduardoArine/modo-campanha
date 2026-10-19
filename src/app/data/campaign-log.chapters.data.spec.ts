@@ -19,7 +19,7 @@ describe('Campaign Log — CHAPTER 00 ORIGIN', () => {
       'PRIMEIRO CONTATO',
       'OS ANOS DE LOCADORA',
       'O PEDIDO À JOANINHA',
-      'CONQUISTADO, NÃO GANHO',
+      'CONQUISTADO, NÃO DADO',
       'FEITO DE MEMÓRIAS',
     ]);
     expect(new Set(entries.map((e) => e.id)).size).toBe(5);

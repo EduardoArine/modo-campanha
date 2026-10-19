@@ -162,7 +162,7 @@ Só CSS (transições e `@keyframes`) e signals; sem biblioteca de animação. T
 - **Rota:** `npm start` → `/dev/inventory-lab` (e `/en/dev/inventory-lab`). Só no build de desenvolvimento (`dev.routes.development.ts`), nunca em produção.
 - **Parâmetros:** `dir=a|b|h`, `state=initial|selected|inserting|ready`, `error=1` (render e teaser indisponíveis), `clean=1` (sem a barra do laboratório). A barra no canto inferior direito troca direção, estado, erro e idioma.
 - **Código:** `src/app/dev/inventory-lab/` usa o `PROJECTS[0]` real, os renders oficiais, `mc-cart`, `mc-crt-project-viewer` e `app-system-horizon-screen` sem modificá-los. Os textos de protótipo ficam em `lab-copy.ts`. **Não é a implementação definitiva.**
-- **Capturas:** capturas locais da revisão (fora do repositório) (A, B e H; todos os estados em 1440 e 390; INITIAL e READY em 1024 e 820; en em 1440 e 390; erro em 1440 e 390).
+- **Capturas:** locais, fora do repositório (A, B e H; todos os estados em 1440 e 390; INITIAL e READY em 1024 e 820; en em 1440 e 390; erro em 1440 e 390).
 
 ## 15. Revisão independente (REVIEWER, 2026-10-18)
 
@@ -372,7 +372,7 @@ Capturas locais da revisão (fora do repositório):
 
 ### 17.4 Identidade do MC-CART (resolvida em D-078)
 
-Comparação lado a lado: capturas locais da revisão (fora do repositório).
+Comparação lado a lado: capturas locais, fora do repositório.
 
 - **Iguais:** o rótulo (arte, SYSTEM HORIZON, MC-CART, MC-001, MODO CAMPANHA, glifo), os trilhos laterais laranja, a fenda laranja à direita, o triângulo, a paleta e a tipografia.
 - **Diferentes, e estruturais:**
@@ -461,4 +461,4 @@ A pedido do Eduardo, **a TV é a protagonista** e o console, o aparelho que roda
 - **Linhas de base:** console e TV seguem na mesma linha (os estados ficam na mesma altura).
 - **Sem regressões:** sem overflow nem CLS ao inserir ou ejetar; a ordem de foco não mudou; Lighthouse dá acessibilidade 100.
 - **`sizes`:** foram atualizados para as novas larguras. O INITIAL em 390@3x caiu de 424 para 299 KB.
-- **Capturas antes × depois:** capturas locais da revisão (fora do repositório).
+- **Capturas antes × depois:** locais, fora do repositório.

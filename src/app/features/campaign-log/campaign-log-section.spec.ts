@@ -115,7 +115,7 @@ describe('CampaignLogSection', () => {
       'MARCO 01 · PRIMEIRO CONTATO',
       'MARCO 02 · OS ANOS DE LOCADORA',
       'MARCO 03 · O PEDIDO À JOANINHA',
-      'MARCO 04 · CONQUISTADO, NÃO GANHO',
+      'MARCO 04 · CONQUISTADO, NÃO DADO',
       'MARCO 05 · FEITO DE MEMÓRIAS',
       'MARCO 01',
       'MARCO 02',
@@ -290,7 +290,7 @@ describe('CampaignLogSection', () => {
           ?.replace('PRIMEIRO CONTATO', 'FIRST CONTACT')
           .replace('OS ANOS DE LOCADORA', 'THE RENTAL STORE YEARS')
           .replace('O PEDIDO À JOANINHA', 'THE LADYBUG WISH')
-          .replace('CONQUISTADO, NÃO GANHO', 'EARNED, NOT GIVEN')
+          .replace('CONQUISTADO, NÃO DADO', 'EARNED, NOT GIVEN')
           .replace('FEITO DE MEMÓRIAS', 'BUILT FROM MEMORIES'),
       ),
     );

@@ -1067,14 +1067,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 
 ## D-084 — Versão pt-BR sem termos em inglês; pacote técnico de pré-lançamento
 
-- **Data:** 2026-10-19
+- **Data:** 2026-10-18
 - **Pedido do Eduardo:** com as duas versões disponíveis, a versão em português não mistura termos em inglês (Campaign Log, Player Status etc.). Os termos propostos foram aprovados ("pode seguir assim").
 - **Revê a D-018 nesse ponto:** rótulos de sistema deixam de ficar em inglês nos dois idiomas. Em pt ficam em português; a versão en não muda.
+- **Revê a D-083 nesse ponto, com aprovação do Eduardo:** os textos do Player Status congelados no dicionário mudam em pt ("STATUS DO JOGADOR", "JOGADOR 01"). O visual continua congelado.
 - **Mantidos (nomes próprios e identidade):**
   - MODO CAMPANHA, MC-01, MC-CART, MC-001, SYSTEM HORIZON (nome do jogo) e Comunidade ON;
   - nomes de tecnologia;
   - termos correntes em português: XP, ONLINE e STATUS;
-  - GitHub e LinkedIn, além de "teaser" e "Game Design", correntes no Brasil.
+  - GitHub e LinkedIn, além de "teaser", "Game Design", "slot" (SLOT VAZIO) e "games" (DNA DE GAMES), correntes no Brasil e na voz do Eduardo;
+  - os nomes das habilidades do Arsenal, conteúdo aprovado (D-041): "Design systems", "workflows", "prompts", "REST APIs", "UX/UI".
 - **Traduzidos (pt-BR):**
   - **Seções:**
     - STATUS DO JOGADOR;
@@ -1094,15 +1096,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - PROGRESSO SALVO;
     - ATIVO / EM ANDAMENTO;
     - ARTE DO PROJETO.
-  - **Codinomes do Capítulo 00 (agora `Localized`):** PRIMEIRO CONTATO, OS ANOS DE LOCADORA, O PEDIDO À JOANINHA, CONQUISTADO, NÃO GANHO, FEITO DE MEMÓRIAS. Os nomes próprios do Capítulo 02 são iguais nos dois idiomas.
-- **Teaser SYSTEM HORIZON (revê a D-068 nesse ponto):** os textos da tela também ficam em português: JOGADOR 01, CONSTRUÇÃO / PRODUTO / IA / DNA DE GAMES, CAMPANHA DESBLOQUEADA, A CAMPANHA CONTINUA... Só os textos do dicionário mudam; engine, roteiro, timings e arte, não.
+  - **Codinomes do Capítulo 00 (agora `Localized`):** PRIMEIRO CONTATO, OS ANOS DE LOCADORA, O PEDIDO À JOANINHA, CONQUISTADO, NÃO DADO, FEITO DE MEMÓRIAS. Os nomes próprios do Capítulo 02 são iguais nos dois idiomas.
+- **Teaser SYSTEM HORIZON (revê a D-068 nesse ponto):** os textos da tela também ficam em português: JOGADOR 01, CONSTRUÇÃO / PRODUTO / IA / DNA DE GAMES, CAMPANHA LIBERADA, A CAMPANHA CONTINUA... "CAMPANHA LIBERADA" substitui a proposta aprovada "CAMPANHA DESBLOQUEADA": a etiqueta encostava nas bordas do CRT no celular (1,9 a 3,2 px de folga). Só os textos do dicionário mudam; engine, roteiro, timings e arte, não.
   - **Medição:** nenhuma legenda passa da área visível em 1440, 1024, 820, 390 e 360 px, na Hero e no CRT do Inventory.
 - **Pacote técnico de pré-lançamento (sem decisão pendente):**
   - **Menu:** com Jornada → Diário de Campanha, na ordem da página. Cabe numa linha em 320 px.
-  - **Nome acessível da marca:** "MC Modo Campanha, voltar ao topo", que contém o texto visível (WCAG 2.5.3).
+  - **Nome acessível da marca:** "MC Modo Campanha, voltar ao topo", que contém o texto visível (WCAG 2.5.3). Há um espaço entre os spans "MC" e "MODO CAMPANHA" (sem efeito visual), sem o qual o texto lido ficava "MCMODO CAMPANHA".
   - **`scripts/pages-postbuild.mjs` no workflow, com a URL real do `configure-pages`:**
     - `404.html`;
-    - `en/index.html` com idioma, título, descrição e Open Graph em inglês;
+    - `en/index.html` e `en.html` com idioma, título, descrição e Open Graph em inglês. O `en.html` faz `/en` responder sem o redirecionamento 301 para `/en/`; confirmar no primeiro deploy;
     - canonical, hreflang e `og:url` estáticos;
     - `sitemap.xml`.
 

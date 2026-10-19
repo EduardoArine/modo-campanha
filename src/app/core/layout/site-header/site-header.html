@@ -2,8 +2,9 @@
   <div class="bar">
     <!-- Marca PROVISÓRIA: substituir pelo monograma MC / wordmark SVG quando existirem. -->
     <a class="brand" [routerLink]="locale.homePath()" [attr.aria-label]="ui().brand.homeLabel">
-      <span class="monogram" aria-hidden="true">{{ ui().brand.monogram }}</span>
-      <span class="wordmark" aria-hidden="true">{{ ui().brand.name }}</span>
+      <!-- O espaço entre os spans mantém o texto visível "MC MODO CAMPANHA" (WCAG 2.5.3). -->
+      <span class="monogram" aria-hidden="true">{{ ui().brand.monogram }}</span
+      >&ngsp;<span class="wordmark" aria-hidden="true">{{ ui().brand.name }}</span>
     </a>
 
     <nav class="nav" [attr.aria-label]="ui().nav.label">
