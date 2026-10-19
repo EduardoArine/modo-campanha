@@ -13,12 +13,11 @@ export const UI_PT_BR = {
     names: { 'pt-BR': 'Português', en: 'English' },
     short: { 'pt-BR': 'PT', en: 'EN' },
   },
-  // Marca provisória até o monograma MC / wordmark final (D-015).
+  // Marca: símbolo (SVG decorativo, D-085) + wordmark.
   brand: {
     name: 'MODO CAMPANHA',
-    monogram: 'MC',
-    // Contém o texto visível "MC MODO CAMPANHA" (WCAG 2.5.3).
-    homeLabel: 'MC Modo Campanha, voltar ao topo',
+    // Contém o texto visível "MODO CAMPANHA" (WCAG 2.5.3); o símbolo é decorativo.
+    homeLabel: 'Modo Campanha, voltar ao topo',
   },
   nav: {
     label: 'Navegação principal',

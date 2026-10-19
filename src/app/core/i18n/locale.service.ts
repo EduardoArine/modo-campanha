@@ -46,7 +46,7 @@ export class LocaleService {
       this.document.documentElement.lang = this.locale();
       this.title.setTitle(ui.meta.title);
       this.meta.updateTag({ name: 'description', content: ui.meta.description });
-      // Open Graph por idioma (sem og:image até existir o monograma MC).
+      // Open Graph por idioma (sem og:image até a aprovação da imagem de compartilhamento, D-085).
       const locale = this.locale();
       this.meta.updateTag({ property: 'og:title', content: ui.meta.title });
       this.meta.updateTag({ property: 'og:description', content: ui.meta.description });

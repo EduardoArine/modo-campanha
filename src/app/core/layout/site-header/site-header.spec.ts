@@ -15,14 +15,16 @@ describe('SiteHeader', () => {
     return fixture.nativeElement as HTMLElement;
   }
 
-  it('renders the provisional brand, translated nav and no technical metadata', async () => {
+  it('renders the brand symbol, translated nav and no technical metadata', async () => {
     const el = await renderAt('/');
     const navLinks = Array.from(el.querySelectorAll('nav a')).map((a) => a.textContent?.trim());
 
-    // O nome acessível contém o texto visível "MC MODO CAMPANHA" (WCAG 2.5.3).
-    expect(el.querySelector('.brand')?.getAttribute('aria-label')).toBe(
-      'MC Modo Campanha, voltar ao topo',
-    );
+    const brand = el.querySelector('.brand')!;
+    // Símbolo decorativo (D-085); o nome acessível contém o texto visível "MODO CAMPANHA" (WCAG 2.5.3).
+    expect(brand.getAttribute('aria-label')).toBe('Modo Campanha, voltar ao topo');
+    expect(brand.querySelector('svg.symbol')?.getAttribute('aria-hidden')).toBe('true');
+    expect(brand.querySelectorAll('svg.symbol .glyph rect').length).toBe(4);
+    expect(brand.textContent?.trim()).toBe('MODO CAMPANHA');
     expect(navLinks).toEqual(['Sobre', 'Projetos', 'Jornada', 'Contato']);
     expect(Array.from(el.querySelectorAll('nav a')).map((a) => a.getAttribute('href'))).toEqual([
       '/#player-status',

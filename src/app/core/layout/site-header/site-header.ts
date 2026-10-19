@@ -16,7 +16,7 @@ import { McAction, McIcon } from '../../../shared/ui';
 
 /**
  * Header do site (Home Slice 01-A, D-037). Sólido e fixo; persiste entre `/` e `/en`.
- * Marca provisória (MC + MODO CAMPANHA) até o monograma/wordmark final.
+ * Marca: símbolo do Modo Campanha (D-085) + wordmark MODO CAMPANHA.
  * Sem metadados técnicos (ONLINE, build, versão, MC-01).
  * Currículo só aparece quando existir URL real.
  */

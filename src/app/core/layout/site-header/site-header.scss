@@ -44,16 +44,20 @@
   }
 }
 
-.monogram {
-  display: grid;
-  place-items: center;
+// Símbolo (D-085): placa ink com o topo escalonado do MC-CART e o glifo laranja; cores do token.
+.symbol {
+  display: block;
+  flex: none;
   width: space(6);
   height: space(6);
-  border: var(--mc-border-width-strong) solid var(--mc-accent);
-  @include type(system);
-  font-weight: 600;
-  letter-spacing: 0;
-  color: var(--mc-text);
+
+  .shell {
+    fill: var(--mc-bg);
+  }
+
+  .glyph {
+    fill: var(--mc-accent);
+  }
 }
 
 .wordmark {

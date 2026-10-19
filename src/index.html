@@ -10,7 +10,7 @@
       content="Portfólio profissional de Eduardo Arine: carreira em desenvolvimento, IA, produtos digitais e gamificação apresentada como uma campanha de videogame."
     />
     <!-- Open Graph estático (pt-BR, D-060): crawlers sociais não executam JS. O LocaleService
-         atualiza por idioma em runtime. Sem og:image até existir o monograma MC. -->
+         atualiza por idioma em runtime. Sem og:image até a aprovação da imagem de compartilhamento (D-085). -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Modo Campanha" />
     <meta property="og:title" content="Modo Campanha — Eduardo Arine" />
@@ -31,7 +31,10 @@
       type="font/woff2"
       crossorigin
     />
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <!-- Símbolo do Modo Campanha (D-085); fonte: design/source/brand/build-symbol.mjs. -->
+    <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
   </head>
   <body>
     <app-root></app-root>

@@ -16,8 +16,7 @@ export const UI_EN: UiDictionary = {
   },
   brand: {
     name: 'MODO CAMPANHA',
-    monogram: 'MC',
-    homeLabel: 'MC Modo Campanha, back to top',
+    homeLabel: 'Modo Campanha, back to top',
   },
   nav: {
     label: 'Main navigation',
