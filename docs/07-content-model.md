@@ -32,9 +32,11 @@ interface TagDefinition {
 type ProjectTags = readonly [] | readonly [TagId] | readonly [TagId, TagId]; // até 2, pelo tipo
 
 interface ProjectLink {
-  kind: 'repository' | 'live' | 'case-study' | 'other';
+  // press | paper | academic | launch | record: os mesmos tipos do Campaign Log (D-087)
+  kind: 'repository' | 'live' | 'case-study' | 'press' | 'paper' | 'academic' | 'launch' | 'record' | 'other';
   label: Localized;
   url: string;
+  note?: Localized; // contexto factual (ex.: autoria de um artigo que não é do Eduardo)
 }
 
 interface CartridgeImage {
@@ -47,7 +49,8 @@ interface CartridgeImage {
 interface ProjectCartridge {
   shell: McCartShell; // dark | light | orange | cool (fallback em CSS)
   accent: McCartAccent; // warm | cool | special (fallback em CSS)
-  artwork?: CartridgeImage & { alt: Localized }; // MC-001: SYSTEM HORIZON, 4:3 (D-065)
+  // MC-001: SYSTEM HORIZON, 4:3 (D-065). MC-002…006: ilustração do rótulo, fit 'contain' (D-087)
+  artwork?: CartridgeImage & { alt: Localized; fit?: 'cover' | 'contain' };
   // front = identidade canônica (D-065); console = variante técnica para a inserção física no MC-01
   // (699 × 500, mesma escala do console; sem ela, o projeto não entra no console: fallback) (D-077)
   renders?: { front: CartridgeImage; threeQuarter?: CartridgeImage; console?: CartridgeImage };
@@ -70,14 +73,17 @@ interface Project {
   title: Localized;
   description: Localized;
   type: Localized; // tipo (MC-001: EXPERIÊNCIA NARRATIVA, D-077)
+  challenge?: Localized; // problema (case, D-087)
   role: Localized;
   technologies: readonly string[];
+  highlights?: Localized<readonly string[]>; // marcos documentados (D-087)
   learnings: Localized<readonly string[]>;
   year?: number; // só com dado real
   tags: ProjectTags;
   cartridge: ProjectCartridge;
   experiences: readonly ProjectExperience[]; // nada "disponível" que não exista
   links: readonly ProjectLink[];
+  ongoing?: true; // campanha atual, EM ANDAMENTO (D-087)
 }
 ```
 
@@ -89,7 +95,7 @@ Regras:
 - **Sem campos editoriais:** nada de aprovador, revisão ou confidencialidade no runtime (repositório público, D-042).
 - **Removidos:** `ProjectType`, `ProjectStatus`/`status`, `featured`, `subtitle`, `summary` (→ `description`), `stack` (→ `technologies`), `mission`, `responsibilities`, `challenges`, `solution`, `results`, `screenshots`, link `video`, entidade `Cartridge` com `label`/`art`/`color`/`serial` (serial subiu para o projeto). Campos de case voltam só quando o CRT/case existir e houver conteúdo aprovado.
 
-Dados: `src/app/data/projects.data.ts`: **MC-001 Modo Campanha** (`approved`, shell grafite com acentos laranja, artwork SYSTEM HORIZON e renders `front`/`threeQuarter` em `assets/cartridges/mc-001/`, D-065). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (MC-002 Paco) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
+Dados: `src/app/data/projects.data.ts`: **coleção MC-CART, MC-001 a MC-006 (D-087)**; os cases de MC-002 a MC-006 são condensados do Campaign Log e as evidências são importadas de `campaign-log.chapters.data.ts` (mesma fonte). Histórico: **MC-001 Modo Campanha** (`approved`, shell grafite com acentos laranja, artwork SYSTEM HORIZON e renders `front`/`threeQuarter` em `assets/cartridges/mc-001/`, D-065). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (Paco, novo serial a definir, D-087) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
 
 ## Skill / SkillGroup (Skill Loadout, D-042)
 

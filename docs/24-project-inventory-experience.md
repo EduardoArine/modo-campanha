@@ -462,3 +462,76 @@ A pedido do Eduardo, **a TV é a protagonista** e o console, o aparelho que roda
 - **Sem regressões:** sem overflow nem CLS ao inserir ou ejetar; a ordem de foco não mudou; Lighthouse dá acessibilidade 100.
 - **`sizes`:** foram atualizados para as novas larguras. O INITIAL em 390@3x caiu de 424 para 299 KB.
 - **Capturas antes × depois:** locais, fora do repositório.
+
+## 18. Biblioteca MC-CART: seis cartuchos (D-087, 2026-10-19)
+
+Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXPLORAR → TROCAR.**
+
+### 18.1 Composição
+
+- **Ordem (todas as larguras):** cabeçalho da seção → biblioteca → editorial → console → ação → CRT → controles → case.
+- **Biblioteca** (`features/project-inventory/cartridge-library.*`): COLEÇÃO MC-CART / MC-CART COLLECTION, dica, "06 CARTUCHOS". Prateleira de objetos, não grid de cards: carcaça (`renders.console`), serial, nome e um selo de texto (SELECIONADO / INSERIDO). Selecionado = contorno âmbar + 2 px de elevação + selo + `aria-current`.
+- **Cartuchos visíveis:** 6 em 1440; 4 em 1024; 3 em 820; ~2,3 em 390 (o seguinte aparece cortado). Quando a faixa não cabe, rola na horizontal dentro da biblioteca (snap leve) e aparecem os botões anterior / próximo. Sem biblioteca de carrossel e sem autoplay.
+
+### 18.2 Estados
+
+| Situação | Editorial | Console / CRT | Biblioteca |
+| --- | --- | --- | --- |
+| Primeira visita | MC-001 | cartucho sobre o slot, CRT desligado | MC-001 SELECIONADO, "Selecionar …" |
+| Escolha com slot vazio | escolhido | o escolhido sobre o slot | anúncio "Cartucho selecionado: …" |
+| Inserido (PRONTO) | inserido | arte no CRT, case | INSERIDO; os outros dizem "Trocar para …" |
+| Troca | o que vai entrar | ejeta → insere → carrega → PRONTO | tudo bloqueado, "Aguarde: trocando de cartucho." |
+
+- **Máquina de estados:** `ready + select(outro)` → `ejecting{next, then: 'insert'}` → `inserting(next)` → `loading` → `ready`. Com movimento reduzido, `ready` → `ready(next)`. `cartridgeSelection(state)` deriva escolhido × inserido.
+- **Foco:** a troca pela biblioteca não move o foco nem rola; o READY é anunciado em texto. O "Inserir cartucho" segue o H2.
+
+### 18.3 CRT
+
+- MC-001: arte SYSTEM HORIZON 4:3 e teaser sob demanda (sem mudança).
+- MC-002 a MC-006: a ilustração do rótulo, sem a carcaça, inteira (`object-fit: contain`), sem "Reproduzir".
+
+### 18.4 Assets e peso
+
+| Arquivo | Uso | Peso (por cartucho) |
+| --- | --- | --- |
+| `console-scale-360/540/699/1398.webp` | biblioteca (360/540) e encaixe no MC-01 | 20–23 / 37–41 / 56–64 / 145–170 KB |
+| `label-art-640/952.webp` (MC-002…006) | CRT no PRONTO | 52–64 / 83–105 KB |
+
+- **Carga inicial:** igual à anterior (159 KB de imagens em 1440; LCP = Hero).
+- **Ao chegar no Inventory:** +~100 KB, das 5 miniaturas novas (`loading="lazy"`).
+- **Arte do CRT:** só do cartucho inserido.
+- **JS:** +13,7 KB brutos no inicial (dados dos cinco projetos) e +9 KB no chunk da Home (biblioteca).
+- **Carcaça do MC-001:** 699 px de 101 KB para 61 KB.
+
+### 18.5 Pendências
+
+- **Harmonização do MC-001:** a Hero (D-086) e a `og:image` (D-085) ainda mostram a carcaça anterior (alça grafite).
+- **Textos dos cases:** condensados do Campaign Log, aguardando a revisão do Eduardo.
+- **Textos alternativos:** os alts das ilustrações dos rótulos também aguardam a revisão do Eduardo.
+- **Comunidade ON:** sem link público.
+- **Serial do Paco:** será um novo serial quando ele for aprovado.
+
+### 18.6 Revisão independente (REVIEWER, 2026-10-19)
+
+**Veredito:** aprovável com ressalvas, sem bloqueante funcional. A máquina de estados da troca, o escopo (nenhuma seção congelada alterada) e os cases estão corretos; os marcos dos cases têm fonte no Campaign Log.
+
+**Corrigido:**
+- **Paginação:** os botões usam `aria-disabled`, então o foco não cai no `body` no fim da faixa.
+- **`sizes` das miniaturas:** agora usa as larguras medidas (360w também em DPR 2).
+- **Estado no nome acessível:** "MC-005 — Axia, inserido" e `aria-disabled` nos itens sem ação.
+- **Marca da troca:** é gravada só depois da transição.
+- **`aria-controls`:** omitido no fallback.
+- **Rótulo do case em inglês:** PROBLEM.
+- **Limpeza:** string morta removida.
+- **Testes:** novo teste da contagem de evidências por projeto.
+- **Fidelidade à fonte:** ScoutEvo (aprendizado) e Axia (atuação).
+
+**Para decisão do Eduardo:**
+- **Carcaça do MC-001 (D-078):** com a carcaça nova no Inventory, a Hero e a `og:image` ainda mostram a anterior.
+- **Revisão editorial:** tipos impressos, alts e textos dos cases.
+- **Comunidade ON como projeto:** confirmar a publicação.
+
+**Sugestões sem bloqueio:**
+- Manter o case montado durante a troca.
+- Selo CARREGANDO até o PRONTO.
+- Miniaturas dedicadas, mais leves.

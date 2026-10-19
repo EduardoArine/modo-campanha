@@ -41,6 +41,8 @@ Campos de case ainda **não aprovados** (ficam fora do data até o case completo
 
 ## 2. MC-002 — Paco: 23 Horas para a Última Vela (`publication: review`)
 
+> **D-087:** o serial MC-002 passou a ser AEDES REVENGE (coleção MC-CART). O Paco recebe um novo serial quando for aprovado; a ficha abaixo segue como registro.
+
 | Campo | pt-BR | en |
 |---|---|---|
 | Public name | Paco: 23 Horas para a Última Vela | Paco: 23 Horas para a Última Vela (**sem tradução oficial do título**) |
