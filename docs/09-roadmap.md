@@ -186,7 +186,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Acessibilidade (Lighthouse a11y 100; skip link; foco visível; status de carregamento; `aria-hidden` em decoração)
 - ✅ SEO bilíngue: `hreflang` + canonical + `<html lang>` dinâmicos (D-060)
 - ⏸ Prerender estático das duas versões (`@angular/ssr` só em build): dependência nova, **decisão do Eduardo**
-- 🟡 Metadata: Open Graph por idioma ✅; favicon próprio ✅ (D-085); `og:image` (MC-001, pt e en) pendente de aprovação visual
+- ✅ Metadata: Open Graph por idioma, favicon próprio e `og:image` por idioma com o MC-001 (D-085)
 - 🟡 Performance: mobile 82 / desktop 99 (Lighthouse local, HTTP/1.1, 2026-10-18; antes 87 / 100); ✅ preload da fonte do Hero (D-079)
 - ✅ Lighthouse: a11y / best practices / SEO 100 em mobile e desktop
 - ✅ Redução de movimento

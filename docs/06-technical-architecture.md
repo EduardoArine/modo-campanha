@@ -158,7 +158,7 @@ src/app/core/i18n/
 ### URL, SEO e GitHub Pages
 
 - pt-BR em `/modo-campanha/`, en em `/modo-campanha/en`.
-- O workflow de deploy roda `scripts/pages-postbuild.mjs` com a URL do `configure-pages` (D-084): `en/index.html` com idioma, título, descrição e Open Graph em inglês (resposta 200 em vez do 404 do fallback); canonical, hreflang e `og:url` estáticos nas duas versões; `sitemap.xml`.
+- O workflow de deploy roda `scripts/pages-postbuild.mjs` com a URL do `configure-pages` (D-084): `en/index.html` com idioma, título, descrição e Open Graph em inglês (resposta 200 em vez do 404 do fallback); canonical, hreflang, `og:url` e `og:image` (absoluto, `og-image-<idioma>.png`, D-085) estáticos nas duas versões; `sitemap.xml`.
 - **FASE 8 (D-060):** `hreflang`, canonical e Open Graph por idioma implementados no `LocaleService`; Open Graph estático pt-BR no `index.html`; `robots.txt`. **Prerender** estático das duas versões (`@angular/ssr` só em build) continua pendente de decisão: até lá, o HTML estático inicial é pt-BR.
 
 ## Performance
