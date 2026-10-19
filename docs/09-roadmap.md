@@ -196,7 +196,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## FASE 9 — RELEASE ⏸ (deploy público só com o Eduardo)
 
-- ⬜ **Antes de publicar:** harmonizar a Hero (D-086) e a `og:image` (D-085) com a nova carcaça oficial do MC-001 (D-088)
+- ⬜ **Antes de publicar:** harmonizar a Hero (D-086) com a nova carcaça oficial do MC-001 (D-088); a `og:image` já foi harmonizada
 - ⬜ Revisão das traduções antigas do Campaign Log (pendência separada, D-088)
 - ⬜ GitHub Pages (ativar e publicar)
 - ⬜ Domínio opcional no futuro

@@ -550,6 +550,6 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 - A seção varia só os 25 px da linha de controles do CRT, que sai durante a ejeção, como no H2.
 
 **Pendências registradas:**
-- **Antes da publicação:** harmonizar a Hero e a `og:image` com a nova carcaça do MC-001.
+- **Antes da publicação:** harmonizar a Hero com a nova carcaça do MC-001. A `og:image` já foi harmonizada (D-088, atualização).
 - **Separada:** revisão das traduções antigas do Campaign Log.
 - **Paco:** sem código MC-CART por enquanto.

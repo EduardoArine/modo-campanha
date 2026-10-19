@@ -1184,3 +1184,9 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Selo CARREGANDO:** o cartucho mostra CARREGANDO na biblioteca enquanto entra e carrega; INSERIDO só no PRONTO. O nome acessível segue a mesma regra ("MC-004 — EOS, carregando").
   - **Assets:** nenhuma imagem nova; os atuais passam nos critérios de desempenho.
 - **Status:** **APPROVED / FROZEN** na branch `feat/hero-refinement`. Não alterar sem regressão objetiva. Sem merge e sem deploy.
+- **Atualização (2026-10-19): `og:image` harmonizada, aprovada pelo Eduardo.**
+  - **O que mudou:** o template (`design/source/brand/og/og-image.html`) passa a usar a carcaça oficial da coleção, `public/assets/cartridges/mc-001/console-scale-1398.webp`, a mesma fonte do encaixe no MC-01.
+  - **Composição:** posição, tamanho, sombra e textos ficam como na D-085; a única diferença visível é a alça laranja.
+  - **Arquivos:** `public/og-image-{pt-BR,en}.png` regerados (cerca de 244 / 242 KB, antes ~290 KB).
+  - **Prévias:** o `render-og.mjs` aceita `OG_OUT` para gravar fora do `public/`.
+  - **Pendência restante antes da publicação:** a Hero.
