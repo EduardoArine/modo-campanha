@@ -134,6 +134,11 @@ ul {
 .case {
   grid-column: 1 / -1;
   margin-top: space(6);
+
+  // Durante a troca (D-087): mantém a altura sem mostrar dados de um projeto que ainda carrega.
+  &.is-pending {
+    visibility: hidden;
+  }
 }
 
 // Biblioteca MC-CART (D-087): acima da estação, com o respiro de um cabeçalho de seção.

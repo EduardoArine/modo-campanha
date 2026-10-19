@@ -64,6 +64,8 @@
           <span class="badge" aria-hidden="true">
             @if (isInserted) {
               {{ ui().inventory.collection.inserted }}
+            } @else if (project.id === loading()) {
+              {{ ui().inventory.collection.loading }}
             } @else if (isSelected) {
               {{ ui().inventory.collection.selected }}
             }

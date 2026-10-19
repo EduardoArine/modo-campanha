@@ -259,6 +259,11 @@ describe('ProjectInventorySection', () => {
     click(carts[3]);
     carts = library(el);
     expect(text(el, '.slot-status')).toBe('EJETANDO MC-001');
+    // O case reserva o espaço, invisível e inerte, sem dados do novo projeto.
+    const pending = () => el.querySelector('app-project-case.is-pending');
+    expect(pending()?.getAttribute('aria-hidden')).toBe('true');
+    expect(pending()?.hasAttribute('inert')).toBe(true);
+    expect(el.querySelectorAll('app-project-case').length).toBe(1);
     expect(text(el, '[role="status"]')).toBe('Trocando para MC-004 — EOS.');
     // O editorial já é do cartucho escolhido; o console ainda ejeta o anterior.
     expect(text(el, '.intro .name')).toBe('EOS');
@@ -275,9 +280,18 @@ describe('ProjectInventorySection', () => {
 
     step(600);
     expect(text(el, '.slot-status')).toBe('CARREGANDO MC-004');
-    step(620, 450);
+    // CARREGANDO até o READY (na biblioteca e no case, que segue reservado).
+    expect(text(el, '.cart.is-selected .badge')).toBe('CARREGANDO');
+    expect(library(el)[3].getAttribute('aria-label')).toBe('MC-004 — EOS, carregando');
+    expect(pending()).not.toBeNull();
+    step(620);
+    expect(text(el, '.cart.is-selected .badge')).toBe('CARREGANDO');
+    expect(pending()).not.toBeNull();
+    step(450);
 
     expect(text(el, '.slot-status')).toBe('MC-004 INSERIDO');
+    expect(text(el, '.cart.is-selected .badge')).toBe('INSERIDO');
+    expect(pending()).toBeNull();
     expect(text(el, '.tv-status')).toBe('EOS · PRONTO');
     expect(text(el, '[role="status"]')).toBe('MC-004 — EOS pronto.');
     const art = el.querySelector('.glass-art')!;

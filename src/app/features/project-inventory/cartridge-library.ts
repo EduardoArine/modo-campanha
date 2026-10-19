@@ -36,6 +36,8 @@ export class CartridgeLibrary {
   readonly selected = input.required<string>();
   /** Cartucho fisicamente no MC-01 (null com o slot vazio). */
   readonly inserted = input<string | null>(null);
+  /** Cartucho entrando ou carregando no MC-01: CARREGANDO até o READY. */
+  readonly loading = input<string | null>(null);
   /** Em transição (inserindo, carregando, ejetando): a escolha espera, sem prender o foco. */
   readonly busy = input(false);
   /** O CRT (#project-viewer) está na página (fora do fallback): só então há aria-controls. */
@@ -83,7 +85,7 @@ export class CartridgeLibrary {
 
   /** Escolher este cartucho muda algo? (o inserido e o já selecionado com o slot vazio, não). */
   protected actionable(project: Project): boolean {
-    if (project.id === this.inserted()) return false;
+    if (project.id === this.inserted() || project.id === this.loading()) return false;
     return !(project.id === this.selected() && !this.inserted());
   }
 
@@ -95,6 +97,7 @@ export class CartridgeLibrary {
     const c = this.ui().inventory.collection;
     const name = `${project.serial} — ${this.locale.pick(project.title)}`;
     if (project.id === this.inserted()) return `${name}, ${c.isInserted}`;
+    if (project.id === this.loading()) return `${name}, ${c.isLoading}`;
     if (!this.actionable(project)) return `${name}, ${c.isSelected}`;
     return `${this.inserted() ? c.swap : c.select} ${name}`;
   }

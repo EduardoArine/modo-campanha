@@ -23,6 +23,7 @@
         [projects]="projects"
         [selected]="selection().selected"
         [inserted]="selection().inserted"
+        [loading]="selection().loading"
         [busy]="!v.selectable"
         [viewer]="v.slot !== 'unavailable'"
         (choose)="choose($event)"
@@ -200,7 +201,10 @@
         </div>
       }
 
-      @if (v.case) {
+      @if (swapCase(); as previous) {
+        <!-- Troca em curso (D-087): o case anterior só reserva o espaço, invisível, até o PRONTO. -->
+        <app-project-case class="case is-pending" [project]="previous" aria-hidden="true" inert />
+      } @else if (v.case) {
         <app-project-case class="case" [project]="project" />
       }
     </div>

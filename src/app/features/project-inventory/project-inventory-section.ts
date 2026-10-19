@@ -15,6 +15,7 @@ import {
 
 import { LocaleService } from '../../core/i18n';
 import { McCart, McConsole, McCrtFront } from '../../shared/signature';
+import { Project } from '../../models';
 import { McAction, McIcon, McSectionHeader, McStatus } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { CartridgeLibrary } from './cartridge-library';
@@ -113,10 +114,12 @@ export class ProjectInventorySection {
   /** Anúncio da última transição (role="status"); vazio até o visitante agir. */
   protected readonly announcement = signal('');
   /**
-   * A troca em curso começou na biblioteca: o READY é anunciado, sem levar o foco nem rolar até o CRT
-   * (o visitante continua na biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
+   * Troca pela biblioteca em curso: guarda o projeto que estava PRONTO. O case dele só reserva o
+   * espaço (invisível e inerte) até o novo PRONTO, sem mostrar dados do projeto que ainda carrega.
+   * O READY da troca é anunciado, sem levar o foco nem rolar até o CRT (o visitante continua na
+   * biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
    */
-  private swapFromLibrary = false;
+  protected readonly swapCase = signal<Project | null>(null);
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -174,10 +177,11 @@ export class ProjectInventorySection {
   /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
   protected choose(id: string): void {
     const before = this.state();
+    const previous = this.project() ?? null;
     this.select(id);
     const after = this.state();
     // Só a troca animada chega a um READY posterior (o dispatch do select não lê a marca).
-    this.swapFromLibrary = before.kind === 'ready' && after.kind === 'ejecting';
+    this.swapCase.set(before.kind === 'ready' && after.kind === 'ejecting' ? previous : null);
     if (after === before) return;
     const next = this.projects.find((p) => p.id === id);
     if (!next) return;
@@ -243,9 +247,11 @@ export class ProjectInventorySection {
             ? s.teaserUnavailable
             : '',
     );
+    // Falha no meio da troca: o fallback mostra o case normalmente.
+    if (after.kind === 'unavailable') this.swapCase.set(null);
     // Troca pela biblioteca: o READY é anunciado em texto; foco e rolagem ficam onde estão.
-    if (after.kind === 'ready' && before.kind !== 'ready' && this.swapFromLibrary) {
-      this.swapFromLibrary = false;
+    if (after.kind === 'ready' && before.kind !== 'ready' && this.swapCase()) {
+      this.swapCase.set(null);
       const p = this.project();
       if (p) this.announcement.set(`${p.serial} — ${this.locale.pick(p.title)} ${s.ready}`);
       return;

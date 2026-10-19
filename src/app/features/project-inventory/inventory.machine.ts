@@ -98,19 +98,24 @@ function eject(state: InventoryState, next: string, reduced: boolean): Inventory
 /**
  * Cartucho escolhido na biblioteca × cartucho fisicamente no MC-01 (D-087). Diferem só durante a
  * troca (o atual ainda saindo, o escolhido esperando) e no slot vazio (escolhido, nada inserido).
+ * Inserindo ou carregando, o cartucho ainda não está pronto: `loading`, não `inserted`.
  */
 export function cartridgeSelection(state: InventoryState): {
   selected: string;
   inserted: string | null;
+  loading: string | null;
 } {
   switch (state.kind) {
     case 'empty':
     case 'unavailable':
-      return { selected: state.cartridge, inserted: null };
+      return { selected: state.cartridge, inserted: null, loading: null };
     case 'ejecting':
-      return { selected: state.next, inserted: state.cartridge };
-    default:
-      return { selected: state.cartridge, inserted: state.cartridge };
+      return { selected: state.next, inserted: state.cartridge, loading: null };
+    case 'inserting':
+    case 'loading':
+      return { selected: state.cartridge, inserted: null, loading: state.cartridge };
+    case 'ready':
+      return { selected: state.cartridge, inserted: state.cartridge, loading: null };
   }
 }
 

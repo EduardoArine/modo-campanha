@@ -120,11 +120,31 @@ describe('inventory machine (D-077)', () => {
     expect(cartridgeSelection(initialInventoryState('mc-001'))).toEqual({
       selected: 'mc-001',
       inserted: null,
+      loading: null,
     });
     const ready = run([{ type: 'insert', reduced: true }]);
-    expect(cartridgeSelection(ready)).toEqual({ selected: 'mc-001', inserted: 'mc-001' });
+    expect(cartridgeSelection(ready)).toEqual({
+      selected: 'mc-001',
+      inserted: 'mc-001',
+      loading: null,
+    });
     const swapping = run([{ type: 'select', cartridge: 'mc-004', reduced: false }], ready);
-    expect(cartridgeSelection(swapping)).toEqual({ selected: 'mc-004', inserted: 'mc-001' });
+    expect(cartridgeSelection(swapping)).toEqual({
+      selected: 'mc-004',
+      inserted: 'mc-001',
+      loading: null,
+    });
+    // Inserindo e carregando: ainda não está pronto (CARREGANDO até o READY).
+    for (const s of [
+      run([{ type: 'ejected' }], swapping),
+      run([{ type: 'ejected' }, { type: 'seated' }], swapping),
+    ]) {
+      expect(cartridgeSelection(s)).toEqual({
+        selected: 'mc-004',
+        inserted: null,
+        loading: 'mc-004',
+      });
+    }
   });
 
   it('manual eject keeps the last cartridge selected, slot empty and the TV in standby', () => {
