@@ -1,0 +1,52 @@
+// Lista de marcos (mobile, D-091). Escolhido: contorno âmbar + número em âmbar + aria-current.
+@use 'mc' as *;
+
+:host {
+  display: block;
+
+  @include mq(md) {
+    display: none;
+  }
+}
+
+.list {
+  display: grid;
+  gap: space(1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: space(3);
+  width: 100%;
+  min-height: 44px;
+  padding: space(2) space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: none;
+  color: var(--mc-text);
+  font: inherit;
+  @include type(body-s);
+  text-align: start;
+  cursor: pointer;
+
+  &.is-selected {
+    border-color: var(--mc-accent);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.num {
+  @include type(label);
+  color: var(--mc-text-muted);
+
+  .is-selected & {
+    color: var(--mc-accent);
+  }
+}

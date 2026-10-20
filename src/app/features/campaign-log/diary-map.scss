@@ -1,0 +1,241 @@
+// Mapa do capítulo (D-091). O cabeçalho do capítulo fica na seção. Moldura 16:9 com três camadas no mesmo sistema de coordenadas
+// (% da moldura): cenário, rota (SVG, traço que não escala) e marcos (botões). Texto sobre a arte
+// sempre em superfície própria (véu no cabeçalho, etiqueta nos marcos). < 768: mini mapa com
+// pontos (a lista de marcos é o diary-milestones); ≥ 768: marcos clicáveis com número e título.
+@use 'mc' as *;
+
+:host {
+  position: relative;
+  display: block;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-bg);
+}
+
+.art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  animation: fade 300ms ease-out;
+}
+
+// Placeholder até a arte aprovada: só a proporção e um relevo discreto, sem texto.
+.art--placeholder {
+  background:
+    radial-gradient(ellipse at 70% 85%, var(--mc-elevated), transparent 60%),
+    linear-gradient(160deg, var(--mc-surface), var(--mc-bg));
+}
+
+// Véu de leitura do cabeçalho (só quando ele fica sobre a arte, ≥ 1200).
+.veil {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    165deg,
+    color-mix(in srgb, var(--mc-bg) 88%, transparent) 0%,
+    transparent 48%
+  );
+
+  @include mq(xl) {
+    display: block;
+  }
+}
+
+.route {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  path {
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+}
+
+.route-shadow {
+  stroke: var(--mc-bg);
+  opacity: 0.6;
+
+  .route & {
+    stroke-width: 6;
+  }
+}
+
+.route-line {
+  stroke: var(--mc-text);
+  stroke-dasharray: 6 6;
+}
+
+.route-travelled {
+  stroke: var(--mc-accent);
+
+  .route & {
+    stroke-width: 3;
+  }
+}
+
+// Mini mapa (mobile): pontos sem interação; a escolha está na lista.
+.pin {
+  position: absolute;
+  width: space(3);
+  height: space(3);
+  border: var(--mc-border-width-strong) solid var(--mc-text);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-bg);
+  transform: translate(-50%, -50%);
+
+  &.is-selected {
+    border-color: var(--mc-accent);
+    background: var(--mc-accent);
+  }
+
+  @include mq(md) {
+    display: none;
+  }
+}
+
+.nodes {
+  display: none;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include mq(md) {
+    display: block;
+  }
+}
+
+.node {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+// Área de toque de 44 px centrada no ponto; a etiqueta faz parte do mesmo botão.
+.hit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mc-text);
+  font: inherit;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+
+  &:focus-visible {
+    outline: none;
+
+    .tag {
+      @include focus-ring;
+    }
+  }
+}
+
+.dot {
+  width: 18px;
+  height: 18px;
+  border: 3px solid var(--mc-text);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-bg);
+  transition:
+    transform 180ms ease-out,
+    background-color 180ms ease-out;
+
+  .hit:hover & {
+    transform: scale(1.15);
+  }
+
+  // Selecionado: preenchido + anel (forma e cor; o texto da etiqueta também muda de borda).
+  .is-selected & {
+    background: var(--mc-accent);
+    outline: var(--mc-border-width-strong) solid var(--mc-accent);
+    outline-offset: 3px;
+  }
+}
+
+.tag {
+  position: absolute;
+  bottom: calc(100% - #{space(1)});
+  left: 50%;
+  display: flex;
+  align-items: baseline;
+  gap: space(2);
+  width: max-content;
+  max-width: 11rem;
+  padding: space(1) space(2);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: color-mix(in srgb, var(--mc-panel) 94%, transparent);
+  @include type(body-s);
+  font-weight: 600;
+  text-align: start;
+  transform: translateX(-50%);
+  transition: border-color 180ms ease-out;
+
+  .below & {
+    top: calc(100% - #{space(1)});
+    bottom: auto;
+  }
+
+  .start & {
+    left: 0;
+    transform: none;
+  }
+
+  .end & {
+    right: 0;
+    left: auto;
+    transform: none;
+  }
+
+  .is-selected & {
+    border-color: var(--mc-accent);
+  }
+}
+
+.num {
+  @include type(label);
+  color: var(--mc-text-muted);
+
+  .is-selected & {
+    color: var(--mc-accent);
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art {
+    animation: none;
+  }
+
+  .dot,
+  .tag {
+    transition: none;
+  }
+}

@@ -1,14 +1,26 @@
 <section id="campaign-log" class="mc-page-grid section" aria-labelledby="campaign-log-title">
   <mc-section-header [heading]="ui().sections.campaignLog" headingId="campaign-log-title" />
+  <p class="intro">{{ locale.pick(intro) }}</p>
 
-  <ol class="log" role="list">
-    <!-- Capítulos (docs/15 §13–§17), conteúdo canônico do Campaign Log. Lista plana: cabeçalho do
-         capítulo (h3), checkpoints (h4) e fechamento são itens do mesmo eixo. -->
-    @for (chapter of chapters; track chapter.id) {
-      <li class="entry entry--chapter">
-        <span class="marker" aria-hidden="true"></span>
-        @if (chapter.period; as period) {
-          <p class="period">
+  @let active = chapter();
+
+  <!-- Seletor de capítulos (C): escolha rápida, sem mover a página. -->
+  <app-diary-chapters
+    class="chapters"
+    [chapters]="chapters"
+    [selected]="active.id"
+    (choose)="selectChapter($event)"
+  />
+
+  <!-- Capítulo ativo (A): mapa + painel de leitura, do mesmo estado. -->
+  <div class="active" id="diary-chapter">
+    <div class="map">
+      <!-- Cabeçalho do capítulo: sobre o mapa (≥ 768, com véu de leitura); acima dele no mobile. -->
+      <header class="head">
+        <p class="eyebrow">
+          {{ ui().campaignLog.chapter }} {{ active.number }}
+          @if (active.period; as period) {
+            ·
             <time [attr.datetime]="period.start">{{ period.start }}</time>
             @if (period.end; as end) {
               —
@@ -18,120 +30,104 @@
                 <time [attr.datetime]="end">{{ end }}</time>
               }
             }
-          </p>
-        }
-        <h3 class="chapter-name">
-          {{ ui().campaignLog.chapter }} {{ chapter.number }}
-          @if (chapter.name; as name) {
-            — {{ locale.pick(name) }}
+          }
+        </p>
+        <h3 class="name" id="diary-chapter-title" tabindex="-1">
+          @if (active.name; as name) {
+            {{ locale.pick(name) }}
+          } @else {
+            {{ ui().campaignLog.chapter }} {{ active.number }}
           }
         </h3>
-        @if (chapter.signature; as signature) {
+        @if (active.signature; as signature) {
           <p class="signature">{{ locale.pick(signature) }}</p>
         }
-        @if (chapter.context; as context) {
+        @if (active.context; as context) {
           <p class="context">{{ locale.pick(context) }}</p>
         }
-      </li>
-      @for (entry of chapter.entries; track entry.id; let i = $index) {
-        @let when = entry.when;
-        <li class="entry entry--story">
-          <span class="marker" aria-hidden="true"></span>
-          <p class="period">
-            @if ('year' in when) {
-              <time [attr.datetime]="when.year">{{ when.year }}</time>
-            } @else if ('since' in when) {
-              {{ ui().campaignLog.since }}
-              <time [attr.datetime]="when.since">{{ when.since }}</time>
-            } @else if ('span' in when) {
-              <time [attr.datetime]="when.span.start">{{ when.span.start }}</time> —
-              <time [attr.datetime]="when.span.end">{{ when.span.end }}</time>
-            } @else if ('approx' in when) {
-              @let approx = when.approx;
-              {{ ui().campaignLog.approx }}
-              @if (typeof approx === 'number') {
-                <time [attr.datetime]="approx">{{ approx }}</time>
+      </header>
+      <app-diary-map
+        [chapter]="active"
+        [selected]="selectedId()"
+        (choose)="selectMilestone($event)"
+      />
+    </div>
+    <!-- Mobile: lista de marcos entre o mini mapa e o painel. -->
+    <app-diary-milestones
+      class="list"
+      [entries]="active.entries"
+      [selected]="selectedId()"
+      (choose)="selectMilestone($event)"
+    />
+    <app-diary-milestone
+      class="panel"
+      [chapter]="active"
+      [index]="index()"
+      [next]="next()"
+      (step)="step($event)"
+      (openChapter)="selectChapter($event, true)"
+    />
+  </div>
+
+  @if (others().length) {
+    <!-- Prévias dos outros capítulos: contexto e acesso, sem repetir o seletor. -->
+    <h3 class="others-title">{{ ui().campaignLog.diary.others }}</h3>
+    <ul class="others" role="list">
+      @for (other of others(); track other.id) {
+        <li class="other">
+          @if (other.map; as art) {
+            <img
+              class="other-art"
+              [src]="art.src"
+              [attr.srcset]="art.srcset ?? null"
+              sizes="(min-width: 1024px) 400px, 100vw"
+              [width]="art.width"
+              [height]="art.height"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          } @else {
+            <span class="other-art other-art--placeholder" aria-hidden="true"></span>
+          }
+          <p class="other-code">{{ ui().campaignLog.chapter }} {{ other.number }}</p>
+          <h4 class="other-name">
+            @if (other.name; as name) {
+              {{ locale.pick(name) }}
+            } @else {
+              {{ ui().campaignLog.chapter }} {{ other.number }}
+            }
+          </h4>
+          @if (other.signature; as signature) {
+            <p class="other-text">{{ locale.pick(signature) }}</p>
+          }
+          <div class="other-foot">
+            <p class="other-count">
+              @if (other.entries.length) {
+                {{ other.entries.length }} {{ ui().campaignLog.diary.milestones }}
               } @else {
-                <!-- Dois anos possíveis, sem escolher um: "c. 2020/2021". -->
-                {{ approx[0] }}/{{ approx[1] }}
+                {{ ui().campaignLog.diary.inConstruction }}
               }
-            } @else {
-              {{ locale.pick(when.era) }}
-            }
-          </p>
-          <p class="kind">
-            {{ ui().campaignLog.checkpoint }} {{ code(i) }}
-            @if (entry.code; as name) {
-              · {{ locale.pick(name) }}
-            }
-          </p>
-          <h4 class="title">{{ locale.pick(entry.title) }}</h4>
-          <p class="summary">{{ locale.pick(entry.summary) }}</p>
-          <details class="story">
-            <summary>
-              <span class="open">{{ ui().campaignLog.story.open }}</span>
-              <span class="close">{{ ui().campaignLog.story.close }}</span>
-            </summary>
-            @for (paragraph of locale.pick(entry.story); track $index) {
-              <p>{{ paragraph }}</p>
-            }
-            @if (entry.photos; as photos) {
-              <!-- Fotos reais como evidência documental (proporção original, sem filtro). -->
-              <div class="photos">
-                @for (photo of photos; track photo.src) {
-                  <img
-                    [src]="photo.src"
-                    [srcset]="photo.srcset"
-                    sizes="(min-width: 768px) 320px, 100vw"
-                    [width]="photo.width"
-                    [height]="photo.height"
-                    [alt]="locale.pick(photo.alt)"
-                    [style.--ratio]="photo.width / photo.height"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                }
-              </div>
-            }
-            @if (entry.links; as links) {
-              <!-- Referências externas verificáveis (tipo + título + contexto), em nova aba. -->
-              <ul class="refs" role="list">
-                @for (link of links; track link.url; let r = $index) {
-                  <li>
-                    @if (r === 0 || links[r - 1].kind !== link.kind) {
-                      <p class="kind">{{ ui().campaignLog.links[link.kind] }}</p>
-                    }
-                    <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
-                      {{ locale.pick(link.label) }} <mc-icon name="external" />
-                      <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
-                    </a>
-                    @if (link.note; as note) {
-                      <p class="context">{{ locale.pick(note) }}</p>
-                    }
-                  </li>
-                }
-              </ul>
-            }
-          </details>
+            </p>
+            <button
+              mcAction="secondary"
+              type="button"
+              aria-controls="diary-chapter"
+              [attr.aria-label]="
+                ui().campaignLog.diary.open +
+                ': ' +
+                ui().campaignLog.chapter +
+                ' ' +
+                other.number +
+                (other.name ? ' — ' + locale.pick(other.name) : '')
+              "
+              (click)="selectChapter(other.id, true)"
+            >
+              {{ ui().campaignLog.diary.open }} <mc-icon name="chevron-right" />
+            </button>
+          </div>
         </li>
       }
-      @if (chapter.closing; as closing) {
-        <!-- Fechamento: CHECKPOINT COMPLETE + ano final, ou CURRENT QUEST — EM ANDAMENTO. -->
-        <li class="entry entry--chapter" [class.entry--ongoing]="chapter.ongoing">
-          <span class="marker" aria-hidden="true"></span>
-          <p class="chapter-name">
-            @if (chapter.ongoing) {
-              {{ ui().campaignLog.ongoing }}
-            } @else {
-              {{ ui().campaignLog.complete }}
-              @if (chapter.period?.end; as end) {
-                — <time [attr.datetime]="end">{{ end }}</time>
-              }
-            }
-          </p>
-          <p class="signature">{{ locale.pick(closing) }}</p>
-        </li>
-      }
-    }
-  </ol>
+    </ul>
+  }
 </section>

@@ -37,6 +37,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
   entries: [
     {
       id: 'origin-first-contact',
+      map: { x: 14, y: 72, label: 'below' },
       code: { 'pt-BR': 'PRIMEIRO CONTATO', en: 'FIRST CONTACT' },
       when: { approx: 1991 },
       title: { 'pt-BR': 'Primeiro contato', en: 'First Contact' },
@@ -58,6 +59,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-rental-store-years',
+      map: { x: 32, y: 56, label: 'above' },
       code: { 'pt-BR': 'OS ANOS DE LOCADORA', en: 'THE RENTAL STORE YEARS' },
       when: { era: { 'pt-BR': 'Época do SNES', en: 'SNES era' } },
       title: { 'pt-BR': 'A escola das locadoras', en: 'The Rental Store Years' },
@@ -78,6 +80,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-ladybug-wish',
+      map: { x: 49, y: 65, label: 'below' },
       code: { 'pt-BR': 'O PEDIDO À JOANINHA', en: 'THE LADYBUG WISH' },
       when: { era: { 'pt-BR': 'Infância', en: 'Childhood' } },
       title: { 'pt-BR': 'O pedido à joaninha', en: 'The Ladybug Wish' },
@@ -98,6 +101,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-earned-not-given',
+      map: { x: 68, y: 42, label: 'above' },
       code: { 'pt-BR': 'CONQUISTADO, NÃO DADO', en: 'EARNED, NOT GIVEN' },
       when: { era: { 'pt-BR': 'Época do PlayStation', en: 'PlayStation era' } },
       title: {
@@ -122,6 +126,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'origin-built-from-memories',
+      map: { x: 84, y: 60, label: 'below' },
       code: { 'pt-BR': 'FEITO DE MEMÓRIAS', en: 'BUILT FROM MEMORIES' },
       when: { era: { 'pt-BR': 'Vida adulta', en: 'Adulthood' } },
       title: { 'pt-BR': 'Uma coleção de histórias', en: 'A Collection of Stories' },
@@ -176,6 +181,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   entries: [
     {
       id: 'fatec-passion-became-choice',
+      map: { x: 13, y: 70, label: 'below' },
       when: { year: 2013 },
       title: { 'pt-BR': 'Quando a paixão virou escolha', en: 'When Passion Became a Choice' },
       summary: {
@@ -195,6 +201,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-aedes-revenge',
+      map: { x: 31, y: 64, label: 'above' },
       when: { era: { 'pt-BR': 'Durante a graduação', en: 'During college' } },
       title: {
         'pt-BR': 'Aedes Revenge — Meu primeiro grande projeto',
@@ -220,6 +227,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-first-best-game',
+      map: { x: 49, y: 74, label: 'below' },
       when: { year: 2016 },
       title: { 'pt-BR': 'Meu primeiro Melhor Jogo', en: 'My First Best Game Award' },
       summary: {
@@ -240,6 +248,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-real-players',
+      map: { x: 67, y: 52, label: 'above' },
       when: { year: 2017 },
       title: {
         'pt-BR': 'Um jogo de verdade, com jogadores de verdade',
@@ -264,6 +273,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-two-awards-capstone',
+      map: { x: 86, y: 68, label: 'below' },
       when: { year: 2017 },
       title: {
         'pt-BR': 'Dois prêmios e um TCC nota 10',
@@ -323,6 +333,7 @@ export const CHAPTER_02: CampaignLogChapter = {
   entries: [
     {
       id: 'scoutevo',
+      map: { x: 16, y: 66, label: 'below' },
       code: { 'pt-BR': 'SCOUTEVO', en: 'SCOUTEVO' },
       when: { year: 2018 },
       title: { 'pt-BR': 'Quando uma ideia entrou em campo', en: 'When an Idea Took the Field' },
@@ -372,6 +383,7 @@ export const CHAPTER_02: CampaignLogChapter = {
     {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
       id: 'eos',
+      map: { x: 39, y: 66, label: 'above' },
       code: { 'pt-BR': 'EOS', en: 'EOS' },
       when: { year: 2019 },
       title: {
@@ -471,6 +483,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // 2020/2021, segundo o próprio relato (estimativa, não data documental), e evolução posterior,
       // sem ano final. A InfraFM cita o desenvolvimento em 2022.
       id: 'axia',
+      map: { x: 62, y: 72, label: 'below' },
       code: { 'pt-BR': 'AXIA', en: 'AXIA' },
       when: { approx: [2020, 2021] },
       title: {
@@ -525,6 +538,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // Descrição pública escrita por ele; nada interno da Comunidade ON. O resumo do card é próprio
       // (D-073), não a primeira frase da história. "Digital Games" no en (D-074).
       id: 'comunidade-on',
+      map: { x: 84, y: 52, label: 'above' },
       code: { 'pt-BR': 'COMUNIDADE ON', en: 'COMUNIDADE ON' },
       when: { since: 2025 },
       title: {

@@ -1,8 +1,6 @@
-// Campaign Log (docs/15-home-slice-03.md, A + C — Checkpoint Log Editorial). Timeline vertical
-// aberta: sem cards, fundos, sombras ou objeto físico. A linha e os markers só organizam a
-// cronologia. ≥ 768: período em coluna própria (2 colunas), à esquerda do eixo; < 768: período
-// entra no fluxo, acima do label. Nomes curtos locais: --mk = tamanho do marker, --my = topo do
-// marker (centro da 1ª linha de label), --in = recuo do texto em relação ao eixo.
+// Diário de Campanha (D-091). Abertura editorial (cabeçalho padrão das seções + texto curto),
+// seletor de capítulos, capítulo ativo (mapa ~70% + painel ~30% a partir de 1200; empilhados
+// abaixo disso) e prévias dos outros capítulos. Sem cards de jogo, sombras ou glow.
 @use 'mc' as *;
 
 :host {
@@ -13,223 +11,170 @@
   padding-block: var(--mc-space-section);
 }
 
-.log {
-  @include columns;
-  row-gap: 0;
-  margin: var(--mc-space-section-head) 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.entry {
-  --mk: #{space(2)};
-  --my: #{space(1)};
-  --in: #{space(5)};
-  position: relative;
-  grid-column: 1 / -1;
-  padding: 0 0 space(7) var(--in);
-
-  @include mq(md) {
-    grid-column: 3 / -1;
-  }
-
-  @include mq(lg) {
-    grid-column: 3 / span 7;
-  }
-
-  // Eixo: liga os markers; começa no primeiro e termina no último.
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: calc(var(--mk) / 2);
-    width: var(--mc-border-width-default);
-    background: var(--mc-border-subtle);
-  }
-
-  &:first-child::before {
-    top: var(--my);
-  }
-
-  &:last-child {
-    padding-bottom: 0;
-
-    &::before {
-      bottom: auto;
-      height: var(--my);
-    }
-  }
-}
-
-// Markers quadrados: checkpoint estrutural neutro; capítulo warm vazado; em andamento = status.
-.marker {
-  position: absolute;
-  z-index: 1;
-  top: var(--my);
-  left: 0;
-  box-sizing: border-box;
-  width: var(--mk);
-  height: var(--mk);
-  border: var(--mc-border-width-default) solid var(--mc-border-default);
-  background: var(--mc-bg);
-}
-
-.entry--chapter.entry--ongoing .marker {
-  border-color: var(--mc-status-online);
-  background: var(--mc-status-online);
-}
-
 p,
 h3,
-h4 {
+h4,
+ul {
   margin: 0;
 }
 
-.period {
-  @include type(label);
-  color: var(--mc-text);
-
-  // Coluna de período à esquerda do eixo (alinhada ao label do checkpoint).
-  @include mq(md) {
-    position: absolute;
-    top: 0;
-    right: calc(100% + var(--mc-gutter));
-    white-space: nowrap;
-    text-align: right;
-  }
-}
-
-.kind {
-  margin-top: space(1);
-  @include type(label);
-  color: var(--mc-text-muted);
-
-  @include mq(md) {
-    margin-top: 0;
-  }
-}
-
-// Títulos de checkpoint e assinatura/fechamento de capítulo.
-.title,
-.signature {
-  margin-top: space(2);
-  @include type(title-m);
-  color: var(--mc-text);
-}
-
-.context {
-  margin-top: space(1);
-  @include type(body-s);
-  color: var(--mc-text-muted);
-}
-
-// Parágrafos da história completa (só os filhos diretos: rótulo e nota das referências mantêm
-// .kind e .context): mesma regra do resumo.
-.summary,
-.story > p {
+.intro {
   max-width: 62ch;
-  margin-top: space(2);
+  margin-top: space(4);
   @include type(body);
   color: var(--mc-text-secondary);
 }
 
-// Capítulo (docs/15 §13): cabeçalho no mesmo eixo, marker warm vazado. Os checkpoints do capítulo
-// usam a tipografia aprovada (D-050).
-.entry--chapter .marker {
-  border-color: var(--mc-accent-active);
+.chapters {
+  margin-top: space(6);
 }
 
-.chapter-name {
+.active {
+  display: grid;
+  gap: var(--mc-gutter);
+  margin-top: space(5);
+
+  // Lado a lado só a partir de 1200: abaixo disso o mapa ganha a largura toda e o painel desce.
+  @include mq(xl) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
+    align-items: start;
+  }
+}
+
+// Cabeçalho do capítulo ativo: no fluxo (< 1200); sobre o canto do mapa a partir de 1200.
+.map {
+  position: relative;
+
+  // Lado a lado: o mapa acompanha a leitura de uma história longa no painel.
+  @include mq(xl) {
+    position: sticky;
+    top: calc(var(--mc-header-block) + #{space(4)});
+  }
+}
+
+.head {
+  display: grid;
+  gap: space(1);
+  margin-bottom: space(4);
+
+  // Sobre o mapa só ao lado do painel (≥ 1200); abaixo disso, acima do mapa, no fluxo.
+  @include mq(xl) {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    max-width: min(46%, 26rem);
+    margin: 0;
+    padding: space(5);
+    // Só texto: cliques passam para os marcos do mapa.
+    pointer-events: none;
+  }
+}
+
+.eyebrow {
   @include type(label);
   color: var(--mc-accent);
 }
 
-// História completa: <details> nativo (teclado e leitor de tela sem JS). Aberta, substitui o resumo.
-.story {
-  margin-top: space(2);
+.name {
+  @include type(title-l);
+  color: var(--mc-text);
 
-  summary {
-    display: inline-flex;
-    gap: space(2);
-    cursor: pointer;
-    list-style: none;
-    @include type(body-s);
-    color: var(--mc-link);
-
-    &::-webkit-details-marker {
-      display: none;
-    }
-
-    &::before {
-      content: '▸';
-    }
-
-    &:hover {
-      color: var(--mc-link-hover);
-    }
-  }
-
-  &[open] summary::before {
-    content: '▾';
-  }
-
-  &[open] .open,
-  &:not([open]) .close {
-    display: none;
+  &:focus {
+    outline: none;
   }
 }
 
-.entry--story:has(.story[open]) .summary {
-  display: none;
+.signature {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
 }
 
-// Fotos da história (evidência documental): proporção original, sem filtro nem sombra; borda sutil.
-// ≥ 768: lado a lado na mesma altura (--ratio = largura/altura de cada foto vira o flex-grow); < 768:
-// empilhadas.
-.photos {
-  display: flex;
-  flex-direction: column;
-  gap: space(3);
-  max-width: 62ch;
-  margin-top: space(4);
-
-  @include mq(md) {
-    flex-direction: row;
-    align-items: flex-start;
-  }
-
-  img {
-    display: block;
-    min-width: 0;
-    width: 100%;
-    height: auto;
-    border: var(--mc-border-width-default) solid var(--mc-border-subtle);
-    border-radius: var(--mc-radius-sm);
-
-    @include mq(md) {
-      flex: var(--ratio) 1 0;
-    }
-
-    // Imagem única (ex.: montagem em retrato): largura contida.
-    &:only-child {
-      max-width: 24rem;
-    }
-  }
+.context {
+  @include type(caption);
+  color: var(--mc-text-muted);
 }
 
-// Referências externas do checkpoint (ex.: TCC, artigo, imprensa), depois do texto e das fotos.
-// Reusa .kind (tipo) e .context (nota).
-.refs {
+.others-title {
+  margin-top: space(7);
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+.others {
   display: grid;
-  gap: space(4);
-  margin: space(5) 0 0;
+  gap: var(--mc-gutter);
+  margin-top: space(3);
   padding: 0;
   list-style: none;
 
-  // Títulos longos quebram linha; inline mantém o ícone externo junto do fim do texto.
-  a {
-    display: inline;
-    white-space: normal;
+  @include mq(md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  @include mq(xl) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+// Prévia: texto sobre superfície lisa; o cenário entra à direita, apagando em direção ao texto.
+.other {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: space(2);
+  padding: space(5);
+  overflow: hidden;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+
+  > :not(.other-art) {
+    position: relative;
+  }
+}
+
+.other-art {
+  position: absolute;
+  inset: 0 0 0 45%;
+  width: 55%;
+  height: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to right, transparent, #000 70%);
+  opacity: 0.7;
+}
+
+.other-art--placeholder {
+  background: linear-gradient(160deg, var(--mc-surface), var(--mc-elevated));
+}
+
+.other-code,
+.other-count {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.other-count {
+  color: var(--mc-text-muted);
+}
+
+.other-name {
+  max-width: 70%;
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.other-text {
+  max-width: 70%;
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+.other-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  margin-top: space(2);
 }
