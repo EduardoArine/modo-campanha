@@ -1,7 +1,29 @@
-import { CampaignLogChapter, CampaignLogPhoto } from '../models';
+import { CampaignLogChapter, CampaignLogImage, CampaignLogPhoto } from '../models';
 import { PLAYER_PROFILE } from './profile.data';
 
 const ASSETS = 'assets/campaign-log/';
+
+/**
+ * Arte do Diário de Campanha (D-091): derivados WebP gerados por design/source/diary/build-diary.mjs
+ * a partir dos mestres PNG (cenários 16:9 em maps/, imagens editoriais 3:2 em stories/).
+ */
+function diaryArt(
+  dir: 'maps' | 'stories',
+  name: string,
+  widths: readonly number[],
+  height: number,
+): CampaignLogImage {
+  const max = widths[widths.length - 1];
+  const base = 'assets/diary/' + dir + '/' + name + '-';
+  return {
+    src: base + max + '.webp',
+    srcset: widths.map((w) => base + w + '.webp ' + w + 'w').join(', '),
+    width: max,
+    height,
+  };
+}
+const MAP_WIDTHS = [640, 960, 1280, 1672];
+const STORY_WIDTHS = [480, 720, 1080, 1536];
 
 /** Derivados WebP (proporção original, sem filtro) das fotos fornecidas pelo Eduardo. */
 function photo(
@@ -30,6 +52,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
   id: 'chapter-00-origin',
   number: '00',
   name: { 'pt-BR': 'ORIGEM', en: 'ORIGIN' },
+  map: diaryArt('maps', 'ch00-origem', MAP_WIDTHS, 941),
   signature: {
     'pt-BR': 'A campanha começou muito antes do código.',
     en: 'The campaign started long before the code.',
@@ -38,6 +61,14 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     {
       id: 'origin-first-contact',
       map: { x: 14, y: 72, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch00-01-primeiro-contato', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma sala ao pôr do sol, com uma TV de tubo mostrando uma paisagem, um console e um controle sobre o tapete.',
+          en: 'Pixel-art illustration: a living room at sunset, with a CRT TV showing a landscape, a console, and a controller on the rug.',
+        },
+      },
       code: { 'pt-BR': 'PRIMEIRO CONTATO', en: 'FIRST CONTACT' },
       when: { approx: 1991 },
       title: { 'pt-BR': 'Primeiro contato', en: 'First Contact' },
@@ -60,6 +91,14 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     {
       id: 'origin-rental-store-years',
       map: { x: 32, y: 56, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch00-02-escola-locadoras', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma locadora de jogos ao entardecer, com estantes de caixas de jogos, um balcão e uma TV ligada.',
+          en: 'Pixel-art illustration: a video game rental store at dusk, with shelves of game boxes, a counter, and a TV turned on.',
+        },
+      },
       code: { 'pt-BR': 'OS ANOS DE LOCADORA', en: 'THE RENTAL STORE YEARS' },
       when: { era: { 'pt-BR': 'Época do SNES', en: 'SNES era' } },
       title: { 'pt-BR': 'A escola das locadoras', en: 'The Rental Store Years' },
@@ -81,6 +120,14 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     {
       id: 'origin-ladybug-wish',
       map: { x: 49, y: 65, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch00-03-pedido-joaninha', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: um cartão dobrado com uma joaninha, sobre uma escrivaninha ao pôr do sol, ao lado de um controle.',
+          en: 'Pixel-art illustration: a folded card with a ladybug on a desk at sunset, next to a controller.',
+        },
+      },
       code: { 'pt-BR': 'O PEDIDO À JOANINHA', en: 'THE LADYBUG WISH' },
       when: { era: { 'pt-BR': 'Infância', en: 'Childhood' } },
       title: { 'pt-BR': 'O pedido à joaninha', en: 'The Ladybug Wish' },
@@ -102,6 +149,14 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     {
       id: 'origin-earned-not-given',
       map: { x: 68, y: 42, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch00-04-conquista-trabalho', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma escrivaninha com um caderno aberto, um lápis, uma xícara e um monitor antigo, diante de uma janela ao pôr do sol.',
+          en: 'Pixel-art illustration: a desk with an open notebook, a pencil, a mug, and an old monitor, by a window at sunset.',
+        },
+      },
       code: { 'pt-BR': 'CONQUISTADO, NÃO DADO', en: 'EARNED, NOT GIVEN' },
       when: { era: { 'pt-BR': 'Época do PlayStation', en: 'PlayStation era' } },
       title: {
@@ -127,6 +182,14 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
     {
       id: 'origin-built-from-memories',
       map: { x: 84, y: 60, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch00-05-colecao-historias', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: estantes com caixas de jogos, cartuchos e controles, ao lado de uma janela ao pôr do sol.',
+          en: 'Pixel-art illustration: shelves with game boxes, cartridges, and controllers, next to a window at sunset.',
+        },
+      },
       code: { 'pt-BR': 'FEITO DE MEMÓRIAS', en: 'BUILT FROM MEMORIES' },
       when: { era: { 'pt-BR': 'Vida adulta', en: 'Adulthood' } },
       title: { 'pt-BR': 'Uma coleção de histórias', en: 'A Collection of Stories' },
@@ -169,6 +232,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   id: 'chapter-01-fatec',
   number: '01',
   name: { 'pt-BR': 'DO CONTROLE AO CÓDIGO', en: 'FROM CONTROLLER TO CODE' },
+  map: diaryArt('maps', 'ch01-controle-codigo', MAP_WIDTHS, 941),
   period: { start: 2013, end: 2017 },
   context: {
     'pt-BR': 'Tecnologia em Jogos Digitais · FATEC Americana',

@@ -75,9 +75,26 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
       ['84%', '60%'],
     ]);
     expect(el.querySelector('app-diary-map .route-line')?.getAttribute('d')).toMatch(/^M14 72 C/);
-    // Placeholder até a arte aprovada: sem imagem quebrada.
+    // Cenário decorativo (a navegação está nos botões), com derivados por largura.
+    const art = el.querySelector('app-diary-map img.art')!;
+    expect(art.getAttribute('alt')).toBe('');
+    expect(art.getAttribute('src')).toBe('assets/diary/maps/ch00-origem-1672.webp');
+    expect(art.getAttribute('srcset')).toContain('ch00-origem-640.webp 640w');
+    expect(art.getAttribute('loading')).toBe('lazy');
+    // Imagem editorial do marco, com alt descritivo.
+    const story = el.querySelector('app-diary-milestone img.image')!;
+    expect(story.getAttribute('src')).toBe(
+      'assets/diary/stories/ch00-01-primeiro-contato-1536.webp',
+    );
+    expect(story.getAttribute('alt')).toMatch(/^Ilustração em pixel art: uma sala ao pôr do sol/);
+  });
+
+  it('keeps a ratio placeholder where the art has not arrived yet (CHAPTER 02)', async () => {
+    const el = await renderAt('/');
+    click(el.querySelectorAll('app-diary-chapters .card')[2]);
     expect(el.querySelector('app-diary-map .art--placeholder')).not.toBeNull();
     expect(el.querySelector('app-diary-map img')).toBeNull();
+    expect(el.querySelector('app-diary-milestone .image--placeholder')).not.toBeNull();
   });
 
   it('switches milestone on the map: panel, highlight, route and mobile list change together', async () => {

@@ -40,9 +40,10 @@
   position: absolute;
   inset: 0;
   background: linear-gradient(
-    165deg,
-    color-mix(in srgb, var(--mc-bg) 88%, transparent) 0%,
-    transparent 48%
+    170deg,
+    color-mix(in srgb, var(--mc-bg) 94%, transparent) 0%,
+    color-mix(in srgb, var(--mc-bg) 80%, transparent) 26%,
+    transparent 52%
   );
 
   @include mq(xl) {
@@ -61,29 +62,29 @@
     vector-effect: non-scaling-stroke;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 2;
+    stroke-width: 3;
   }
 }
 
 .route-shadow {
   stroke: var(--mc-bg);
-  opacity: 0.6;
+  opacity: 0.7;
 
   .route & {
-    stroke-width: 6;
+    stroke-width: 8;
   }
 }
 
 .route-line {
   stroke: var(--mc-text);
-  stroke-dasharray: 6 6;
+  stroke-dasharray: 8 7;
 }
 
 .route-travelled {
   stroke: var(--mc-accent);
 
   .route & {
-    stroke-width: 3;
+    stroke-width: 4;
   }
 }
 
