@@ -88,7 +88,7 @@ Fundamentos restantes do design system (XP, Motion, Easter Egg Language, consoli
 
 Backlog:
 
-- ✅ **Hero refinement (D-063 → D-066 → D-067 → D-079 → D-086, `docs/21` §7–§8)**: fundo do setup MC-01 usado direto (recorte próprio no mobile), **arte final com as peças oficiais** (D-086; contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
+- ✅ **Hero refinement (D-063 → D-066 → D-067 → D-079 → D-086 → D-089, `docs/21` §7–§8)**: fundo do setup MC-01 usado direto (recorte próprio no mobile), **arte final com as peças oficiais** (D-086; contrato em `docs/21` §8.2); ajustes técnicos de D-079 concluídos (scanlines, preload da Pixelify, rótulo da pausa). Antes: ⬜ **Hero CRT Screen Artwork**: arte da tela do CRT do Hero como asset próprio (a sensação de tela vazia não se resolve com mais objetos na cena)
 - ✅ **Mobile Navigation**: nav como segunda linha do header abaixo de 768 px (D-057)
 - ✅ **Player Status definitivo (D-082): APPROVED / FROZEN** (D-083): painel do mockup aprovado com a foto real, responsivo, pt/en
 - ✅ Bloco "Sobre a jornada" no Player Status: texto e traduções en aprovados (D-082, D-083)
@@ -160,7 +160,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ **Project Inventory — H2, Physical Cartridge Experience** (D-075–D-077, `docs/24` §17): MC-01 em camadas, inserção física, CRT frontal com a arte oficial e teaser sob demanda, case fora do vidro, estado de domínio único; **APPROVED / consolidado** (D-078), sem deploy
 - ✅ **Biblioteca MC-CART** (D-087, `docs/24` §18): seis cartuchos oficiais, escolher → inserir → explorar → trocar, cases a partir do Campaign Log; **APPROVED / FROZEN** (D-088), sem deploy
-- ⏳ Harmonização visual do MC-01 da Hero com o MC-01 canônico do H2 (D-077): contrato da nova imagem pronto (D-079, `docs/21` §8.2); aguardando a arte externa do Eduardo para a substituição
+- ✅ Harmonização visual do MC-01 da Hero com o MC-01 canônico do H2 (D-077): contrato da nova imagem (D-079, `docs/21` §8.2), arte final (D-086) e carcaça da coleção (D-089)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
@@ -196,7 +196,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 
 ## FASE 9 — RELEASE ⏸ (deploy público só com o Eduardo)
 
-- ⬜ **Antes de publicar:** harmonizar a Hero (D-086) com a nova carcaça oficial do MC-001 (D-088); a `og:image` já foi harmonizada
+- ✅ **Antes de publicar:** Hero (D-089) e `og:image` (D-088) harmonizadas com a carcaça oficial do MC-001
 - ⬜ Revisão das traduções antigas do Campaign Log (pendência separada, D-088)
 - ⬜ GitHub Pages (ativar e publicar)
 - ⬜ Domínio opcional no futuro

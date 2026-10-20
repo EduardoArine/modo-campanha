@@ -144,18 +144,19 @@ Para quem vai produzir a arte. **A imagem atual não é substituída até a nova
 
 #### A. Referências oficiais
 
-| Objeto             | Referência (usar)                                                                                           | O que vale                                                                                                            |
-| ------------------ | ----------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| MC-01 com o MC-001 | `design/source/mc-01/console-reference.png` (1254 × 1074); camadas `console-front.png` e `console-back.png` | carcaça, placa "MC-01 —— MODO CAMPANHA" com o glifo, POWER/RESET com LEDs, portas 1 e 2, acentos laranja nas laterais |
-| MC-CART MC-001     | `design/source/mc-01/mc-001-console-scale.png` (699 × 500), carcaça oficial (D-078)                         | topo escalonado, pegas laterais (fenda laranja à direita), janela da etiqueta, triângulo na base                      |
-| Etiqueta e tela    | `public/assets/cartridges/mc-001/system-horizon.webp`                                                       | pôr do sol, montanhas, lago, trilha e cerca, em pixel art                                                             |
-| CRT                | `design/source/mc-01/crt-front.png` (1254 × 1254), o CRT do H2                                              | gabinete grafite com aro laranja, glifo no canto superior esquerdo, 4 botões com LED no canto inferior direito        |
-| Controle           | `design/source/hero/mc-01-controller.png` (1254 × 1254)                                                     | o mesmo da Hero atual (já confere)                                                                                    |
+| Objeto             | Referência (usar)                                                                                              | O que vale                                                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| MC-01 com o MC-001 | `design/source/mc-01/console-reference.png` (1254 × 1074); camadas `console-front.png` e `console-back.png`    | carcaça, placa "MC-01 —— MODO CAMPANHA" com o glifo, POWER/RESET com LEDs, portas 1 e 2, acentos laranja nas laterais |
+| MC-CART MC-001     | `design/source/mc-cart/collection/mc-001-system-horizon.png` (1483 × 1061), carcaça oficial da coleção (D-088) | alça laranja no topo, pegas laranja nas duas laterais, janela da etiqueta, triângulo na base                          |
+| Etiqueta e tela    | `public/assets/cartridges/mc-001/system-horizon.webp`                                                          | pôr do sol, montanhas, lago, trilha e cerca, em pixel art                                                             |
+| CRT                | `design/source/mc-01/crt-front.png` (1254 × 1254), o CRT do H2                                                 | gabinete grafite com aro laranja, glifo no canto superior esquerdo, 4 botões com LED no canto inferior direito        |
+| Controle           | `design/source/hero/mc-01-controller.png` (1254 × 1254)                                                        | o mesmo da Hero atual (já confere)                                                                                    |
 
 **Não usar como referência:**
 
 - `design/source/hero/mc-01-console.png` e `mc-01-crt.png`: versões anteriores (D-066).
 - Os renders `front` e `threeQuarter` do MC-001: histórico (D-078).
+- `design/source/mc-01/mc-001-console-scale.png`: carcaça anterior do MC-001, substituída pela da coleção (D-088).
 - A própria fotografia atual para o desenho dos objetos. Ela serve só para a composição e a luz.
 
 #### B. Formato e resolução
@@ -275,9 +276,9 @@ Se o vidro ficar na caixa atual, dentro da tolerância de G, **nada é remedido*
 | Valor                                               | Onde                     | Fórmula                                                                                                         |
 | --------------------------------------------------- | ------------------------ | --------------------------------------------------------------------------------------------------------------- |
 | `HERO_CRT_GLASS` (4 cantos) e o comentário da caixa | `hero-scene.assets.ts`   | cantos do vidro em frações da caixa (x0–x1, y0–y1)                                                              |
-| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (hoje 16,05% / 26,99%, vidro y 151–405)                                                  |
-| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (hoje 68,9% / 19,44%, caixa x 1152–1477)                                                 |
-| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − m0) / (m1 − m0) · (x1 − x0) / (m1 − m0), recorte mobile de m0 a m1 (hoje 628–1569: 55,69% / 34,54%)       |
+| `top` / `height` da `.crt`                          | `hero-scene.scss`        | y0 / H · (y1 − y0) / H (valores atuais na D-089)                                                                |
+| `--sx` / `--sw` (≥ 768)                             | `hero-scene.scss`        | x0 / W · (x1 − x0) / W (valores atuais na D-089)                                                                |
+| `--sx` / `--sw` (mobile)                            | `hero-scene.scss`        | (x0 − m0) / (m1 − m0) · (x1 − x0) / (m1 − m0), recorte mobile de m0 a m1 (628–1569; valores atuais na D-089)    |
 | Furo coberto                                        | medição do alfa (< 128)  | nenhum pixel do furo fora da caixa nas laterais; em cima e embaixo, sobra de ≤ ~3,5 px aceitável (vidro escuro) |
 | Área segura do teaser                               | `docs/22` §4.0           | proporção do vidro (1,24 a 1,333): em 1,24 : 1 cortam-se ~6 px de cada lado; em 4 : 3, nada                     |
 | Recorte mobile                                      | `HERO_BACKGROUND.mobile` | x do quadrado que contém MC-01, vidro e controle                                                                |
@@ -288,7 +289,7 @@ A engine, o roteiro, os timings e a câmera do teaser não mudam em nenhum caso.
 
 Gerados a partir do mestre:
 
-| Derivado                              | Hoje                  | Na substituição                                        |
+| Derivado                              | Na D-079              | Na substituição                                        |
 | ------------------------------------- | --------------------- | ------------------------------------------------------ |
 | `background-{640,960,1280,1672}.webp` | 32 / 58 / 87 / 128 KB | regerados                                              |
 | `background-{2560,3344}.webp`         | não existem           | novos 2×: ~260 / ~380 KB, orçamento a validar pelo LCP |
@@ -296,7 +297,7 @@ Gerados a partir do mestre:
 
 - **Por que os 2×:** hoje, em telas 2×, a imagem é ampliada: 1,76× em 1440 @ 2×, 2,16× em 1920 @ 2× e 2,9× em 2560 @ 2×. O 3344 resolve até ~1672 px de largura de cena em 2×. Acima disso continua ampliado, mas bem menos.
 - **Código:** atualizar `HERO_BACKGROUND` e os `sizes`.
-- **Mestre:** substitui `design/source/hero/hero-background.png`. A versão atual vai para o histórico com o sufixo `-v1`.
+- **Mestre:** substitui `design/source/hero/hero-background.png`. A versão atual vai para o histórico com o próximo sufixo (`-v1`, `-v2`...).
 
 #### M. Aceite (validação da substituição)
 
@@ -317,7 +318,7 @@ Gerados a partir do mestre:
 > **Official objects.** Reproduce the reference objects exactly: shapes, proportions, colors and printed labels.
 >
 > - Console: console-reference.png.
-> - Cartridge shell: mc-001-console-scale.png.
+> - Cartridge shell: mc-001-system-horizon.png.
 > - CRT: crt-front.png.
 > - Controller: mc-01-controller.png.
 >
@@ -341,6 +342,10 @@ Gerados a partir do mestre:
 ### 8.3 Substituição (D-086, concluída)
 
 A arte final (v2, gerada externamente pelo Eduardo) substituiu a imagem provisória. Medidas novas do vidro, contraste real, LCP e derivados estão no D-086. O mestre anterior ficou em `design/source/hero/hero-background-v1.png`. Derivados: `node design/source/hero/build-background.mjs`.
+
+### 8.4 Harmonização com o MC-001 da coleção (D-089, concluída)
+
+Nova arte, gerada externamente pelo Eduardo e aprovada como está. Vidro remedido (furo x 1157–1475,5 · y 149,5–405, 1,247 : 1), novos `HERO_CRT_GLASS`, `top` / `height` e `--sx` / `--sw`, derivados regerados. O mestre da D-086 ficou em `design/source/hero/hero-background-v2.png`. Diferenças em relação ao contrato aceitas pelo Eduardo: ver D-089. **Pendente de decisão:** o título "MODO CAMPANHA" fica abaixo do critério M4 (4,5 : 1) em 1200–1219 px e em 2560 px (mínimo 3,69 : 1; acima de 3 : 1, o mínimo WCAG AA para texto grande).
 
 ## 9. Tubo transparente: telas atrás da imagem (D-080)
 

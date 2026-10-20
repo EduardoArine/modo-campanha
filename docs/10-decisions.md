@@ -1190,3 +1190,33 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Arquivos:** `public/og-image-{pt-BR,en}.png` regerados (cerca de 244 / 242 KB, antes ~290 KB).
   - **Prévias:** o `render-og.mjs` aceita `OG_OUT` para gravar fora do `public/`.
   - **Pendência restante antes da publicação:** a Hero.
+
+## D-089 — Hero: nova arte para a harmonização com o MC-001 da coleção
+
+- **Data:** 2026-10-19
+- **Contexto:** pendência anterior à publicação (D-088): a Hero (D-086) ainda mostrava a carcaça anterior do MC-001. O Eduardo gerou a nova arte externamente, a partir de um briefing com a carcaça da coleção (`design/source/mc-cart/collection/mc-001-system-horizon.png`), e a aprovou como está ("não quero mais mexer com ela").
+- **Revisão antes da integração:** as diferenças em relação ao contrato (`docs/21` §8.2) foram apresentadas ao Eduardo, que as aceitou:
+  - **Cartucho:** etiqueta próxima à da coleção ("— SYSTEM —" com filetes), mas as pegas laterais continuam frisadas (na coleção são lisas). O "MC-001" virou pseudotexto, e o "MODO CAMPANHA" do rótulo saiu irregular (ilegíveis no tamanho real; §8.2 H e I).
+  - **Estante atrás do texto:** velas e fitas de LED acesas (§8.2 F; motivo da reprovação da v1 na D-086).
+  - **Console e CRT:** a placa "MC-01 — MODO CAMPANHA" e os rótulos dos botões do CRT ficaram menos legíveis; saiu o glifo do canto do CRT.
+  - **Mesa:** uma caixa com rótulo laranja à esquerda do console; o cabo do controle não aparece.
+- **Aceite (§M):**
+  - **Formato:** 3344 × 1882 RGBA, tubo transparente, nenhum pixel não opaco fora do tubo. Alfa normalizado como na D-086: 5.768 pixels de 240–254 → 255.
+  - **Vidro remedido (§K):** furo x 1157–1475,5 · y 149,5–405 (1×), proporção 1,247 : 1 (dentro de 1,24–4 : 3; cortam-se ~6 px de cada lado do teaser, dentro da área segura). Caixa x 1152,5–1480 · y 149,5–405 (folga lateral 4,5 px).
+    - `HERO_CRT_GLASS` = [0,004; 0,042] · [1; 0] · [0,998; 1] · [0; 0,971].
+    - `.crt`: top 15,89%, height 27,15%.
+    - `--sx` / `--sw`: 68,93% / 19,59% (≥ 768) e 55,74% / 34,8% (mobile; recorte x 628–1569 mantido).
+    - Na arte anterior, a mesma fórmula reproduz a caixa, `top` / `height` e `--sx` / `--sw` da D-086; no quadrilátero, a diferença é ≤ 0,001 (~0,3 px).
+  - **Teaser atrás do tubo** (palco magenta, 1440 / 1200 / 1024 / 820 / 390 / 360): nenhuma fresta nas laterais. Em cima e embaixo, onde o tubo é abaulado, sobram até 3 px CSS de vidro escuro (antes, até 4 px).
+  - **Recortes (§J):** console, cartucho, CRT e controle inteiros em 1024, 820 e 390.
+  - **Contraste real do texto** (272 linhas, 1200–2560 px, pt e en, pior pixel sob cada linha; mesmo script nas duas artes):
+    - de 2 para **10** linhas abaixo de 4,5 : 1;
+    - o resumo em inglês a 1200 px passou a atender (antes 4,25 : 1);
+    - **regressão:** o título "MODO CAMPANHA" cai por causa das velas e do LED da estante. Pela caixa da linha (método conservador), fica entre 3,69 e 4,40 : 1 de 1200 a 1239 px e em 2560 px. Sob os glifos, só 1200–~1219 px (mínimo 3,69 : 1) e 2560 px (4,49 : 1) ficam abaixo de 4,5 : 1.
+    - É texto grande (Pixelify Sans 700, 96 px): continua acima de 3 : 1 (WCAG AA), mas abaixo do critério M4 do contrato (4,5 : 1). **Pendente de decisão do Eduardo:** aceitar a exceção ou ajustar a máscara da Hero. Nada foi ajustado sem aprovação.
+  - **Peso e LCP** (rede ~Slow 4G, CPU 4×, mediana de 3, build de produção): o LCP continua sendo o texto da Hero (1440: 3320 → 3324 ms; 390: 3336 → 3364 ms, dentro da variação). A imagem 1× passa de 119 para 125 KB (desktop) e de 39 para 41 KB (mobile).
+- **Derivados (§L):** `background-{640,960,1280,1672,2560,3344}.webp` (32 / 61 / 84 / 125 / 204 / 285 KB) e `background-mobile-{480,800,1200}.webp` (41 / 76 / 129 KB), por `node design/source/hero/build-background.mjs`.
+- **Mestre:** `design/source/hero/hero-background.png` (regravado sem perdas, pixels idênticos à arte recebida após a normalização do alfa); a arte da D-086 foi para `hero-background-v2.png`.
+- **Contrato (`docs/21` §8.2):** a referência do cartucho passa a ser a carcaça da coleção.
+- **Revisão independente:** aprovada com ressalvas, sem bloqueantes; medidas, alfa, recortes, peso e LCP conferidos; ressalvas de documentação corrigidas.
+- **Status:** **Hero com a nova arte, aprovada pelo Eduardo.** Harmonização anterior à publicação concluída (a `og:image` já estava harmonizada, D-088). Pendente: a decisão sobre o contraste do título (acima). Sem merge e sem deploy.

@@ -405,7 +405,7 @@ Comparação lado a lado: capturas locais, fora do repositório.
 
 ### 17.6 Pendências
 
-1. **Harmonização do MC-01 da Hero** (foto cinematográfica) com o MC-01 canônico do H2. A Hero não foi alterada.
+1. ~~**Harmonização do MC-01 da Hero** (foto cinematográfica) com o MC-01 canônico do H2.~~ Resolvida: arte final na D-086 e carcaça da coleção na D-089.
 2. ~~Confirmar o tipo do MC-001~~ **aprovado** (D-078): EXPERIÊNCIA NARRATIVA / NARRATIVE EXPERIENCE.
 3. **Aprendizados do MC-001:** revisão editorial futura (D-078), sem bloquear a aprovação. Os rótulos MINHA CONTRIBUIÇÃO, STACK, APRENDIZADOS e EVIDÊNCIAS estão aprovados.
 4. **Telas de alta densidade (2x/3x)** baixam os derivados maiores (424 KB). Um derivado intermediário (~1080 px) economizaria pouco, com risco de nitidez.
@@ -505,7 +505,7 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 
 ### 18.5 Pendências
 
-- **Harmonização do MC-001:** a Hero (D-086) e a `og:image` (D-085) ainda mostram a carcaça anterior (alça grafite).
+- ~~**Harmonização do MC-001:** a Hero (D-086) e a `og:image` (D-085) ainda mostram a carcaça anterior (alça grafite).~~ Resolvida: `og:image` na D-088, Hero na D-089.
 - **Textos dos cases:** condensados do Campaign Log, aguardando a revisão do Eduardo.
 - **Textos alternativos:** os alts das ilustrações dos rótulos também aguardam a revisão do Eduardo.
 - **Comunidade ON:** sem link público.
@@ -550,6 +550,6 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 - A seção varia só os 25 px da linha de controles do CRT, que sai durante a ejeção, como no H2.
 
 **Pendências registradas:**
-- **Antes da publicação:** harmonizar a Hero com a nova carcaça do MC-001. A `og:image` já foi harmonizada (D-088, atualização).
+- ~~**Antes da publicação:** harmonizar a Hero com a nova carcaça do MC-001.~~ Resolvida: Hero na D-089; `og:image` na D-088 (atualização).
 - **Separada:** revisão das traduções antigas do Campaign Log.
 - **Paco:** sem código MC-CART por enquanto.
