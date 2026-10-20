@@ -475,7 +475,8 @@ A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C 
 ### 18.4 Pendências
 
 - **Artes recebidas (D-091):** os mapas dos capítulos 00 e 01 e as imagens editoriais do Cap. 00, com mestres em `design/source/diary/` e derivados por `build-diary.mjs`.
-- **Artes que faltam:** o mapa do Cap. 02 e as imagens editoriais dos marcos dos capítulos 01 e 02 (seguem com placeholder).
+- **Mapa do Cap. 02:** recebido e integrado.
+- **Artes que faltam:** as imagens editoriais dos marcos dos capítulos 01 e 02 (seguem com placeholder).
 - **Textos alternativos:** revisão pelo Eduardo.
 - **Texto de abertura:** revisão da tradução en.
 - **Zoom e pan:** melhoria opcional.
