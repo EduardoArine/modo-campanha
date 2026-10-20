@@ -1227,14 +1227,14 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Autorização:** o Eduardo autorizou seguir até a publicação, inclusive a ativação do Pages pela API.
 - **Passos:**
   - verificação local idêntica ao workflow (build do Pages, guardas de rota dev, MOCK e preload, pós-build): tudo passou;
-  -  avançada por fast-forward até  (), sem conflitos;
-  - a 1ª execução do  falhou no : o Pages não estava ativado no repositório (404). Ativado com origem **GitHub Actions** (HTTPS obrigatório);
+  - `main` avançada por fast-forward até `feat/hero-refinement` (`c8df706`), sem conflitos;
+  - a 1ª execução do `deploy-pages.yml` falhou no `configure-pages`: o Pages não estava ativado no repositório (404). Ativado com origem **GitHub Actions** (HTTPS obrigatório);
   - a 2ª execução publicou com sucesso.
 - **Endereço:** https://eduardoarine.github.io/modo-campanha/ (pt-BR) e https://eduardoarine.github.io/modo-campanha/en (en).
 - **Verificação no ar:**
-  -  e  respondem 200 (sem redirecionamento para ); rota desconhecida responde 404 com o fallback da SPA;
-  -  com ,  en_US, canonical, hreflang e  absolutos;  com as duas versões;
-  - imagens da Hero, fonte Pixelify e  servidas;
-  - no Chrome (1440 pt/en e 390 pt): as seis seções de produção, menu com quatro destinos, teaser rodando, âncora Projetos abaixo do cabeçalho, sem erros de console ou de rede.
-- **Pendências pós-publicação:** Safari e Firefox reais, links do LinkedIn e da ScienceDirect, LinkedIn Post Inspector, envio do  no Search Console.
+  - `/` e `/en` respondem 200 (sem redirecionamento para `/en/`); rota desconhecida responde 404 com o fallback da SPA;
+  - `/en` com `lang="en"`, `og:locale` en_US, canonical, hreflang e `og:image` absolutos; `sitemap.xml` com as duas versões;
+  - imagens da Hero, fonte Pixelify e `og:image` servidas;
+  - no Chrome (1440 pt/en e 390 pt): as seis seções de produção, menu com quatro destinos, teaser rodando, âncora "Projetos" abaixo do cabeçalho, sem erros de console ou de rede.
+- **Pendências pós-publicação:** Safari e Firefox reais, links do LinkedIn e da ScienceDirect, LinkedIn Post Inspector, envio do `sitemap.xml` no Search Console.
 - **Status:** **publicado.** O deploy continua manual: novos deploys só com autorização do Eduardo.
