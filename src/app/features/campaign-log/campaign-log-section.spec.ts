@@ -89,11 +89,13 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     expect(story.getAttribute('alt')).toMatch(/^Ilustração em pixel art: uma sala ao pôr do sol/);
   });
 
-  it('keeps a ratio placeholder where the art has not arrived yet (CHAPTER 02)', async () => {
+  it('keeps a ratio placeholder where the editorial art has not arrived yet (CHAPTER 02)', async () => {
     const el = await renderAt('/');
     click(el.querySelectorAll('app-diary-chapters .card')[2]);
-    expect(el.querySelector('app-diary-map .art--placeholder')).not.toBeNull();
-    expect(el.querySelector('app-diary-map img')).toBeNull();
+    expect(el.querySelector('app-diary-map img.art')?.getAttribute('src')).toBe(
+      'assets/diary/maps/ch02-codigo-produto-1672.webp',
+    );
+    expect(el.querySelector('app-diary-milestone img.image')).toBeNull();
     expect(el.querySelector('app-diary-milestone .image--placeholder')).not.toBeNull();
   });
 

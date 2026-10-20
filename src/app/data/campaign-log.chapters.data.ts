@@ -388,6 +388,7 @@ export const CHAPTER_02: CampaignLogChapter = {
   id: 'chapter-02',
   number: '02',
   name: { 'pt-BR': 'DO CÓDIGO AO PRODUTO', en: 'FROM CODE TO PRODUCT' },
+  map: diaryArt('maps', 'ch02-codigo-produto', MAP_WIDTHS, 941),
   period: { start: 2018, end: 'present' },
   signature: {
     'pt-BR':
@@ -397,7 +398,7 @@ export const CHAPTER_02: CampaignLogChapter = {
   entries: [
     {
       id: 'scoutevo',
-      map: { x: 16, y: 66, label: 'below' },
+      map: { x: 13, y: 58, label: 'below' },
       code: { 'pt-BR': 'SCOUTEVO', en: 'SCOUTEVO' },
       when: { year: 2018 },
       title: { 'pt-BR': 'Quando uma ideia entrou em campo', en: 'When an Idea Took the Field' },
@@ -447,7 +448,7 @@ export const CHAPTER_02: CampaignLogChapter = {
     {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
       id: 'eos',
-      map: { x: 39, y: 66, label: 'above' },
+      map: { x: 36, y: 62, label: 'above' },
       code: { 'pt-BR': 'EOS', en: 'EOS' },
       when: { year: 2019 },
       title: {
@@ -547,7 +548,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // 2020/2021, segundo o próprio relato (estimativa, não data documental), e evolução posterior,
       // sem ano final. A InfraFM cita o desenvolvimento em 2022.
       id: 'axia',
-      map: { x: 62, y: 72, label: 'below' },
+      map: { x: 62, y: 55, label: 'below' },
       code: { 'pt-BR': 'AXIA', en: 'AXIA' },
       when: { approx: [2020, 2021] },
       title: {
@@ -602,7 +603,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       // Descrição pública escrita por ele; nada interno da Comunidade ON. O resumo do card é próprio
       // (D-073), não a primeira frase da história. "Digital Games" no en (D-074).
       id: 'comunidade-on',
-      map: { x: 84, y: 52, label: 'above' },
+      map: { x: 86, y: 60, label: 'above' },
       code: { 'pt-BR': 'COMUNIDADE ON', en: 'COMUNIDADE ON' },
       when: { since: 2025 },
       title: {
