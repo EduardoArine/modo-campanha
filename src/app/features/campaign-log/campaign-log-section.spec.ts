@@ -89,14 +89,21 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     expect(story.getAttribute('alt')).toMatch(/^Ilustração em pixel art: uma sala ao pôr do sol/);
   });
 
-  it('keeps a ratio placeholder where the editorial art has not arrived yet (CHAPTER 02)', async () => {
+  it('gives every milestone its editorial image and every chapter its map (no placeholder left)', async () => {
     const el = await renderAt('/');
-    click(el.querySelectorAll('app-diary-chapters .card')[2]);
-    expect(el.querySelector('app-diary-map img.art')?.getAttribute('src')).toBe(
-      'assets/diary/maps/ch02-codigo-produto-1672.webp',
-    );
-    expect(el.querySelector('app-diary-milestone img.image')).toBeNull();
-    expect(el.querySelector('app-diary-milestone .image--placeholder')).not.toBeNull();
+    CAMPAIGN_LOG_CHAPTERS.forEach((chapter, c) => {
+      click(el.querySelectorAll('app-diary-chapters .card')[c]);
+      expect(el.querySelector('app-diary-map img.art')).not.toBeNull();
+      chapter.entries.forEach((_, i) => {
+        click(nodes(el)[i]);
+        const image = el.querySelector('app-diary-milestone img.image')!;
+        expect(image.getAttribute('src')).toMatch(
+          /^assets\/diary\/stories\/ch0[0-2]-0[1-5]-[a-z-]+-1536\.webp$/,
+        );
+        expect(image.getAttribute('alt')).toMatch(/^Ilustração em pixel art: /);
+      });
+    });
+    expect(el.querySelector('.art--placeholder, .image--placeholder')).toBeNull();
   });
 
   it('switches milestone on the map: panel, highlight, route and mobile list change together', async () => {

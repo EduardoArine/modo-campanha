@@ -246,6 +246,14 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     {
       id: 'fatec-passion-became-choice',
       map: { x: 13, y: 70, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch01-01-paixao-escolha', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: a mesa de um laboratório de faculdade ao pôr do sol, com um notebook aberto num editor de jogo 2D, um caderno de esboços e um controle; pela janela, o campus.',
+          en: 'Pixel-art illustration: a desk in a college lab at sunset, with a laptop open in a 2D game editor, a sketchbook, and a controller; the campus seen through the window.',
+        },
+      },
       when: { year: 2013 },
       title: { 'pt-BR': 'Quando a paixão virou escolha', en: 'When Passion Became a Choice' },
       summary: {
@@ -266,6 +274,14 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     {
       id: 'fatec-aedes-revenge',
       map: { x: 31, y: 64, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch01-02-aedes-revenge', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma mesa à noite, com um monitor mostrando um jogo 2D em desenvolvimento estrelado por um mosquito, um caderno com esboços do personagem e post-its.',
+          en: 'Pixel-art illustration: a desk at night, with a monitor showing a 2D game in development starring a mosquito, a sketchbook with character drawings, and sticky notes.',
+        },
+      },
       when: { era: { 'pt-BR': 'Durante a graduação', en: 'During college' } },
       title: {
         'pt-BR': 'Aedes Revenge — Meu primeiro grande projeto',
@@ -292,6 +308,14 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     {
       id: 'fatec-first-best-game',
       map: { x: 49, y: 74, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch01-03-melhor-jogo', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: um salão de mostra de jogos ao entardecer, com um notebook rodando o jogo do mosquito e um troféu ao lado; ao fundo, pessoas visitam outros estandes.',
+          en: 'Pixel-art illustration: a game showcase hall at dusk, with a laptop running the mosquito game and a trophy beside it; in the background, people visit other booths.',
+        },
+      },
       when: { year: 2016 },
       title: { 'pt-BR': 'Meu primeiro Melhor Jogo', en: 'My First Best Game Award' },
       summary: {
@@ -313,6 +337,14 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     {
       id: 'fatec-real-players',
       map: { x: 67, y: 52, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch01-04-jogadores-reais', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: mãos segurando dois celulares com o jogo do mosquito sobre uma mesa, ao lado de um caderno com gráficos e post-its com estrela e polegar para cima.',
+          en: 'Pixel-art illustration: hands holding two phones running the mosquito game over a table, next to a notebook with charts and sticky notes with a star and a thumbs-up.',
+        },
+      },
       when: { year: 2017 },
       title: {
         'pt-BR': 'Um jogo de verdade, com jogadores de verdade',
@@ -338,6 +370,14 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     {
       id: 'fatec-two-awards-capstone',
       map: { x: 86, y: 68, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch01-05-premios-tcc', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma mesa ao pôr do sol com dois troféus, um trabalho encadernado, um capelo de formatura, um notebook com o jogo do mosquito e um console antigo de madeira com joystick.',
+          en: 'Pixel-art illustration: a desk at sunset with two trophies, a bound thesis, a graduation cap, a laptop running the mosquito game, and an old woodgrain console with a joystick.',
+        },
+      },
       when: { year: 2017 },
       title: {
         'pt-BR': 'Dois prêmios e um TCC nota 10',
@@ -399,6 +439,14 @@ export const CHAPTER_02: CampaignLogChapter = {
     {
       id: 'scoutevo',
       map: { x: 13, y: 58, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch02-01-scoutevo', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: um campo de futebol ao entardecer, com um jovem jogador conduzindo a bola ao longe e, em primeiro plano, um tablet num banco mostrando dados de jogadores.',
+          en: 'Pixel-art illustration: a football field at dusk, with a young player dribbling in the distance and, in the foreground, a tablet on a bench showing player data.',
+        },
+      },
       code: { 'pt-BR': 'SCOUTEVO', en: 'SCOUTEVO' },
       when: { year: 2018 },
       title: { 'pt-BR': 'Quando uma ideia entrou em campo', en: 'When an Idea Took the Field' },
@@ -449,6 +497,14 @@ export const CHAPTER_02: CampaignLogChapter = {
       // Textos pt/en fornecidos pelo Eduardo (2026-10-17), sem alteração; ênfases viram texto simples.
       id: 'eos',
       map: { x: 36, y: 62, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch02-02-eos', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma mesa diante de uma janela com vista para a cidade e dois hospitais, com um monitor mostrando uma rota num mapa e uma maleta de transporte médico; lá fora, um helicóptero e uma van.',
+          en: 'Pixel-art illustration: a desk by a window overlooking the city and two hospitals, with a monitor showing a route on a map and a medical transport case; outside, a helicopter and a van.',
+        },
+      },
       code: { 'pt-BR': 'EOS', en: 'EOS' },
       when: { year: 2019 },
       title: {
@@ -549,6 +605,14 @@ export const CHAPTER_02: CampaignLogChapter = {
       // sem ano final. A InfraFM cita o desenvolvimento em 2022.
       id: 'axia',
       map: { x: 62, y: 55, label: 'below' },
+      image: {
+        ...diaryArt('stories', 'ch02-03-axia', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: o saguão de um prédio de escritórios ao pôr do sol, com sensores conectados nas paredes, um painel de indicadores e um carrinho de limpeza.',
+          en: 'Pixel-art illustration: an office building lobby at sunset, with connected sensors on the walls, a dashboard screen, and a cleaning cart.',
+        },
+      },
       code: { 'pt-BR': 'AXIA', en: 'AXIA' },
       when: { approx: [2020, 2021] },
       title: {
@@ -604,6 +668,14 @@ export const CHAPTER_02: CampaignLogChapter = {
       // (D-073), não a primeira frase da história. "Digital Games" no en (D-074).
       id: 'comunidade-on',
       map: { x: 86, y: 60, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch02-04-comunidade-on', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: um espaço de trabalho colaborativo com terraços, plantas e uma grande árvore iluminada, com pessoas trabalhando em notebooks ao pôr do sol.',
+          en: 'Pixel-art illustration: a collaborative workspace with terraces, plants, and a large lit tree, with people working on laptops at sunset.',
+        },
+      },
       code: { 'pt-BR': 'COMUNIDADE ON', en: 'COMUNIDADE ON' },
       when: { since: 2025 },
       title: {
