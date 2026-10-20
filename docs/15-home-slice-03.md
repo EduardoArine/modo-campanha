@@ -470,11 +470,13 @@ A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C 
 - **Cenário do capítulo:** preencher `map` no capítulo (16:9, WebP, `srcset`). Arte sem rota, sem nós e sem texto.
 - **Imagem editorial:** preencher `image` no marco (3:2, com `alt` pt/en).
 - **Posições dos marcos:** depois da arte, revisar `map {x, y, label}` de cada marco sobre ela.
-- **Nomes reservados:** os da D-091.
+- **Nomes reservados:** os da D-091, com o sufixo de largura (ex.: `ch00-origem-1672.webp`). Para gerar: salvar o PNG em `design/source/diary/maps/` ou `stories/` e rodar `node design/source/diary/build-diary.mjs`.
 
 ### 18.4 Pendências
 
-- **Artes:** cenários e imagens editoriais.
+- **Artes recebidas (D-091):** os mapas dos capítulos 00 e 01 e as imagens editoriais do Cap. 00, com mestres em `design/source/diary/` e derivados por `build-diary.mjs`.
+- **Artes que faltam:** o mapa do Cap. 02 e as imagens editoriais dos marcos dos capítulos 01 e 02 (seguem com placeholder).
+- **Textos alternativos:** revisão pelo Eduardo.
 - **Texto de abertura:** revisão da tradução en.
 - **Zoom e pan:** melhoria opcional.
 - **Traduções antigas do Campaign Log:** revisão (pendência separada, D-088).

@@ -1277,4 +1277,15 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - a história fechada pode ser achada pela busca do navegador (`hidden="until-found"`);
   - nome acessível dos capítulos começando pelo texto visível;
   - cards de mesma altura; anel do nó selecionado sem sombra.
+- **Artes (2026-10-20), fornecidas pelo Eduardo:**
+  - **Recebido:** cenários dos capítulos 00 (natureza, vila e rio até a cidade ao pôr do sol) e 01 (cidade iluminada, ponte e rio), em 1672 × 941; imagens editoriais dos cinco marcos do Cap. 00, em 1536 × 1024.
+  - **Correspondência pelo conteúdo:** 01 sala com a TV; 02 locadora; 03 cartão com a joaninha; 04 escrivaninha com o caderno; 05 estante da coleção.
+  - **Mestres PNG** preservados em `design/source/diary/{maps,stories}/`.
+  - **Derivados WebP** por `node design/source/diary/build-diary.mjs` (só redimensiona, qualidade 0,82): mapas 640 / 960 / 1280 / 1672 (84–488 KB), histórias 480 / 720 / 1080 / 1536 (25–250 KB), carregados sob demanda.
+  - **Textos alternativos** pt/en objetivos, pendentes de revisão do Eduardo.
+  - **Posições dos marcos:** conferidas sobre as artes (marcos em terra, sobre a rota visual).
+  - **Véu de leitura do cabeçalho:** reforçado.
+  - **Rota:** mais grossa, com contorno escuro.
+  - **Prévias dos outros capítulos:** a arte some também em direção ao rodapé do card, para o botão ficar sobre superfície lisa.
+  - **Sem arte ainda:** o Cap. 02 (mapa) e as imagens dos marcos dos capítulos 01 e 02 seguem com placeholder.
 - **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
