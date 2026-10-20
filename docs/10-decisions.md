@@ -1213,10 +1213,10 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - de 2 para **10** linhas abaixo de 4,5 : 1;
     - o resumo em inglês a 1200 px passou a atender (antes 4,25 : 1);
     - **regressão:** o título "MODO CAMPANHA" cai por causa das velas e do LED da estante. Pela caixa da linha (método conservador), fica entre 3,69 e 4,40 : 1 de 1200 a 1239 px e em 2560 px. Sob os glifos, só 1200–~1219 px (mínimo 3,69 : 1) e 2560 px (4,49 : 1) ficam abaixo de 4,5 : 1.
-    - É texto grande (Pixelify Sans 700, 96 px): continua acima de 3 : 1 (WCAG AA), mas abaixo do critério M4 do contrato (4,5 : 1). **Pendente de decisão do Eduardo:** aceitar a exceção ou ajustar a máscara da Hero. Nada foi ajustado sem aprovação.
+    - É texto grande (Pixelify Sans 700, 96 px): continua acima de 3 : 1 (WCAG AA), mas abaixo do critério M4 do contrato (4,5 : 1). **Exceção aceita pelo Eduardo** (2026-10-19): a Hero fica como está, sem ajuste de máscara.
   - **Peso e LCP** (rede ~Slow 4G, CPU 4×, mediana de 3, build de produção): o LCP continua sendo o texto da Hero (1440: 3320 → 3324 ms; 390: 3336 → 3364 ms, dentro da variação). A imagem 1× passa de 119 para 125 KB (desktop) e de 39 para 41 KB (mobile).
 - **Derivados (§L):** `background-{640,960,1280,1672,2560,3344}.webp` (32 / 61 / 84 / 125 / 204 / 285 KB) e `background-mobile-{480,800,1200}.webp` (41 / 76 / 129 KB), por `node design/source/hero/build-background.mjs`.
 - **Mestre:** `design/source/hero/hero-background.png` (regravado sem perdas, pixels idênticos à arte recebida após a normalização do alfa); a arte da D-086 foi para `hero-background-v2.png`.
 - **Contrato (`docs/21` §8.2):** a referência do cartucho passa a ser a carcaça da coleção.
 - **Revisão independente:** aprovada com ressalvas, sem bloqueantes; medidas, alfa, recortes, peso e LCP conferidos; ressalvas de documentação corrigidas.
-- **Status:** **Hero com a nova arte, aprovada pelo Eduardo.** Harmonização anterior à publicação concluída (a `og:image` já estava harmonizada, D-088). Pendente: a decisão sobre o contraste do título (acima). Sem merge e sem deploy.
+- **Status:** **Hero com a nova arte, aprovada pelo Eduardo.** Harmonização anterior à publicação concluída (a `og:image` já estava harmonizada, D-088). **Hero APPROVED / FROZEN:** arte, máscara, layout e encaixe do teaser não mudam sem regressão objetiva. Sem merge e sem deploy.

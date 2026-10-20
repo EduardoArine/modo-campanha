@@ -345,7 +345,7 @@ A arte final (v2, gerada externamente pelo Eduardo) substituiu a imagem provisó
 
 ### 8.4 Harmonização com o MC-001 da coleção (D-089, concluída)
 
-Nova arte, gerada externamente pelo Eduardo e aprovada como está. Vidro remedido (furo x 1157–1475,5 · y 149,5–405, 1,247 : 1), novos `HERO_CRT_GLASS`, `top` / `height` e `--sx` / `--sw`, derivados regerados. O mestre da D-086 ficou em `design/source/hero/hero-background-v2.png`. Diferenças em relação ao contrato aceitas pelo Eduardo: ver D-089. **Pendente de decisão:** o título "MODO CAMPANHA" fica abaixo do critério M4 (4,5 : 1) em 1200–1219 px e em 2560 px (mínimo 3,69 : 1; acima de 3 : 1, o mínimo WCAG AA para texto grande).
+Nova arte, gerada externamente pelo Eduardo e aprovada como está. Vidro remedido (furo x 1157–1475,5 · y 149,5–405, 1,247 : 1), novos `HERO_CRT_GLASS`, `top` / `height` e `--sx` / `--sw`, derivados regerados. O mestre da D-086 ficou em `design/source/hero/hero-background-v2.png`. Diferenças em relação ao contrato aceitas pelo Eduardo: ver D-089. **Exceção aceita pelo Eduardo:** o título "MODO CAMPANHA" fica abaixo do critério M4 (4,5 : 1) em 1200–1219 px e em 2560 px (mínimo 3,69 : 1; acima de 3 : 1, o mínimo WCAG AA para texto grande). **Hero APPROVED / FROZEN** (D-089).
 
 ## 9. Tubo transparente: telas atrás da imagem (D-080)
 
