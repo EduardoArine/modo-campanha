@@ -1288,6 +1288,9 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Rota:** mais grossa, com contorno escuro.
   - **Prévias dos outros capítulos:** a arte some também em direção ao rodapé do card, para o botão ficar sobre superfície lisa.
   - **Mapa do Cap. 02 (recebido depois, 1672 × 941):** campo de futebol, hospital com heliponto e van na ponte, escritórios com sensores e campus com terraços. Marcos sobre esses lugares: ScoutEvo (campo), EOS (van na ponte, junto ao hospital), Axia (escritórios), Comunidade ON (campus).
-  - **Sem arte ainda:** as imagens editoriais dos marcos dos capítulos 01 e 02 seguem com placeholder. Os prompts foram entregues ao Eduardo.
+  - **Imagens editoriais dos capítulos 01 e 02 (recebidas depois, 1536 × 1024):** geradas pelo Eduardo com os prompts desta etapa.
+    - Cap. 01: laboratório da faculdade (01), mesa com os esboços do mosquito (02), mostra com troféu (03), celulares com o jogo (04), dois troféus + TCC + capelo (05).
+    - Cap. 02: campo com tablet (ScoutEvo), mesa com rota e maleta médica (EOS), saguão com sensores (Axia), espaço colaborativo com a árvore (Comunidade ON).
+  - **Resultado:** todos os 3 capítulos e os 14 marcos têm arte; nenhum placeholder resta (teste dedicado).
   - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
 - **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
