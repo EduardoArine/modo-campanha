@@ -14,10 +14,10 @@
   // Imagem mostrada: recorte quadrado no mobile (HERO_BACKGROUND.mobile, x 628–1569 da fonte).
   --ar: 1;
   --pos: 50%;
-  // Caixa da tela na imagem mostrada (fonte 1672 × 941: x 1159,5–1507,5, y 150,5–408,5; folga só lateral);
+  // Caixa da tela na imagem mostrada (fonte 1672 × 941: x 1152,5–1480, y 149,5–405; folga só lateral);
   // os cantos dentro dela (perspectiva da TV) estão em HERO_CRT_GLASS.
-  --sx: 56.48%;
-  --sw: 36.98%;
+  --sx: 55.74%;
+  --sw: 34.8%;
   // Máscara (local): opaca entre --x1/--x2 e --y1/--y2, dissolvendo até --x0 e as bordas.
   --x0: 0%;
   --x1: 12%;
@@ -30,8 +30,8 @@
     aspect-ratio: 3 / 2;
     --ar: 1672 / 941;
     --pos: 80%;
-    --sx: 69.35%;
-    --sw: 20.81%;
+    --sx: 68.93%;
+    --sw: 19.59%;
   }
 
   // Desktop compacto: ao lado do texto (colunas 7–12), sangrando só à direita.
@@ -94,9 +94,9 @@ img {
 .crt {
   position: absolute;
   left: var(--sx);
-  top: 15.99%;
+  top: 15.89%;
   width: var(--sw);
-  height: 27.42%;
+  height: 27.15%;
 }
 
 // Pausar/reproduzir (WCAG 2.2.2): pequeno, no canto inferior do visual, sem competir com os CTAs.
