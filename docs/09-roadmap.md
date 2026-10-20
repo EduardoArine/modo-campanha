@@ -194,11 +194,12 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ✅ Teclado (ordem de foco, skip link, foco nunca sob o header)
 - ✅ Offset de âncora/foco em CSS acompanha a altura real do header (D-060)
 
-## FASE 9 — RELEASE ⏸ (deploy público só com o Eduardo)
+## FASE 9 — RELEASE ✅ publicado em 2026-10-20 (D-090; novos deploys só com o Eduardo)
 
 - ✅ **Antes de publicar:** Hero (D-089) e `og:image` (D-088) harmonizadas com a carcaça oficial do MC-001
 - ⬜ Revisão das traduções antigas do Campaign Log (pendência separada, D-088)
-- ⬜ GitHub Pages (ativar e publicar)
+- ✅ GitHub Pages ativado (origem: GitHub Actions) e site publicado em https://eduardoarine.github.io/modo-campanha/ (D-090)
+- ⬜ Pós-publicação: Safari e Firefox reais, links do LinkedIn e da ScienceDirect, LinkedIn Post Inspector, `sitemap.xml` no Search Console
 - ⬜ Domínio opcional no futuro
 - ⬜ Adicionar ao LinkedIn
 - ⬜ Iniciar posts do Modo Campanha (cartuchos como peças de social)
