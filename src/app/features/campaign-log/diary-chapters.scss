@@ -1,0 +1,102 @@
+// Seletor de capítulos do Diário (D-091). Cards horizontais: texto à esquerda, prévia do mapa à
+// direita (o próprio cenário, recortado, com fade para a superfície). Selecionado: contorno âmbar
+// + rótulo de texto + aria-current. Rola na horizontal quando não cabe (snap leve).
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+.strip {
+  display: flex;
+  gap: space(3);
+  margin: 0;
+  // Folga para o contorno de foco não ser cortado pela rolagem.
+  padding: space(1);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+}
+
+.slot {
+  display: flex;
+  flex: 0 0 min(17rem, 78%);
+  scroll-snap-align: start;
+}
+
+.card {
+  position: relative;
+  display: grid;
+  align-content: center;
+  gap: space(1);
+  width: 100%;
+  min-height: 5.5rem;
+  padding: space(3) space(4);
+  overflow: hidden;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+  color: var(--mc-text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color 180ms ease-out;
+
+  &:hover {
+    border-color: var(--mc-border-default);
+  }
+
+  &.is-selected {
+    border-color: var(--mc-accent);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+// Prévia à direita, apagando em direção ao texto (o texto fica sempre sobre a superfície lisa).
+.thumb {
+  position: absolute;
+  inset: 0 0 0 40%;
+  width: 60%;
+  height: 100%;
+  object-fit: cover;
+  mask-image: linear-gradient(to right, transparent, #000 60%);
+  opacity: 0.85;
+}
+
+.thumb--placeholder {
+  background: linear-gradient(135deg, var(--mc-surface), var(--mc-elevated));
+}
+
+.code,
+.name,
+.state {
+  position: relative;
+  max-width: 62%;
+}
+
+.code {
+  @include type(label);
+  color: var(--mc-text-muted);
+}
+
+.name {
+  @include type(body-s);
+  font-weight: 600;
+}
+
+.state {
+  @include type(label);
+  color: var(--mc-text-muted);
+
+  .is-selected & {
+    color: var(--mc-accent);
+  }
+}

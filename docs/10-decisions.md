@@ -1238,3 +1238,61 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - no Chrome (1440 pt/en e 390 pt): as seis seções de produção, menu com quatro destinos, teaser rodando, âncora "Projetos" abaixo do cabeçalho, sem erros de console ou de rede.
 - **Pendências pós-publicação:** Safari e Firefox reais, links do LinkedIn e da ScienceDirect, LinkedIn Post Inspector, envio do `sitemap.xml` no Search Console.
 - **Status:** **publicado.** O deploy continua manual: novos deploys só com autorização do Eduardo.
+
+## D-091 — Diário de Campanha: mapa por capítulos (híbrido A + C)
+
+- **Data:** 2026-10-20
+- **Pedido do Eduardo:** substituir a timeline vertical do Diário de Campanha (Campaign Log, D-048 / D-050 / D-074) por uma experiência explorável por capítulos, a partir de uma prancha visual híbrida A + C aprovada por ele:
+  - **A — World Map Editorial:** o mapa do capítulo ativo, com a rota e os marcos;
+  - **C — capítulos com mini overworld:** os capítulos como unidades navegáveis.
+  - **Revê a D-050:** a timeline vertical congelada deixa de ser a apresentação do Diário. **O conteúdo (D-074) não muda.**
+- **Implementação (branch `feat/campaign-diary`, aguardando aprovação visual e funcional):**
+  - **Estrutura:**
+    - cabeçalho padrão das seções + texto de abertura;
+    - seletor de capítulos (faixa horizontal);
+    - capítulo ativo: mapa 16:9 (~70%) + painel de leitura (~30%) a partir de 1200 px; abaixo disso, mapa na largura toda e painel embaixo;
+    - prévias dos outros capítulos;
+    - no mobile, mini mapa + lista de marcos + painel.
+  - **Estado único** na seção (capítulo e marco escolhidos); mapa, painel, lista e seletor só refletem esse estado.
+  - **Mapa:**
+    - três camadas no mesmo sistema de coordenadas (% da moldura 16:9): cenário (imagem decorativa, sem rota nem nós desenhados), rota em SVG (traço que não escala; laranja até o marco escolhido) e marcos (botões com número e título);
+    - posições em `CampaignLogChapterEntry.map {x, y, label}`, provisórias até as artes; as do Cap. 00 são as do briefing;
+    - zoom e pan ficam como melhoria opcional.
+  - **Painel:**
+    - número do marco + época real, título, imagem editorial 3:2 (2:1 ao lado do mapa), resumo;
+    - "Ler a história completa" (texto, fotos reais e fontes);
+    - no último marco, o fechamento do capítulo (MARCO CONCLUÍDO / MISSÃO ATUAL);
+    - anterior / próximo / próximo capítulo.
+  - **Sem dados sem base:** a ficha da prancha (Status "Concluído"), os cadeados, os capítulos ilustrativos ("Novas histórias", "Em expansão") e a barra "2/5 marcos" não foram implementados, porque não têm base nos dados. Capítulo sem marcos aparece como EM CONSTRUÇÃO (hoje nenhum).
+  - **Assets:**
+    - `CampaignLogChapter.map` (16:9) e `CampaignLogChapterEntry.image` (3:2): campo ausente = placeholder discreto com a proporção. O cenário do capítulo também é a prévia dos cards (recorte por CSS).
+    - Nomes reservados: `assets/diary/maps/ch00-origem.webp`, `ch01-controle-codigo.webp` e `assets/diary/stories/ch00-01-primeiro-contato.webp` … `ch00-05-colecao-historias.webp`.
+  - **Texto novo:** a abertura (`CAMPAIGN_LOG_INTRO`) usa o texto da prancha; a tradução en está pendente de revisão.
+- **Revisão independente:** aprovável com correções. Todas as correções objetivas foram feitas:
+  - codinomes dos marcos de volta no painel ("MARCO 01 de 05 · PRIMEIRO CONTATO", com a época acima), como na timeline;
+  - um único botão "Próximo marco" / "Próximo capítulo", para o foco não se perder;
+  - fotos limitadas a 24rem e textos a 62ch no painel largo (768–1199);
+  - cabeçalho do capítulo sobre o mapa só a partir de 1200 (abaixo disso, acima do mapa) e sem interceptar cliques;
+  - o resumo continua visível quando é texto próprio (D-073);
+  - a história fechada pode ser achada pela busca do navegador (`hidden="until-found"`);
+  - nome acessível dos capítulos começando pelo texto visível;
+  - cards de mesma altura; anel do nó selecionado sem sombra.
+- **Artes (2026-10-20), fornecidas pelo Eduardo:**
+  - **Recebido:** cenários dos capítulos 00 (natureza, vila e rio até a cidade ao pôr do sol) e 01 (cidade iluminada, ponte e rio), em 1672 × 941; imagens editoriais dos cinco marcos do Cap. 00, em 1536 × 1024.
+  - **Correspondência pelo conteúdo:** 01 sala com a TV; 02 locadora; 03 cartão com a joaninha; 04 escrivaninha com o caderno; 05 estante da coleção.
+  - **Mestres PNG** preservados em `design/source/diary/{maps,stories}/`.
+  - **Derivados WebP** por `node design/source/diary/build-diary.mjs` (só redimensiona, qualidade 0,82): mapas 640 / 960 / 1280 / 1672 (84–488 KB), histórias 480 / 720 / 1080 / 1536 (25–250 KB), carregados sob demanda.
+  - **Textos alternativos** pt/en objetivos, pendentes de revisão do Eduardo.
+  - **Posições dos marcos:** conferidas sobre as artes (marcos em terra, sobre a rota visual).
+  - **Véu de leitura do cabeçalho:** reforçado.
+  - **Rota:** mais grossa, com contorno escuro.
+  - **Prévias dos outros capítulos:** a arte some também em direção ao rodapé do card, para o botão ficar sobre superfície lisa.
+  - **Mapa do Cap. 02 (recebido depois, 1672 × 941):** campo de futebol, hospital com heliponto e van na ponte, escritórios com sensores e campus com terraços. Marcos sobre esses lugares: ScoutEvo (campo), EOS (van na ponte, junto ao hospital), Axia (escritórios), Comunidade ON (campus).
+  - **Imagens editoriais dos capítulos 01 e 02 (recebidas depois, 1536 × 1024):** geradas pelo Eduardo com os prompts desta etapa.
+    - Cap. 01: laboratório da faculdade (01), mesa com os esboços do mosquito (02), mostra com troféu (03), celulares com o jogo (04), dois troféus + TCC + capelo (05).
+    - Cap. 02: campo com tablet (ScoutEvo), mesa com rota e maleta médica (EOS), saguão com sensores (Axia), espaço colaborativo com a árvore (Comunidade ON).
+  - **Resultado:** todos os 3 capítulos e os 14 marcos têm arte; nenhum placeholder resta (teste dedicado).
+  - **EOS, versão final:** a cruz vermelha sobre fundo branco da maleta (emblema protegido da Cruz Vermelha) foi trocada por uma cruz verde, numa edição feita pelo Eduardo; o resto da imagem não mudou.
+  - **Consoles reconhecíveis:** o console de madeira com joystick (Cap. 01, marco 05) lembra o Atari citado na história; vale a mesma exceção do controle do SNES, sem logos.
+  - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
+- **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.

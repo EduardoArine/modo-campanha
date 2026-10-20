@@ -44,6 +44,29 @@ export interface CampaignLogLink {
   note?: Localized;
 }
 
+/**
+ * Imagem do Diário de Campanha (D-091): cenário do capítulo (16:9) ou imagem editorial do marco
+ * (3:2). Ausente = a interface mostra um placeholder discreto com a mesma proporção.
+ */
+export interface CampaignLogImage {
+  src: string;
+  srcset?: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * Posição do marco no mapa do capítulo (D-091), em % da arte 16:9 (0–100). A rota (SVG) e o nó
+ * (botão) usam o mesmo sistema de coordenadas; a arte não traz rota nem nós desenhados.
+ * Provisória até a arte aprovada de cada capítulo.
+ */
+export interface CampaignLogMapPosition {
+  x: number;
+  y: number;
+  /** Lado do rótulo em relação ao nó (padrão: acima), para não cobrir a rota nem outro rótulo. */
+  label?: 'above' | 'below';
+}
+
 /** Checkpoint dentro de um capítulo (docs/15 §13–§14). Relato pessoal real. */
 export interface CampaignLogChapterEntry {
   id: string;
@@ -62,6 +85,10 @@ export interface CampaignLogChapterEntry {
   photos?: readonly CampaignLogPhoto[];
   /** Documentos públicos que comprovam o checkpoint (ex.: o TCC no repositório da FATEC). */
   links?: readonly CampaignLogLink[];
+  /** Onde o marco fica no mapa do capítulo (D-091). */
+  map: CampaignLogMapPosition;
+  /** Imagem editorial do marco (3:2), no painel do Diário. Ausente = placeholder. */
+  image?: CampaignLogImage & { alt: Localized };
 }
 
 /**
@@ -85,4 +112,9 @@ export interface CampaignLogChapter {
   closing?: Localized;
   /** Capítulo ainda em andamento: o fechamento vira CURRENT QUEST — EM ANDAMENTO. */
   ongoing?: boolean;
+  /**
+   * Cenário do mapa do capítulo (16:9, decorativo: a navegação é descrita em HTML). Também é a
+   * prévia dos cards de capítulo (recorte por CSS). Ausente = placeholder (D-091).
+   */
+  map?: CampaignLogImage;
 }

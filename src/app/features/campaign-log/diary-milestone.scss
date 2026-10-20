@@ -1,0 +1,158 @@
+// Painel do marco (D-091): superfície própria para leitura (sem texto sobre a pixel art). Ordem:
+// número + época → título → imagem → resumo → história sob demanda → fechamento → navegação.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+p,
+h4,
+dl,
+dd,
+ul {
+  margin: 0;
+}
+
+.panel {
+  display: grid;
+  gap: space(4);
+  padding: space(5);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+}
+
+.body {
+  display: grid;
+  gap: space(3);
+  animation: enter 220ms ease-out;
+}
+
+.eyebrow,
+.kind {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.when {
+  @include type(label);
+  color: var(--mc-text);
+}
+
+.title {
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+
+  // Painel em largura toda (< 1200): a imagem não passa de 28rem.
+  max-width: 28rem;
+
+  // Ao lado do mapa, um recorte mais baixo (como na prancha), para o painel acompanhar o mapa.
+  @include mq(xl) {
+    max-width: none;
+    aspect-ratio: 2 / 1;
+  }
+  object-fit: cover;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+}
+
+// Placeholder até a imagem editorial aprovada: só a proporção, sem texto.
+.image--placeholder {
+  background: linear-gradient(160deg, var(--mc-elevated), var(--mc-surface));
+}
+
+.summary,
+.story p {
+  max-width: 62ch;
+  @include type(body);
+  color: var(--mc-text-secondary);
+}
+
+.toggle {
+  justify-self: stretch;
+}
+
+// Só aberta ganha display próprio (fechada, vale o hidden="until-found" do navegador).
+.story:not([hidden]) {
+  display: grid;
+  gap: space(3);
+}
+
+// Fotos reais: nunca maiores que o original; lado a lado no painel largo (768–1199).
+.photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+
+  img {
+    display: block;
+    flex: 1 1 14rem;
+    max-width: 24rem;
+    height: auto;
+    border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+    border-radius: var(--mc-radius-sm);
+  }
+}
+
+.refs {
+  display: grid;
+  gap: space(3);
+  padding: 0;
+  list-style: none;
+
+  // Títulos longos quebram linha; o ícone externo segue o fim do texto.
+  a {
+    display: inline;
+    white-space: normal;
+  }
+}
+
+.note {
+  @include type(body-s);
+  color: var(--mc-text-muted);
+}
+
+.closing {
+  display: grid;
+  gap: space(1);
+  padding-top: space(3);
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+
+  &.is-ongoing .kind {
+    color: var(--mc-status-online);
+  }
+}
+
+.closing-text {
+  @include type(body-s);
+  color: var(--mc-text);
+}
+
+.steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: space(2);
+  margin-top: calc(-1 * #{space(2)});
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .body {
+    animation: none;
+  }
+}

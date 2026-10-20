@@ -1,0 +1,73 @@
+@let c = chapter();
+<div class="frame">
+  <!-- Cenário (decorativo; a navegação está nos botões). Troca com o capítulo, em fade curto. -->
+  @for (key of [c.id]; track key) {
+    @if (c.map; as art) {
+      <img
+        class="art"
+        [src]="art.src"
+        [attr.srcset]="art.srcset ?? null"
+        sizes="(min-width: 1200px) 840px, 100vw"
+        [width]="art.width"
+        [height]="art.height"
+        alt=""
+        loading="lazy"
+        decoding="async"
+      />
+    } @else {
+      <span class="art art--placeholder" aria-hidden="true"></span>
+    }
+  }
+  <span class="veil" aria-hidden="true"></span>
+
+  <!-- Rota em SVG nas coordenadas do mapa (0–100); o traço não escala com a moldura. -->
+  <svg class="route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+    <path class="route-shadow" [attr.d]="route()" />
+    <path class="route-line" [attr.d]="route()" />
+    @if (travelled()) {
+      <path class="route-travelled" [attr.d]="travelled()" />
+    }
+  </svg>
+
+  <!-- Mini mapa (mobile): só os pontos; a escolha fica na lista abaixo. -->
+  @for (entry of entries(); track entry.id) {
+    <span
+      class="pin"
+      [class.is-selected]="entry.id === selected()"
+      [style.left.%]="entry.map.x"
+      [style.top.%]="entry.map.y"
+      aria-hidden="true"
+    ></span>
+  }
+
+  <!-- Marcos (≥ 768): botões com número e título, no ponto da rota. -->
+  <ol class="nodes" role="list" [attr.aria-label]="ui().campaignLog.diary.map">
+    @for (entry of entries(); track entry.id; let i = $index) {
+      @let isSelected = entry.id === selected();
+      <li
+        class="node"
+        [class.below]="entry.map.label === 'below'"
+        [class.start]="entry.map.x < 20"
+        [class.end]="entry.map.x > 80"
+        [style.left.%]="entry.map.x"
+        [style.top.%]="entry.map.y"
+      >
+        <button
+          type="button"
+          class="hit"
+          aria-controls="diary-milestone"
+          [attr.aria-label]="label(i)"
+          [attr.aria-current]="isSelected ? 'step' : null"
+          [class.is-selected]="isSelected"
+          (click)="choose.emit(entry.id)"
+        >
+          <span class="dot" aria-hidden="true"></span>
+          <span class="tag" aria-hidden="true">
+            <span class="num">{{ number(i) }}</span>
+            {{ locale.pick(entry.title) }}
+          </span>
+        </button>
+      </li>
+    }
+  </ol>
+</div>

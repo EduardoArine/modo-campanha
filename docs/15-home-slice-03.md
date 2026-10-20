@@ -441,3 +441,42 @@ O checkpoint da Comunidade ON já conta o quê, o porquê e o papel do Eduardo. 
 3. Página específica da Axia, se voltar a existir.
 4. Achievements, Current Main Quest e Side Quests seguem com MOCK só em desenvolvimento (etapas próprias, §16.4 e §16.6).
 5. Seta de link externo que pode quebrar sozinha em rótulos longos (§16.7).
+
+## 18. Diário de Campanha: mapa por capítulos (D-091, 2026-10-20)
+
+A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C da prancha aprovada). O conteúdo é o mesmo da §17 (D-074): três capítulos, 14 marcos, histórias, fotos, fontes e fechamentos.
+
+### 18.1 Componentes (`features/campaign-log/`)
+
+| Componente | Papel |
+| --- | --- |
+| `campaign-log-section` | estado único (capítulo e marco), cabeçalho, capítulo ativo, prévias dos outros |
+| `diary-chapters` | seletor de capítulos (faixa horizontal, `aria-current`) |
+| `diary-map` | moldura 16:9: cenário + rota SVG + marcos (≥ 768) / pontos (mini mapa, < 768) |
+| `diary-milestones` | lista de marcos (só < 768) |
+| `diary-milestone` | painel de leitura |
+| `campaign-when` | época do marco (ano, intervalo, "desde", aproximado ou época em texto) |
+| `diary-labels.ts` | número e nome acessível do marco ("MARCO 02 de 05: …") |
+
+### 18.2 Layout
+
+- **≥ 1200:** mapa (~70%) e painel (~30%) lado a lado. O cabeçalho do capítulo fica sobre o canto do mapa, com véu de leitura. O mapa fica fixo enquanto se lê uma história longa.
+- **768–1199:** cabeçalho acima do mapa, mapa na largura toda e painel abaixo (imagem até 28rem, fotos até 24rem, texto até 62ch).
+- **< 768:** cabeçalho do capítulo, mini mapa (só pontos), lista de marcos e painel.
+- **Validação:** sem overflow horizontal, sem sobreposição de etiquetas, sem etiqueta sob o cabeçalho ou fora da moldura, em 1440 / 1280 / 1200 / 1199 / 1024 / 820 / 768 / 390, pt e en, nos três capítulos.
+
+### 18.3 Para receber as artes
+
+- **Cenário do capítulo:** preencher `map` no capítulo (16:9, WebP, `srcset`). Arte sem rota, sem nós e sem texto.
+- **Imagem editorial:** preencher `image` no marco (3:2, com `alt` pt/en).
+- **Posições dos marcos:** depois da arte, revisar `map {x, y, label}` de cada marco sobre ela.
+- **Nomes reservados:** os da D-091, com o sufixo de largura (ex.: `ch00-origem-1672.webp`). Para gerar: salvar o PNG em `design/source/diary/maps/` ou `stories/` e rodar `node design/source/diary/build-diary.mjs`.
+
+### 18.4 Pendências
+
+- **Artes recebidas (D-091):** os mapas dos capítulos 00 e 01 e as imagens editoriais do Cap. 00, com mestres em `design/source/diary/` e derivados por `build-diary.mjs`.
+- **Mapa do Cap. 02 e imagens editoriais dos capítulos 01 e 02:** recebidos e integrados. Todas as artes do Diário estão no lugar.
+- **Textos alternativos:** revisão pelo Eduardo.
+- **Texto de abertura:** revisão da tradução en.
+- **Zoom e pan:** melhoria opcional.
+- **Traduções antigas do Campaign Log:** revisão (pendência separada, D-088).

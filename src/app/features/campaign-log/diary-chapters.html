@@ -1,0 +1,51 @@
+<div role="group" [attr.aria-label]="ui().campaignLog.diary.chapters">
+  <ol class="strip" role="list">
+    @for (chapter of chapters(); track chapter.id) {
+      @let isSelected = chapter.id === selected();
+      <li class="slot">
+        <button
+          type="button"
+          class="card"
+          aria-controls="diary-chapter"
+          [attr.aria-label]="label(chapter)"
+          [attr.aria-current]="isSelected ? 'true' : null"
+          [class.is-selected]="isSelected"
+          (click)="choose.emit(chapter.id)"
+        >
+          <!-- Prévia: o próprio cenário do capítulo, recortado (sem asset duplicado). -->
+          @if (chapter.map; as art) {
+            <img
+              class="thumb"
+              [src]="art.src"
+              [attr.srcset]="art.srcset ?? null"
+              sizes="240px"
+              [width]="art.width"
+              [height]="art.height"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          } @else {
+            <span class="thumb thumb--placeholder" aria-hidden="true"></span>
+          }
+          <span class="code" aria-hidden="true">
+            {{ ui().campaignLog.diary.chapterShort }} {{ chapter.number }}
+          </span>
+          @if (chapter.name; as name) {
+            <span class="name" aria-hidden="true">{{ locale.pick(name) }}</span>
+          }
+          <!-- Estado por texto: selecionado, quantidade de marcos ou em construção. -->
+          <span class="state" aria-hidden="true">
+            @if (isSelected) {
+              {{ ui().campaignLog.diary.selected }}
+            } @else if (chapter.entries.length) {
+              {{ chapter.entries.length }} {{ ui().campaignLog.diary.milestones }}
+            } @else {
+              {{ ui().campaignLog.diary.inConstruction }}
+            }
+          </span>
+        </button>
+      </li>
+    }
+  </ol>
+</div>

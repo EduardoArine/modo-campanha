@@ -1,0 +1,149 @@
+@let c = chapter();
+<article class="panel" id="diary-milestone" aria-labelledby="diary-milestone-title">
+  @if (entry(); as e) {
+    <!-- Recriado a cada marco: título, imagem e textos trocam juntos, num fade curto. -->
+    @for (key of [e.id]; track key) {
+      <div class="body">
+        <!-- Época real, depois a posição na sequência + o codinome do marco (como na timeline). -->
+        <p class="when"><app-campaign-when [when]="e.when" /></p>
+        <p class="eyebrow">
+          {{ ui().campaignLog.checkpoint }} {{ pad(index() + 1) }} {{ ui().campaignLog.diary.of }}
+          {{ pad(total()) }}
+          @if (e.code; as code) {
+            · {{ locale.pick(code) }}
+          }
+        </p>
+        <h4 class="title" id="diary-milestone-title">{{ locale.pick(e.title) }}</h4>
+
+        @if (e.image; as image) {
+          <img
+            class="image"
+            [src]="image.src"
+            [attr.srcset]="image.srcset ?? null"
+            sizes="(min-width: 1200px) 360px, (min-width: 768px) 448px, 100vw"
+            [width]="image.width"
+            [height]="image.height"
+            [alt]="locale.pick(image.alt)"
+            loading="lazy"
+            decoding="async"
+          />
+        } @else {
+          <span class="image image--placeholder" aria-hidden="true"></span>
+        }
+
+        <!-- O resumo é a 1ª frase da história: some quando ela abre, salvo resumo próprio (D-073). -->
+        @if (!expanded() || !summaryInStory()) {
+          <p class="summary">{{ locale.pick(e.summary) }}</p>
+        }
+
+        <button
+          mcAction="primary"
+          type="button"
+          class="toggle"
+          aria-controls="diary-story"
+          [attr.aria-expanded]="expanded()"
+          (click)="expanded.set(!expanded())"
+        >
+          {{ expanded() ? ui().campaignLog.story.close : ui().campaignLog.story.open }}
+        </button>
+
+        <!-- Fechada, a história continua encontrável pela busca do navegador (abre ao achar). -->
+        <div
+          class="story"
+          id="diary-story"
+          [attr.hidden]="expanded() ? null : 'until-found'"
+          (beforematch)="expanded.set(true)"
+        >
+          @for (paragraph of locale.pick(e.story); track $index) {
+            <p>{{ paragraph }}</p>
+          }
+          @if (e.photos; as photos) {
+            <!-- Fotos reais como evidência documental (proporção original, sem filtro). -->
+            <div class="photos">
+              @for (photo of photos; track photo.src) {
+                <img
+                  [src]="photo.src"
+                  [srcset]="photo.srcset"
+                  sizes="(min-width: 1200px) 300px, (min-width: 768px) 384px, 100vw"
+                  [width]="photo.width"
+                  [height]="photo.height"
+                  [alt]="locale.pick(photo.alt)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              }
+            </div>
+          }
+          @if (e.links; as links) {
+            <!-- Referências externas verificáveis (tipo + título + contexto), em nova aba. -->
+            <ul class="refs" role="list">
+              @for (link of links; track link.url; let r = $index) {
+                <li>
+                  @if (r === 0 || links[r - 1].kind !== link.kind) {
+                    <p class="kind">{{ ui().campaignLog.links[link.kind] }}</p>
+                  }
+                  <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+                    {{ locale.pick(link.label) }} <mc-icon name="external" />
+                    <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+                  </a>
+                  @if (link.note; as note) {
+                    <p class="note">{{ locale.pick(note) }}</p>
+                  }
+                </li>
+              }
+            </ul>
+          }
+        </div>
+
+        @if (isLast() && c.closing; as closing) {
+          <!-- Fechamento do capítulo: MARCO CONCLUÍDO + ano final, ou MISSÃO ATUAL — EM ANDAMENTO. -->
+          <div class="closing" [class.is-ongoing]="c.ongoing">
+            <p class="kind">
+              @if (c.ongoing) {
+                {{ ui().campaignLog.ongoing }}
+              } @else {
+                {{ ui().campaignLog.complete }}
+                @if (c.period?.end; as end) {
+                  — <time [attr.datetime]="end">{{ end }}</time>
+                }
+              }
+            </p>
+            <p class="closing-text">{{ locale.pick(closing) }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- aria-disabled (não disabled): o foco fica no botão no começo da sequência. -->
+    <div class="steps">
+      <button
+        mcAction="text"
+        type="button"
+        aria-controls="diary-milestone"
+        [attr.aria-disabled]="index() === 0 ? 'true' : null"
+        (click)="index() > 0 && step.emit(-1)"
+      >
+        <mc-icon name="chevron-left" /> {{ ui().campaignLog.diary.previous }}
+      </button>
+      <!-- Um só botão: no último marco vira "Próximo capítulo" (o foco não se perde na troca). -->
+      @let toChapter = isLast() ? next() : null;
+      <button
+        mcAction="text"
+        type="button"
+        [attr.aria-controls]="toChapter ? 'diary-chapter' : 'diary-milestone'"
+        [attr.aria-label]="toChapter ? nextLabel(toChapter) : null"
+        [attr.aria-disabled]="isLast() && !toChapter ? 'true' : null"
+        (click)="goNext()"
+      >
+        {{ toChapter ? ui().campaignLog.diary.nextChapter : ui().campaignLog.diary.next }}
+        <mc-icon name="chevron-right" />
+      </button>
+    </div>
+  } @else {
+    <!-- Capítulo sem marcos publicados: dito com honestidade, sem conteúdo fictício. -->
+    <p class="eyebrow" id="diary-milestone-title">{{ ui().campaignLog.diary.inConstruction }}</p>
+    @if (c.signature; as signature) {
+      <p class="summary">{{ locale.pick(signature) }}</p>
+    }
+  }
+</article>

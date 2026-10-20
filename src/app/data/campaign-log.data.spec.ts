@@ -80,4 +80,19 @@ describe('Campaign Log — canonical chapters', () => {
       .replace('Real XP. No persona.', '');
     expect(json).not.toMatch(/\bXP\b|\bLV\b|\brank\b|%|★/i);
   });
+
+  it('places every checkpoint on its chapter map (D-091): 0–100, left to right, no shared point', () => {
+    for (const chapter of CAMPAIGN_LOG_CHAPTERS) {
+      const points = chapter.entries.map((e) => e.map);
+      for (const { x, y } of points) {
+        expect(x).toBeGreaterThanOrEqual(0);
+        expect(x).toBeLessThanOrEqual(100);
+        expect(y).toBeGreaterThanOrEqual(0);
+        expect(y).toBeLessThanOrEqual(100);
+      }
+      // A rota segue a ordem dos marcos, da esquerda para a direita.
+      expect(points.map((p) => p.x)).toEqual([...points.map((p) => p.x)].sort((a, b) => a - b));
+      expect(new Set(points.map((p) => p.x + ',' + p.y)).size).toBe(points.length);
+    }
+  });
 });

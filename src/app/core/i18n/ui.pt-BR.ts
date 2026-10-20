@@ -150,6 +150,22 @@ export const UI_PT_BR = {
       academic: 'DOCUMENTO ACADÊMICO',
     },
     story: { open: 'Ler a história completa', close: 'Recolher a história' },
+    // Diário de Campanha: mapa por capítulos (D-091).
+    diary: {
+      chapterShort: 'CAP.',
+      of: 'de',
+      milestones: 'MARCOS',
+      inConstruction: 'EM CONSTRUÇÃO',
+      selected: 'SELECIONADO',
+      chapters: 'Capítulos do diário',
+      map: 'Mapa do capítulo',
+      list: 'Marcos do capítulo',
+      previous: 'Marco anterior',
+      next: 'Próximo marco',
+      nextChapter: 'Próximo capítulo',
+      open: 'Abrir capítulo',
+      others: 'OUTROS CAPÍTULOS',
+    },
   },
   achievements: {
     code: 'CONQ',
