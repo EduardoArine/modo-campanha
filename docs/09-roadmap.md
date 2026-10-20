@@ -120,6 +120,7 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 - ✅ 03-0 histórico real em capítulos (CHAPTERS 00, 01 e 02) · ✅ 03-A model / data infrastructure (D-049) · ✅ 03-B visual (**APPROVED**, congelado, D-050) · ✅ 03-C editorial content (**aprovado**, D-074; linha profissional MOCK aposentada) · aguardando validação visual final do Eduardo · sem deploy
 
 - ✅ Campaign Log (Slice 03, D-074)
+- 🔄 **Diário de Campanha: mapa por capítulos** (D-091, `docs/15` §18): híbrido A + C sobre o conteúdo real; aguardando aprovação do Eduardo e as artes (cenários e imagens editoriais)
 - 🟡 Achievements (Slice 04)
 
 ### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
