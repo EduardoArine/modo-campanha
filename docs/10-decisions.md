@@ -1292,5 +1292,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - Cap. 01: laboratório da faculdade (01), mesa com os esboços do mosquito (02), mostra com troféu (03), celulares com o jogo (04), dois troféus + TCC + capelo (05).
     - Cap. 02: campo com tablet (ScoutEvo), mesa com rota e maleta médica (EOS), saguão com sensores (Axia), espaço colaborativo com a árvore (Comunidade ON).
   - **Resultado:** todos os 3 capítulos e os 14 marcos têm arte; nenhum placeholder resta (teste dedicado).
+  - **EOS, versão final:** a cruz vermelha sobre fundo branco da maleta (emblema protegido da Cruz Vermelha) foi trocada por uma cruz verde, numa edição feita pelo Eduardo; o resto da imagem não mudou.
+  - **Consoles reconhecíveis:** o console de madeira com joystick (Cap. 01, marco 05) lembra o Atari citado na história; vale a mesma exceção do controle do SNES, sem logos.
   - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
 - **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
