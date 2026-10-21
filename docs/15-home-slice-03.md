@@ -450,7 +450,7 @@ A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C 
 
 | Componente | Papel |
 | --- | --- |
-| `campaign-log-section` | estado único (capítulo e marco), cabeçalho, capítulo ativo, prévias dos outros |
+| `campaign-log-section` | estado único (capítulo e marco), cabeçalho, capítulo ativo |
 | `diary-chapters` | seletor de capítulos (faixa horizontal, `aria-current`) |
 | `diary-map` | moldura 16:9: cenário + rota SVG + marcos (≥ 768) / pontos (mini mapa, < 768) |
 | `diary-milestones` | lista de marcos (só < 768) |

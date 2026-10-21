@@ -18,7 +18,7 @@
               class="thumb"
               [src]="art.src"
               [attr.srcset]="art.srcset ?? null"
-              sizes="240px"
+              sizes="(min-width: 768px) 280px, 240px"
               [width]="art.width"
               [height]="art.height"
               alt=""
@@ -34,16 +34,12 @@
           @if (chapter.name; as name) {
             <span class="name" aria-hidden="true">{{ locale.pick(name) }}</span>
           }
-          <!-- Estado por texto: selecionado, quantidade de marcos ou em construção. -->
-          <span class="state" aria-hidden="true">
-            @if (isSelected) {
-              {{ ui().campaignLog.diary.selected }}
-            } @else if (chapter.entries.length) {
-              {{ chapter.entries.length }} {{ ui().campaignLog.diary.milestones }}
-            } @else {
+          <!-- Como na prancha: código + nome. Capítulo sem marcos diz isso em texto. -->
+          @if (!chapter.entries.length) {
+            <span class="state" aria-hidden="true">
               {{ ui().campaignLog.diary.inConstruction }}
-            }
-          </span>
+            </span>
+          }
         </button>
       </li>
     }

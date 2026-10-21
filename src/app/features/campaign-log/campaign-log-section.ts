@@ -11,7 +11,7 @@ import {
 
 import { LocaleService } from '../../core/i18n';
 import { CAMPAIGN_LOG_CHAPTERS, CAMPAIGN_LOG_INTRO } from '../../data';
-import { McAction, McIcon, McSectionHeader } from '../../shared/ui';
+import { McSectionHeader } from '../../shared/ui';
 import { DiaryChapters } from './diary-chapters';
 import { DiaryMap } from './diary-map';
 import { DiaryMilestone } from './diary-milestone';
@@ -19,21 +19,12 @@ import { DiaryMilestones } from './diary-milestones';
 
 /**
  * Diário de Campanha (D-091; capítulos D-070–D-074). Híbrido A + C: World Map Editorial do capítulo
- * ativo (cenário + rota + marcos) com painel de leitura ao lado, seletor de capítulos acima e
- * prévias dos outros capítulos abaixo. Uma única fonte de verdade: capítulo e marco escolhidos;
+ * ativo (cenário + rota + marcos) com painel de leitura ao lado e seletor de capítulos acima. Uma única fonte de verdade: capítulo e marco escolhidos;
  * mapa, painel e seletor só refletem esse estado. Sem métricas, XP, medalhas ou cadeados.
  */
 @Component({
   selector: 'app-campaign-log-section',
-  imports: [
-    McAction,
-    McIcon,
-    McSectionHeader,
-    DiaryChapters,
-    DiaryMap,
-    DiaryMilestones,
-    DiaryMilestone,
-  ],
+  imports: [McSectionHeader, DiaryChapters, DiaryMap, DiaryMilestones, DiaryMilestone],
   templateUrl: './campaign-log-section.html',
   styleUrl: './campaign-log-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -65,11 +56,10 @@ export class CampaignLogSection {
   protected readonly next = computed(
     () => this.chapters[this.chapters.indexOf(this.chapter()) + 1] ?? null,
   );
-  protected readonly others = computed(() => this.chapters.filter((c) => c !== this.chapter()));
 
   /**
-   * Abre um capítulo no primeiro marco. Do seletor (acima do mapa), nada se move; das prévias de
-   * baixo ou do "Próximo capítulo", leva a vista e o foco ao título do capítulo aberto.
+   * Abre um capítulo no primeiro marco. Do seletor (acima do mapa), nada se move; do "Próximo
+   * capítulo" (no fim do painel), leva a vista e o foco ao título do capítulo aberto.
    */
   protected selectChapter(id: string, reveal = false): void {
     const chapter = this.chapters.find((c) => c.id === id);

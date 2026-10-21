@@ -1,6 +1,6 @@
 // Diário de Campanha (D-091). Abertura editorial (cabeçalho padrão das seções + texto curto),
-// seletor de capítulos, capítulo ativo (mapa ~70% + painel ~30% a partir de 1200; empilhados
-// abaixo disso) e prévias dos outros capítulos. Sem cards de jogo, sombras ou glow.
+// seletor de capítulos e capítulo ativo (mapa ~70% + painel ~30% a partir de 1200; empilhados
+// abaixo disso). Sem cards de jogo, sombras ou glow.
 @use 'mc' as *;
 
 :host {
@@ -34,16 +34,21 @@ ul {
   gap: var(--mc-gutter);
   margin-top: space(5);
 
-  // Lado a lado só a partir de 1200: abaixo disso o mapa ganha a largura toda e o painel desce.
+  // Lado a lado só a partir de 1200, numa moldura âmbar (como na prancha): mapa ~70% e painel
+  // ~30%, com a mesma altura (o painel estica; o mapa fica no topo). Abaixo disso, o mapa ganha a largura toda e o painel desce.
   @include mq(xl) {
     grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-    align-items: start;
+    gap: space(3);
+    padding: space(3);
+    border: var(--mc-border-width-default) solid var(--mc-border-accent);
+    border-radius: var(--mc-radius-sm);
   }
 }
 
 // Cabeçalho do capítulo ativo: no fluxo (< 1200); sobre o canto do mapa a partir de 1200.
 .map {
   position: relative;
+  align-self: start;
 
   // Lado a lado: o mapa acompanha a leitura de uma história longa no painel.
   @include mq(xl) {
@@ -93,92 +98,4 @@ ul {
 .context {
   @include type(caption);
   color: var(--mc-text-muted);
-}
-
-.others-title {
-  margin-top: space(7);
-  @include type(label);
-  color: var(--mc-text-muted);
-}
-
-.others {
-  display: grid;
-  gap: var(--mc-gutter);
-  margin-top: space(3);
-  padding: 0;
-  list-style: none;
-
-  @include mq(md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @include mq(xl) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-// Prévia: texto sobre superfície lisa; o cenário entra à direita, apagando em direção ao texto.
-.other {
-  position: relative;
-  display: grid;
-  align-content: start;
-  gap: space(2);
-  padding: space(5);
-  overflow: hidden;
-  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
-  border-radius: var(--mc-radius-sm);
-  background: var(--mc-panel);
-
-  > :not(.other-art) {
-    position: relative;
-  }
-}
-
-.other-art {
-  position: absolute;
-  inset: 0 0 0 45%;
-  width: 55%;
-  height: 100%;
-  object-fit: cover;
-  // Some em direção ao texto e ao rodapé: o botão fica sempre sobre a superfície lisa.
-  mask-image:
-    linear-gradient(to right, transparent, #000 70%),
-    linear-gradient(to bottom, #000 45%, transparent 75%);
-  mask-composite: intersect;
-  opacity: 0.7;
-}
-
-.other-art--placeholder {
-  background: linear-gradient(160deg, var(--mc-surface), var(--mc-elevated));
-}
-
-.other-code,
-.other-count {
-  @include type(label);
-  color: var(--mc-accent);
-}
-
-.other-count {
-  color: var(--mc-text-muted);
-}
-
-.other-name {
-  max-width: 70%;
-  @include type(title-m);
-  color: var(--mc-text);
-}
-
-.other-text {
-  max-width: 70%;
-  @include type(body-s);
-  color: var(--mc-text-secondary);
-}
-
-.other-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: space(3);
-  margin-top: space(2);
 }

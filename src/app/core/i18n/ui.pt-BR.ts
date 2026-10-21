@@ -173,8 +173,6 @@ export const UI_PT_BR = {
       previous: 'Marco anterior',
       next: 'Próximo marco',
       nextChapter: 'Próximo capítulo',
-      open: 'Abrir capítulo',
-      others: 'OUTROS CAPÍTULOS',
     },
   },
   achievements: {

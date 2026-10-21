@@ -4,6 +4,7 @@
 
 :host {
   display: block;
+  height: 100%;
 }
 
 p,
@@ -14,10 +15,19 @@ ul {
   margin: 0;
 }
 
+// Corpo em cima, navegação no rodapé (o painel acompanha a altura do mapa).
 .panel {
   display: grid;
+  // minmax(0, 1fr): o conteúdo (fotos, links longos) nunca alarga o painel.
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
   gap: space(4);
+  height: 100%;
   padding: space(5);
+
+  @include mq(xl) {
+    padding: space(4);
+  }
   border: var(--mc-border-width-default) solid var(--mc-border-subtle);
   border-radius: var(--mc-radius-sm);
   background: var(--mc-panel);
@@ -25,7 +35,14 @@ ul {
 
 .body {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
   gap: space(3);
+
+  @include mq(xl) {
+    gap: space(2);
+  }
+
   animation: enter 220ms ease-out;
 }
 
@@ -74,6 +91,11 @@ ul {
   max-width: 62ch;
   @include type(body);
   color: var(--mc-text-secondary);
+
+  // Coluna estreita ao lado do mapa: texto menor, como na prancha.
+  @include mq(xl) {
+    @include type(body-s);
+  }
 }
 
 .toggle {
@@ -95,7 +117,8 @@ ul {
   img {
     display: block;
     flex: 1 1 14rem;
-    max-width: 24rem;
+    min-width: 0;
+    max-width: min(24rem, 100%);
     height: auto;
     border: var(--mc-border-width-default) solid var(--mc-border-subtle);
     border-radius: var(--mc-radius-sm);
