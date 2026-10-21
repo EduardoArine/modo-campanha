@@ -71,7 +71,8 @@
 
   @if (others().length) {
     <!-- Prévias dos outros capítulos: contexto e acesso, sem repetir o seletor. -->
-    <h3 class="others-title">{{ ui().campaignLog.diary.others }}</h3>
+    <!-- Como na prancha, sem título visível: ele fica para leitores de tela (h3 da hierarquia). -->
+    <h3 class="others-title mc-visually-hidden">{{ ui().campaignLog.diary.others }}</h3>
     <ul class="others" role="list">
       @for (other of others(); track other.id) {
         <li class="other">
@@ -80,7 +81,7 @@
               class="other-art"
               [src]="art.src"
               [attr.srcset]="art.srcset ?? null"
-              sizes="(min-width: 1024px) 400px, 100vw"
+              sizes="(min-width: 768px) 360px, 100vw"
               [width]="art.width"
               [height]="art.height"
               alt=""
@@ -110,8 +111,8 @@
               }
             </p>
             <button
-              mcAction="secondary"
               type="button"
+              class="other-open"
               aria-controls="diary-chapter"
               [attr.aria-label]="
                 ui().campaignLog.diary.open +
@@ -123,7 +124,7 @@
               "
               (click)="selectChapter(other.id, true)"
             >
-              {{ ui().campaignLog.diary.open }} <mc-icon name="chevron-right" />
+              <mc-icon name="chevron-right" [size]="20" />
             </button>
           </div>
         </li>

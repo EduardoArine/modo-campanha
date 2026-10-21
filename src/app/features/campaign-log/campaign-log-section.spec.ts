@@ -46,7 +46,9 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
       'CAP. 02 — DO CÓDIGO AO PRODUTO, 4 marcos',
     ]);
     expect(cards.map((c) => c.getAttribute('aria-current'))).toEqual(['true', null, null]);
-    expect(text(el, 'app-diary-chapters .is-selected .state')).toBe('SELECIONADO');
+    // Como na prancha, o card mostra código + nome; o selecionado é contorno duplo + aria-current.
+    expect(el.querySelector('app-diary-chapters .state')).toBeNull();
+    expect(text(el, 'app-diary-chapters .is-selected .name')).toBe('ORIGEM');
 
     expect(text(el, '#diary-chapter-title')).toBe('ORIGEM');
     expect(text(el, '.head .signature')).toBe('A campanha começou muito antes do código.');

@@ -1294,6 +1294,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Resultado:** todos os 3 capítulos e os 14 marcos têm arte; nenhum placeholder resta (teste dedicado).
   - **EOS, versão final:** a cruz vermelha sobre fundo branco da maleta (emblema protegido da Cruz Vermelha) foi trocada por uma cruz verde, numa edição feita pelo Eduardo; o resto da imagem não mudou.
   - **Consoles reconhecíveis:** o console de madeira com joystick (Cap. 01, marco 05) lembra o Atari citado na história; vale a mesma exceção do controle do SNES, sem logos.
+- **Layout igual à prancha (2026-10-21, pedido do Eduardo; conteúdo inalterado):**
+  - **Seletor de capítulos:** cards de mesma largura ocupando a linha (≥ 768), só código + nome, com a arte maior à direita; o selecionado tem contorno âmbar duplo + `aria-current` (o selo SELECIONADO saiu); "EM CONSTRUÇÃO" continua em texto num capítulo sem marcos.
+  - **Capítulo ativo (≥ 1200):** mapa e painel dentro de uma moldura âmbar, com a mesma altura; painel mais compacto (texto menor, navegação no rodapé).
+  - **Outros capítulos:** sem título visível (fica para leitores de tela), cards compactos com o rodapé alinhado e botão redondo de seta (o nome acessível diz qual capítulo abre).
+  - **Fora (anotação da prancha ou sem base nos dados):** CONCEITO HÍBRIDO, CAPÍTULO ATIVO, Recolher mapa, zoom, ficha com Status, barra de progresso e cadeados.
   - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
 - **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
 

@@ -11,7 +11,7 @@ import {
 
 import { LocaleService } from '../../core/i18n';
 import { CAMPAIGN_LOG_CHAPTERS, CAMPAIGN_LOG_INTRO } from '../../data';
-import { McAction, McIcon, McSectionHeader } from '../../shared/ui';
+import { McIcon, McSectionHeader } from '../../shared/ui';
 import { DiaryChapters } from './diary-chapters';
 import { DiaryMap } from './diary-map';
 import { DiaryMilestone } from './diary-milestone';
@@ -25,15 +25,7 @@ import { DiaryMilestones } from './diary-milestones';
  */
 @Component({
   selector: 'app-campaign-log-section',
-  imports: [
-    McAction,
-    McIcon,
-    McSectionHeader,
-    DiaryChapters,
-    DiaryMap,
-    DiaryMilestones,
-    DiaryMilestone,
-  ],
+  imports: [McIcon, McSectionHeader, DiaryChapters, DiaryMap, DiaryMilestones, DiaryMilestone],
   templateUrl: './campaign-log-section.html',
   styleUrl: './campaign-log-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

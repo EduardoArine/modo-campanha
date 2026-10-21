@@ -34,16 +34,21 @@ ul {
   gap: var(--mc-gutter);
   margin-top: space(5);
 
-  // Lado a lado só a partir de 1200: abaixo disso o mapa ganha a largura toda e o painel desce.
+  // Lado a lado só a partir de 1200, numa moldura âmbar (como na prancha): mapa ~70% e painel
+  // ~30%, com a mesma altura (o painel estica; o mapa fica no topo). Abaixo disso, o mapa ganha a largura toda e o painel desce.
   @include mq(xl) {
     grid-template-columns: minmax(0, 7fr) minmax(0, 3fr);
-    align-items: start;
+    gap: space(3);
+    padding: space(3);
+    border: var(--mc-border-width-default) solid var(--mc-border-accent);
+    border-radius: var(--mc-radius-sm);
   }
 }
 
 // Cabeçalho do capítulo ativo: no fluxo (< 1200); sobre o canto do mapa a partir de 1200.
 .map {
   position: relative;
+  align-self: start;
 
   // Lado a lado: o mapa acompanha a leitura de uma história longa no painel.
   @include mq(xl) {
@@ -95,16 +100,10 @@ ul {
   color: var(--mc-text-muted);
 }
 
-.others-title {
-  margin-top: space(7);
-  @include type(label);
-  color: var(--mc-text-muted);
-}
-
 .others {
   display: grid;
   gap: var(--mc-gutter);
-  margin-top: space(3);
+  margin-top: space(5);
   padding: 0;
   list-style: none;
 
@@ -120,10 +119,10 @@ ul {
 // Prévia: texto sobre superfície lisa; o cenário entra à direita, apagando em direção ao texto.
 .other {
   position: relative;
-  display: grid;
-  align-content: start;
-  gap: space(2);
-  padding: space(5);
+  display: flex;
+  flex-direction: column;
+  gap: space(1);
+  padding: space(4) space(5);
   overflow: hidden;
   border: var(--mc-border-width-default) solid var(--mc-border-subtle);
   border-radius: var(--mc-radius-sm);
@@ -180,5 +179,28 @@ ul {
   align-items: center;
   justify-content: space-between;
   gap: space(3);
-  margin-top: space(2);
+  // Rodapé no fundo do card: alinhado entre cards de textos diferentes.
+  margin-top: auto;
+  padding-top: space(2);
+}
+
+// Botão redondo com seta (como na prancha); o nome acessível diz qual capítulo abre.
+.other-open {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: var(--mc-border-width-default) solid var(--mc-accent);
+  border-radius: var(--mc-radius-round);
+  background: var(--mc-panel);
+  color: var(--mc-accent);
+
+  &:hover {
+    background: var(--mc-interactive-hover);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
 }
