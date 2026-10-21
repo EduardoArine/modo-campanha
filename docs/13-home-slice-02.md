@@ -1,6 +1,6 @@
 # 13 — Home Slice 02 (plano aprovado com refinamentos)
 
-> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043). 02-C **APPROVED** (D-044). 02-C.5 **APPROVED** (D-045, D-046): artwork System Horizon Refined integrado ao MC-001; Inventory público com o MC-001. 02-D absorvido por 02-C / 02-C.5; 02-E absorvido por 02-B / 02-C / 02-C.5. 02-F **APPROVED** (D-047). **HOME SLICE 02 — APPROVED.** Seções não construídas não são renderizadas; a navegação só expõe destinos existentes.
+> Status: **plano aprovado (D-040, D-042).** 02-0 concluído (D-041). 02-A concluído (models e dados do Skill Loadout). 02-B **APPROVED** (D-043; o Arsenal foi revisto pela Concept C em D-092, `docs/25`). 02-C **APPROVED** (D-044). 02-C.5 **APPROVED** (D-045, D-046): artwork System Horizon Refined integrado ao MC-001; Inventory público com o MC-001. 02-D absorvido por 02-C / 02-C.5; 02-E absorvido por 02-B / 02-C / 02-C.5. 02-F **APPROVED** (D-047). **HOME SLICE 02 — APPROVED.** Seções não construídas não são renderizadas; a navegação só expõe destinos existentes.
 > Escopo: **Skill Loadout** (contexto profissional) e **Project Inventory** (protagonista do slice).
 > Header, Hero e Player Status aprovados (D-039) não mudam, salvo regressão justificada e relatada.
 

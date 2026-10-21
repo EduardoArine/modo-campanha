@@ -78,7 +78,7 @@ Inclui espaço para um **pequeno texto humano de apresentação**, escrito em pr
 
 As capacidades, conhecimentos e ferramentas que Eduardo leva para os projetos: **quatro módulos de capacidades, não quatro cards**. "Tree" foi abandonado porque sugeria progressão, níveis e unlocks.
 
-- Grupos: **BUILD · PRODUCT · AI · GAME DNA** (códigos decorativos BLD · PRD · AI · GDN, sem numeração).
+- Grupos: **BUILD · PRODUCT · AI · GAME DNA** (códigos decorativos BLD · PRD · AI · GDN, sem numeração). **Revisto pela Concept C (D-092, `docs/25`):** em pt CONSTRUÇÃO · PRODUTO · INTELIGÊNCIA ARTIFICIAL · DNA DE GAMES (CON · PRD · IA · DNA); em en DEVELOPMENT · PRODUCT · ARTIFICIAL INTELLIGENCE · GAME DNA (DEV · PRD · AI · GDN); seletores interativos, uma especialidade por vez.
 - Conteúdo: Skill Loadout v1 aprovado (D-041), bilíngue, em `src/app/data/skills.data.ts` (`SKILL_LOADOUT`).
 - **Sem nenhuma graduação:** porcentagem, barras, estrelas, levels, XP por skill, rótulos de proficiência, ranking ou os antigos estados unlocked/evolving/core/exploring.
 - Itens são conteúdo informativo (texto em lista), nunca chips, botões ou filtros.

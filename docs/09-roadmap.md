@@ -104,6 +104,7 @@ Backlog:
 - ✅ Hero (H1 semântico = Eduardo Arine, D-026) — Slice 01
 - ✅ Player Status — Slice 01
 - ✅ Skill Loadout (antes "Skill Tree"; sem estados/graduação, D-040) — Slice 02
+  - ⏳ Concept C — Loadout Interativo (D-092, `docs/25`): implementado, aguardando aprovação do Eduardo
 - ✅ Project Inventory (MC-001 com artwork aprovado) — Slice 02
 - ➡️ CRT Project Viewer na experiência da Home → **FASE 5** (o componente visual `mc-crt-project-viewer` existe no design system desde a FASE 2)
 - ➡️ Wordmark MODO CAMPANHA em SVG → backlog do design system (não implementado). Símbolo: D-085

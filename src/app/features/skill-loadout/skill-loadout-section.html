@@ -1,17 +1,81 @@
 <section id="skill-loadout" class="mc-page-grid section" aria-labelledby="skill-loadout-title">
-  <mc-section-header [heading]="ui().sections.skillLoadout" headingId="skill-loadout-title" />
-
-  <div class="modules">
-    @for (group of groups; track group.id) {
-      <div class="module">
-        <p class="code" aria-hidden="true">{{ locale.pick(group.code) }}</p>
-        <h3 class="title" [id]="'skill-group-' + group.id">{{ locale.pick(group.title) }}</h3>
-        <ul class="skills" role="list" [attr.aria-labelledby]="'skill-group-' + group.id">
-          @for (skill of group.skills; track skill.id) {
-            <li>{{ locale.pick(skill.name) }}</li>
-          }
-        </ul>
+  <div class="panel">
+    <header class="head">
+      <div class="titles">
+        <p class="eyebrow">{{ ui().skillLoadout.eyebrow }}</p>
+        <h2 id="skill-loadout-title" class="title">{{ ui().sections.skillLoadout }}</h2>
+        <p class="lead">{{ ui().skillLoadout.lead }}</p>
       </div>
-    }
+      <button
+        #allToggle
+        mcAction="text"
+        class="all"
+        aria-controls="skill-loadout-board"
+        (click)="toggleAll()"
+      >
+        {{ showAll() ? ui().skillLoadout.back : ui().skillLoadout.viewAll }}
+      </button>
+    </header>
+
+    <div class="selectors" role="group" [attr.aria-label]="ui().skillLoadout.specialties">
+      @for (group of groups; track group.id) {
+        <button
+          type="button"
+          class="selector"
+          [attr.data-group]="group.id"
+          [attr.aria-pressed]="!showAll() && active() === group.id"
+          aria-controls="skill-loadout-board"
+          (click)="select(group.id)"
+        >
+          <span class="tile" aria-hidden="true"><mc-icon [name]="group.icon" [size]="24" /></span>
+          <span class="code" aria-hidden="true">{{ locale.pick(group.code) }}</span>
+          <span class="name">{{ locale.pick(group.title) }}</span>
+        </button>
+      }
+    </div>
+
+    <div id="skill-loadout-board" class="board" [class.is-all]="showAll()">
+      @if (showAll()) {
+        <h3 class="mc-visually-hidden">{{ ui().skillLoadout.allTitle }}</h3>
+      }
+      @for (group of visible(); track group.id) {
+        <div class="group" [attr.data-group]="group.id">
+          <div class="group-head">
+            <span class="tile" aria-hidden="true"><mc-icon [name]="group.icon" [size]="24" /></span>
+            <div class="group-titles">
+              @if (showAll()) {
+                <h4 class="group-title">
+                  <span class="code">{{ locale.pick(group.code) }}</span> —
+                  {{ locale.pick(group.title) }}
+                </h4>
+              } @else {
+                <h3 class="group-title">
+                  <span class="code">{{ locale.pick(group.code) }}</span> —
+                  {{ locale.pick(group.title) }}
+                </h3>
+              }
+              <p class="group-text">{{ locale.pick(group.description) }}</p>
+            </div>
+            <p class="count">{{ group.skills.length }} {{ ui().skillLoadout.skills }}</p>
+          </div>
+          <ul class="skills" role="list">
+            @for (skill of group.skills; track skill.id) {
+              <li class="skill">
+                <span class="tile" aria-hidden="true"
+                  ><mc-icon [name]="skill.icon" [size]="24"
+                /></span>
+                {{ locale.pick(skill.name) }}
+              </li>
+            }
+          </ul>
+        </div>
+      }
+      @if (showAll()) {
+        <!-- A lista passa de 2.300 px no celular: um segundo "Voltar" no fim (D-092). -->
+        <button mcAction="text" class="back-end" (click)="backFromEnd()">
+          {{ ui().skillLoadout.back }}
+        </button>
+      }
+    </div>
   </div>
 </section>

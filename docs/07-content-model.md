@@ -107,10 +107,14 @@ type SkillGroupId = 'build' | 'product' | 'ai' | 'game-dna';
 interface Skill {
   id: string;
   name: Localized;
+  icon: McIconName; // pictograma autoral (D-092)
 }
 interface SkillGroup {
   id: SkillGroupId;
+  code: Localized; // CON / DEV
   title: Localized;
+  description: Localized; // frase da especialidade no Loadout (D-092)
+  icon: McIconName;
   skills: readonly Skill[];
 }
 ```
