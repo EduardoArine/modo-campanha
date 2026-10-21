@@ -18,6 +18,8 @@ ul {
 // Corpo em cima, navegação no rodapé (o painel acompanha a altura do mapa).
 .panel {
   display: grid;
+  // minmax(0, 1fr): o conteúdo (fotos, links longos) nunca alarga o painel.
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: 1fr auto;
   gap: space(4);
   height: 100%;
@@ -33,6 +35,7 @@ ul {
 
 .body {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: space(3);
 
@@ -114,7 +117,8 @@ ul {
   img {
     display: block;
     flex: 1 1 14rem;
-    max-width: 24rem;
+    min-width: 0;
+    max-width: min(24rem, 100%);
     height: auto;
     border: var(--mc-border-width-default) solid var(--mc-border-subtle);
     border-radius: var(--mc-radius-sm);
