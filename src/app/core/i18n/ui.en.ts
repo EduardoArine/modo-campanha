@@ -58,13 +58,22 @@ export const UI_EN: UiDictionary = {
     journey: 'ABOUT THE JOURNEY',
     state: 'CURRENT STATE',
   },
+  skillLoadout: {
+    eyebrow: 'SPECIALTY LOADOUT',
+    lead: 'Select a specialty to explore my main skills.',
+    specialties: 'Specialties',
+    viewAll: 'View all skills',
+    back: 'Back to loadout',
+    allTitle: 'ALL SKILLS',
+    skills: 'SKILLS',
+  },
   cart: {
     system: 'MC-CART',
     artworkPlaceholder: 'PROJECT ARTWORK',
   },
   sections: {
     playerStatus: 'PLAYER STATUS',
-    skillLoadout: 'SKILL LOADOUT',
+    skillLoadout: 'SKILL ARSENAL',
     projectInventory: 'PROJECT INVENTORY',
     campaignLog: 'CAMPAIGN LOG',
     achievements: 'ACHIEVEMENTS',

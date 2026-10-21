@@ -1,0 +1,154 @@
+// Arsenal de Habilidades (D-092): painel da especialidade ativa e visão completa.
+// Uma especialidade: grade de 3 colunas a partir de 768 px (6 e 4 itens ocupam as mesmas duas
+// linhas, sem salto de altura); 1 coluna no mobile. Visão completa: 2 × 2 grupos a partir de 1200 px.
+@use 'mc' as *;
+
+.board {
+  display: grid;
+  gap: space(6);
+  margin-top: space(4);
+  padding: space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-bg);
+
+  @include mq(xl) {
+    &.is-all {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: space(5);
+    }
+  }
+}
+
+// Troca de especialidade: entrada curta, só opacidade (sem deslocar o conteúdo). Movimento reduzido:
+// instantâneo (regra global em _base.scss).
+.group {
+  display: grid;
+  align-content: start;
+  gap: space(4);
+  min-width: 0;
+  animation: group-in 180ms ease-out;
+}
+
+@keyframes group-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.group-head {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: space(2) space(3);
+  padding-bottom: space(3);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+
+  @include mq(md) {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+  }
+
+  .tile {
+    border-color: var(--tone);
+  }
+}
+
+.group-titles {
+  display: grid;
+  gap: space(1);
+}
+
+.group-title,
+.group-text,
+.count {
+  margin: 0;
+}
+
+// Mesmo papel dos títulos de caixa do Player Status (title-m em caixa alta).
+.group-title {
+  @include type(title-m);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mc-text);
+
+  .code {
+    color: var(--tone);
+  }
+}
+
+.group-text {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+
+  // 768–1023: a frase mais longa ocupa duas linhas; reservá-las evita o salto entre especialidades.
+  @include mq(md) {
+    min-height: 2lh;
+  }
+
+  @include mq(lg) {
+    min-height: 0;
+  }
+}
+
+// Contagem real de itens (não é nível nem progresso).
+.count {
+  grid-column: 1 / -1;
+  @include type(label);
+  color: var(--mc-text-muted);
+
+  @include mq(md) {
+    grid-column: auto;
+  }
+}
+
+.skills {
+  display: grid;
+  gap: space(3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @include mq(md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .is-all & {
+    @include mq(md) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+.skill {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: space(3);
+  min-height: 3.75rem;
+  padding: space(2) space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-surface);
+  @include type(body);
+  font-weight: 500;
+  color: var(--mc-text);
+
+  // 768–1199: cabem duas linhas de nome em todos os cards (alturas iguais entre especialidades).
+  @include mq(md) {
+    min-height: 4.25rem;
+  }
+
+  @include mq(xl) {
+    min-height: 3.75rem;
+  }
+
+  .tile {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: var(--mc-panel);
+  }
+}
+
+// Segundo "Voltar ao loadout", no fim da visão completa (ocupa a linha inteira da grade).
+.back-end {
+  grid-column: 1 / -1;
+  justify-self: end;
+}

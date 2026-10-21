@@ -1,86 +1,198 @@
-// Skill Loadout (docs/13-home-slice-02.md, §1.5). Composição aberta e silenciosa:
-// sem surface, sem cards, sem objetos físicos; laranja só no código de cada módulo.
-// Desktop (≥ 1200): 4 módulos (3/12). 768–1199: 2 × 2. Mobile: 1 por linha.
+// Arsenal de Habilidades, Concept C (D-092). Esta folha: encaixe no Player Status, cabeçalho e
+// seletores. O painel da especialidade está em skill-loadout-board.scss (orçamento de CSS, D-035).
+// O Player Status (D-083, congelado) não muda: o módulo se aproxima dele por margem negativa e
+// dois engates atravessam o vão entre as molduras.
 @use 'mc' as *;
+
+// Tom de cada especialidade (só identifica a categoria; o laranja segue dominante na estrutura).
+$tones: (
+  build: specialty-build,
+  product: specialty-product,
+  ai: specialty-ai,
+  game-dna: specialty-game,
+);
 
 :host {
   display: block;
+  // Vão de space(4) até a moldura do Player Status (que termina com o padding da seção).
+  margin-top: calc(#{space(4)} - var(--mc-space-section));
 }
 
 .section {
-  padding-block: var(--mc-space-section);
+  padding-block: 0 var(--mc-space-section);
 }
 
-.modules {
-  @include columns;
-  row-gap: space(6);
-  margin-top: var(--mc-space-section-head);
-  // Alturas diferentes são esperadas (BUILD tem 6 itens): nada é esticado.
-  align-items: start;
-
-  @include mq(md) {
-    row-gap: space(7);
+@each $id, $token in $tones {
+  [data-group='#{$id}'] {
+    --tone: var(--mc-#{$token});
   }
 }
 
-.module {
-  grid-column: 1 / -1;
+// Mesma moldura do Player Status (borda de acento, superfície). Os engates (::before/::after)
+// prolongam as laterais pelo vão: o Loadout lê como módulo encaixado na ficha, não seção nova.
+.panel {
+  position: relative;
+  padding: space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  background: var(--mc-surface);
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    width: space(6);
+    // Exatamente o vão: não cobre a borda do Player Status nem a do Loadout.
+    height: space(4);
+    margin-bottom: var(--mc-border-width-default);
+    border-inline: var(--mc-border-width-default) solid var(--mc-border-accent);
+    background: var(--mc-surface);
+  }
+
+  &::before {
+    left: space(7);
+  }
+
+  &::after {
+    right: space(7);
+  }
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: space(3) space(5);
+  padding-bottom: space(4);
+  margin-bottom: space(4);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.titles {
+  flex: 1 1 22rem;
   display: grid;
-  gap: space(2);
-
-  @include mq(md) {
-    grid-column: span 4;
-  }
-
-  @include mq(lg) {
-    grid-column: span 6;
-  }
-
-  @include mq(xl) {
-    grid-column: span 3;
-  }
+  gap: space(1);
 }
 
-// Código de sistema decorativo (aria-hidden): único laranja da seção, além do marcador do header.
-.code {
+.eyebrow,
+.title,
+.lead {
   margin: 0;
+}
+
+.eyebrow {
   @include type(label);
   color: var(--mc-accent);
 }
 
-// Título do módulo + divisor sutil.
+// Menor que o título do Player Status: o Loadout é extensão da ficha.
 .title {
-  margin: 0;
-  padding-bottom: space(3);
-  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
   @include type(title-m);
-  text-transform: uppercase;
   letter-spacing: 0.06em;
+  text-transform: uppercase;
   color: var(--mc-text);
 }
 
-// Itens informativos: texto em lista, marcador discreto; sem hover, pointer ou foco.
-.skills {
+.lead {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+.all {
+  flex: none;
+}
+
+// Seletores: 2 × 2 até 1023 px, uma linha a partir de 1024 px.
+.selectors {
   display: grid;
-  gap: space(2);
-  margin: space(2) 0 0;
-  padding: 0;
-  list-style: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: space(3);
 
-  li {
-    position: relative;
-    padding-inline-start: space(4);
-    @include type(body);
-    color: var(--mc-text-secondary);
+  @include mq(lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
 
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0.7em;
-      left: 0;
-      width: space(1);
-      height: space(1);
-      background: var(--mc-border-default);
+.selector {
+  position: relative;
+  display: grid;
+  // Mobile: nome em linha própria, com a largura toda (sem quebrar palavras).
+  grid-template: 'tile code' auto 'name name' auto / auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: space(3);
+  min-height: 4.5rem;
+  padding: space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-bg);
+  color: var(--mc-text-secondary);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease-out,
+    background-color 160ms ease-out;
+
+  @include mq(md) {
+    grid-template: 'tile code' auto 'tile name' auto / auto minmax(0, 1fr);
+  }
+
+  &:hover {
+    border-color: var(--mc-border-default);
+    background-color: var(--mc-interactive-hover);
+  }
+
+  // Selecionado: borda no tom, contorno interno, nome claro e o indicador apontando para o painel
+  // (não depende só da cor).
+  &[aria-pressed='true'] {
+    border-color: var(--tone);
+    box-shadow: inset 0 0 0 var(--mc-border-width-default) var(--tone);
+    background: var(--mc-panel);
+    color: var(--mc-text);
+
+    // Só com os quatro na mesma linha (no 2 × 2 apontaria para o seletor de baixo).
+    @include mq(lg) {
+      &::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        left: calc(50% - #{space(2)});
+        width: space(4);
+        height: space(2);
+        clip-path: polygon(0 0, 100% 0, 50% 100%);
+        background: var(--tone);
+      }
+    }
+
+    .tile {
+      border-color: var(--tone);
     }
   }
+
+  .tile {
+    grid-area: tile;
+  }
+}
+
+.code {
+  grid-area: code;
+  @include type(title-m);
+  letter-spacing: 0.04em;
+  color: var(--tone);
+}
+
+.name {
+  grid-area: name;
+  @include type(label);
+  overflow-wrap: break-word;
+}
+
+// Ladrilho do ícone (seletores, cabeçalho do grupo e habilidades): o ícone leva o tom.
+.tile {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-surface);
+  color: var(--tone);
 }

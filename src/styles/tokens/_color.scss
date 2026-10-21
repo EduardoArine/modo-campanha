@@ -1,6 +1,7 @@
 // Cores do MC Design System (docs/11-design-system.md, Colors). Aprovadas em D-014 e D-024.
 // Duas camadas: primitivos (`--mc-color-*`, só dentro dos tokens) e semânticos (`--mc-*`,
-// os únicos que componentes podem usar). Nenhuma cor nova: tudo deriva da paleta D-014.
+// os únicos que componentes podem usar). Tudo deriva da paleta D-014; a única extensão são os dois
+// tons de identidade das especialidades do Arsenal (violet-400, coral-400, D-092).
 @use 'sass:list';
 @use 'sass:map';
 @use 'sass:meta';
@@ -21,6 +22,9 @@ $color-primitives: (
   teal-500: #3fa7a3,
   green-500: #7fb069,
   red-600: #c44536,
+  // Identidade das especialidades do Arsenal (D-092): só para diferenciar IA e DNA DE GAMES.
+  violet-400: #a393d9,
+  coral-400: #e07a5f,
 );
 
 // Valor = nome de primitivo, ou `(primitivo, alpha)` para camadas translúcidas que se
@@ -59,6 +63,12 @@ $color-semantic: (
   cool: teal-500,
   status-online: green-500,
   status-danger: red-600,
+  // Identidade das especialidades do Arsenal (D-092): diferenciam as categorias, não significam
+  // status nem nível. O laranja continua dominante na estrutura.
+  specialty-build: orange-500,
+  specialty-product: teal-500,
+  specialty-ai: violet-400,
+  specialty-game: coral-400,
   // Bordas
   border-subtle: (cream-100, 12%),
   border-default: (cream-100, 40%),

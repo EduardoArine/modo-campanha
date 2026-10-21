@@ -1,3 +1,4 @@
+import { MC_ICONS } from '../shared/ui/icon/icons';
 import { SKILL_LOADOUT } from './skills.data';
 
 const names = (locale: 'pt-BR' | 'en') =>
@@ -8,13 +9,19 @@ const names = (locale: 'pt-BR' | 'en') =>
 describe('SKILL_LOADOUT (runtime data)', () => {
   it('has exactly the four approved groups, in order', () => {
     expect(SKILL_LOADOUT.map((group) => group.id)).toEqual(['build', 'product', 'ai', 'game-dna']);
-    expect(SKILL_LOADOUT.map((group) => group.code.en)).toEqual(['BLD', 'PRD', 'AI', 'GDN']);
+    expect(SKILL_LOADOUT.map((group) => group.code.en)).toEqual(['DEV', 'PRD', 'AI', 'GDN']);
     expect(SKILL_LOADOUT.map((group) => group.code['pt-BR'])).toEqual(['CON', 'PRD', 'IA', 'DNA']);
     expect(SKILL_LOADOUT.map((group) => group.title.en)).toEqual([
-      'BUILD',
+      'DEVELOPMENT',
       'PRODUCT',
-      'AI',
+      'ARTIFICIAL INTELLIGENCE',
       'GAME DNA',
+    ]);
+    expect(SKILL_LOADOUT.map((group) => group.title['pt-BR'])).toEqual([
+      'CONSTRUÇÃO',
+      'PRODUTO',
+      'INTELIGÊNCIA ARTIFICIAL',
+      'DNA DE GAMES',
     ]);
   });
 
@@ -90,14 +97,33 @@ describe('SKILL_LOADOUT (runtime data)', () => {
 
   it('carries no proficiency or authoring fields at runtime', () => {
     for (const group of SKILL_LOADOUT) {
-      expect(Object.keys(group).sort()).toEqual(['code', 'id', 'skills', 'title']);
+      expect(Object.keys(group).sort()).toEqual([
+        'code',
+        'description',
+        'icon',
+        'id',
+        'skills',
+        'title',
+      ]);
       for (const skill of group.skills) {
-        expect(Object.keys(skill).sort()).toEqual(['id', 'name']);
+        expect(Object.keys(skill).sort()).toEqual(['icon', 'id', 'name']);
       }
     }
     expect(JSON.stringify(SKILL_LOADOUT)).not.toMatch(
       /level|percent|rating|stars|state|status|candidate|unlocked|evolving|core|exploring|xp/i,
     );
+  });
+
+  it('gives every group and skill an authorial icon that exists in the icon set', () => {
+    const icons = SKILL_LOADOUT.flatMap((group) => [
+      group.icon,
+      ...group.skills.map((s) => s.icon),
+    ]);
+
+    expect(icons.every((name) => name in MC_ICONS)).toBe(true);
+    // Uma habilidade por pictograma (os grupos podem reaproveitar o do Player Status).
+    const skillIcons = SKILL_LOADOUT.flatMap((group) => group.skills.map((s) => s.icon));
+    expect(new Set(skillIcons).size).toBe(skillIcons.length);
   });
 
   it('uses unique skill ids', () => {

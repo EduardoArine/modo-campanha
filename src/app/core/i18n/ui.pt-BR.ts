@@ -62,6 +62,16 @@ export const UI_PT_BR = {
     journey: 'SOBRE A JORNADA',
     state: 'ESTADO ATUAL',
   },
+  // Arsenal de Habilidades (Concept C, D-092): rótulos do Loadout; o conteúdo está em skills.data.ts.
+  skillLoadout: {
+    eyebrow: 'LOADOUT DE ESPECIALIDADES',
+    lead: 'Selecione uma especialidade para explorar minhas principais habilidades.',
+    specialties: 'Especialidades',
+    viewAll: 'Ver todas as habilidades',
+    back: 'Voltar ao loadout',
+    allTitle: 'TODAS AS HABILIDADES',
+    skills: 'HABILIDADES',
+  },
   cart: {
     system: 'MC-CART',
     artworkPlaceholder: 'ARTE DO PROJETO',
