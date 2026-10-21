@@ -1,6 +1,6 @@
 // Diário de Campanha (D-091). Abertura editorial (cabeçalho padrão das seções + texto curto),
-// seletor de capítulos, capítulo ativo (mapa ~70% + painel ~30% a partir de 1200; empilhados
-// abaixo disso) e prévias dos outros capítulos. Sem cards de jogo, sombras ou glow.
+// seletor de capítulos e capítulo ativo (mapa ~70% + painel ~30% a partir de 1200; empilhados
+// abaixo disso). Sem cards de jogo, sombras ou glow.
 @use 'mc' as *;
 
 :host {
@@ -98,109 +98,4 @@ ul {
 .context {
   @include type(caption);
   color: var(--mc-text-muted);
-}
-
-.others {
-  display: grid;
-  gap: var(--mc-gutter);
-  margin-top: space(5);
-  padding: 0;
-  list-style: none;
-
-  @include mq(md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  @include mq(xl) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-// Prévia: texto sobre superfície lisa; o cenário entra à direita, apagando em direção ao texto.
-.other {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: space(1);
-  padding: space(4) space(5);
-  overflow: hidden;
-  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
-  border-radius: var(--mc-radius-sm);
-  background: var(--mc-panel);
-
-  > :not(.other-art) {
-    position: relative;
-  }
-}
-
-.other-art {
-  position: absolute;
-  inset: 0 0 0 45%;
-  width: 55%;
-  height: 100%;
-  object-fit: cover;
-  // Some em direção ao texto e ao rodapé: o botão fica sempre sobre a superfície lisa.
-  mask-image:
-    linear-gradient(to right, transparent, #000 70%),
-    linear-gradient(to bottom, #000 45%, transparent 75%);
-  mask-composite: intersect;
-  opacity: 0.7;
-}
-
-.other-art--placeholder {
-  background: linear-gradient(160deg, var(--mc-surface), var(--mc-elevated));
-}
-
-.other-code,
-.other-count {
-  @include type(label);
-  color: var(--mc-accent);
-}
-
-.other-count {
-  color: var(--mc-text-muted);
-}
-
-.other-name {
-  max-width: 70%;
-  @include type(title-m);
-  color: var(--mc-text);
-}
-
-.other-text {
-  max-width: 70%;
-  @include type(body-s);
-  color: var(--mc-text-secondary);
-}
-
-.other-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: space(3);
-  // Rodapé no fundo do card: alinhado entre cards de textos diferentes.
-  margin-top: auto;
-  padding-top: space(2);
-}
-
-// Botão redondo com seta (como na prancha); o nome acessível diz qual capítulo abre.
-.other-open {
-  display: grid;
-  place-items: center;
-  width: 44px;
-  height: 44px;
-  padding: 0;
-  border: var(--mc-border-width-default) solid var(--mc-accent);
-  border-radius: var(--mc-radius-round);
-  background: var(--mc-panel);
-  color: var(--mc-accent);
-
-  &:hover {
-    background: var(--mc-interactive-hover);
-  }
-
-  &:focus-visible {
-    @include focus-ring;
-  }
 }

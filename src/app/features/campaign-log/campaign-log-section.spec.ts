@@ -218,19 +218,19 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     });
   });
 
-  it('previews the other chapters below, and opening one moves focus to its title', async () => {
+  it('opens the next chapter from the last milestone and moves focus to its title', async () => {
     const el = await renderAt('/');
-    expect(texts(el, '.other-name')).toEqual(['DO CONTROLE AO CÓDIGO', 'DO CÓDIGO AO PRODUTO']);
-    const open = el.querySelectorAll('.other button')[1];
-    expect(open.getAttribute('aria-label')).toBe(
-      'Abrir capítulo: CAPÍTULO 02 — DO CÓDIGO AO PRODUTO',
-    );
-    click(open);
+    click(nodes(el)[4]);
+    click(steps(el)[1]);
     await fixture.whenStable();
 
-    expect(text(el, '#diary-chapter-title')).toBe('DO CÓDIGO AO PRODUTO');
+    expect(text(el, '#diary-chapter-title')).toBe('DO CONTROLE AO CÓDIGO');
     expect(document.activeElement?.id).toBe('diary-chapter-title');
-    expect(texts(el, '.other-name')).toEqual(['ORIGEM', 'DO CONTROLE AO CÓDIGO']);
+  });
+
+  it('ends with the active chapter: no redundant previews of the other chapters', async () => {
+    const el = await renderAt('/');
+    expect(el.querySelector('.others, .other')).toBeNull();
   });
 
   it('shows no game metrics or invented status', async () => {
@@ -248,6 +248,5 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     );
     expect(steps(el)[1].textContent?.trim()).toBe('Next checkpoint');
     expect(text(el, 'app-diary-milestone .toggle')).toBe('Read the full story');
-    expect(text(el, '.others-title')).toBe('OTHER CHAPTERS');
   });
 });

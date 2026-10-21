@@ -162,8 +162,6 @@ export const UI_EN: UiDictionary = {
       previous: 'Previous checkpoint',
       next: 'Next checkpoint',
       nextChapter: 'Next chapter',
-      open: 'Open chapter',
-      others: 'OTHER CHAPTERS',
     },
   },
   achievements: {
