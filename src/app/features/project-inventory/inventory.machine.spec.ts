@@ -209,4 +209,58 @@ describe('inventory machine — READY art failure', () => {
     expect(inventoryView(failed).slot).toBe('inserted');
     expect(run([{ type: 'play' }], failed)).toMatchObject({ screen: 'teaser' });
   });
+
+  it('opens the dossier from the cover, moves between sections and goes back without ejecting (H3)', () => {
+    const ready = run([{ type: 'insert', reduced: true }]);
+    expect(ready).toEqual({ kind: 'ready', cartridge: 'mc-001', screen: 'art' });
+    const dossier = run([{ type: 'explore' }], ready);
+    expect(dossier).toEqual({ kind: 'ready', cartridge: 'mc-001', screen: 'dossier', section: 0 });
+    expect(inventoryView(dossier)).toMatchObject({ slot: 'inserted', controls: true });
+    const third = run([{ type: 'section', index: 2 }], dossier);
+    expect(third).toMatchObject({ screen: 'dossier', section: 2 });
+    // A mesma seção não gera novo estado; seção fora do dossiê é ignorada.
+    expect(run([{ type: 'section', index: 2 }], third)).toBe(third);
+    expect(run([{ type: 'section', index: 1 }], ready)).toBe(ready);
+    // Voltar à capa: o cartucho continua inserido.
+    expect(run([{ type: 'cover' }], third)).toEqual({
+      kind: 'ready',
+      cartridge: 'mc-001',
+      screen: 'art',
+    });
+  });
+
+  it('swaps from the dossier back to the new cover, never a dossier of another cartridge (H3)', () => {
+    const dossier = run([
+      { type: 'insert', reduced: true },
+      { type: 'explore' },
+      { type: 'section', index: 3 },
+    ]);
+    const swapping = run([{ type: 'select', cartridge: 'mc-004', reduced: false }], dossier);
+    expect(swapping).toMatchObject({ kind: 'ejecting', next: 'mc-004', then: 'insert' });
+    const ready = run([{ type: 'ejected' }, { type: 'seated' }, { type: 'loaded' }], swapping);
+    expect(ready).toEqual({ kind: 'ready', cartridge: 'mc-004', screen: 'art' });
+    expect(run([{ type: 'select', cartridge: 'mc-005', reduced: true }], dossier)).toEqual({
+      kind: 'ready',
+      cartridge: 'mc-005',
+      screen: 'art',
+    });
+    // Ejetar do dossiê: ejeção real, slot vazio.
+    expect(run([{ type: 'eject', reduced: true }], dossier)).toEqual({
+      kind: 'empty',
+      cartridge: 'mc-001',
+      ejected: true,
+    });
+  });
+
+  it('returns to the cover from the teaser and explores from it (H3)', () => {
+    const teaser = run([{ type: 'insert', reduced: true }, { type: 'play' }]);
+    expect(teaser).toMatchObject({ screen: 'teaser' });
+    expect(run([{ type: 'cover' }], teaser)).toMatchObject({ screen: 'art' });
+    expect(run([{ type: 'explore' }], teaser)).toMatchObject({ screen: 'dossier', section: 0 });
+  });
+
+  it('ignores a late teaser failure once the dossier is open (H3)', () => {
+    const dossier = run([{ type: 'insert', reduced: true }, { type: 'explore' }]);
+    expect(run([{ type: 'teaser-failed' }], dossier)).toBe(dossier);
+  });
 });

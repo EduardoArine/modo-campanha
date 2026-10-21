@@ -553,3 +553,34 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 - ~~**Antes da publicação:** harmonizar a Hero com a nova carcaça do MC-001.~~ Resolvida: Hero na D-089; `og:image` na D-088 (atualização).
 - **Separada:** revisão das traduções antigas do Campaign Log.
 - **Paco:** sem código MC-CART por enquanto.
+
+## 19. H3 — MC-CART Library + CRT Project Viewer (D-093, 2026-10-21)
+
+**A biblioteca escolhe, o MC-01 carrega, o CRT apresenta.** Evolução do H2 (§17) e da biblioteca (§18), sem reconstruir: mesmos console, CRT, geometria, máscaras do vidro, tempos e teaser.
+
+### 19.1 Componentes (`features/project-inventory/`)
+
+| Componente | Papel |
+| --- | --- |
+| `project-inventory-section` | estado único, biblioteca / "← Biblioteca", estação, barra do console |
+| `crt-cover` | capa no vidro: arte oficial + código, nome, tipo, descrição, tecnologias, EXPLORAR PROJETO (MC-001: teaser) |
+| `crt-dossier` | dossiê no vidro: cabeçalho, seções (lista ou seletor), área com rolagem, 01 / 06, Anterior / Próxima |
+| `crt-dossier-section` | conteúdo de uma seção, só com dados reais do `Project` |
+| `project-case` | só no fallback (MC-01 indisponível) |
+
+### 19.2 Estados
+
+empty → (inserir) → inserting → loading → **ready(art = CAPA)** → (explorar) → **ready(dossier, seção)** → (voltar à capa) → ready(art).
+
+- **No READY:** teaser (MC-001) ⇄ capa; Ejetar a qualquer momento.
+- **Troca:** escolher outro cartucho na biblioteca, com um cartucho no READY (capa ou teaser), ejeta, insere, carrega e abre a **capa** do novo. No dossiê, a biblioteca está recolhida: "← Biblioteca" volta à capa e mostra a coleção.
+
+### 19.3 Validação
+
+- **Larguras e idiomas:** 1440 / 1024 / 820 / 390, pt e en, nos seis cartuchos (capa e dossiê) e nas seis seções do Aedes Revenge.
+- **Resultado:**
+  - nada do vidro passa da borda do tubo;
+  - sem rolagem lateral da página;
+  - só a área da seção rola dentro do CRT.
+- **Fluxo com movimento real:** seleção, inserção, explorar, seções, voltar à capa, voltar à biblioteca, troca automática, teaser e ejeção.
+- **Teclado:** Tab, Enter e Espaço, com o foco nos lugares descritos na D-093.

@@ -109,6 +109,35 @@ export const UI_PT_BR = {
       previous: 'Cartuchos anteriores',
       next: 'Próximos cartuchos',
     },
+    // H3 (D-093): capa e dossiê do projeto dentro do CRT.
+    cover: {
+      kind: 'PROJETO',
+      explore: 'Explorar projeto',
+    },
+    dossier: {
+      back: 'Voltar à capa',
+      library: 'Biblioteca',
+      toLibrary: 'Voltar à biblioteca',
+      nav: 'Seções do dossiê',
+      pick: 'Seção do dossiê',
+      previous: 'Anterior',
+      next: 'Próxima',
+      nextSection: 'Próxima seção',
+      previousSection: 'Seção anterior',
+      section: 'Seção',
+      of: 'de',
+      artCaption: 'ARTE DO CARTUCHO',
+      evidence: 'EVIDÊNCIAS',
+      sections: {
+        about: 'Sobre o projeto',
+        challenge: 'Problema',
+        role: 'Minha contribuição',
+        stack: 'Tecnologias',
+        highlights: 'Marcos',
+        learnings: 'Aprendizados',
+        learningsEvidence: 'Aprendizados e evidências',
+      },
+    },
     slot: {
       empty: 'SLOT VAZIO',
       loading: 'CARREGANDO',
@@ -116,7 +145,6 @@ export const UI_PT_BR = {
       ejecting: 'EJETANDO',
       unavailable: 'MC-01 INDISPONÍVEL',
     },
-    ready: 'PRONTO',
     teaser: {
       play: 'Reproduzir teaser',
       pause: 'Pausar teaser',
@@ -127,7 +155,7 @@ export const UI_PT_BR = {
     status: {
       loading: 'Carregando cartucho.',
       ejected: 'Cartucho ejetado.',
-      teaserUnavailable: 'O teaser não carregou. O case do projeto continua disponível.',
+      teaserUnavailable: 'O teaser não carregou. O dossiê do projeto continua disponível.',
       selected: 'Cartucho selecionado:',
       swapping: 'Trocando para',
       ready: 'pronto.',

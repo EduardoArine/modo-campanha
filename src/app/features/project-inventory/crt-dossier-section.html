@@ -1,0 +1,81 @@
+@let p = project();
+@let d = ui().inventory.dossier;
+@switch (section()) {
+  @case ('about') {
+    <p class="lead">{{ locale.pick(p.description) }}</p>
+    @if (p.ongoing) {
+      <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
+    }
+    @if (p.cartridge.artwork; as art) {
+      <!-- Ilustração do cartucho, rotulada como arte (não é captura de tela do produto). -->
+      <figure class="art">
+        <img
+          [src]="art.src"
+          [attr.srcset]="art.srcset ?? null"
+          sizes="(min-width: 1200px) 420px, 80vw"
+          [width]="art.width"
+          [height]="art.height"
+          [alt]="locale.pick(art.alt)"
+          loading="lazy"
+          decoding="async"
+        />
+        <figcaption>{{ d.artCaption }}</figcaption>
+      </figure>
+    }
+    <p class="meta">{{ locale.pick(p.type) }}</p>
+    @for (e of p.experiences; track e.kind) {
+      <p class="meta">
+        {{ locale.pick(e.label) }}
+        {{
+          e.status === 'available'
+            ? ui().inventory.experience.available
+            : ui().inventory.experience.inDevelopment
+        }}
+      </p>
+    }
+  }
+  @case ('challenge') {
+    <p class="lead">{{ locale.pick(p.challenge!) }}</p>
+  }
+  @case ('role') {
+    <p class="lead">{{ locale.pick(p.role) }}</p>
+  }
+  @case ('stack') {
+    <ul class="chips" role="list">
+      @for (tech of p.technologies; track tech) {
+        <li>{{ tech }}</li>
+      }
+    </ul>
+  }
+  @case ('highlights') {
+    <ul class="list" role="list">
+      @for (h of locale.pick(p.highlights!); track h) {
+        <li>{{ h }}</li>
+      }
+    </ul>
+  }
+  @case ('learnings') {
+    <ul class="list" role="list">
+      @for (l of locale.pick(p.learnings); track l) {
+        <li>{{ l }}</li>
+      }
+    </ul>
+    @if (p.links.length) {
+      <p class="kind">{{ d.evidence }}</p>
+      <ul class="links" role="list">
+        @for (link of p.links; track link.url) {
+          <li>
+            <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              {{ locale.pick(link.label) }} <mc-icon name="external" />
+              <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+            </a>
+            <!-- Contexto (ex.: autoria do artigo), sem atribuir a obra ao Eduardo. -->
+            @if (link.note; as note) {
+              <p class="note">{{ locale.pick(note) }}</p>
+            }
+          </li>
+        }
+      </ul>
+    }
+  }
+}

@@ -1,6 +1,7 @@
-// Project Inventory — H2 (D-077, docs/24 §17). Composição: no desktop, editorial + MC-01 à esquerda e
-// CRT frontal à direita, com a mesma largura (6 + 6) e a mesma linha de base; o cartucho, mais alto,
-// é o protagonista do INITIAL. Tablet: 4 + 4. Mobile: editorial → MC-01 → ação → CRT → case.
+// Project Inventory — H3 (D-093, docs/24 §19): biblioteca no topo; estação com o MC-01 à esquerda e
+// o CRT, protagonista, à direita (≥ 1024: 42/58 na capa; no dossiê, 34/66 e 28/72 a partir de
+// 1200). Abaixo de 1024: CRT em cima e console embaixo; no celular (< 768) o CRT sangra pelas laterais (o vidro 4:3 real precisa
+// da largura toda) e o console fica menor. A barra do console junta estado e ação.
 @use 'mc' as *;
 
 :host {
@@ -9,143 +10,137 @@
 
 .section {
   padding-block: var(--mc-space-section);
+  // O CRT do celular passa da largura do conteúdo: sem rolagem lateral da página.
+  overflow-x: clip;
 }
 
-p,
-h3,
-ul {
+p {
   margin: 0;
 }
 
-// Proporção dos aparelhos: a TV é a protagonista e o console, o aparelho que roda o cartucho.
-// Duas colunas a partir do tablet: 45/55 (820) e 44/56 (≥ 1024), com 48 px entre os aparelhos;
-// em 1440 a TV fica ~1,27× mais larga que o console. Mobile: console a 85%, TV na largura toda.
-.h2 {
-  @include columns;
-  row-gap: space(5);
+.library,
+.to-library {
   margin-top: var(--mc-space-section-head);
+}
+
+.to-library {
+  justify-self: start;
+}
+
+.to-library-name {
+  color: var(--mc-text-secondary);
+}
+
+.station {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: space(5);
+  margin-top: space(6);
   align-items: end;
 
-  @include mq(md) {
-    grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
-    column-gap: space(7);
+  @include mq(lg) {
+    grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+    column-gap: space(6);
+    transition: grid-template-columns 300ms ease-out;
+
+    .is-dossier & {
+      grid-template-columns: minmax(0, 34fr) minmax(0, 66fr);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
   }
 
-  @include mq(lg) {
-    grid-template-columns: minmax(0, 44fr) minmax(0, 56fr);
+  @include mq(xl) {
+    .is-dossier & {
+      grid-template-columns: minmax(0, 28fr) minmax(0, 72fr);
+    }
   }
 }
 
-.intro {
-  grid-column: 1 / -1;
+.tv-area {
+  min-width: 0;
+
+  // Celular: a TV ocupa 122% da tela, centrada; o vidro fica a ~8 px das bordas.
+  @media (max-width: 767.98px) {
+    width: 122vw;
+    margin-inline: calc((100% - 122vw) / 2);
+  }
+
+  @include mq(lg) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+.console-area {
+  container-type: inline-size;
   display: grid;
-  gap: space(2);
+  gap: space(4);
+  justify-self: center;
+  width: min(100%, 30rem);
 
   @include mq(lg) {
     grid-column: 1;
     grid-row: 1;
-    align-self: start;
-  }
-}
-
-.eyebrow {
-  @include type(label);
-  color: var(--mc-accent);
-}
-
-.name {
-  @include type(section-title);
-  color: var(--mc-text);
-}
-
-.desc {
-  max-width: 52ch;
-  @include type(body);
-  color: var(--mc-text-secondary);
-}
-
-.experiences {
-  @include type(body-s);
-  color: var(--mc-text);
-}
-
-// O console escala inteiro (as três camadas juntas) com a largura da coluna.
-.console-area,
-.fallback {
-  grid-column: 1 / -1;
-  display: grid;
-  gap: space(4);
-  justify-self: center;
-  width: 85%;
-
-  @include mq(md) {
-    grid-column: 1;
     justify-self: stretch;
     width: auto;
   }
+}
 
-  @include mq(lg) {
-    grid-row: 2;
+// Barra do console: LED + cartucho/estado + UMA ação (Inserir ou Ejetar), altura fixa.
+.bar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: space(3);
+  min-height: calc(#{space(8)} + #{space(4)});
+  padding: space(2) space(3) space(2) space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+}
+
+.bar-text {
+  display: grid;
+  gap: space(1);
+  min-width: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
   }
 }
 
-// Estado do slot em cima e ação embaixo, com a altura dos dois reservada em todas as larguras: o
-// texto do slot não muda de lugar entre os estados e nada empurra a página. Mesma altura dos
-// controles do CRT: console e TV dividem a mesma linha de base.
-.action {
-  min-height: calc(#{space(8)} + #{space(3)});
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: space(3);
+// Coluna do console estreita (dossiê): a ação desce para a linha de baixo.
+@container (max-width: 340px) {
+  .bar {
+    grid-template-columns: auto minmax(0, 1fr);
+
+    > :last-child {
+      grid-column: 1 / -1;
+      justify-self: stretch;
+    }
+  }
 }
 
-.tv-area {
-  grid-column: 1 / -1;
+.bar-name {
+  @include type(body-s);
+  font-weight: 600;
+  color: var(--mc-text);
+}
+
+// Fallback: o MC-CART canônico e, abaixo, o case em HTML (fora do vidro).
+.fallback {
   display: grid;
   gap: space(4);
-
-  @include mq(md) {
-    grid-column: 2;
-  }
-
-  @include mq(lg) {
-    grid-row: 1 / span 2;
-  }
-}
-
-// Controles do CRT: o mesmo padrão do console (estado em cima, ações embaixo), alinhados com ele;
-// altura do READY reservada desde o INITIAL.
-.tv-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: space(3);
-  min-height: calc(#{space(8)} + #{space(3)});
-}
-
-.tv-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: space(3) space(4);
+  justify-items: start;
 }
 
 .case {
-  grid-column: 1 / -1;
   margin-top: space(6);
-
-  // Durante a troca (D-087): mantém a altura sem mostrar dados de um projeto que ainda carrega.
-  &.is-pending {
-    visibility: hidden;
-  }
-}
-
-// Biblioteca MC-CART (D-087): acima da estação, com o respiro de um cabeçalho de seção.
-.library {
-  margin-top: var(--mc-space-section-head);
-}
-
-.ongoing {
-  justify-self: start;
 }

@@ -162,6 +162,7 @@ Construído antes de Current Quest e Side Quests; continua sendo a última seç�
 - ⏸ Progress (sem definição nos docs; decisão do Eduardo, D-059)
 - ✅ **Project Inventory — H2, Physical Cartridge Experience** (D-075–D-077, `docs/24` §17): MC-01 em camadas, inserção física, CRT frontal com a arte oficial e teaser sob demanda, case fora do vidro, estado de domínio único; **APPROVED / consolidado** (D-078), sem deploy
 - ✅ **Biblioteca MC-CART** (D-087, `docs/24` §18): seis cartuchos oficiais, escolher → inserir → explorar → trocar, cases a partir do Campaign Log; **APPROVED / FROZEN** (D-088), sem deploy
+- 🔄 **Project Inventory H3 — MC-CART Library + CRT Project Viewer** (D-093, `docs/24` §19): capa e dossiê do projeto dentro do CRT; aguardando aprovação do Eduardo
 - ✅ Harmonização visual do MC-01 da Hero com o MC-01 canônico do H2 (D-077): contrato da nova imagem (D-079, `docs/21` §8.2), arte final (D-086) e carcaça da coleção (D-089)
 - ✅ Hover states (cartucho sobe da prateleira, D-058)
 - ✅ Transitions (CRT on, cartucho, D-058)
