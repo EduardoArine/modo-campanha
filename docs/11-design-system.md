@@ -106,6 +106,10 @@ src/styles.scss            # fonts → custom-properties → base → layout
 | Teal               | `#3FA7A3` |
 | Success / XP       | `#7FB069` |
 | Danger             | `#C44536` |
+| Specialty AI       | `#A393D9` |
+| Specialty Game     | `#E07A5F` |
+
+Os dois últimos tons (D-092) servem só à identidade das especialidades do Arsenal (`--mc-specialty-*`). Contraste medido como texto: violet-400 6,92 : 1 sobre bg, 6,48 : 1 sobre surface e 6,02 : 1 sobre panel; coral-400 6,37 / 5,96 / 5,54 : 1 (validados no build, `$supported-pairs`). Ícones do Arsenal: 21 pictogramas pixel autorais (`docs/25` §7).
 
 ### Contraste medido (WCAG 2.x)
 
@@ -256,7 +260,7 @@ Sempre referenciam primitivos, sem duplicar valores.
 
 ## Sprint 2 — Colors + Borders + Surfaces (APROVADO e implementado, D-024)
 
-Arquivos: `src/styles/tokens/_color.scss` (primitivos + semânticos), `_surface.scss` (borders, radius, foco), `_contrast.scss` (contratos), emitidos em `_custom-properties.scss`; regras globais em `_base.scss`. **Nenhum HEX novo**: tudo deriva da paleta D-014; camadas translúcidas usam `color-mix()`.
+Arquivos: `src/styles/tokens/_color.scss` (primitivos + semânticos), `_surface.scss` (borders, radius, foco), `_contrast.scss` (contratos), emitidos em `_custom-properties.scss`; regras globais em `_base.scss`. **Nenhum HEX novo**: tudo deriva da paleta D-014; camadas translúcidas usam `color-mix()`. Única exceção: os dois tons das especialidades do Arsenal (`violet-400`, `coral-400`, D-092), expostos só como `--mc-specialty-*`.
 
 ### 5. Colors: duas camadas
 

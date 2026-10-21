@@ -1296,3 +1296,32 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Consoles reconhecíveis:** o console de madeira com joystick (Cap. 01, marco 05) lembra o Atari citado na história; vale a mesma exceção do controle do SNES, sem logos.
   - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
 - **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
+
+## D-092 — Arsenal de Habilidades: Concept C, Loadout Interativo
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo:** integrar o Arsenal ao Status do Jogador com a **Concept C — Loadout Interativo** (prancha aprovada): quatro seletores, uma especialidade por vez, painel de habilidades e a visão "Ver todas". As propostas A e B não entram. Especificação completa em `docs/25-skill-loadout-concept-c.md`.
+- **Revê a D-043 (02-B, composição aberta e informativa):** o Arsenal passa a ser interativo. Conteúdo: o Skill Loadout v1 (D-041), sem item novo e sem graduação.
+- **Player Status (D-083) intacto:** nenhuma linha do componente mudou. O Arsenal se aproxima por margem negativa, usa a mesma moldura e dois engates atravessam o vão entre as molduras, sem cobrir nenhuma das bordas.
+- **Especialidades:** CON CONSTRUÇÃO, PRD PRODUTO, IA INTELIGÊNCIA ARTIFICIAL e DNA DNA DE GAMES; em inglês DEV DEVELOPMENT, PRD PRODUCT, AI ARTIFICIAL INTELLIGENCE e GDN GAME DNA (o "BUILD / BLD" da D-043 vira "DEVELOPMENT / DEV", como no briefing). O teaser SYSTEM HORIZON (congelado) continua dizendo "BUILD" em inglês: **alinhamento pendente de decisão do Eduardo**. Cada uma tem frase própria (`SkillGroup.description`): a de CON veio do briefing; **PRD, IA e DNA são propostas para revisão do Eduardo**.
+- **Interação:** botões nativos com `aria-pressed` (não tabs ARIA, porque a visão completa não tem aba selecionada); CON no início; "Ver todas as habilidades" / "Voltar ao loadout" recupera a última especialidade; troca de 180 ms só de opacidade, instantânea com movimento reduzido.
+- **Design system:**
+  - **Cores (revê a regra "Nenhum HEX novo" da D-014 nesse ponto):** dois primitivos novos, `violet-400` `#A393D9` e `coral-400` `#E07A5F`, só para a identidade das especialidades. Semânticos `specialty-build` / `-product` / `-ai` / `-game`; contraste validado no build sobre `bg`, `surface` e `panel`.
+  - **Ícones:** 21 pictogramas pixel autorais (12 × 12), sem logos de terceiros.
+  - **Modelo:** `Skill.icon`, `SkillGroup.icon` e `SkillGroup.description`.
+- **Termo em inglês na versão pt (exceção à D-084, pedida no briefing):** "LOADOUT DE ESPECIALIDADES" e "Voltar ao loadout".
+- **Título em inglês:** "SKILL LOADOUT" passa a "SKILL ARSENAL", porque a micro-label já diz "SPECIALTY LOADOUT".
+- **Divergências da prancha** (`docs/25` §8):
+  - duas molduras com engates, em vez de uma moldura única (o Player Status está congelado);
+  - contagem real no lugar da barra "LOADOUT ATIVO";
+  - pictogramas autorais e só o nome nos cards, sem logos nem descrições não aprovadas;
+  - grade 2 × 2 no mobile, sem faixa com setas.
+- **Visão completa no mobile:** um segundo "Voltar ao loadout" no fim da lista (a lista passa de 2.300 px em 390); ele devolve o foco ao botão do cabeçalho, já que ele próprio some.
+- **Validação:**
+  - axe sem violações;
+  - teclado, foco e movimento reduzido conferidos;
+  - capturas em 1440 / 1280 / 1024 / 820 / 390 / 360, pt e en, sem overflow;
+  - as outras seções e o painel do Player Status idênticos à `main`, pixel a pixel;
+  - testes e builds passam;
+  - revisão independente: aprovada com ressalvas, sem bloqueantes; ressalvas corrigidas (ícone do TypeScript, docs, segundo "Voltar" no mobile).
+- **Status:** implementado na branch `feat/skill-loadout-concept-c`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.

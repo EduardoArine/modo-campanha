@@ -4,19 +4,19 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 
 ## Sequência da onepage
 
-| #   | Seção              | Âncora (`id`)                    | Componente                               | Responsabilidade                                                                           |
-| --- | ------------------ | -------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------ |
-| 0   | Boot / Intro       | (sem âncora)                     | futuro, em `core/`                       | Entrada de ≤ 1 s. Nunca bloqueia o conteúdo.                                               |
-| 1   | Player Profile     | `#hero`                          | `HeroSection`                            | Quem é Eduardo, em uma tela. Nome, classe, foco, frase central e CTAs.                     |
-| 2   | Player Status      | `#player-status`                 | `PlayerStatusSection`                    | "Sobre mim" em formato de ficha de personagem + texto humano curto.                        |
-| 3   | Skill Loadout      | `#skill-loadout`                 | `SkillLoadoutSection`                    | Capacidades em quatro módulos (BUILD, PRODUCT, AI, GAME DNA), sem graduação (D-040).       |
-| 4   | Project Inventory  | `#project-inventory`             | `ProjectInventorySection`                | Projetos como cartuchos (MC-CART + Project Summary); só `publication: 'approved'` (D-044). |
-| 4a  | CRT Project Viewer | `#project-viewer` (dentro do #4) | `ProjectCase` em `mc-crt-project-viewer` | Case no CRT, abaixo da grade, ao inserir um cartucho (D-058).                              |
-| 5   | Campaign Log       | `#campaign-log`                  | `CampaignLogSection`                     | Trajetória profissional em checkpoints.                                                    |
-| 6   | Achievements       | `#achievements`                  | `AchievementsSection`                    | Conquistas baseadas em fatos concretos.                                                    |
-| 7   | Current Main Quest | `#current-quest`                 | `CurrentQuestSection`                    | Destaque para a Comunidade On, sem informações confidenciais.                              |
-| 8   | Side Quests        | `#side-quests`                   | `SideQuestsSection`                      | Projetos pessoais, games, experimentos e estudos.                                          |
-| 9   | Final Checkpoint   | `#final-checkpoint`              | `FinalCheckpointSection`                 | Encerramento, contato e links.                                                             |
+| #   | Seção              | Âncora (`id`)                    | Componente                               | Responsabilidade                                                                                                                          |
+| --- | ------------------ | -------------------------------- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| 0   | Boot / Intro       | (sem âncora)                     | futuro, em `core/`                       | Entrada de ≤ 1 s. Nunca bloqueia o conteúdo.                                                                                              |
+| 1   | Player Profile     | `#hero`                          | `HeroSection`                            | Quem é Eduardo, em uma tela. Nome, classe, foco, frase central e CTAs.                                                                    |
+| 2   | Player Status      | `#player-status`                 | `PlayerStatusSection`                    | "Sobre mim" em formato de ficha de personagem + texto humano curto.                                                                       |
+| 3   | Skill Loadout      | `#skill-loadout`                 | `SkillLoadoutSection`                    | Arsenal de Habilidades: Loadout interativo encaixado no Player Status, quatro especialidades e "Ver todas", sem graduação (D-040, D-092). |
+| 4   | Project Inventory  | `#project-inventory`             | `ProjectInventorySection`                | Projetos como cartuchos (MC-CART + Project Summary); só `publication: 'approved'` (D-044).                                                |
+| 4a  | CRT Project Viewer | `#project-viewer` (dentro do #4) | `ProjectCase` em `mc-crt-project-viewer` | Case no CRT, abaixo da grade, ao inserir um cartucho (D-058).                                                                             |
+| 5   | Campaign Log       | `#campaign-log`                  | `CampaignLogSection`                     | Trajetória profissional em checkpoints.                                                                                                   |
+| 6   | Achievements       | `#achievements`                  | `AchievementsSection`                    | Conquistas baseadas em fatos concretos.                                                                                                   |
+| 7   | Current Main Quest | `#current-quest`                 | `CurrentQuestSection`                    | Destaque para a Comunidade On, sem informações confidenciais.                                                                             |
+| 8   | Side Quests        | `#side-quests`                   | `SideQuestsSection`                      | Projetos pessoais, games, experimentos e estudos.                                                                                         |
+| 9   | Final Checkpoint   | `#final-checkpoint`              | `FinalCheckpointSection`                 | Encerramento, contato e links.                                                                                                            |
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
