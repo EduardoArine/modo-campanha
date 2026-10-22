@@ -1428,9 +1428,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Moldura única:** a biblioteca e a estação são dois compartimentos de uma só moldura (`.rig`), separados por um filete de acento. No dossiê, o "← Biblioteca" fica logo acima.
 - **MC-01 frontal (revê a geometria da D-077):**
   - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render inteiro do Eduardo (fora do repositório; 2508 × 1170; diferença < 0,05%).
-  - **Cartucho:** em escala do console, com 1150 px, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" (−560 px) paira acima da tampa.
+  - **Cartucho:** em escala do console, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" paira acima da tampa.
+    - **Ajuste de 2026-10-22 (pedido do Eduardo, sobrava lateral no slot):** de 1150 para 1270 px (+10%), centrado no miolo escuro do slot (x 607–1880 na base da tampa). A parte visível segue em 66%, a pose "fora" passou de −560 para −618 px e o espaço acima do console, de 820 para 935 px.
   - **Componente:** mesma ordem de camadas, só `transform` e as mesmas durações do `mc-console`.
   - **Derivados:** `mc01-{back,front}-{640,960,1280}.webp` (10 a 58 KB), por `node design/source/mc-01/build-console.mjs`. Os derivados antigos saíram do `public/`; os mestres antigos ficam em `design/source/mc-01/`.
+- **Barra do console no topo (2026-10-22, pedido do Eduardo):** com os aparelhos lado a lado (≥ 1024), a barra (cartucho, estado e Inserir/Ejetar) fica no topo da coluna, alinhada ao topo da TV, e o MC-01 desce até a mesma linha de apoio da TV. Empilhado (< 1024), a barra fica logo acima do console. Com a coluna abaixo de 400 px, a ação desce para a linha de baixo. O portátil do celular não muda.
 - **Apoio na mesa:** sombra de contato elíptica sob a TV, o console e o portátil (só objetos físicos), e uma base mais alta na estação (≥ 1024: 64 px), para a mesa aparecer à frente dos aparelhos.
 - **Filtro CRT** (`mc-crt-front`, input `filter`, ligado por padrão):
   - fica por cima do conteúdo, sem capturar o ponteiro;

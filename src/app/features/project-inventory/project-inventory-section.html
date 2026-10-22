@@ -204,6 +204,8 @@
             </div>
 
             <div class="console-area">
+              <!-- Estado e ação no topo da coluna; o MC-01 embaixo, na mesma linha de apoio da TV. -->
+              <ng-container *ngTemplateOutlet="consoleBar" />
               <!-- MC-01 físico; o clique no console é atalho de ponteiro do botão "Inserir cartucho". -->
               <mc-console
                 [cartridge]="cartridge()"
@@ -212,13 +214,12 @@
                 [lifted]="lifted()"
                 [class.is-idle]="v.insert === 'enabled'"
                 sizes="(min-width: 1200px) 460px, (min-width: 1024px) 36vw, 70vw"
-                cartSizes="(min-width: 1200px) 216px, (min-width: 1024px) 17vw, 44vw"
+                cartSizes="(min-width: 1200px) 236px, (min-width: 1024px) 19vw, 48vw"
                 (failed)="assetsFailed()"
                 (click)="v.insert === 'enabled' && insert()"
                 (pointerenter)="lifted.set(true)"
                 (pointerleave)="lifted.set(false)"
               />
-              <ng-container *ngTemplateOutlet="consoleBar" />
             </div>
           }
         } @else {
