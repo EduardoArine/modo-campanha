@@ -1,4 +1,4 @@
-import { DOCUMENT, NgComponentOutlet, ViewportScroller } from '@angular/common';
+import { DOCUMENT, NgComponentOutlet, NgTemplateOutlet, ViewportScroller } from '@angular/common';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -14,11 +14,12 @@ import {
 } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
-import { McCart, McConsole, McCrtFront } from '../../shared/signature';
-import { Project } from '../../models';
+import { McCart, McConsole, McCrtFront, McHandheld } from '../../shared/signature';
 import { McAction, McIcon, McSectionHeader, McStatus } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { CartridgeLibrary } from './cartridge-library';
+import { CrtCover } from './crt-cover';
+import { CrtDossier, dossierSections } from './crt-dossier';
 import {
   cartridgeSelection,
   initialInventoryState,
@@ -34,25 +35,38 @@ const MOVE_MS = 620;
 const BOOT_MS = 450;
 const EJECT_MS = 600;
 
+/** Cenário da estação (D-094): estante desfocada e mesa; derivados de build-station.mjs. */
+const STATION_BACKGROUND_WIDTHS = [640, 960, 1280, 1672];
+const STATION_BACKGROUND = {
+  src: 'assets/inventory/station-background-1672.webp',
+  srcset: STATION_BACKGROUND_WIDTHS.map(
+    (w) => `assets/inventory/station-background-${w}.webp ${w}w`,
+  ).join(', '),
+};
+
 /**
- * Project Inventory — H2, Physical Cartridge Experience (D-077, docs/24 §17). O MC-CART é inserido
- * no MC-01 montado em camadas; o CRT frontal mostra a arte oficial e, sob demanda, o teaser; o
- * case fica fora do vidro, em HTML. Um único estado de domínio (`inventory.machine.ts`) decide
- * textos, controles, indicadores e anúncios. Com 2 ou mais cartuchos aprovados, aparece a
- * biblioteca MC-CART (D-087): escolher seleciona; com um cartucho inserido, a mesma escolha troca.
+ * Project Inventory — H3, MC-CART Library + CRT Project Viewer (D-093, docs/24 §19), evolução do
+ * H2 (D-077) e da biblioteca (D-087). A biblioteca escolhe, o MC-01 carrega, o CRT apresenta: no
+ * READY, a CAPA do projeto dentro do tubo; EXPLORAR PROJETO abre o DOSSIÊ, também dentro do tubo.
+ * Um único estado de domínio (`inventory.machine.ts`) decide cartucho, transição, capa/dossiê e
+ * seção ativa. No fallback (MC-01 indisponível), o case segue acessível em HTML, fora do vidro.
  */
 @Component({
   selector: 'app-project-inventory-section',
   imports: [
     NgComponentOutlet,
+    NgTemplateOutlet,
     McSectionHeader,
     McStatus,
     McAction,
     CartridgeLibrary,
+    CrtCover,
+    CrtDossier,
     McIcon,
     McCart,
     McConsole,
     McCrtFront,
+    McHandheld,
     ProjectCase,
   ],
   templateUrl: './project-inventory-section.html',
@@ -62,6 +76,7 @@ const EJECT_MS = 600;
 export class ProjectInventorySection {
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
+  protected readonly stationBackground = STATION_BACKGROUND;
   private readonly injector = inject(Injector);
   private readonly scroller = inject(ViewportScroller);
   private readonly window = inject(DOCUMENT).defaultView;
@@ -75,51 +90,37 @@ export class ProjectInventorySection {
   );
   /** Escolhido × inserido (D-087): diferem só durante a troca e com o slot vazio. */
   protected readonly selection = computed(() => cartridgeSelection(this.state()));
-  /** Editorial do cartucho ESCOLHIDO (na troca, o que vai entrar). */
-  protected readonly chosenProject = computed(() =>
-    this.projects.find((p) => p.id === this.selection().selected),
+  /** Cartucho ESCOLHIDO (na troca, o que vai entrar): nome do "Inserir cartucho". */
+  protected readonly chosen = computed(
+    () => this.projects.find((p) => p.id === this.selection().selected) ?? this.project()!,
   );
+  /** Dossiê aberto (D-093): a biblioteca recolhe e o CRT ganha destaque. */
+  protected readonly dossier = computed(() => {
+    const s = this.state();
+    return s.kind === 'ready' && s.screen === 'dossier';
+  });
+  /** Seção ativa do dossiê. */
+  protected readonly section = computed(() => {
+    const s = this.state();
+    return s.kind === 'ready' ? (s.section ?? 0) : 0;
+  });
   /** Sem render em escala do console, o cartucho não entra no MC-01 (fallback). */
   protected readonly cartridge = computed(() => this.project()?.cartridge.renders?.console ?? null);
-  /** Texto do slot, do mesmo estado: SLOT VAZIO · CARREGANDO MC-001 · MC-001 INSERIDO · EJETANDO MC-001. */
-  protected readonly slotText = computed(() => {
-    const slot = this.ui().inventory.slot;
-    const serial = this.project()?.serial ?? '';
-    switch (this.view().slot) {
-      case 'empty':
-        return slot.empty;
-      case 'loading':
-        return `${slot.loading} ${serial}`;
-      case 'inserted':
-        return `${serial} ${slot.inserted}`;
-      case 'ejecting':
-        return `${slot.ejecting} ${serial}`;
-      case 'unavailable':
-        return slot.unavailable;
-    }
-  });
-  /**
-   * "Teaser disponível · Campanha jogável em desenvolvimento": rótulo do projeto + estado da UI. Faz
-   * parte do editorial, então segue o cartucho ESCOLHIDO (na troca, o que vai entrar).
-   */
-  protected readonly experiences = computed(() => {
-    const status = this.ui().inventory.experience;
-    return (this.chosenProject()?.experiences ?? []).map(
-      (e) =>
-        `${this.locale.pick(e.label)} ${e.status === 'available' ? status.available : status.inDevelopment}`,
-    );
-  });
+  /** Estado do slot, do mesmo estado (o nome do cartucho fica na linha de cima da barra). */
+  protected readonly slotText = computed(() => this.ui().inventory.slot[this.view().slot]);
   /** Intenção de inserir (hover/foco na ação ou no console): aproxima o cartucho do slot. */
   protected readonly lifted = signal(false);
   /** Anúncio da última transição (role="status"); vazio até o visitante agir. */
   protected readonly announcement = signal('');
   /**
-   * Troca pela biblioteca em curso: guarda o projeto que estava PRONTO. O case dele só reserva o
-   * espaço (invisível e inerte) até o novo PRONTO, sem mostrar dados do projeto que ainda carrega.
-   * O READY da troca é anunciado, sem levar o foco nem rolar até o CRT (o visitante continua na
-   * biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
+   * Troca pela biblioteca em curso: o READY é anunciado, sem levar o foco nem rolar até o CRT (o
+   * visitante continua na biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
    */
-  protected readonly swapCase = signal<Project | null>(null);
+  private librarySwap = false;
+
+  /** Celular (< 768, D-095): o portátil substitui o MC-01 + CRT. */
+  private readonly phoneQuery = this.window?.matchMedia?.('(max-width: 767.98px)');
+  protected readonly handheld = signal(this.phoneQuery?.matches ?? false);
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -156,10 +157,32 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
+    const onPhone = (event: MediaQueryListEvent) => this.switchDevice(event.matches);
+    this.phoneQuery?.addEventListener('change', onPhone);
     inject(DestroyRef).onDestroy(() => {
       reduce?.removeEventListener('change', onChange);
+      this.phoneQuery?.removeEventListener('change', onPhone);
       this.playback.pause();
     });
+  }
+
+  /**
+   * Celular ↔ tablet/desktop (D-095): troca o aparelho sem mexer no estado. Se o foco estava nele,
+   * vai ao equivalente no novo (título do dossiê, título da capa ou estado do slot).
+   */
+  private switchDevice(phone: boolean): void {
+    const active = this.window?.document.activeElement;
+    const inside = !!active?.closest('#project-viewer, .bar');
+    this.handheld.set(phone);
+    if (!inside) return;
+    const s = this.state();
+    const target =
+      s.kind === 'ready' && s.screen === 'dossier'
+        ? 'dossier-title'
+        : s.kind === 'ready' && s.screen !== 'teaser'
+          ? 'crt-cover-title'
+          : 'inventory-status';
+    this.afterRender(() => this.byId(target)?.focus({ preventScroll: true }));
   }
 
   protected insert(): void {
@@ -177,19 +200,74 @@ export class ProjectInventorySection {
   /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
   protected choose(id: string): void {
     const before = this.state();
-    const previous = this.project() ?? null;
+    // Portátil (D-095): o cartucho já selecionado com o slot vazio entra direto.
+    if (this.handheld() && before.kind === 'empty' && before.cartridge === id) {
+      this.librarySwap = true;
+      this.insert();
+      return;
+    }
     this.select(id);
     const after = this.state();
     // Só a troca animada chega a um READY posterior (o dispatch do select não lê a marca).
-    this.swapCase.set(before.kind === 'ready' && after.kind === 'ejecting' ? previous : null);
+    this.librarySwap = before.kind === 'ready' && after.kind === 'ejecting';
     if (after === before) return;
     const next = this.projects.find((p) => p.id === id);
     if (!next) return;
     const s = this.ui().inventory.status;
     const name = `${next.serial} — ${this.locale.pick(next.title)}`;
+    // Portátil (D-095): escolher com o slot vazio já insere; o READY não rola nem leva o foco.
+    if (after.kind === 'empty' && this.handheld()) {
+      this.librarySwap = true;
+      this.insert();
+      return;
+    }
     if (after.kind === 'empty') this.announcement.set(`${s.selected} ${name}.`);
     else if (after.kind === 'ejecting') this.announcement.set(`${s.swapping} ${name}.`);
     else if (after.kind === 'ready') this.announcement.set(`${name} ${s.ready}`);
+  }
+
+  /** EXPLORAR PROJETO: abre o dossiê na 1ª seção e traz a estação à vista; o foco vai ao título. */
+  protected explore(): void {
+    this.dispatch({ type: 'explore' });
+    this.afterRender(() => {
+      this.scroller.scrollToAnchor('inventory-station', {
+        behavior: this.reducedMotion() ? 'auto' : 'smooth',
+      });
+      this.byId('dossier-title')?.focus({ preventScroll: true });
+    });
+  }
+
+  protected goSection(index: number): void {
+    const project = this.project();
+    if (!project) return;
+    const last = dossierSections(project).length - 1;
+    this.dispatch({ type: 'section', index: Math.min(Math.max(0, index), last) });
+  }
+
+  /** Voltar à capa (do dossiê ou do teaser): o cartucho continua inserido; foco no EXPLORAR. */
+  protected toCover(): void {
+    this.dispatch({ type: 'cover' });
+    this.afterRender(() => this.byId('inventory-explore')?.focus());
+  }
+
+  /** Voltar à biblioteca: a capa volta e a biblioteca reaparece; foco no cartucho inserido. */
+  protected toLibrary(): void {
+    this.dispatch({ type: 'cover' });
+    this.afterRender(() => {
+      const current = this.window?.document.querySelector<HTMLElement>(
+        '#library-strip .cart[aria-current="true"]',
+      );
+      this.scroller.scrollToAnchor('project-inventory', {
+        behavior: this.reducedMotion() ? 'auto' : 'smooth',
+      });
+      // A faixa foi recriada no início: centraliza nela o cartucho inserido antes de focá-lo.
+      const strip = current?.closest('ul');
+      const slot = current?.closest('li');
+      if (strip && slot) {
+        strip.scrollLeft = slot.offsetLeft - (strip.clientWidth - slot.offsetWidth) / 2;
+      }
+      current?.focus({ preventScroll: true });
+    });
   }
 
   /** Teaser sob demanda: carrega a tela, depois reproduz; falha = estado próprio do READY. */
@@ -197,14 +275,27 @@ export class ProjectInventorySection {
     const state = this.state();
     if (state.kind !== 'ready') return;
     if (state.screen === 'teaser') return this.playback.toggle();
-    if (state.screen !== 'art') return;
+    if (state.screen !== 'art' && state.screen !== 'art-unavailable') return;
+    const cartridge = state.cartridge;
+    // Durante o import(), o visitante pode trocar de cartucho ou abrir o dossiê: só segue se nada mudou.
+    const stillOnCover = () => {
+      const now = this.state();
+      return (
+        now.kind === 'ready' &&
+        now.cartridge === cartridge &&
+        (now.screen === 'art' || now.screen === 'art-unavailable')
+      );
+    };
     try {
       const { SystemHorizonScreen } = await import('../../system-horizon/system-horizon-screen');
+      if (!stillOnCover()) return;
       this.teaserScreen.set(SystemHorizonScreen);
       this.dispatch({ type: 'play' });
       this.playback.play();
+      // A capa sai do vidro: o foco vai ao Pausar, no mesmo lugar da ação.
+      this.afterRender(() => this.byId('teaser-toggle')?.focus());
     } catch {
-      this.dispatch({ type: 'teaser-failed' });
+      if (stillOnCover()) this.dispatch({ type: 'teaser-failed' });
     }
   }
 
@@ -221,7 +312,7 @@ export class ProjectInventorySection {
     this.lifted.set(true);
     const button = event.target as HTMLElement;
     if (!button.matches(':focus-visible')) return;
-    const area = button.closest('.console-area');
+    const area = button.closest('.console-area, .handheld-area');
     const header =
       this.window?.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ?? 0;
     if (area && area.getBoundingClientRect().top < header) {
@@ -247,32 +338,35 @@ export class ProjectInventorySection {
             ? s.teaserUnavailable
             : '',
     );
-    // Falha no meio da troca: o fallback mostra o case normalmente.
-    if (after.kind === 'unavailable') this.swapCase.set(null);
+    // Falha no meio da troca: a marca não pode sobrar.
+    if (after.kind === 'unavailable') this.librarySwap = false;
     // Troca pela biblioteca: o READY é anunciado em texto; foco e rolagem ficam onde estão.
-    if (after.kind === 'ready' && before.kind !== 'ready' && this.swapCase()) {
-      this.swapCase.set(null);
+    if (after.kind === 'ready' && before.kind !== 'ready' && this.librarySwap) {
+      this.librarySwap = false;
       const p = this.project();
       if (p) this.announcement.set(`${p.serial} — ${this.locale.pick(p.title)} ${s.ready}`);
       return;
     }
-    // READY: rola até o CRT e leva o foco ao estado (o foco anuncia; sem anúncio duplicado).
+    // READY: rola até o CRT e leva o foco ao título da capa, dentro do vidro (o próximo Tab é o
+    // EXPLORAR PROJETO); o estado é anunciado em texto.
     if (after.kind === 'ready' && before.kind !== 'ready') {
+      const p = this.project();
+      if (p) this.announcement.set(`${p.serial} — ${this.locale.pick(p.title)} ${s.ready}`);
       this.afterRender(() => {
         this.scroller.scrollToAnchor('project-viewer', {
           behavior: this.reducedMotion() ? 'auto' : 'smooth',
         });
-        this.byId('inventory-status')?.focus({ preventScroll: true });
+        this.byId('crt-cover-title')?.focus({ preventScroll: true });
       });
     }
-    // Ejetar: o "Inserir cartucho" volta na hora (bloqueado durante a volta) e recebe o foco (A2).
+    // Ejetar (também do dossiê): a biblioteca volta e o "Inserir cartucho" recebe o foco (A2).
     const ejectedNow = after.kind === 'empty' && after.ejected && before.kind !== 'ejecting';
     if ((after.kind === 'ejecting' && !after.then) || ejectedNow) {
       this.afterRender(() => this.byId('inventory-insert')?.focus());
     }
-    // Teaser falhou: o botão Reproduzir sai; o foco vai ao estado da tela, que diz a falha (A1).
+    // Teaser falhou: o botão Reproduzir sai; o foco vai ao título da capa, que mostra o aviso (A1).
     if (after.kind === 'ready' && after.screen === 'teaser-unavailable') {
-      this.afterRender(() => this.byId('inventory-status')?.focus({ preventScroll: true }));
+      this.afterRender(() => this.byId('crt-cover-title')?.focus({ preventScroll: true }));
     }
   }
 

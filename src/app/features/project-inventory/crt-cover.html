@@ -1,0 +1,68 @@
+@let p = project();
+<!-- Arte oficial ao fundo (decorativa: o nome e a descrição estão em texto). -->
+@if (showArt() && p.cartridge.artwork; as art) {
+  <img
+    class="art"
+    [src]="art.src"
+    [attr.srcset]="art.srcset ?? null"
+    sizes="(min-width: 1024px) 560px, 92vw"
+    [width]="art.width"
+    [height]="art.height"
+    alt=""
+    decoding="async"
+    (error)="artFailed.emit()"
+  />
+}
+<span class="shade" aria-hidden="true"></span>
+
+<div class="copy">
+  <p class="kicker">
+    <span class="code">{{ p.serial }}</span> / {{ ui().inventory.cover.kind }}
+  </p>
+  <h3 class="title" id="crt-cover-title" tabindex="-1">
+    {{ title().head }}
+    @if (title().tail) {
+      <span class="tail">{{ title().tail }}</span>
+    }
+  </h3>
+  <p class="type">{{ locale.pick(p.type) }}</p>
+  @if (p.ongoing) {
+    <mc-status class="ongoing" state="in-progress">{{ ui().status.inProgress }}</mc-status>
+  }
+  <p class="desc">{{ locale.pick(p.description) }}</p>
+  @if (p.technologies.length) {
+    <ul class="tech" role="list">
+      @for (tech of p.technologies; track tech) {
+        <li>{{ tech }}</li>
+      }
+    </ul>
+  }
+  @if (experiences()) {
+    <p class="exp">{{ experiences() }}</p>
+  }
+  @if (teaserFailed()) {
+    <p class="notice">{{ ui().inventory.teaser.unavailable }}</p>
+  }
+  <div class="actions">
+    <button
+      mcAction="primary"
+      type="button"
+      id="inventory-explore"
+      aria-controls="project-viewer"
+      [attr.aria-label]="ui().inventory.cover.explore + ': ' + locale.pick(p.title)"
+      (click)="explore.emit()"
+    >
+      {{ ui().inventory.cover.explore }} <mc-icon name="chevron-right" />
+    </button>
+    @if (teaser()) {
+      <button
+        mcAction="secondary"
+        type="button"
+        aria-controls="project-viewer"
+        (click)="playTeaser.emit()"
+      >
+        <mc-icon name="play" /> {{ ui().inventory.teaser.play }}
+      </button>
+    }
+  </div>
+</div>

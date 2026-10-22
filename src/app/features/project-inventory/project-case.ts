@@ -5,9 +5,9 @@ import { Project } from '../../models';
 import { McAction, McIcon } from '../../shared/ui';
 
 /**
- * Case do projeto (D-077, D-087): fora do CRT, em HTML acessível, para leitura rápida. Só campos
- * aprovados do `Project` (problema, contribuição, stack, marcos, aprendizados, links). Nome, proposta e experiências disponíveis ficam
- * no editorial da seção (sem repetir). Não duplica o Campaign Log.
+ * Case do projeto em HTML, fora do CRT (D-077, D-087). Desde o H3 (D-093), o case aparece dentro do
+ * CRT (dossiê); este componente fica só para o FALLBACK (MC-01 indisponível), para o conteúdo
+ * continuar acessível. Só campos aprovados do `Project`. Não duplica o Campaign Log.
  */
 @Component({
   selector: 'app-project-case',

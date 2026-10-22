@@ -1,0 +1,98 @@
+@let p = project();
+@let d = ui().inventory.dossier;
+<div class="dossier">
+  <p class="mc-visually-hidden" role="status">{{ announcement() }}</p>
+
+  <header class="top">
+    <h3 class="name" id="dossier-title" tabindex="-1">
+      <!-- O Angular remove espaços só entre elementos: o espaço do " / " fica dentro do span. -->
+      <span class="code">{{ p.serial }}</span
+      ><span class="slash" aria-hidden="true">&nbsp;/ </span><span>{{ locale.pick(p.title) }}</span>
+    </h3>
+    <button
+      mcAction="secondary"
+      type="button"
+      class="back"
+      id="dossier-back"
+      [attr.aria-label]="d.back + ': ' + locale.pick(p.title)"
+      (click)="cover.emit()"
+    >
+      <mc-icon name="chevron-left" /> <span class="back-text">{{ d.back }}</span>
+    </button>
+  </header>
+
+  <!-- Vidro largo: lista das seções; vidro estreito: seletor nativo (mesma escolha). -->
+  <nav class="nav" [attr.aria-label]="d.nav">
+    <ol role="list">
+      @for (id of sections(); track id; let i = $index) {
+        <li>
+          <button
+            type="button"
+            class="item"
+            aria-controls="dossier-content"
+            [attr.aria-current]="i === index() ? 'step' : null"
+            [class.is-current]="i === index()"
+            (click)="select(i)"
+          >
+            <span class="num" aria-hidden="true">{{ pad(i + 1) }}</span> {{ label(id) }}
+          </button>
+        </li>
+      }
+    </ol>
+  </nav>
+  <label class="pick">
+    <span class="mc-visually-hidden">{{ d.pick }}</span>
+    <select [value]="index()" (change)="onPick($event)">
+      @for (id of sections(); track id; let i = $index) {
+        <option [value]="i" [selected]="i === index()">{{ pad(i + 1) }} · {{ label(id) }}</option>
+      }
+    </select>
+  </label>
+
+  <div
+    class="content"
+    id="dossier-content"
+    role="region"
+    [attr.tabindex]="scrollable() ? 0 : null"
+    aria-labelledby="dossier-section-title"
+    #content
+  >
+    @for (key of [current()]; track key) {
+      <div class="body">
+        <h4 class="title" id="dossier-section-title">{{ label(current()) }}</h4>
+        <app-crt-dossier-section [project]="p" [section]="current()" />
+      </div>
+    }
+  </div>
+
+  <!-- aria-disabled (não disabled): o foco fica no botão no começo e no fim da sequência. -->
+  <footer class="foot">
+    <p class="page" aria-hidden="true">
+      <span class="now">{{ pad(index() + 1) }}</span> / {{ pad(total()) }}
+    </p>
+    <button
+      mcAction="secondary"
+      type="button"
+      class="prev"
+      aria-controls="dossier-content"
+      [attr.aria-label]="d.previousSection"
+      [attr.aria-disabled]="isFirst() ? 'true' : null"
+      (click)="select(index() - 1)"
+    >
+      <mc-icon name="chevron-left" /> {{ d.previous }}
+    </button>
+    <button
+      mcAction="secondary"
+      type="button"
+      class="next"
+      aria-controls="dossier-content"
+      [attr.aria-disabled]="isLast() ? 'true' : null"
+      (click)="select(index() + 1)"
+    >
+      <!-- Uma linha só: sem espaço entre "Próxima" e ": Problema". -->
+      <!-- prettier-ignore -->
+      <span>{{ d.next }}@if (!isLast()) {<span class="next-name">: {{ label(sections()[index() + 1]) }}</span>}</span>
+      <mc-icon name="chevron-right" />
+    </button>
+  </footer>
+</div>

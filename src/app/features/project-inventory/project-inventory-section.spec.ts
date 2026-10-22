@@ -5,11 +5,13 @@ import { RouterTestingHarness } from '@angular/router/testing';
 import { routes } from '../../app.routes';
 import { PROJECTS } from '../../data';
 import { Project } from '../../models';
+import { dossierSections } from './crt-dossier';
 import { INVENTORY_PROJECTS } from './inventory.projects';
 import { ProjectInventorySection } from './project-inventory-section';
 
-// Project Inventory H2 (D-077) + biblioteca MC-CART (D-087). Testes com os dados reais (MC-001 a
-// MC-006) e, para o caso de um cartucho só, com uma fixture isolada (nunca nos dados).
+// Project Inventory H3 (D-093): biblioteca MC-CART (D-087) + estação MC-01 / CRT, com a CAPA e o
+// DOSSIÊ do projeto dentro do tubo. Testes com os dados reais (MC-001 a MC-006) e, para o caso de
+// um cartucho só, com uma fixture isolada (nunca nos dados).
 describe('ProjectInventorySection', () => {
   let fixture: ComponentFixture<ProjectInventorySection>;
   const realMatchMedia = window.matchMedia;
@@ -38,119 +40,330 @@ describe('ProjectInventorySection', () => {
 
   const text = (root: Element, selector: string) =>
     root.querySelector(selector)?.textContent?.replace(/\s+/g, ' ').trim();
-  const click = (el: Element | null) => {
+  const click = (el: Element | null | undefined) => {
     (el as HTMLElement).click();
     fixture.detectChanges();
   };
+  /** Avança os temporizadores uma etapa por vez (cada estado agenda o próximo ao renderizar). */
+  const step = (...ms: number[]) => {
+    for (const t of ms) {
+      vi.advanceTimersByTime(t);
+      fixture.detectChanges();
+    }
+  };
+  const library = (el: Element) => Array.from(el.querySelectorAll<HTMLElement>('.strip .cart'));
+  const sections = (el: Element) => Array.from(el.querySelectorAll('app-crt-dossier .item'));
+  const glass = (el: Element) => el.querySelector('mc-crt-front .glass')!;
 
   afterEach(() => {
     window.matchMedia = realMatchMedia;
     vi.useRealTimers();
   });
 
-  it('introduces SYSTEM HORIZON with the cartridge waiting above the MC-01 (INITIAL)', async () => {
+  it('opens with the collection, MC-001 above the empty slot and the CRT in standby', async () => {
     reducedMotion(false);
     const el = await renderAt('/');
 
     expect(el.querySelector('h2')?.textContent).toBe('INVENTÁRIO DE PROJETOS');
-    expect(text(el, '.eyebrow')).toBe('MC-001 · MODO CAMPANHA · EXPERIÊNCIA NARRATIVA');
-    expect(text(el, '.intro .name')).toBe('SYSTEM HORIZON');
-    expect(text(el, '.desc')).toMatch(/^O primeiro cartucho do Modo Campanha\./);
-    expect(text(el, '.experiences')).toBe(
-      'Teaser disponível · Campanha jogável em desenvolvimento',
-    );
-    expect(el.querySelector('mc-console')?.getAttribute('aria-hidden')).toBe('true');
+    expect(text(el, '.library .title')).toBe('BIBLIOTECA DE CARTUCHOS');
+    expect(library(el).length).toBe(6);
+    expect(library(el)[0].getAttribute('aria-current')).toBe('true');
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
-    expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
+    expect(text(el, '.bar-text')).toBe('MC-001 · SYSTEM HORIZON SLOT VAZIO');
     expect(text(el, '.glass')).toBe('INSIRA UM CARTUCHO');
     const insert = el.querySelector('#inventory-insert')!;
     expect(insert.getAttribute('aria-label')).toBe('Inserir cartucho: SYSTEM HORIZON');
     expect(insert.getAttribute('aria-controls')).toBe('project-viewer');
     expect(el.querySelector('#project-viewer')?.getAttribute('role')).toBe('region');
-    expect(el.querySelector('app-project-case, .tv-status')).toBeNull();
+    // Nada do case fora do vidro (H3): só no fallback.
+    expect(el.querySelector('app-project-case, app-crt-cover, app-crt-dossier')).toBeNull();
   });
 
-  it('inserts with one coherent state per step: loading → MC-01 boot → READY with the official art', async () => {
+  it('inserts with one coherent state per step and lands on the COVER inside the CRT', async () => {
     reducedMotion(false);
     const el = await renderAt('/');
-    // Temporizadores falsos só depois de renderizar (whenStable espera timers reais).
     vi.useFakeTimers();
     click(el.querySelector('#inventory-insert'));
 
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('seated');
-    expect(el.querySelector('mc-console')?.getAttribute('data-motion')).toBe('insert');
     expect(el.querySelector('#inventory-insert')?.getAttribute('aria-disabled')).toBe('true');
-    expect(text(el, '.slot-status')).toBe('CARREGANDO MC-001');
+    expect(text(el, '.slot-status')).toBe('CARREGANDO');
     expect(text(el, '[role="status"]')).toBe('Carregando cartucho.');
-
-    vi.advanceTimersByTime(620);
-    fixture.detectChanges();
+    step(620);
     expect(text(el, '.glass-system')).toBe('CARREGANDO CARTUCHO...');
+    step(450);
 
-    vi.advanceTimersByTime(450);
-    fixture.detectChanges();
-    expect(text(el, '.slot-status')).toBe('MC-001 INSERIDO');
-    expect(text(el, '.tv-status')).toBe('SYSTEM HORIZON · PRONTO');
-    expect(el.querySelector('.glass-art')?.getAttribute('src')).toBe(
-      'assets/cartridges/mc-001/system-horizon.webp',
-    );
-    // O teaser não começa sozinho: só a arte; "Reproduzir teaser" é uma ação explícita.
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(glass(el).querySelector('app-crt-cover')).not.toBeNull();
+    // READY anunciado; o foco vai ao título da capa, antes do EXPLORAR PROJETO.
+    expect(text(el, '[role="status"]')).toBe('MC-001 — SYSTEM HORIZON pronto.');
+    await fixture.whenStable();
+    expect(document.activeElement?.id).toBe('crt-cover-title');
+    expect(text(el, '.copy .kicker')).toBe('MC-001 / PROJETO');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
+    expect(text(el, '.copy .type')).toBe('EXPERIÊNCIA NARRATIVA');
+    expect(text(el, '.copy .desc')).toMatch(/^O primeiro cartucho do Modo Campanha\./);
+    expect(el.querySelector('.copy img, app-crt-cover img.art')?.getAttribute('alt')).toBe('');
+    // MC-001: explorar o case e o teaser (que não começa sozinho), sem prometer a campanha jogável.
+    expect(text(el, '#inventory-explore')).toBe('Explorar projeto');
+    expect(text(el, '.copy .exp')).toBe('Teaser disponível · Campanha jogável em desenvolvimento');
     expect(el.querySelector('app-system-horizon-screen')).toBeNull();
-    expect(text(el, '.tv-actions button')).toBe('Reproduzir teaser');
+    // Uma só ação no console: Ejetar.
     expect(el.querySelector('#inventory-insert')).toBeNull();
-    // Sem anúncio duplicado: o foco no estado já anuncia o READY.
-    expect(text(el, '[role="status"]')).toBe('');
-  });
-
-  it('shows the professional case outside the CRT once the cartridge is seated', async () => {
-    reducedMotion(true);
-    const el = await renderAt('/');
-    click(el.querySelector('#inventory-insert'));
-
-    const labels = Array.from(el.querySelectorAll('app-project-case dt')).map((d) =>
-      d.textContent?.trim(),
+    expect(el.querySelector('#inventory-eject')?.getAttribute('aria-label')).toBe(
+      'Ejetar cartucho: SYSTEM HORIZON',
     );
-    expect(labels).toEqual([
-      'PROBLEMA',
-      'MINHA CONTRIBUIÇÃO',
-      'TECNOLOGIAS',
-      'APRENDIZADOS',
-      'EVIDÊNCIAS',
-    ]);
-    expect(el.querySelector('.glass app-project-case, .glass dl')).toBeNull();
-    const link = el.querySelector<HTMLAnchorElement>('app-project-case a')!;
-    expect(link.getAttribute('href')).toBe('https://github.com/EduardoArine/modo-campanha');
-    expect(link.getAttribute('target')).toBe('_blank');
   });
 
-  it('goes straight to READY with reduced motion, and ejects back to INITIAL', async () => {
+  /** Celular simulado; devolve o listener de mudança da media query do portátil. */
+  function phone(on: boolean, reduce = false): { change?: (event: { matches: boolean }) => void } {
+    const ref: { change?: (event: { matches: boolean }) => void } = {};
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes('max-width') ? on : reduce && query.includes('reduce'),
+      addEventListener: (_: string, fn: (event: { matches: boolean }) => void) => {
+        if (query.includes('max-width')) ref.change = fn;
+      },
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    return ref;
+  }
+
+  it('on the handheld, the selected cartridge inserts too and the library says Insert / Swap to', async () => {
+    phone(true, true);
+    const el = await renderAt('/');
+
+    expect(library(el)[0].getAttribute('aria-label')).toBe('Inserir MC-001 — SYSTEM HORIZON');
+    expect(library(el)[0].getAttribute('aria-disabled')).toBeNull();
+    // Tocar no MC-001, já selecionado com o slot vazio, insere.
+    click(library(el)[0]);
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
+    expect(library(el)[2].getAttribute('aria-label')).toBe('Trocar para MC-003 — ScoutEvo');
+  });
+
+  it('swaps on the handheld (eject, insert, load) without taking focus from the carousel', async () => {
+    phone(true);
+    const el = await renderAt('/');
+    vi.useFakeTimers();
+    click(library(el)[0]);
+    step(620, 450);
+    library(el)[2].focus();
+    click(library(el)[2]);
+
+    expect(el.querySelector('mc-handheld')?.getAttribute('data-pose')).toBe('out');
+    expect(text(el, '[role="status"]')).toBe('Trocando para MC-003 — ScoutEvo.');
+    step(600, 620, 450);
+    expect(text(el, '#crt-cover-title')).toBe('ScoutEvo');
+    expect(text(el, '[role="status"]')).toBe('MC-003 — ScoutEvo pronto.');
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(library(el)[2]);
+  });
+
+  it('switches device at runtime keeping the state and the focus equivalent', async () => {
+    const media = phone(true, true);
+    const el = await renderAt('/');
+    document.body.appendChild(el);
+    click(library(el)[1]);
+    click(el.querySelector('#inventory-explore'));
+    expect(el.querySelector('mc-handheld app-crt-dossier')).not.toBeNull();
+    el.querySelector<HTMLElement>('#dossier-title')?.focus();
+
+    // O celular gira para o tablet: o CRT entra com o mesmo dossiê, e o foco vai ao título dele.
+    media.change?.({ matches: false });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(el.querySelector('mc-handheld')).toBeNull();
+    expect(glass(el).querySelector('app-crt-dossier')).not.toBeNull();
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(document.activeElement?.id).toBe('dossier-title');
+    el.remove();
+  });
+
+  it('uses the handheld on phones: choosing a cartridge inserts it and the cover opens on its screen', async () => {
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes('max-width'),
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    const el = await renderAt('/');
+    vi.useFakeTimers();
+
+    // Portátil no lugar do MC-01 + CRT; a mesma região acessível e a mesma barra.
+    expect(el.querySelector('mc-console, mc-crt-front')).toBeNull();
+    const handheld = el.querySelector('mc-handheld')!;
+    expect(handheld.id).toBe('project-viewer');
+    expect(handheld.getAttribute('role')).toBe('region');
+    expect(handheld.classList).toContain('is-standby');
+    expect(text(handheld, '.glass-system')).toBe('INSIRA UM CARTUCHO');
+
+    // Escolher o MC-002 já insere (sem o passo "Inserir cartucho").
+    click(library(el)[1]);
+    expect(handheld.getAttribute('data-pose')).toBe('seated');
+    expect(text(el, '.slot-status')).toBe('CARREGANDO');
+    step(620, 450);
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(handheld.querySelector('.screen app-crt-cover')).not.toBeNull();
+    expect(text(el, '#crt-cover-title')).toBe('Aedes Revenge');
+    // A escolha veio do carrossel: o foco não sai dele.
+    await fixture.whenStable();
+    expect(document.activeElement?.id).not.toBe('crt-cover-title');
+    expect(el.querySelector('#inventory-eject')).not.toBeNull();
+  });
+
+  it('explores the dossier inside the CRT: header, sections, one section at a time, navigation', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    click(library(el)[1]);
+    click(el.querySelector('#inventory-insert'));
+    click(el.querySelector('#inventory-explore'));
+
+    const dossier = glass(el).querySelector('app-crt-dossier')!;
+    expect(dossier).not.toBeNull();
+    expect(text(el, '#dossier-title')).toBe('MC-002 / Aedes Revenge');
+    // A biblioteca recolhe; "Biblioteca" volta a ela sem ejetar.
+    expect(el.querySelector('app-cartridge-library')).toBeNull();
+    expect(text(el, '.to-library')).toBe('Biblioteca · MC-002 Aedes Revenge');
+    expect(sections(el).map((s) => s.textContent?.replace(/\s+/g, ' ').trim())).toEqual([
+      '01 Sobre o projeto',
+      '02 Problema',
+      '03 Minha contribuição',
+      '04 Tecnologias',
+      '05 Marcos',
+      '06 Aprendizados e evidências',
+    ]);
+    expect(sections(el)[0].getAttribute('aria-current')).toBe('step');
+    expect(text(el, '#dossier-section-title')).toBe('Sobre o projeto');
+    expect(text(el, '.foot .page')).toBe('01 / 06');
+    const [prev, next] = Array.from(el.querySelectorAll('app-crt-dossier .foot button'));
+    expect(prev.getAttribute('aria-disabled')).toBe('true');
+    // Nome acessível = texto visível (WCAG 2.5.3).
+    expect(next.getAttribute('aria-label')).toBeNull();
+    expect(next.textContent?.replace(/s+/g, ' ').trim()).toBe('Próxima: Problema');
+
+    click(next);
+    expect(text(el, '#dossier-section-title')).toBe('Problema');
+    expect(text(el, 'app-crt-dossier [role="status"]')).toBe('Seção 02 de 06: Problema');
+    click(sections(el)[4]);
+    expect(text(el, '#dossier-section-title')).toBe('Marcos');
+    expect(el.querySelectorAll('app-crt-dossier-section .list li').length).toBe(4);
+    click(sections(el)[5]);
+    expect(text(el, '.foot .page')).toBe('06 / 06');
+    expect(el.querySelector('app-crt-dossier .foot .next')?.getAttribute('aria-disabled')).toBe(
+      'true',
+    );
+    const tcc = el.querySelector<HTMLAnchorElement>('app-crt-dossier-section .links a')!;
+    expect(tcc.getAttribute('target')).toBe('_blank');
+    // O seletor compacto (vidro estreito) faz a mesma escolha.
+    const select = el.querySelector<HTMLSelectElement>('app-crt-dossier select')!;
+    select.value = '2';
+    select.dispatchEvent(new Event('change'));
+    fixture.detectChanges();
+    expect(text(el, '#dossier-section-title')).toBe('Minha contribuição');
+  });
+
+  it('goes back to the cover and to the library without ejecting the cartridge', async () => {
     reducedMotion(true);
     const el = await renderAt('/');
     click(el.querySelector('#inventory-insert'));
-    expect(text(el, '.slot-status')).toBe('MC-001 INSERIDO');
+    click(el.querySelector('#inventory-explore'));
+    click(el.querySelector('#dossier-back'));
 
-    const eject = el.querySelector('.tv-actions button[aria-label]')!;
-    expect(eject.getAttribute('aria-label')).toBe('Ejetar cartucho: SYSTEM HORIZON');
-    click(eject);
+    expect(glass(el).querySelector('app-crt-cover')).not.toBeNull();
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+
+    click(el.querySelector('#inventory-explore'));
+    click(el.querySelector('.to-library'));
+    expect(el.querySelector('app-cartridge-library')).not.toBeNull();
+    expect(glass(el).querySelector('app-crt-cover')).not.toBeNull();
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+  });
+
+  it('swaps from the dossier with one choice and opens the new cover (never two projects at once)', async () => {
+    reducedMotion(false);
+    const el = await renderAt('/');
+    vi.useFakeTimers();
+    click(el.querySelector('#inventory-insert'));
+    step(620, 450);
+    click(el.querySelector('#inventory-explore'));
+    click(el.querySelector('.to-library'));
+
+    click(library(el)[3]);
+    expect(text(el, '.slot-status')).toBe('EJETANDO');
+    expect(text(el, '[role="status"]')).toBe('Trocando para MC-004 — EOS.');
+    // Durante a troca, o vidro fica em espera: nem capa nem dossiê.
+    expect(glass(el).querySelector('app-crt-cover, app-crt-dossier')).toBeNull();
+    expect(library(el).every((c) => c.getAttribute('aria-disabled') === 'true')).toBe(true);
+
+    step(600, 620, 450);
+    expect(text(el, '.bar-text')).toBe('MC-004 · EOS INSERIDO');
+    expect(text(el, '[role="status"]')).toBe('MC-004 — EOS pronto.');
+    expect(text(el, '#crt-cover-title')).toBe('EOS');
+    // Sem teaser fora do MC-001.
+    expect(text(el, '.copy .actions')).toBe('Explorar projeto');
+  });
+
+  it('plays the SYSTEM HORIZON teaser on demand inside the CRT and returns to the cover', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    click(el.querySelector('#inventory-insert'));
+    const play = Array.from(el.querySelectorAll('app-crt-cover button')).find((b) =>
+      b.textContent?.includes('Reproduzir teaser'),
+    );
+    click(play);
+    // A tela do teaser chega por import() (chunk sob demanda): espera o READY(teaser).
+    for (let i = 0; i < 50 && !el.querySelector('.glass-fill'); i++) {
+      await new Promise((resolve) => setTimeout(resolve, 10));
+      fixture.detectChanges();
+    }
+
+    expect(el.querySelector('.glass-fill')).not.toBeNull();
+    // O teaser tem as próprias scanlines: o filtro de tubo (D-095) sai.
+    expect(glass(el).querySelector('.filter')).toBeNull();
+    // A capa saiu: o foco vai ao Pausar, dentro do vidro.
+    await fixture.whenStable();
+    expect(document.activeElement?.id).toBe('teaser-toggle');
+    expect(text(el, '.teaser-bar')).toContain('Voltar à capa');
+    click(el.querySelector('#teaser-back'));
+    expect(glass(el).querySelector('app-crt-cover')).not.toBeNull();
+    expect(glass(el).querySelector('.filter')).not.toBeNull();
+  });
+
+  it('ejects for real from the dossier and goes back to a coherent empty slot', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    click(el.querySelector('#inventory-insert'));
+    click(el.querySelector('#inventory-explore'));
+    click(el.querySelector('#inventory-eject'));
+
     expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
     expect(text(el, '[role="status"]')).toBe('Cartucho ejetado.');
+    expect(el.querySelector('app-cartridge-library')).not.toBeNull();
+    expect(el.querySelector('app-crt-dossier, app-crt-cover')).toBeNull();
     expect(el.querySelector('#inventory-insert')).not.toBeNull();
-    expect(el.querySelector('app-project-case')).toBeNull();
   });
 
-  it('renders the en labels and states', async () => {
+  it('builds each dossier only from real content (no empty section, no invented link)', async () => {
+    expect(PROJECTS.map((p) => [p.serial, dossierSections(p).length])).toEqual([
+      ['MC-001', 5],
+      ['MC-002', 6],
+      ['MC-003', 6],
+      ['MC-004', 6],
+      ['MC-005', 5],
+      ['MC-006', 5],
+    ]);
     reducedMotion(true);
-    const el = await renderAt('/en');
-    expect(text(el, '.eyebrow')).toBe('MC-001 · MODO CAMPANHA · NARRATIVE EXPERIENCE');
-    expect(text(el, '.experiences')).toBe('Teaser available · Playable campaign in development');
-    expect(text(el, '.slot-status')).toBe('EMPTY SLOT');
+    const el = await renderAt('/');
+    click(library(el)[5]);
     click(el.querySelector('#inventory-insert'));
-    expect(text(el, '.slot-status')).toBe('MC-001 INSERTED');
-    expect(text(el, '.tv-actions button')).toBe('Play teaser');
-    expect(el.querySelector('#project-viewer')?.getAttribute('aria-label')).toBe('Project viewer');
+    expect(text(el, '.copy mc-status')).toBe('EM ANDAMENTO');
+    click(el.querySelector('#inventory-explore'));
+    // Comunidade ON: sem link público, a última seção é só "Aprendizados".
+    expect(sections(el).at(-1)?.textContent?.replace(/\s+/g, ' ').trim()).toBe('05 Aprendizados');
+    click(sections(el)[4]);
+    expect(el.querySelector('app-crt-dossier-section .links')).toBeNull();
   });
 
-  it('falls back to the canonical MC-CART and the case when a console layer fails', async () => {
+  it('falls back to the canonical MC-CART and the HTML case when a console layer fails', async () => {
     reducedMotion(false);
     const el = await renderAt('/');
     el.querySelector('mc-console img')!.dispatchEvent(new Event('error'));
@@ -162,190 +375,48 @@ describe('ProjectInventorySection', () => {
     );
     expect(text(el, '.slot-status')).toBe('MC-01 INDISPONÍVEL');
     expect(el.querySelector('app-project-case')).not.toBeNull();
+    // Sem o CRT, o "Sobre o projeto" segue em texto: descrição e experiências.
+    expect(text(el, '.fallback-desc')).toMatch(/^O primeiro cartucho do Modo Campanha./);
+    expect(text(el, '.fallback')).toContain('Teaser disponível');
+    // A biblioteca segue: escolher outro cartucho recupera a estação.
+    click(library(el)[2]);
+    expect(el.querySelector('mc-console')).not.toBeNull();
   });
 
-  /** Avança os temporizadores uma etapa por vez (cada estado agenda o próximo ao renderizar). */
-  const step = (...ms: number[]) => {
-    for (const t of ms) {
-      vi.advanceTimersByTime(t);
-      fixture.detectChanges();
-    }
-  };
-  const library = (el: Element) => Array.from(el.querySelectorAll<HTMLElement>('.strip .cart'));
+  it('shows the cover text when the art fails, keeping the dossier available', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    click(library(el)[1]);
+    click(el.querySelector('#inventory-insert'));
+    el.querySelector('app-crt-cover img.art')!.dispatchEvent(new Event('error'));
+    fixture.detectChanges();
+
+    expect(el.querySelector('app-crt-cover img.art')).toBeNull();
+    expect(text(el, '#crt-cover-title')).toBe('Aedes Revenge');
+    click(el.querySelector('#inventory-explore'));
+    expect(el.querySelector('app-crt-dossier')).not.toBeNull();
+  });
 
   it('hides the library with a single cartridge (fixture)', async () => {
     reducedMotion(true);
     const el = await renderAt('/', [PROJECTS[0]]);
     expect(el.querySelector('app-cartridge-library')).toBeNull();
-    expect(text(el, '.intro .name')).toBe('SYSTEM HORIZON');
-  });
-
-  it('opens with the MC-CART collection: six cartridges, MC-001 selected, slot empty, CRT off', async () => {
-    reducedMotion(false);
-    const el = await renderAt('/');
-    const carts = library(el);
-
-    expect(text(el, '.library .title')).toBe('COLEÇÃO MC-CART');
-    expect(text(el, '.library .count')).toBe('06 CARTUCHOS');
-    expect(text(el, '.library .hint')).toBe('Escolha um cartucho para explorar.');
-    expect(carts.map((c) => c.getAttribute('aria-label'))).toEqual([
-      'MC-001 — SYSTEM HORIZON, selecionado',
-      'Selecionar MC-002 — Aedes Revenge',
-      'Selecionar MC-003 — ScoutEvo',
-      'Selecionar MC-004 — EOS',
-      'Selecionar MC-005 — Axia',
-      'Selecionar MC-006 — Comunidade ON',
-    ]);
-    expect(carts.map((c) => c.getAttribute('aria-current'))).toEqual([
-      'true',
-      null,
-      null,
-      null,
-      null,
-      null,
-    ]);
-    expect(text(el, '.cart.is-selected .badge')).toBe('SELECIONADO');
-    // O já selecionado com o slot vazio não tem ação: aria-disabled, os outros não.
-    expect(carts.map((c) => c.getAttribute('aria-disabled'))).toEqual([
-      'true',
-      null,
-      null,
-      null,
-      null,
-      null,
-    ]);
-    expect(carts.every((c) => c.querySelector('img')?.getAttribute('loading') === 'lazy')).toBe(
-      true,
-    );
-    expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
-    expect(text(el, '.glass')).toBe('INSIRA UM CARTUCHO');
-    // Sem rolagem na largura do teste: sem controles de página.
-    expect(el.querySelector('.pager')).toBeNull();
-  });
-
-  it('selects without inserting while the slot is empty, and announces it', async () => {
-    reducedMotion(false);
-    const el = await renderAt('/');
-    click(library(el)[2]);
-
-    expect(text(el, '.eyebrow')).toBe('MC-003 · MODO CAMPANHA · PLATAFORMA DE TALENTOS NO FUTEBOL');
-    expect(text(el, '.intro .name')).toBe('ScoutEvo');
-    expect(text(el, '[role="status"]')).toBe('Cartucho selecionado: MC-003 — ScoutEvo.');
-    expect(library(el)[2].getAttribute('aria-current')).toBe('true');
-    expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
-    expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
-    expect(el.querySelector('#inventory-insert')?.getAttribute('aria-label')).toBe(
-      'Inserir cartucho: ScoutEvo',
-    );
-    expect(el.querySelector('app-project-case')).toBeNull();
-  });
-
-  it('swaps with one explicit choice: eject → insert → load → READY, announced, focus kept', async () => {
-    reducedMotion(false);
-    const el = await renderAt('/');
-    vi.useFakeTimers();
     click(el.querySelector('#inventory-insert'));
-    step(620, 450);
-    expect(text(el, '.slot-status')).toBe('MC-001 INSERIDO');
-
-    let carts = library(el);
-    expect(text(el, '.library .hint')).toBe('Escolher outro cartucho troca o que está no MC-01.');
-    expect(carts[0].getAttribute('aria-label')).toBe('MC-001 — SYSTEM HORIZON, inserido');
-    expect(carts[0].getAttribute('aria-disabled')).toBe('true');
-    expect(carts[3].getAttribute('aria-label')).toBe('Trocar para MC-004 — EOS');
-    expect(text(el, '.cart.is-inserted .badge')).toBe('INSERIDO');
-
-    carts[3].focus();
-    click(carts[3]);
-    carts = library(el);
-    expect(text(el, '.slot-status')).toBe('EJETANDO MC-001');
-    // O case reserva o espaço, invisível e inerte, sem dados do novo projeto.
-    const pending = () => el.querySelector('app-project-case.is-pending');
-    expect(pending()?.getAttribute('aria-hidden')).toBe('true');
-    expect(pending()?.hasAttribute('inert')).toBe(true);
-    expect(el.querySelectorAll('app-project-case').length).toBe(1);
-    expect(text(el, '[role="status"]')).toBe('Trocando para MC-004 — EOS.');
-    // O editorial já é do cartucho escolhido; o console ainda ejeta o anterior.
-    expect(text(el, '.intro .name')).toBe('EOS');
-    expect(el.querySelector('.experiences')).toBeNull();
-    expect(carts.every((c) => c.getAttribute('aria-disabled') === 'true')).toBe(true);
-    expect(text(el, '.library .hint')).toBe('Aguarde: trocando de cartucho.');
-    // Durante a transição, outra escolha espera (é ignorada).
-    click(carts[4]);
-    expect(text(el, '[role="status"]')).toBe('Trocando para MC-004 — EOS.');
-    // A inserção é automática: o Inserir fica bloqueado e já nomeia o cartucho que vai entrar.
-    const insert = el.querySelector('#inventory-insert')!;
-    expect(insert.getAttribute('aria-disabled')).toBe('true');
-    expect(insert.getAttribute('aria-label')).toBe('Inserir cartucho: EOS');
-
-    step(600);
-    expect(text(el, '.slot-status')).toBe('CARREGANDO MC-004');
-    // CARREGANDO até o READY (na biblioteca e no case, que segue reservado).
-    expect(text(el, '.cart.is-selected .badge')).toBe('CARREGANDO');
-    expect(library(el)[3].getAttribute('aria-label')).toBe('MC-004 — EOS, carregando');
-    expect(pending()).not.toBeNull();
-    step(620);
-    expect(text(el, '.cart.is-selected .badge')).toBe('CARREGANDO');
-    expect(pending()).not.toBeNull();
-    step(450);
-
-    expect(text(el, '.slot-status')).toBe('MC-004 INSERIDO');
-    expect(text(el, '.cart.is-selected .badge')).toBe('INSERIDO');
-    expect(pending()).toBeNull();
-    expect(text(el, '.tv-status')).toBe('EOS · PRONTO');
-    expect(text(el, '[role="status"]')).toBe('MC-004 — EOS pronto.');
-    const art = el.querySelector('.glass-art')!;
-    expect(art.getAttribute('src')).toBe('assets/cartridges/mc-004/label-art-952.webp');
-    expect(art.classList.contains('is-contain')).toBe(true);
-    // Sem teaser: só ejetar. O foco não foi levado ao CRT.
-    expect(text(el, '.tv-actions')).toBe('Ejetar cartucho');
-    expect(document.activeElement?.id).not.toBe('inventory-status');
-    expect(text(el, 'app-project-case dt')).toBe('PROBLEMA');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
   });
 
-  it('swaps straight to READY with reduced motion', async () => {
-    reducedMotion(true);
-    const el = await renderAt('/');
-    click(el.querySelector('#inventory-insert'));
-    click(library(el)[5]);
-
-    expect(text(el, '.slot-status')).toBe('MC-006 INSERIDO');
-    expect(text(el, '[role="status"]')).toBe('MC-006 — Comunidade ON pronto.');
-    expect(text(el, '.intro mc-status')).toBe('EM ANDAMENTO');
-    // Comunidade ON sem link público: sem a coluna de evidências.
-    expect(text(el, 'app-project-case')).not.toContain('EVIDÊNCIAS');
-  });
-
-  it('keeps the manual eject: the swapped cartridge goes back above the slot', async () => {
-    reducedMotion(true);
-    const el = await renderAt('/');
-    click(el.querySelector('#inventory-insert'));
-    click(library(el)[1]);
-    click(el.querySelector('.tv-actions button[aria-label]'));
-
-    expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
-    expect(text(el, '.intro .name')).toBe('Aedes Revenge');
-    expect(library(el)[1].getAttribute('aria-current')).toBe('true');
-    expect(library(el)[1].getAttribute('aria-label')).toBe('MC-002 — Aedes Revenge, selecionado');
-    expect(library(el)[2].getAttribute('aria-label')).toBe('Selecionar MC-003 — ScoutEvo');
-  });
-
-  it('shows the context of the EOS paper evidence without claiming its authorship', async () => {
-    reducedMotion(true);
-    const el = await renderAt('/');
-    click(library(el)[3]);
-    click(el.querySelector('#inventory-insert'));
-
-    expect(text(el, 'app-project-case')).toContain('MARCOS');
-    expect(el.querySelectorAll('app-project-case .note').length).toBeGreaterThan(0);
-  });
-
-  it('renders the library in en', async () => {
+  it('renders the en labels and states', async () => {
     reducedMotion(true);
     const el = await renderAt('/en');
-    expect(text(el, '.library .title')).toBe('MC-CART COLLECTION');
-    expect(text(el, '.library .count')).toBe('06 CARTRIDGES');
+    expect(text(el, '.slot-status')).toBe('EMPTY SLOT');
     click(el.querySelector('#inventory-insert'));
-    expect(library(el)[2].getAttribute('aria-label')).toBe('Swap to MC-003 — ScoutEvo');
+    expect(text(el, '.copy .kicker')).toBe('MC-001 / PROJECT');
+    expect(text(el, '.copy .type')).toBe('NARRATIVE EXPERIENCE');
+    expect(text(el, '#inventory-explore')).toBe('Explore project');
+    click(el.querySelector('#inventory-explore'));
+    expect(text(el, '#dossier-section-title')).toBe('About the project');
+    expect(text(el, '#dossier-back')).toBe('Back to cover');
+    expect(text(el, '.to-library')).toBe('Library · MC-001 SYSTEM HORIZON');
+    expect(el.querySelector('#project-viewer')?.getAttribute('aria-label')).toBe('Project viewer');
   });
 });

@@ -1,26 +1,17 @@
-// Project Inventory — detalhes dos aparelhos (D-077): estado do slot, LED, conteúdo do vidro do CRT
-// e fallback. Textos de sistema sempre em etiqueta legível (nunca dentro da imagem).
+// Project Inventory — detalhes dos aparelhos (D-077, D-093): estado do slot, LED, sistema do vidro
+// do CRT (espera, carregando, teaser) e fallback; capa e dossiê têm componentes próprios. Textos de sistema sempre em etiqueta legível (nunca dentro da imagem).
 @use 'mc' as *;
 
 mc-console.is-idle {
   cursor: pointer;
 }
 
-.slot-status,
-.tv-status {
+.slot-status {
   display: flex;
   align-items: center;
   gap: space(2);
   @include type(system);
   color: var(--mc-text-secondary);
-}
-
-.tv-status:focus {
-  outline: none;
-}
-
-.tv-status:focus-visible {
-  @include focus-ring;
 }
 
 // LED do estado: desligado, ocupado (transição), ligado, falha. Sempre acompanhado de texto.
@@ -51,18 +42,12 @@ mc-console.is-idle {
 }
 
 // ------------------------------------------------------------------ Vidro do CRT
-.glass-system,
-.glass-caption {
+.glass-system {
   position: relative;
   padding: space(1) space(2);
   @include type(system);
   font-size: clamp(0.625rem, 3cqw, 0.875rem);
   color: var(--mc-text-muted);
-}
-
-.glass-caption {
-  background: var(--mc-bg);
-  color: var(--mc-text);
 }
 
 .glass-bar {
@@ -80,47 +65,149 @@ mc-console.is-idle {
   }
 }
 
-.glass-art,
-.glass-fill {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
 // Teaser: recuo mínimo medido (2,5%) para o canto curvo do tubo não cobrir o HUD (D-081). A borda
 // preta que sobra é a área útil de uma TV de tubo. Proporção e escala inteira do canvas intactas.
 .glass-fill {
+  position: absolute;
   inset: 2.5%;
-  width: auto;
-  height: auto;
 }
 
-.glass-art {
-  object-fit: cover;
-  animation: power-on 280ms ease-out;
-}
-
-// Arte do rótulo (≈ 2:1) inteira no vidro 4:3, sem corte (D-087).
-.glass-art.is-contain {
-  object-fit: contain;
-}
-
-// A tela liga do centro (linha → quadro), sem flash.
-@keyframes power-on {
-  from {
-    transform: scaleY(0.02);
-    opacity: 0.4;
-  }
+// Controles do teaser (D-093): dentro do vidro, no rodapé (o HUD do SYSTEM HORIZON fica no topo).
+.teaser-bar {
+  position: absolute;
+  right: 4%;
+  bottom: 4%;
+  z-index: 1;
+  display: flex;
+  gap: space(2);
 }
 
 // ------------------------------------------------------------------ Fallback
-.fallback {
-  justify-items: start;
+.fallback-desc {
+  max-width: 52ch;
+  @include type(body);
+  color: var(--mc-text);
 }
 
 .fallback-text {
   max-width: 44ch;
   @include type(body-s);
   color: var(--mc-text-secondary);
+}
+
+// ------------------------------------------------------------------ Moldura (D-094, D-095)
+// Uma moldura só para a biblioteca e a estação (D-095): dois compartimentos separados por um filete.
+// A estação mostra o cenário (estante e mesa), ancorado na base. No celular a moldura sangra até as
+// bordas (o CRT já passa da largura do conteúdo) e perde as laterais.
+.rig {
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-sm);
+  overflow: clip;
+
+  @media (max-width: 767.98px) {
+    margin-inline: calc(-1 * var(--mc-page-margin));
+    border-inline: 0;
+    border-radius: 0;
+
+    .library {
+      padding-inline: var(--mc-page-margin);
+    }
+  }
+
+  .library {
+    border-bottom: var(--mc-border-width-default) solid var(--mc-border-accent);
+  }
+}
+
+.station {
+  position: relative;
+  isolation: isolate;
+  padding: space(6) space(4) space(4);
+  background: var(--mc-bg);
+  overflow: clip;
+
+  @media (max-width: 767.98px) {
+    padding-inline: var(--mc-page-margin);
+  }
+
+  // Laterais curtas: o vidro do CRT mantém a largura de antes da moldura (a capa não perde linhas).
+  @include mq(lg) {
+    padding: space(7) space(4) space(8);
+  }
+}
+
+.station-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  pointer-events: none;
+}
+
+// Apoio na mesa (D-095): sombra de contato elíptica sob a TV e o console, entre o cenário e o
+// aparelho. Objetos físicos: sombra permitida, sem glow.
+.tv-area,
+mc-console {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: auto 4% -3% 4%;
+    height: 9%;
+    border-radius: var(--mc-radius-round);
+    background: radial-gradient(closest-side, var(--mc-material-groove), transparent);
+    pointer-events: none;
+  }
+}
+
+mc-console::after {
+  inset: auto 1% -2% 1%;
+  height: 12%;
+}
+
+// ------------------------------------------------------------------ Portátil (celular, D-095)
+// O visor precisa da largura: o portátil ocupa quase a tela inteira (passa do padding da estação,
+// centrado) e a barra fica embaixo, na largura do conteúdo.
+.handheld-area {
+  display: grid;
+  gap: space(4);
+
+  mc-handheld {
+    --w: min(calc(100vw - #{space(2)}), 30rem);
+    width: var(--w);
+    // Centrado mesmo passando da largura do conteúdo (margens negativas simétricas).
+    margin-inline: calc((100% - var(--w)) / 2);
+  }
+
+  .bar {
+    justify-self: stretch;
+  }
+}
+
+mc-handheld::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: auto 6% -1% 6%;
+  height: 5%;
+  border-radius: var(--mc-radius-round);
+  background: radial-gradient(closest-side, var(--mc-material-groove), transparent);
+  pointer-events: none;
+}
+
+// Visor do portátil (D-095): controles do teaser compactos para não cobrir a cena (≥ 24 px).
+// Só no portátil: o CRT a 1024 também tem vidro estreito e mantém os controles normais.
+mc-handheld .teaser-bar {
+  gap: space(1);
+
+  .mc-action {
+    min-height: 0;
+    padding: space(1) space(2);
+    @include type(caption);
+  }
 }

@@ -1,0 +1,102 @@
+// Conteúdo de uma seção do dossiê (H3, D-093): texto, ilustração do cartucho, tecnologias, marcos,
+// aprendizados e evidências. Herda o tamanho de fonte do dossiê (cqw do vidro).
+@use 'mc' as *;
+
+:host {
+  display: grid;
+  gap: clamp(0.5rem, 1.8cqw, 0.875rem);
+  justify-items: start;
+}
+
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+.lead {
+  max-width: 60ch;
+  line-height: 1.5;
+  color: var(--mc-text-secondary);
+}
+
+.art {
+  display: grid;
+  gap: space(1);
+  width: 100%;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+    border-radius: var(--mc-radius-sm);
+  }
+}
+
+figcaption,
+.kind,
+.meta {
+  @include type(system);
+  font-size: clamp(0.6875rem, 1.9cqw, 0.8125rem);
+  color: var(--mc-text-muted);
+}
+
+.kind {
+  color: var(--mc-accent);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+
+  li {
+    padding: 0.35em 0.8em;
+    border: var(--mc-border-width-default) solid var(--mc-border-default);
+    border-radius: var(--mc-radius-sm);
+  }
+}
+
+.list {
+  display: grid;
+  gap: space(2);
+  max-width: 60ch;
+  line-height: 1.5;
+
+  li {
+    position: relative;
+    padding-inline-start: space(4);
+    color: var(--mc-text-secondary);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.6em;
+      left: 0;
+      width: space(1);
+      height: space(1);
+      background: var(--mc-accent);
+    }
+  }
+}
+
+.links {
+  display: grid;
+  gap: space(2);
+
+  a {
+    display: inline;
+    white-space: normal;
+  }
+}
+
+.note {
+  font-size: 0.9em;
+  color: var(--mc-text-muted);
+}

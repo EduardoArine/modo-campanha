@@ -93,12 +93,13 @@ export const UI_PT_BR = {
     eject: 'Ejetar cartucho',
     // Biblioteca MC-CART (D-087). "MC-CART" é nome próprio; o resto em português (D-084).
     collection: {
-      title: 'COLEÇÃO MC-CART',
+      title: 'BIBLIOTECA DE CARTUCHOS',
       count: 'CARTUCHOS',
       hint: 'Escolha um cartucho para explorar.',
-      hintSwap: 'Escolher outro cartucho troca o que está no MC-01.',
+      hintSwap: 'Escolher outro cartucho troca o que está inserido.',
       busy: 'Aguarde: trocando de cartucho.',
       select: 'Selecionar',
+      insert: 'Inserir',
       swap: 'Trocar para',
       selected: 'SELECIONADO',
       inserted: 'INSERIDO',
@@ -109,6 +110,35 @@ export const UI_PT_BR = {
       previous: 'Cartuchos anteriores',
       next: 'Próximos cartuchos',
     },
+    // H3 (D-093): capa e dossiê do projeto dentro do CRT.
+    cover: {
+      kind: 'PROJETO',
+      explore: 'Explorar projeto',
+    },
+    dossier: {
+      back: 'Voltar à capa',
+      library: 'Biblioteca',
+      toLibrary: 'Voltar à biblioteca',
+      nav: 'Seções do dossiê',
+      pick: 'Seção do dossiê',
+      previous: 'Anterior',
+      next: 'Próxima',
+      nextSection: 'Próxima seção',
+      previousSection: 'Seção anterior',
+      section: 'Seção',
+      of: 'de',
+      artCaption: 'ARTE DO CARTUCHO',
+      evidence: 'EVIDÊNCIAS',
+      sections: {
+        about: 'Sobre o projeto',
+        challenge: 'Problema',
+        role: 'Minha contribuição',
+        stack: 'Tecnologias',
+        highlights: 'Marcos',
+        learnings: 'Aprendizados',
+        learningsEvidence: 'Aprendizados e evidências',
+      },
+    },
     slot: {
       empty: 'SLOT VAZIO',
       loading: 'CARREGANDO',
@@ -116,7 +146,6 @@ export const UI_PT_BR = {
       ejecting: 'EJETANDO',
       unavailable: 'MC-01 INDISPONÍVEL',
     },
-    ready: 'PRONTO',
     teaser: {
       play: 'Reproduzir teaser',
       pause: 'Pausar teaser',
@@ -127,7 +156,7 @@ export const UI_PT_BR = {
     status: {
       loading: 'Carregando cartucho.',
       ejected: 'Cartucho ejetado.',
-      teaserUnavailable: 'O teaser não carregou. O case do projeto continua disponível.',
+      teaserUnavailable: 'O teaser não carregou. O dossiê do projeto continua disponível.',
       selected: 'Cartucho selecionado:',
       swapping: 'Trocando para',
       ready: 'pronto.',

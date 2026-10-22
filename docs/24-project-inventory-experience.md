@@ -553,3 +553,62 @@ Evolução do H2, sem reconstruí-lo. Princípio: **ESCOLHER → INSERIR → EXP
 - ~~**Antes da publicação:** harmonizar a Hero com a nova carcaça do MC-001.~~ Resolvida: Hero na D-089; `og:image` na D-088 (atualização).
 - **Separada:** revisão das traduções antigas do Campaign Log.
 - **Paco:** sem código MC-CART por enquanto.
+
+## 19. H3 — MC-CART Library + CRT Project Viewer (D-093, 2026-10-21)
+
+**A biblioteca escolhe, o MC-01 carrega, o CRT apresenta.** Evolução do H2 (§17) e da biblioteca (§18), sem reconstruir: mesmos console, CRT, geometria, máscaras do vidro, tempos e teaser.
+
+### 19.1 Componentes (`features/project-inventory/`)
+
+| Componente | Papel |
+| --- | --- |
+| `project-inventory-section` | estado único, biblioteca / "← Biblioteca", estação, barra do console |
+| `crt-cover` | capa no vidro: arte oficial + código, nome, tipo, descrição, tecnologias, EXPLORAR PROJETO (MC-001: teaser) |
+| `crt-dossier` | dossiê no vidro: cabeçalho, seções (lista ou seletor), área com rolagem, 01 / 06, Anterior / Próxima |
+| `crt-dossier-section` | conteúdo de uma seção, só com dados reais do `Project` |
+| `project-case` | só no fallback (MC-01 indisponível) |
+
+### 19.2 Estados
+
+empty → (inserir) → inserting → loading → **ready(art = CAPA)** → (explorar) → **ready(dossier, seção)** → (voltar à capa) → ready(art).
+
+- **No READY:** teaser (MC-001) ⇄ capa; Ejetar a qualquer momento.
+- **Troca:** escolher outro cartucho na biblioteca, com um cartucho no READY (capa ou teaser), ejeta, insere, carrega e abre a **capa** do novo. No dossiê, a biblioteca está recolhida: "← Biblioteca" volta à capa e mostra a coleção.
+
+### 19.3 Validação
+
+- **Larguras e idiomas:** 1440 / 1024 / 820 / 390, pt e en, nos seis cartuchos (capa e dossiê) e nas seis seções do Aedes Revenge.
+- **Resultado:**
+  - nada do vidro passa da borda do tubo;
+  - sem rolagem lateral da página;
+  - só a área da seção rola dentro do CRT.
+- **Fluxo com movimento real:** seleção, inserção, explorar, seções, voltar à capa, voltar à biblioteca, troca automática, teaser e ejeção.
+- **Teclado:** Tab, Enter e Espaço, com o foco nos lugares descritos na D-093.
+
+## 20. Moldura e cenário (D-094, 2026-10-21)
+
+Pedido do Eduardo: biblioteca e estação em painéis, como na referência. Só o visual muda; a máquina de estados, os fluxos e a acessibilidade continuam os da D-093.
+
+- **Biblioteca:**
+  - painel com borda de acento e superfície;
+  - cada cartucho numa placa;
+  - o selecionado ganha borda dupla laranja e o código em laranja.
+- **Estação:**
+  - painel com o cenário (estante desfocada e mesa, `station-background`) ancorado na base, com os aparelhos sobre a mesa;
+  - **celular:** de borda a borda;
+  - **fallback:** fundo liso.
+- **Proporção na capa (≥ 1024):** 40/60, para o vidro manter a largura de antes da moldura.
+- **Asset:** `design/source/inventory/build-station.mjs` gera os WebP de 640 a 1672 px.
+
+## 21. Moldura única, MC-01 frontal e portátil no celular (D-095, 2026-10-21)
+
+- **Desktop e tablet (≥ 768):**
+  - uma moldura com a BIBLIOTECA DE CARTUCHOS em cima e a estação embaixo;
+  - o MC-01 no ângulo frontal, com o cartucho no slot laranja (traseira < cartucho < frente);
+  - a TV e o console apoiados na mesa, com sombra de contato;
+  - filtro CRT leve no vidro, exceto no teaser.
+- **Celular (< 768):**
+  - o portátil (`mc-handheld`) no lugar do MC-01 + CRT;
+  - o carrossel de cartuchos por cima: escolher insere (ou troca), e o cartucho desce por trás do corpo;
+  - a tela do portátil mostra capa, dossiê e teaser.
+- **Assets:** `design/source/mc-01/build-console.mjs` (MC-01 frontal) e `design/source/handheld/build-handheld.mjs` (portátil).

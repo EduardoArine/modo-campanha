@@ -1,0 +1,270 @@
+// Dossiê no CRT (H3, D-093). Ocupa o vidro inteiro (o vidro é o container: tipografia em cqw, com
+// limites). Vidro ≥ 560 px: lista das seções à esquerda e conteúdo à direita; abaixo disso, um
+// seletor nativo acima do conteúdo. Só a área da seção rola (uma única rolagem interna).
+@use 'mc' as *;
+
+:host {
+  position: absolute;
+  inset: 0;
+  display: block;
+  animation: enter 220ms ease-out;
+}
+
+p,
+h3,
+h4,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+.dossier {
+  display: grid;
+  grid-template: auto auto minmax(0, 1fr) auto / minmax(0, 1fr);
+  gap: clamp(0.375rem, 1.6cqw, 0.875rem);
+  height: 100%;
+  padding: 3.5cqw 4.5cqw;
+  font-size: clamp(0.8125rem, 2.4cqw, 1rem);
+  color: var(--mc-text);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  padding-bottom: clamp(0.375rem, 1.4cqw, 0.75rem);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.name {
+  min-width: 0;
+
+  // Recebe o foco ao abrir o dossiê (anuncia o projeto); sem anel em foco programático.
+  &:focus {
+    outline: none;
+  }
+
+  font: 600 clamp(0.875rem, 3cqw, 1.375rem) / 1.2 var(--mc-font-text);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.code,
+.now {
+  color: var(--mc-accent);
+}
+
+.slash {
+  color: var(--mc-text-muted);
+}
+
+// Seções: lista (vidro largo) ou seletor (estreito).
+.nav {
+  display: none;
+}
+
+.item {
+  display: flex;
+  gap: space(2);
+  width: 100%;
+  min-height: 40px;
+  padding: space(2) space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  background: none;
+  color: var(--mc-text);
+  font: inherit;
+  font-size: clamp(0.75rem, 2cqw, 0.9375rem);
+  text-align: start;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--mc-interactive-hover);
+  }
+
+  &.is-current {
+    border-color: var(--mc-accent);
+    background: var(--mc-accent);
+    color: var(--mc-text-on-accent);
+    font-weight: 600;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.num {
+  @include type(system);
+  font-size: inherit;
+  color: var(--mc-accent);
+
+  .is-current & {
+    color: inherit;
+  }
+}
+
+.pick select {
+  width: 100%;
+  min-height: 40px;
+  padding: 0 space(3);
+  border: var(--mc-border-width-default) solid var(--mc-accent);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+  color: var(--mc-text);
+  font: inherit;
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.content {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: space(2);
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.body {
+  display: grid;
+  gap: clamp(0.5rem, 1.8cqw, 0.875rem);
+  justify-items: start;
+}
+
+.title {
+  font: 700 clamp(1.125rem, 4.2cqw, 2rem) / 1.1 var(--mc-font-text);
+}
+
+.foot {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  padding-top: clamp(0.375rem, 1.4cqw, 0.75rem);
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.page {
+  margin-right: auto;
+  @include type(system);
+  font-size: clamp(0.8125rem, 2.4cqw, 1.125rem);
+}
+
+.next-name {
+  display: none;
+}
+
+// Vidro largo (desktop e tablet): lista das seções ao lado do conteúdo.
+@container (min-width: 560px) {
+  .dossier {
+    grid-template: auto minmax(0, 1fr) auto / minmax(9rem, 30%) minmax(0, 1fr);
+    column-gap: 3cqw;
+  }
+
+  .top,
+  .foot {
+    grid-column: 1 / -1;
+  }
+
+  .nav {
+    display: block;
+    overflow-y: auto;
+
+    ol {
+      display: grid;
+      gap: space(1);
+    }
+  }
+
+  .pick {
+    display: none;
+  }
+
+  .next-name {
+    display: inline;
+  }
+}
+
+// Vidro do celular (≤ 420 px, ~280 px de altura real do tubo 4:3): o nome vira uma linha, "Voltar à
+// capa" (só o ícone; o aria-label diz a ação) vai para o lado do seletor e o respiro vertical
+// diminui, para sobrar o máximo de altura para a leitura.
+@container (max-width: 420px) {
+  .dossier {
+    grid-template: auto auto minmax(0, 1fr) auto / minmax(0, 1fr) auto;
+    gap: space(1) space(2);
+    // Cantos do tubo são curvos: o respiro lateral fica (o vertical é o que diminui).
+    padding: 3cqw 5cqw;
+  }
+
+  .top {
+    display: contents;
+  }
+
+  .name {
+    grid-column: 1 / -1;
+    font-size: 0.8125rem;
+  }
+
+  .back {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .pick {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .content,
+  .foot {
+    grid-column: 1 / -1;
+  }
+
+  .foot {
+    padding-top: space(1);
+  }
+}
+
+@container (max-width: 420px) {
+  .back-text {
+    display: none;
+  }
+}
+
+// Visor do portátil (≤ 360 px, D-095): seletor e Anterior / Próxima mais baixos (≥ 24 px de
+// alvo), para a área de leitura ganhar altura.
+@container (max-width: 360px) {
+  .pick select {
+    min-height: 32px;
+  }
+
+  .foot .mc-action {
+    min-height: 0;
+    padding: space(1) space(3);
+    @include type(body-s);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}

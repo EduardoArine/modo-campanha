@@ -1,0 +1,95 @@
+// Portátil (D-095). Contexto de empilhamento próprio: cartucho 1 < corpo 2 < tela 3. Posições em %
+// do container (handheld.geometry.ts). Objeto físico: sombra de contato permitida, sem glow.
+@use 'mc' as *;
+
+:host {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+}
+
+.cart,
+.body {
+  position: absolute;
+  display: block;
+  height: auto;
+}
+
+// Cartucho: só transform, mesmas curvas do MC-01 (inserir 620 ms, ejetar 600 ms).
+.cart {
+  z-index: 1;
+  top: var(--slot-top);
+  left: var(--slot-left);
+  width: var(--slot-w);
+  transform: translateY(var(--y, 0));
+  transition: transform 200ms ease-out;
+}
+
+:host([data-pose='out']) .cart {
+  --y: var(--out);
+}
+
+:host([data-pose='out'][data-motion='none'].is-lifted) .cart {
+  transform: translateY(calc(var(--out) + 6%));
+}
+
+:host([data-motion='insert']) .cart {
+  transition: transform 620ms cubic-bezier(0.5, 0, 0.25, 1);
+}
+
+:host([data-motion='eject']) .cart {
+  transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.body {
+  z-index: 2;
+  top: var(--body-top);
+  left: 0;
+  width: 100%;
+  filter: drop-shadow(0 space(3) space(3) var(--mc-material-groove));
+}
+
+// Tela: o conteúdo cobre o visor da arte; apagada (standby), fica transparente.
+.screen {
+  position: absolute;
+  z-index: 3;
+  top: var(--screen-top);
+  left: var(--screen-left);
+  width: var(--screen-w);
+  height: var(--screen-h);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: space(2);
+  overflow: hidden;
+  container-type: inline-size;
+  border-radius: 0.5cqw;
+  background: var(--mc-bg);
+
+  // Reflexo leve do vidro, por cima do conteúdo (não captura o ponteiro).
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      155deg,
+      var(--mc-material-highlight),
+      transparent 32%,
+      transparent 70%,
+      var(--mc-material-groove)
+    );
+    opacity: 0.6;
+  }
+}
+
+:host(.no-filter) .screen::after {
+  display: none;
+}
+
+:host(.is-standby) .screen {
+  background: transparent;
+}

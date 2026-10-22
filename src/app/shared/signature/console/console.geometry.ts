@@ -1,36 +1,39 @@
-// Geometria do MC-01 em camadas (D-076/D-077), medida por registro de pixels contra a referência
-// oficial (design/source/mc-01/console-reference.png, 1254 × 1074): traseira e frente são recortes
-// exatos; o cartucho em escala do console encaixa em (277, 0) sem escala. As coordenadas pertencem
-// ao CONSOLE: qualquer MC-CART com render em escala do console (699 × 500) usa o mesmo slot.
+// Geometria do MC-01 em camadas (D-076/D-077; ângulo frontal desde D-095). Referência: o render
+// inteiro do Eduardo (2508 × 1170, fora do repositório); traseira (tampa com a abertura do slot,
+// y 0–296) e frente (y 296–1170, design/source/mc-01/console-v2/) são recortes exatos dele (diferença < 0,05%).
+// O cartucho em escala do console (699 × 500) entra na abertura laranja: 1150 px de largura,
+// centrado; encaixado, a frente esconde tudo abaixo de y 296, logo acima da faixa do rótulo. As
+// coordenadas pertencem ao CONSOLE: qualquer MC-CART com render em escala do console usa o mesmo slot.
 
 const A = 'assets/mc-01/';
+const set = (name: string) => [640, 960, 1280].map((w) => `${A}${name}-${w}.webp ${w}w`).join(', ');
 
 /** Sistema de coordenadas da referência (px da arte original). */
 export const MC01_CONSOLE = {
-  width: 1254,
-  height: 1074,
-  /** Espaço acima do console para o cartucho fora do slot (pose `out`). */
-  headroom: 230,
+  width: 2508,
+  height: 1170,
+  /** Espaço acima do console para o cartucho fora do slot (pose `out`, topo em y −805). */
+  headroom: 820,
   back: {
-    src: `${A}console-back-1254.webp`,
-    srcset: `${A}console-back-640.webp 640w, ${A}console-back-960.webp 960w, ${A}console-back-1254.webp 1254w`,
-    top: 205,
-    width: 1254,
-    height: 229,
+    src: `${A}mc01-back-1280.webp`,
+    srcset: set('mc01-back'),
+    top: 0,
+    width: 2508,
+    height: 296,
   },
   front: {
-    src: `${A}console-front-1254.webp`,
-    srcset: `${A}console-front-640.webp 640w, ${A}console-front-960.webp 960w, ${A}console-front-1254.webp 1254w`,
-    top: 434,
-    width: 1254,
-    height: 640,
+    src: `${A}mc01-front-1280.webp`,
+    srcset: set('mc01-front'),
+    top: 296,
+    width: 2508,
+    height: 874,
   },
-  /** Cartucho ENCAIXADO; 66 px da base ficam atrás da frente (y ≥ 434). */
-  slot: { left: 277, top: 0, width: 699, height: 500 },
-  /** Deslocamento vertical do cartucho (px da referência; 0 = encaixado). */
-  poses: { out: -230, seated: 0 },
-  /** Sombra de contato sobre a tampa com o cartucho fora (y 262–302). */
-  shadow: { top: 262, height: 40 },
+  /** Cartucho ENCAIXADO (1150 × 823): do topo em y −245, a base passa atrás da frente (y ≥ 296). */
+  slot: { left: 679, top: -245, width: 1150, height: 823 },
+  /** Deslocamento vertical do cartucho (px da referência; 0 = encaixado; fora = acima da tampa). */
+  poses: { out: -560, seated: 0 },
+  /** Sombra de contato sobre a abertura do slot com o cartucho fora. */
+  shadow: { top: 150, height: 70 },
 } as const;
 
 export type McConsolePose = keyof typeof MC01_CONSOLE.poses;

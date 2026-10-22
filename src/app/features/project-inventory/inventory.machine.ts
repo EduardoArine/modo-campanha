@@ -2,9 +2,11 @@
  * Estado de domínio do Project Inventory (H2, D-077): um único estado decide textos, controles,
  * indicadores e anúncios; a interface só lê `inventoryView(state)`. Sem flags independentes.
  *
- * empty ──insert──▶ inserting ──seated──▶ loading ──loaded──▶ ready(art)
+ * empty ──insert──▶ inserting ──seated──▶ loading ──loaded──▶ ready(art = CAPA)
  *   ▲                                                         │  play ▶ ready(teaser)
- *   └──────ejected─── ejecting ◀──────────eject───────────────┘  teaser-failed ▶ ready(teaser-unavailable)
+ *   │                                                         │  teaser-failed ▶ ready(teaser-unavailable)
+ *   │                                                         │  explore ▶ ready(dossier, seção) ─cover▶ ready(art)
+ *   └──────ejected─── ejecting ◀──────────eject───────────────┘
  * Qualquer estado ──assets-failed──▶ unavailable (fallback: case acessível sem o MC-01).
  * Com reduced motion, `insert` vai direto a ready e `eject` direto a empty.
  *
@@ -12,14 +14,25 @@
  * escolhido (ejecting{then: insert} ──ejected──▶ inserting). Uma única escolha faz a troca toda; com
  * reduced motion, vai direto ao READY do novo. Durante inserção, carregamento e ejeção, `select` é
  * ignorado (nada de duas animações, nem case de um projeto com o cartucho de outro).
+ *
+ * H3 (D-093): o READY é a CAPA do projeto dentro do CRT (`art`); `explore` abre o DOSSIÊ (`dossier`,
+ * com a seção ativa) e `cover` volta à capa, sem ejetar. Troca, ejeção e reduced motion sempre
+ * terminam (ou recomeçam) na capa: nunca um dossiê de um projeto com o cartucho de outro.
  */
-export type InventoryScreen = 'art' | 'art-unavailable' | 'teaser' | 'teaser-unavailable';
+export type InventoryScreen =
+  'art' | 'art-unavailable' | 'teaser' | 'teaser-unavailable' | 'dossier';
 
 export type InventoryState =
   | { readonly kind: 'empty'; readonly cartridge: string; readonly ejected?: true }
   | { readonly kind: 'inserting'; readonly cartridge: string }
   | { readonly kind: 'loading'; readonly cartridge: string }
-  | { readonly kind: 'ready'; readonly cartridge: string; readonly screen: InventoryScreen }
+  | {
+      readonly kind: 'ready';
+      readonly cartridge: string;
+      readonly screen: InventoryScreen;
+      /** Seção ativa do dossiê (índice), só com `screen: 'dossier'`. */
+      readonly section?: number;
+    }
   | {
       readonly kind: 'ejecting';
       readonly cartridge: string;
@@ -39,6 +52,9 @@ export type InventoryEvent =
   | { readonly type: 'eject'; readonly reduced: boolean }
   | { readonly type: 'ejected' }
   | { readonly type: 'select'; readonly cartridge: string; readonly reduced: boolean }
+  | { readonly type: 'explore' }
+  | { readonly type: 'cover' }
+  | { readonly type: 'section'; readonly index: number }
   | { readonly type: 'assets-failed' };
 
 export function initialInventoryState(cartridge: string): InventoryState {
@@ -69,7 +85,20 @@ export function nextInventoryState(state: InventoryState, event: InventoryEvent)
       if (event.type === 'play' && (state.screen === 'art' || state.screen === 'art-unavailable')) {
         return { ...state, screen: 'teaser' };
       }
-      if (event.type === 'teaser-failed') return { ...state, screen: 'teaser-unavailable' };
+      if (event.type === 'teaser-failed' && state.screen !== 'dossier') {
+        return { ...state, screen: 'teaser-unavailable' };
+      }
+      // Dossiê (D-093): da capa (ou do teaser) para a 1ª seção; seções só dentro do dossiê.
+      if (event.type === 'explore' && state.screen !== 'dossier') {
+        return { kind: 'ready', cartridge, screen: 'dossier', section: 0 };
+      }
+      if (event.type === 'section' && state.screen === 'dossier') {
+        const section = Math.max(0, Math.floor(event.index));
+        return section === state.section ? state : { ...state, section };
+      }
+      if (event.type === 'cover' && (state.screen === 'dossier' || state.screen === 'teaser')) {
+        return { kind: 'ready', cartridge, screen: 'art' };
+      }
       if (event.type === 'eject') return eject(state, cartridge, event.reduced);
       // Trocar de cartucho no READY (D-087): ejeta o atual e insere o escolhido em seguida.
       if (event.type === 'select' && event.cartridge !== cartridge) {
@@ -134,7 +163,7 @@ export interface InventoryView {
   insert: 'enabled' | 'busy' | 'hidden';
   /** Controles do CRT (estado, teaser, ejetar): só com o cartucho encaixado. */
   controls: boolean;
-  /** Case do projeto: da inserção ao READY (entra com o clique) e no fallback; sai ao ejetar. */
+  /** Case do projeto (H2). No H3 o case está no dossiê; a interface já não lê este campo. */
   case: boolean;
   /** Escolher outro cartucho (com 2 ou mais): fora das transições. */
   selectable: boolean;

@@ -53,3 +53,17 @@
     radial-gradient(30% 34% at 90% 14%, var(--mc-material-orange), transparent 70%);
   opacity: 0.12;
 }
+
+// Filtro de tubo (D-095): por cima do conteúdo, leve o bastante para não atrapalhar a leitura.
+// Scanlines de 3 px (1 escura), vinheta nas bordas e um reflexo frio no alto. Estático.
+.filter {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(70% 45% at 30% 8%, var(--mc-material-highlight), transparent 70%),
+    radial-gradient(closest-side, transparent 72%, var(--mc-material-groove)),
+    repeating-linear-gradient(to bottom, transparent 0 2px, var(--mc-material-groove) 2px 3px);
+  opacity: 0.55;
+}

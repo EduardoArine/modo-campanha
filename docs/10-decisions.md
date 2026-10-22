@@ -1331,3 +1331,141 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - testes e builds passam;
   - revisão independente: aprovada com ressalvas, sem bloqueantes; ressalvas corrigidas (ícone do TypeScript, docs, segundo "Voltar" no mobile).
 - **Status:** implementado na branch `feat/skill-loadout-concept-c`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
+
+## D-093 — Project Inventory H3: MC-CART Library + CRT Project Viewer
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo:** evoluir o H2 (D-077) e a biblioteca (D-087/D-088) para o H3, a partir de pranchas aprovadas por ele. Princípio: **a biblioteca escolhe, o MC-01 carrega, o CRT apresenta.** Todo o case passa a ficar dentro da TV. Detalhes em `docs/24` §19.
+- **Revê a D-088 nesse ponto:** a biblioteca congelada continua igual; muda a estação abaixo dela. O case em blocos abaixo do CRT (D-077) sai e vai para dentro do vidro.
+- **Implementação (aguardando aprovação visual e funcional):**
+  - **Composição:**
+    - biblioteca no topo (sem mudança);
+    - estação com o MC-01 à esquerda e o CRT, protagonista, à direita (≥ 1024: 42/58 na capa; no dossiê, 34/66 e 28/72 a partir de 1200);
+    - abaixo de 1024, CRT em cima e console embaixo; no celular, o CRT ocupa 122% da tela, centrado, para o vidro 4:3 usar a largura toda.
+  - **Barra do console:** LED + "MC-00X · Nome" + estado do slot e **uma** ação (Inserir ou Ejetar). Os controles que ficavam sob a TV saíram (sem ejeção duplicada).
+  - **CAPA (READY):** a arte oficial do cartucho ao fundo e, em HTML, código / PROJETO, nome (última palavra em laranja), tipo, EM ANDAMENTO (Comunidade ON), descrição, tecnologias e EXPLORAR PROJETO.
+    - **MC-001:** também "Reproduzir teaser" e a linha "Teaser disponível · Campanha jogável em desenvolvimento" (nada prometido além do que existe).
+    - **Celular:** descrição em 2 linhas e até 3 tecnologias (o texto completo fica no dossiê).
+  - **DOSSIÊ:**
+    - cabeçalho (código / nome + Voltar à capa);
+    - seções: Sobre o projeto, Problema, Minha contribuição, Tecnologias, Marcos, Aprendizados e evidências;
+    - uma seção por vez, numa única área com rolagem interna;
+    - rodapé com 01 / 06, Anterior e Próxima ("Próxima: Problema");
+    - vidro largo: lista ao lado; vidro do celular: seletor nativo e o "Voltar à capa" só com ícone (o nome acessível diz a ação).
+    - **Só conteúdo real:** seções sem conteúdo não aparecem. Exemplos: sem marcos documentados não há "Marcos" (MC-001, Axia, Comunidade ON); sem link público, a última seção é só "Aprendizados" (Comunidade ON).
+    - **A arte do cartucho** em "Sobre o projeto" é rotulada como ARTE DO CARTUCHO (não é captura de tela do produto).
+  - **Biblioteca no dossiê:** recolhe num botão "← Biblioteca · MC-00X Nome". Voltar à biblioteca e Voltar à capa **não ejetam**.
+  - **Estado (`inventory.machine.ts`):**
+    - `ready.screen` ganha `dossier` (com `section`);
+    - eventos `explore`, `cover` e `section`;
+    - troca, ejeção e reduced motion sempre terminam (ou recomeçam) na capa, então nunca há um dossiê de um projeto com o cartucho de outro;
+    - durante a troca, o vidro fica em espera.
+  - **Teaser do SYSTEM HORIZON:** engine, quadros, pausa e voltas intactos; carregado sob demanda. Pausar/Reproduzir e Voltar à capa ficam dentro do vidro, no rodapé.
+  - **Foco:**
+    - Explorar → título do dossiê;
+    - Voltar à capa → Explorar;
+    - Biblioteca → cartucho inserido na biblioteca;
+    - Ejetar → Inserir cartucho;
+    - a troca pela biblioteca não move o foco (anunciada em texto); trocar de seção anuncia "Seção 02 de 06: Problema" e volta o conteúdo ao topo, sem mexer na página.
+  - **Fallback (MC-01 indisponível):** o MC-CART canônico e o case em HTML (`ProjectCase`) seguem acessíveis; a biblioteca recupera a estação.
+- **Diferenças inevitáveis em relação às pranchas:**
+  - O vidro real do CRT é 4:3, mais alto que o das pranchas: o dossiê no celular tem ~140 px de leitura (com rolagem interna) e a capa encurta a descrição.
+  - Os elementos de estudo das pranchas ficaram de fora: "H3 · CAPA/DOSSIÊ", "CRT DOSSIÊ", menu "01 Início", ONLINE / MC-01 no header, ícones de marca das tecnologias, "Beta publicado em maio de 2017" sob a arte e o resumo "Reconhecimento acadêmico". Esses dois últimos ficam como itens da seção Marcos, onde estão os fatos.
+  - O título "MC-CART Library" grande não entrou: o cabeçalho da seção é o padrão do site, e a biblioteca mantém "COLEÇÃO MC-CART" (D-084).
+  - "Ver coleção (6)" no celular: a biblioteca já mostra os seis cartuchos rolando na horizontal, com anterior / próximo.
+- **Arte na capa:** a ilustração do rótulo preenche o vidro, ancorada à direita, como nas pranchas, e o texto fica sobre um degradê escuro à esquerda. **Revê a D-087 nesse ponto** (`fit: contain` no CRT): a ilustração inteira aparece no dossiê, em "Sobre o projeto".
+- **Revisão independente:** aprovável com correções, sem bloqueante. Correções feitas e revalidadas no navegador:
+  - **Foco:**
+    - no READY, o foco vai ao título da capa (antes caía na barra do console, fora da tela, e o Tab pulava o EXPLORAR); o READY passa a ser anunciado;
+    - "Reproduzir teaser" leva o foco ao Pausar;
+    - "← Biblioteca" centraliza o cartucho inserido na faixa antes de focá-lo.
+  - **Teaser:** se o visitante trocar de cartucho ou abrir o dossiê enquanto o teaser carrega, nada acontece (antes podia tocar no cartucho errado). Uma falha atrasada do teaser não afeta o dossiê.
+  - **Seção do dossiê:** limitada às seções que existem.
+  - **Fallback:** volta a mostrar a descrição, EM ANDAMENTO e as experiências.
+  - **Botão Próxima:** "Próxima: Problema" sem espaço extra, com o nome acessível igual ao texto visível.
+  - **Rolagem:** a área da seção só entra no Tab quando rola, e no fim do texto a rolagem passa para a página.
+  - **Limpeza:** strings e estilos mortos removidos; o aviso do teaser agora diz "o dossiê do projeto continua disponível".
+- **Status:** implementado na branch `feat/hero-refinement`, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
+
+## D-094 — Project Inventory: moldura e cenário da estação
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo:** aproximar o layout do Inventory da referência aprovada (biblioteca e estação em painéis com fundo e borda; "hoje está sem fundo nenhum, como se estivesse jogado na tela"). **A funcionalidade não muda.** O cenário (estante desfocada e mesa) foi fornecido por ele.
+- **Revê a D-087 / D-088 nesse ponto (só visual):** a biblioteca deixa de ser uma prateleira sem fundo.
+- **Biblioteca:**
+  - painel com borda de acento, superfície `--mc-surface` e cantos `--mc-radius-sm`;
+  - cada cartucho numa placa própria (fundo `--mc-bg`, borda sutil);
+  - o selecionado ganha borda dupla de acento, fundo de painel e o código em laranja, mantendo a elevação de 2 px e o rótulo de texto.
+- **Estação:**
+  - **Moldura:** a mesma borda e os mesmos cantos da biblioteca, com o cenário como `<img>` decorativo (`alt=""`, `loading="lazy"`), em `object-fit: cover` ancorado na base. A mesa fica sob os aparelhos, que se apoiam nela.
+  - **Celular (< 768):** o painel vai de borda a borda e perde as laterais, porque o CRT já passa da largura do conteúdo.
+  - **Fallback (MC-01 indisponível):** fundo liso, sem o cenário, para o texto continuar legível.
+- **Proporção (≥ 1024):** console × CRT de 42/58 para 40/60 na capa, como na referência; o dossiê mantém 34/66 e 28/72.
+  - **Motivo:** compensa a moldura. O vidro do CRT fica igual ou maior que antes (1440: 531 → 533 px; 1280: 523 → 526 px), e a descrição da capa não passa a ser cortada.
+  - **Margens laterais da estação:** 16 px no desktop.
+- **Asset:**
+  - **Mestre:** `design/source/inventory/station-background.png` (1672 × 941).
+  - **Derivados:** `public/assets/inventory/station-background-{640,960,1280,1672}.webp` (20 / 38 / 57 / 85 KB), gerados por `node design/source/inventory/build-station.mjs`. Só redimensiona.
+- **Validação:**
+  - 1440 / 1280 / 1024 / 820 / 390 / 360 em pt, e 1440 / 390 em en, nos estados inicial, capa e dossiê: sem rolagem lateral nem erro;
+  - testes, typecheck, Prettier e builds sem aviso;
+  - orçamento de CSS respeitado.
+- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual do Eduardo**. Sem merge e sem deploy.
+
+## D-095 — Project Inventory: moldura única, MC-01 frontal, mesa, filtro CRT e portátil no celular
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo, sobre a D-094:**
+  - título "Biblioteca de cartuchos";
+  - cartuchos unidos ao setup;
+  - console no novo ângulo, mais coerente com a TV;
+  - TV apoiada na madeira, não flutuando;
+  - filtro CRT leve no tubo;
+  - no celular, o portátil dele no lugar do console + TV, com os cartuchos em carrossel por cima e a mesma animação de inserir.
+
+  Arte do Eduardo: console em camadas e portátil.
+- **Título:** BIBLIOTECA DE CARTUCHOS / CARTRIDGE LIBRARY. A dica da troca ficou neutra ("troca o que está inserido"), porque vale para os dois aparelhos.
+- **Moldura única:** a biblioteca e a estação são dois compartimentos de uma só moldura (`.rig`), separados por um filete de acento. No dossiê, o "← Biblioteca" fica logo acima.
+- **MC-01 frontal (revê a geometria da D-077):**
+  - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render inteiro do Eduardo (fora do repositório; 2508 × 1170; diferença < 0,05%).
+  - **Cartucho:** em escala do console, com 1150 px, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" (−560 px) paira acima da tampa.
+  - **Componente:** mesma ordem de camadas, só `transform` e as mesmas durações do `mc-console`.
+  - **Derivados:** `mc01-{back,front}-{640,960,1280}.webp` (10 a 58 KB), por `node design/source/mc-01/build-console.mjs`. Os derivados antigos saíram do `public/`; os mestres antigos ficam em `design/source/mc-01/`.
+- **Apoio na mesa:** sombra de contato elíptica sob a TV, o console e o portátil (só objetos físicos), e uma base mais alta na estação (≥ 1024: 64 px), para a mesa aparecer à frente dos aparelhos.
+- **Filtro CRT** (`mc-crt-front`, input `filter`, ligado por padrão):
+  - fica por cima do conteúdo, sem capturar o ponteiro;
+  - combina scanlines de 3 px (1 escura), vinheta e um reflexo no alto, com opacidade 0,55 e só tokens de material;
+  - fica desligado no teaser, que já tem scanlines próprias;
+  - o texto da capa continua legível (conferido a 2×).
+- **Portátil no celular (< 768):**
+  - **Componente:** `mc-handheld` (`shared/signature/handheld/`): cartucho < corpo < tela.
+    - O cartucho entra por cima, ATRÁS do corpo, como na referência do Eduardo, com as mesmas curvas e durações.
+    - A tela é o visor do render (x 118–1755 · y 156–1336) e recebe o mesmo conteúdo do CRT (capa, dossiê, teaser, carregando). Em espera, mostra o visor apagado da arte.
+    - Derivados `handheld-{480,800,1200}.webp` (35 a 135 KB), por `node design/source/handheld/build-handheld.mjs`.
+  - **Fluxo:**
+    - a biblioteca vira o carrossel por cima, com encaixe centrado;
+    - **escolher um cartucho já insere**: no slot vazio, insere; com outro cartucho, troca;
+    - o "Inserir cartucho" da barra continua;
+    - nessa escolha, a página não rola e o foco fica no carrossel (o READY é anunciado);
+    - a máquina de estados é a mesma da D-093.
+  - **Código:**
+    - `handheld` vem de `matchMedia('(max-width: 767.98px)')`;
+    - o conteúdo da tela e a barra viraram templates compartilhados pelo CRT e pelo portátil;
+    - só um aparelho é renderizado por vez, então os ids e a região `#project-viewer` são únicos.
+  - **Visor estreito:** controles do teaser compactos, para não cobrir a cena (≥ 24 px de altura).
+- **Validação:**
+  - fluxo real com movimento em 390 e 360: inserir pelo carrossel, teaser, troca e ejeção;
+  - axe sem violações no Inventory;
+  - sem rolagem lateral, com o portátil centrado (4 px de cada lado);
+  - 1440 / 1280 / 1024 / 820 em pt, e 1440 / 390 em en;
+  - 200 testes, incluindo um novo do portátil; typecheck, Prettier e build sem aviso.
+- **Revisão independente:** aprovada com ressalvas, sem bloqueantes. Corrigido:
+  - os controles compactos do teaser valem só no portátil (o CRT a 1024 mantém 46 px);
+  - dossiê no visor do portátil (≤ 360 px) com seletor e navegação mais baixos (≥ 31 px): área de leitura de 98 → 113 px em 390;
+  - ao girar o celular com o foco no aparelho, o foco vai ao equivalente no outro;
+  - o reflexo do portátil sai no teaser;
+  - testes do portátil (inserir o selecionado, nomes "Inserir" / "Trocar para", troca, mudança de aparelho em runtime) e do filtro no teaser (203 testes).
+- **Pendente de decisão do Eduardo:**
+  - entre 768 e 1023 px (layout empilhado), a TV fica sobre a estante e só o console fica na mesa;
+  - ~~os PNGs só de referência ficam no repositório~~: removidos por decisão do Eduardo (cerca de 8 MB).
+- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
