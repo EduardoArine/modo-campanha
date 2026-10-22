@@ -35,6 +35,15 @@ const MOVE_MS = 620;
 const BOOT_MS = 450;
 const EJECT_MS = 600;
 
+/** Cenário da estação (D-094): estante desfocada e mesa; derivados de build-station.mjs. */
+const STATION_BACKGROUND_WIDTHS = [640, 960, 1280, 1672];
+const STATION_BACKGROUND = {
+  src: 'assets/inventory/station-background-1672.webp',
+  srcset: STATION_BACKGROUND_WIDTHS.map(
+    (w) => `assets/inventory/station-background-${w}.webp ${w}w`,
+  ).join(', '),
+};
+
 /**
  * Project Inventory — H3, MC-CART Library + CRT Project Viewer (D-093, docs/24 §19), evolução do
  * H2 (D-077) e da biblioteca (D-087). A biblioteca escolhe, o MC-01 carrega, o CRT apresenta: no
@@ -65,6 +74,7 @@ const EJECT_MS = 600;
 export class ProjectInventorySection {
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
+  protected readonly stationBackground = STATION_BACKGROUND;
   private readonly injector = inject(Injector);
   private readonly scroller = inject(ViewportScroller);
   private readonly window = inject(DOCUMENT).defaultView;

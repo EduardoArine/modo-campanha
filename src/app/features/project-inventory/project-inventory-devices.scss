@@ -94,3 +94,39 @@ mc-console.is-idle {
   @include type(body-s);
   color: var(--mc-text-secondary);
 }
+
+// ------------------------------------------------------------------ Moldura da estação (D-094)
+// Painel com o cenário (estante e mesa): os aparelhos se apoiam na mesa, ancorada na base. No
+// celular o painel sangra até as bordas (o CRT já passa da largura do conteúdo) e perde as laterais.
+.station {
+  position: relative;
+  isolation: isolate;
+  padding: space(6) space(4) space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-bg);
+  overflow: clip;
+
+  @media (max-width: 767.98px) {
+    margin-inline: calc(-1 * var(--mc-page-margin));
+    padding-inline: var(--mc-page-margin);
+    border-inline: 0;
+    border-radius: 0;
+  }
+
+  // Laterais curtas: o vidro do CRT mantém a largura de antes da moldura (a capa não perde linhas).
+  @include mq(lg) {
+    padding: space(7) space(4) space(5);
+  }
+}
+
+.station-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+  pointer-events: none;
+}

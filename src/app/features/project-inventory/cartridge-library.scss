@@ -4,8 +4,13 @@
 // 3 (≥ 768) · ~2,3 (mobile: o terço seguinte aparece cortado, sinal de que há mais).
 @use 'mc' as *;
 
+// Painel com moldura (D-094), como a estação abaixo.
 :host {
   display: block;
+  padding: space(4);
+  border: var(--mc-border-width-default) solid var(--mc-border-accent);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-surface);
 }
 
 .head {
@@ -108,10 +113,11 @@
   display: grid;
   gap: space(1);
   width: 100%;
-  padding: space(2);
-  border: var(--mc-border-width-default) solid transparent;
+  // Placa de cada cartucho (D-094): fundo próprio e borda sutil.
+  padding: space(3);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
   border-radius: var(--mc-radius-sm);
-  background: transparent;
+  background: var(--mc-bg);
   color: var(--mc-text);
   font: inherit;
   text-align: start;
@@ -125,8 +131,14 @@
   }
 
   &.is-selected {
-    border-color: var(--mc-border-accent);
+    border-color: var(--mc-accent);
+    box-shadow: inset 0 0 0 var(--mc-border-width-default) var(--mc-accent);
+    background: var(--mc-panel);
     transform: translateY(-2px);
+
+    .serial {
+      color: var(--mc-accent);
+    }
   }
 
   &[aria-disabled='true'] {

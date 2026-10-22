@@ -1,5 +1,5 @@
 // Project Inventory — H3 (D-093, docs/24 §19): biblioteca no topo; estação com o MC-01 à esquerda e
-// o CRT, protagonista, à direita (≥ 1024: 42/58 na capa; no dossiê, 34/66 e 28/72 a partir de
+// o CRT, protagonista, à direita (≥ 1024: 40/60 na capa, D-094; no dossiê, 34/66 e 28/72 a partir de
 // 1200). Abaixo de 1024: CRT em cima e console embaixo; no celular (< 768) o CRT sangra pelas laterais (o vidro 4:3 real precisa
 // da largura toda) e o console fica menor. A barra do console junta estado e ação.
 @use 'mc' as *;
@@ -39,7 +39,7 @@ p {
   align-items: end;
 
   @include mq(lg) {
-    grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+    grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
     column-gap: space(6);
     transition: grid-template-columns 300ms ease-out;
 

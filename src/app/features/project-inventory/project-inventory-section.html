@@ -44,6 +44,18 @@
 
     <div class="station" id="inventory-station" [attr.data-state]="state().kind">
       @if (v.slot !== 'unavailable') {
+        <!-- Cenário (D-094): estante e mesa onde os aparelhos se apoiam. Decorativo. -->
+        <img
+          class="station-bg"
+          [src]="stationBackground.src"
+          [attr.srcset]="stationBackground.srcset"
+          sizes="(min-width: 1200px) 1200px, 100vw"
+          width="1672"
+          height="941"
+          alt=""
+          loading="lazy"
+          decoding="async"
+        />
         <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
         <div
           class="tv-area"
