@@ -4,12 +4,10 @@
 // 3 (≥ 768) · ~2,3 (mobile: o terço seguinte aparece cortado, sinal de que há mais).
 @use 'mc' as *;
 
-// Painel com moldura (D-094), como a estação abaixo.
+// Compartimento de cima da moldura única (D-095): a moldura é do .rig, no Inventory.
 :host {
   display: block;
   padding: space(4);
-  border: var(--mc-border-width-default) solid var(--mc-border-accent);
-  border-radius: var(--mc-radius-sm);
   background: var(--mc-surface);
 }
 

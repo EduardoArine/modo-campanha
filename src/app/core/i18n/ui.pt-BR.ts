@@ -93,7 +93,7 @@ export const UI_PT_BR = {
     eject: 'Ejetar cartucho',
     // Biblioteca MC-CART (D-087). "MC-CART" é nome próprio; o resto em português (D-084).
     collection: {
-      title: 'COLEÇÃO MC-CART',
+      title: 'BIBLIOTECA DE CARTUCHOS',
       count: 'CARTUCHOS',
       hint: 'Escolha um cartucho para explorar.',
       hintSwap: 'Escolher outro cartucho troca o que está no MC-01.',

@@ -18,9 +18,14 @@ p {
   margin: 0;
 }
 
-.library,
+.rig,
 .to-library {
   margin-top: var(--mc-space-section-head);
+}
+
+// Com o "← Biblioteca" (dossiê), a moldura fica logo abaixo dele.
+.to-library + .rig {
+  margin-top: space(4);
 }
 
 .to-library {
@@ -35,7 +40,6 @@ p {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: space(5);
-  margin-top: space(6);
   align-items: end;
 
   @include mq(lg) {

@@ -86,7 +86,7 @@ export const UI_EN: UiDictionary = {
     insert: 'Insert cartridge',
     eject: 'Eject cartridge',
     collection: {
-      title: 'MC-CART COLLECTION',
+      title: 'CARTRIDGE LIBRARY',
       count: 'CARTRIDGES',
       hint: 'Choose a cartridge to explore.',
       hintSwap: 'Choosing another cartridge swaps the one in the MC-01.',

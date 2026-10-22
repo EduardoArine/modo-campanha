@@ -65,7 +65,7 @@ describe('ProjectInventorySection', () => {
     const el = await renderAt('/');
 
     expect(el.querySelector('h2')?.textContent).toBe('INVENTÁRIO DE PROJETOS');
-    expect(text(el, '.library .title')).toBe('COLEÇÃO MC-CART');
+    expect(text(el, '.library .title')).toBe('BIBLIOTECA DE CARTUCHOS');
     expect(library(el).length).toBe(6);
     expect(library(el)[0].getAttribute('aria-current')).toBe('true');
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
