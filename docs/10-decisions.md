@@ -1386,3 +1386,28 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Rolagem:** a área da seção só entra no Tab quando rola, e no fim do texto a rolagem passa para a página.
   - **Limpeza:** strings e estilos mortos removidos; o aviso do teaser agora diz "o dossiê do projeto continua disponível".
 - **Status:** implementado na branch `feat/hero-refinement`, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
+
+## D-094 — Project Inventory: moldura e cenário da estação
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo:** aproximar o layout do Inventory da referência aprovada (biblioteca e estação em painéis com fundo e borda; "hoje está sem fundo nenhum, como se estivesse jogado na tela"). **A funcionalidade não muda.** O cenário (estante desfocada e mesa) foi fornecido por ele.
+- **Revê a D-087 / D-088 nesse ponto (só visual):** a biblioteca deixa de ser uma prateleira sem fundo.
+- **Biblioteca:**
+  - painel com borda de acento, superfície `--mc-surface` e cantos `--mc-radius-sm`;
+  - cada cartucho numa placa própria (fundo `--mc-bg`, borda sutil);
+  - o selecionado ganha borda dupla de acento, fundo de painel e o código em laranja, mantendo a elevação de 2 px e o rótulo de texto.
+- **Estação:**
+  - **Moldura:** a mesma borda e os mesmos cantos da biblioteca, com o cenário como `<img>` decorativo (`alt=""`, `loading="lazy"`), em `object-fit: cover` ancorado na base. A mesa fica sob os aparelhos, que se apoiam nela.
+  - **Celular (< 768):** o painel vai de borda a borda e perde as laterais, porque o CRT já passa da largura do conteúdo.
+  - **Fallback (MC-01 indisponível):** fundo liso, sem o cenário, para o texto continuar legível.
+- **Proporção (≥ 1024):** console × CRT de 42/58 para 40/60 na capa, como na referência; o dossiê mantém 34/66 e 28/72.
+  - **Motivo:** compensa a moldura. O vidro do CRT fica igual ou maior que antes (1440: 531 → 533 px; 1280: 523 → 526 px), e a descrição da capa não passa a ser cortada.
+  - **Margens laterais da estação:** 16 px no desktop.
+- **Asset:**
+  - **Mestre:** `design/source/inventory/station-background.png` (1672 × 941).
+  - **Derivados:** `public/assets/inventory/station-background-{640,960,1280,1672}.webp` (20 / 38 / 57 / 85 KB), gerados por `node design/source/inventory/build-station.mjs`. Só redimensiona.
+- **Validação:**
+  - 1440 / 1280 / 1024 / 820 / 390 / 360 em pt, e 1440 / 390 em en, nos estados inicial, capa e dossiê: sem rolagem lateral nem erro;
+  - testes, typecheck, Prettier e builds sem aviso;
+  - orçamento de CSS respeitado.
+- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual do Eduardo**. Sem merge e sem deploy.

@@ -584,3 +584,18 @@ empty → (inserir) → inserting → loading → **ready(art = CAPA)** → (exp
   - só a área da seção rola dentro do CRT.
 - **Fluxo com movimento real:** seleção, inserção, explorar, seções, voltar à capa, voltar à biblioteca, troca automática, teaser e ejeção.
 - **Teclado:** Tab, Enter e Espaço, com o foco nos lugares descritos na D-093.
+
+## 20. Moldura e cenário (D-094, 2026-10-21)
+
+Pedido do Eduardo: biblioteca e estação em painéis, como na referência. Só o visual muda; a máquina de estados, os fluxos e a acessibilidade continuam os da D-093.
+
+- **Biblioteca:**
+  - painel com borda de acento e superfície;
+  - cada cartucho numa placa;
+  - o selecionado ganha borda dupla laranja e o código em laranja.
+- **Estação:**
+  - painel com o cenário (estante desfocada e mesa, `station-background`) ancorado na base, com os aparelhos sobre a mesa;
+  - **celular:** de borda a borda;
+  - **fallback:** fundo liso.
+- **Proporção na capa (≥ 1024):** 40/60, para o vidro manter a largura de antes da moldura.
+- **Asset:** `design/source/inventory/build-station.mjs` gera os WebP de 640 a 1672 px.
