@@ -1,6 +1,6 @@
 // Derivados WebP do MC-01 em camadas, ângulo frontal (D-095): traseira (tampa com a abertura do slot) e
-// frente, recortes exatos da referência design/source/mc-01/console-v2/reference.png (2508 × 1170;
-// traseira y 0–296, frente y 296–1170). Arte do Eduardo, com alfa. Sem recorte nem filtro: só redimensiona.
+// frente, recortes exatos do render inteiro do Eduardo (2508 × 1170, fora do repositório; traseira
+// y 0–296, frente y 296–1170). Arte do Eduardo, com alfa. Sem recorte nem filtro: só redimensiona.
 // Codifica no Chrome headless (canvas → WebP com alfa, DevTools Protocol, sem dependências).
 //
 // Uso (na raiz do repositório): node design/source/mc-01/build-console.mjs

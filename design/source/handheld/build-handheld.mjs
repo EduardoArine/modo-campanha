@@ -1,6 +1,6 @@
 // Derivados WebP do portátil (D-095), usado no celular no lugar do MC-01 + CRT: corpo com a tela,
 // arte do Eduardo (design/source/handheld/handheld.png, 1868 × 2412, com alfa). O cartucho passa
-// ATRÁS do corpo (referência: reference-with-cartridge.png). Sem recorte nem filtro: só redimensiona.
+// ATRÁS do corpo (como na referência do Eduardo com o cartucho, fora do repositório). Sem recorte nem filtro: só redimensiona.
 // Codifica no Chrome headless (canvas → WebP com alfa, DevTools Protocol, sem dependências).
 //
 // Uso (na raiz do repositório): node design/source/handheld/build-handheld.mjs

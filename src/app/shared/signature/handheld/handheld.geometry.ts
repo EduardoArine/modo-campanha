@@ -1,6 +1,6 @@
 // Geometria do portátil (D-095), medida no render do Eduardo (design/source/handheld/handheld.png,
-// 1868 × 2412). O cartucho em escala do console (699 × 500) passa ATRÁS do corpo, centrado, como em
-// reference-with-cartridge.png: encaixado, 341 px dele ficam acima do corpo. A tela digital é o
+// 1868 × 2412). O cartucho em escala do console (699 × 500) passa ATRÁS do corpo, centrado, como na
+// referência do Eduardo com o cartucho (fora do repositório): encaixado, 341 px dele ficam acima do corpo. A tela digital é o
 // visor do render (x 118–1755 · y 156–1336), com 2 px de folga para dentro da moldura preta.
 
 const A = 'assets/handheld/';

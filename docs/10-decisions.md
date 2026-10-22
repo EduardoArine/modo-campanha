@@ -1427,7 +1427,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Título:** BIBLIOTECA DE CARTUCHOS / CARTRIDGE LIBRARY. A dica da troca ficou neutra ("troca o que está inserido"), porque vale para os dois aparelhos.
 - **Moldura única:** a biblioteca e a estação são dois compartimentos de uma só moldura (`.rig`), separados por um filete de acento. No dossiê, o "← Biblioteca" fica logo acima.
 - **MC-01 frontal (revê a geometria da D-077):**
-  - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render `design/source/mc-01/console-v2/reference.png` (2508 × 1170; diferença < 0,05%).
+  - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render inteiro do Eduardo (fora do repositório; 2508 × 1170; diferença < 0,05%).
   - **Cartucho:** em escala do console, com 1150 px, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" (−560 px) paira acima da tampa.
   - **Componente:** mesma ordem de camadas, só `transform` e as mesmas durações do `mc-console`.
   - **Derivados:** `mc01-{back,front}-{640,960,1280}.webp` (10 a 58 KB), por `node design/source/mc-01/build-console.mjs`. Os derivados antigos saíram do `public/`; os mestres antigos ficam em `design/source/mc-01/`.
@@ -1467,5 +1467,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - testes do portátil (inserir o selecionado, nomes "Inserir" / "Trocar para", troca, mudança de aparelho em runtime) e do filtro no teaser (203 testes).
 - **Pendente de decisão do Eduardo:**
   - entre 768 e 1023 px (layout empilhado), a TV fica sobre a estante e só o console fica na mesa;
-  - os PNGs só de referência (`console-v2/reference.png` e `handheld/reference-with-cartridge.png`, cerca de 4 MB cada) ficam no repositório.
+  - ~~os PNGs só de referência ficam no repositório~~: removidos por decisão do Eduardo (cerca de 8 MB).
 - **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
