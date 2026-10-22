@@ -42,6 +42,8 @@ export class CartridgeLibrary {
   readonly busy = input(false);
   /** O CRT (#project-viewer) está na página (fora do fallback): só então há aria-controls. */
   readonly viewer = input(true);
+  /** Portátil (D-095): escolher insere; o selecionado com o slot vazio também é uma ação. */
+  readonly insertOnChoose = input(false);
   readonly choose = output<string>();
 
   protected readonly locale = inject(LocaleService);
@@ -83,9 +85,13 @@ export class CartridgeLibrary {
     });
   }
 
-  /** Escolher este cartucho muda algo? (o inserido e o já selecionado com o slot vazio, não). */
+  /**
+   * Escolher este cartucho muda algo? (o inserido e o já selecionado com o slot vazio, não; no
+   * portátil, o selecionado com o slot vazio é inserido).
+   */
   protected actionable(project: Project): boolean {
     if (project.id === this.inserted() || project.id === this.loading()) return false;
+    if (this.insertOnChoose()) return true;
     return !(project.id === this.selected() && !this.inserted());
   }
 
@@ -99,7 +105,8 @@ export class CartridgeLibrary {
     if (project.id === this.inserted()) return `${name}, ${c.isInserted}`;
     if (project.id === this.loading()) return `${name}, ${c.isLoading}`;
     if (!this.actionable(project)) return `${name}, ${c.isSelected}`;
-    return `${this.inserted() ? c.swap : c.select} ${name}`;
+    const verb = this.inserted() ? c.swap : this.insertOnChoose() ? c.insert : c.select;
+    return `${verb} ${name}`;
   }
 
   protected pick(project: Project): void {

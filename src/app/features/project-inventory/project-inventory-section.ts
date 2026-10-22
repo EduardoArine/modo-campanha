@@ -1,4 +1,4 @@
-import { DOCUMENT, NgComponentOutlet, ViewportScroller } from '@angular/common';
+import { DOCUMENT, NgComponentOutlet, NgTemplateOutlet, ViewportScroller } from '@angular/common';
 import {
   afterNextRender,
   ChangeDetectionStrategy,
@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
-import { McCart, McConsole, McCrtFront } from '../../shared/signature';
+import { McCart, McConsole, McCrtFront, McHandheld } from '../../shared/signature';
 import { McAction, McIcon, McSectionHeader, McStatus } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { CartridgeLibrary } from './cartridge-library';
@@ -55,6 +55,7 @@ const STATION_BACKGROUND = {
   selector: 'app-project-inventory-section',
   imports: [
     NgComponentOutlet,
+    NgTemplateOutlet,
     McSectionHeader,
     McStatus,
     McAction,
@@ -65,6 +66,7 @@ const STATION_BACKGROUND = {
     McCart,
     McConsole,
     McCrtFront,
+    McHandheld,
     ProjectCase,
   ],
   templateUrl: './project-inventory-section.html',
@@ -116,6 +118,10 @@ export class ProjectInventorySection {
    */
   private librarySwap = false;
 
+  /** Celular (< 768, D-095): o portátil substitui o MC-01 + CRT. */
+  private readonly phoneQuery = this.window?.matchMedia?.('(max-width: 767.98px)');
+  protected readonly handheld = signal(this.phoneQuery?.matches ?? false);
+
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
   protected readonly teaserScreen = signal<Type<unknown> | null>(null);
@@ -151,8 +157,11 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
+    const onPhone = (event: MediaQueryListEvent) => this.handheld.set(event.matches);
+    this.phoneQuery?.addEventListener('change', onPhone);
     inject(DestroyRef).onDestroy(() => {
       reduce?.removeEventListener('change', onChange);
+      this.phoneQuery?.removeEventListener('change', onPhone);
       this.playback.pause();
     });
   }
@@ -172,6 +181,12 @@ export class ProjectInventorySection {
   /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
   protected choose(id: string): void {
     const before = this.state();
+    // Portátil (D-095): o cartucho já selecionado com o slot vazio entra direto.
+    if (this.handheld() && before.kind === 'empty' && before.cartridge === id) {
+      this.librarySwap = true;
+      this.insert();
+      return;
+    }
     this.select(id);
     const after = this.state();
     // Só a troca animada chega a um READY posterior (o dispatch do select não lê a marca).
@@ -181,6 +196,12 @@ export class ProjectInventorySection {
     if (!next) return;
     const s = this.ui().inventory.status;
     const name = `${next.serial} — ${this.locale.pick(next.title)}`;
+    // Portátil (D-095): escolher com o slot vazio já insere; o READY não rola nem leva o foco.
+    if (after.kind === 'empty' && this.handheld()) {
+      this.librarySwap = true;
+      this.insert();
+      return;
+    }
     if (after.kind === 'empty') this.announcement.set(`${s.selected} ${name}.`);
     else if (after.kind === 'ejecting') this.announcement.set(`${s.swapping} ${name}.`);
     else if (after.kind === 'ready') this.announcement.set(`${name} ${s.ready}`);
@@ -272,7 +293,7 @@ export class ProjectInventorySection {
     this.lifted.set(true);
     const button = event.target as HTMLElement;
     if (!button.matches(':focus-visible')) return;
-    const area = button.closest('.console-area');
+    const area = button.closest('.console-area, .handheld-area');
     const header =
       this.window?.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ?? 0;
     if (area && area.getBoundingClientRect().top < header) {

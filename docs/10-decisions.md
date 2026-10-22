@@ -1411,3 +1411,52 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - testes, typecheck, Prettier e builds sem aviso;
   - orçamento de CSS respeitado.
 - **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual do Eduardo**. Sem merge e sem deploy.
+
+## D-095 — Project Inventory: moldura única, MC-01 frontal, mesa, filtro CRT e portátil no celular
+
+- **Data:** 2026-10-21
+- **Pedido do Eduardo, sobre a D-094:**
+  - título "Biblioteca de cartuchos";
+  - cartuchos unidos ao setup;
+  - console no novo ângulo, mais coerente com a TV;
+  - TV apoiada na madeira, não flutuando;
+  - filtro CRT leve no tubo;
+  - no celular, o portátil dele no lugar do console + TV, com os cartuchos em carrossel por cima e a mesma animação de inserir.
+
+  Arte do Eduardo: console em camadas e portátil.
+- **Título:** BIBLIOTECA DE CARTUCHOS / CARTRIDGE LIBRARY. A dica da troca ficou neutra ("troca o que está inserido"), porque vale para os dois aparelhos.
+- **Moldura única:** a biblioteca e a estação são dois compartimentos de uma só moldura (`.rig`), separados por um filete de acento. No dossiê, o "← Biblioteca" fica logo acima.
+- **MC-01 frontal (revê a geometria da D-077):**
+  - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render `design/source/mc-01/console-v2/reference.png` (2508 × 1170; diferença < 0,05%).
+  - **Cartucho:** em escala do console, com 1150 px, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" (−560 px) paira acima da tampa.
+  - **Componente:** mesma ordem de camadas, só `transform` e as mesmas durações do `mc-console`.
+  - **Derivados:** `mc01-{back,front}-{640,960,1280}.webp` (10 a 58 KB), por `node design/source/mc-01/build-console.mjs`. Os derivados antigos saíram do `public/`; os mestres antigos ficam em `design/source/mc-01/`.
+- **Apoio na mesa:** sombra de contato elíptica sob a TV, o console e o portátil (só objetos físicos), e uma base mais alta na estação (≥ 1024: 64 px), para a mesa aparecer à frente dos aparelhos.
+- **Filtro CRT** (`mc-crt-front`, input `filter`, ligado por padrão):
+  - fica por cima do conteúdo, sem capturar o ponteiro;
+  - combina scanlines de 3 px (1 escura), vinheta e um reflexo no alto, com opacidade 0,55 e só tokens de material;
+  - fica desligado no teaser, que já tem scanlines próprias;
+  - o texto da capa continua legível (conferido a 2×).
+- **Portátil no celular (< 768):**
+  - **Componente:** `mc-handheld` (`shared/signature/handheld/`): cartucho < corpo < tela.
+    - O cartucho entra por cima, ATRÁS do corpo, como na referência do Eduardo, com as mesmas curvas e durações.
+    - A tela é o visor do render (x 118–1755 · y 156–1336) e recebe o mesmo conteúdo do CRT (capa, dossiê, teaser, carregando). Em espera, mostra o visor apagado da arte.
+    - Derivados `handheld-{480,800,1200}.webp` (35 a 135 KB), por `node design/source/handheld/build-handheld.mjs`.
+  - **Fluxo:**
+    - a biblioteca vira o carrossel por cima, com encaixe centrado;
+    - **escolher um cartucho já insere**: no slot vazio, insere; com outro cartucho, troca;
+    - o "Inserir cartucho" da barra continua;
+    - nessa escolha, a página não rola e o foco fica no carrossel (o READY é anunciado);
+    - a máquina de estados é a mesma da D-093.
+  - **Código:**
+    - `handheld` vem de `matchMedia('(max-width: 767.98px)')`;
+    - o conteúdo da tela e a barra viraram templates compartilhados pelo CRT e pelo portátil;
+    - só um aparelho é renderizado por vez, então os ids e a região `#project-viewer` são únicos.
+  - **Visor estreito:** controles do teaser compactos, para não cobrir a cena (≥ 24 px de altura).
+- **Validação:**
+  - fluxo real com movimento em 390 e 360: inserir pelo carrossel, teaser, troca e ejeção;
+  - axe sem violações no Inventory;
+  - sem rolagem lateral, com o portátil centrado (4 px de cada lado);
+  - 1440 / 1280 / 1024 / 820 em pt, e 1440 / 390 em en;
+  - 200 testes, incluindo um novo do portátil; typecheck, Prettier e build sem aviso.
+- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.

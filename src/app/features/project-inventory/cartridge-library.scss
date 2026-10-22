@@ -105,6 +105,11 @@
   flex: 0 0 calc((100% - (var(--n) - 1) * #{space(3)}) / var(--n));
   min-width: 0;
   scroll-snap-align: start;
+
+  // Celular (D-095): carrossel sobre o portátil, o cartucho escolhido para no centro.
+  @media (max-width: 767.98px) {
+    scroll-snap-align: center;
+  }
 }
 
 .cart {

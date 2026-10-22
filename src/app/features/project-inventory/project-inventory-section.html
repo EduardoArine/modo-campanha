@@ -42,6 +42,7 @@
           [loading]="selection().loading"
           [busy]="!v.selectable"
           [viewer]="v.slot !== 'unavailable'"
+          [insertOnChoose]="handheld()"
           (choose)="choose($event)"
         />
       }
@@ -60,99 +61,72 @@
             loading="lazy"
             decoding="async"
           />
-          <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
-          <div
-            class="tv-area"
-            id="project-viewer"
-            role="region"
-            [attr.aria-label]="ui().crt.regionLabel"
-          >
-            <mc-crt-front
-              [standby]="v.screen === 'standby'"
-              [filter]="v.screen !== 'teaser'"
-              sizes="(min-width: 1200px) 860px, (min-width: 1024px) 70vw, 122vw"
-              (failed)="assetsFailed()"
-            >
-              @switch (v.screen) {
-                @case ('standby') {
-                  @if (v.slot === 'empty') {
-                    <p class="glass-system">{{ ui().crt.empty }}</p>
-                  }
-                }
-                @case ('loading') {
-                  <p class="glass-system">{{ ui().crt.loading }}</p>
-                  <span class="glass-bar" aria-hidden="true"></span>
-                }
-                @case ('teaser') {
-                  <div class="glass-fill">
-                    @if (teaserScreen(); as screen) {
-                      <ng-container *ngComponentOutlet="screen; inputs: { playback: playback }" />
-                    }
-                  </div>
-                  <!-- Controles do teaser dentro do vidro, no rodapé (o HUD fica no topo). -->
-                  <div class="teaser-bar">
-                    <button
-                      mcAction="secondary"
-                      type="button"
-                      id="teaser-toggle"
-                      aria-controls="project-viewer"
-                      (click)="playback.toggle()"
-                    >
-                      @let playing = playback.playing();
-                      <mc-icon [name]="playing ? 'pause' : 'play'" />
-                      {{ playing ? ui().inventory.teaser.pause : ui().inventory.teaser.play }}
-                    </button>
-                    <button
-                      mcAction="secondary"
-                      type="button"
-                      id="teaser-back"
-                      aria-controls="project-viewer"
-                      (click)="toCover()"
-                    >
-                      <mc-icon name="chevron-left" /> {{ ui().inventory.dossier.back }}
-                    </button>
-                  </div>
-                }
-                @case ('dossier') {
-                  <app-crt-dossier
-                    [project]="project"
-                    [section]="section()"
-                    (go)="goSection($event)"
-                    (cover)="toCover()"
-                  />
-                }
-                @default {
-                  <!-- CAPA: arte oficial + nome, tipo, descrição, tecnologias e EXPLORAR PROJETO. -->
-                  <app-crt-cover
-                    [project]="project"
-                    [showArt]="v.screen !== 'art-unavailable'"
-                    [teaser]="!!project.cartridge.teaser && v.screen !== 'teaser-unavailable'"
-                    [teaserFailed]="v.screen === 'teaser-unavailable'"
-                    (explore)="explore()"
-                    (playTeaser)="toggleTeaser()"
-                    (artFailed)="artFailed()"
-                  />
+          <!-- Conteúdo da tela (D-095): o mesmo no vidro do CRT e no visor do portátil. -->
+          <ng-template #screenContent>
+            @switch (v.screen) {
+              @case ('standby') {
+                @if (v.slot === 'empty') {
+                  <p class="glass-system">{{ ui().crt.empty }}</p>
                 }
               }
-            </mc-crt-front>
-          </div>
-
-          <div class="console-area">
-            <!-- MC-01 físico; o clique no console é atalho de ponteiro do botão "Inserir cartucho". -->
-            <mc-console
-              [cartridge]="cartridge()"
-              [pose]="v.pose"
-              [motion]="v.motion"
-              [lifted]="lifted()"
-              [class.is-idle]="v.insert === 'enabled'"
-              sizes="(min-width: 1200px) 460px, (min-width: 1024px) 36vw, 70vw"
-              cartSizes="(min-width: 1200px) 216px, (min-width: 1024px) 17vw, 44vw"
-              (failed)="assetsFailed()"
-              (click)="v.insert === 'enabled' && insert()"
-              (pointerenter)="lifted.set(true)"
-              (pointerleave)="lifted.set(false)"
-            />
-            <!-- Barra do console: cartucho + estado do slot e UMA ação (Inserir ou Ejetar). -->
+              @case ('loading') {
+                <p class="glass-system">{{ ui().crt.loading }}</p>
+                <span class="glass-bar" aria-hidden="true"></span>
+              }
+              @case ('teaser') {
+                <div class="glass-fill">
+                  @if (teaserScreen(); as screen) {
+                    <ng-container *ngComponentOutlet="screen; inputs: { playback: playback }" />
+                  }
+                </div>
+                <!-- Controles do teaser dentro do vidro, no rodapé (o HUD fica no topo). -->
+                <div class="teaser-bar">
+                  <button
+                    mcAction="secondary"
+                    type="button"
+                    id="teaser-toggle"
+                    aria-controls="project-viewer"
+                    (click)="playback.toggle()"
+                  >
+                    @let playing = playback.playing();
+                    <mc-icon [name]="playing ? 'pause' : 'play'" />
+                    {{ playing ? ui().inventory.teaser.pause : ui().inventory.teaser.play }}
+                  </button>
+                  <button
+                    mcAction="secondary"
+                    type="button"
+                    id="teaser-back"
+                    aria-controls="project-viewer"
+                    (click)="toCover()"
+                  >
+                    <mc-icon name="chevron-left" /> {{ ui().inventory.dossier.back }}
+                  </button>
+                </div>
+              }
+              @case ('dossier') {
+                <app-crt-dossier
+                  [project]="project"
+                  [section]="section()"
+                  (go)="goSection($event)"
+                  (cover)="toCover()"
+                />
+              }
+              @default {
+                <!-- CAPA: arte oficial + nome, tipo, descrição, tecnologias e EXPLORAR PROJETO. -->
+                <app-crt-cover
+                  [project]="project"
+                  [showArt]="v.screen !== 'art-unavailable'"
+                  [teaser]="!!project.cartridge.teaser && v.screen !== 'teaser-unavailable'"
+                  [teaserFailed]="v.screen === 'teaser-unavailable'"
+                  (explore)="explore()"
+                  (playTeaser)="toggleTeaser()"
+                  (artFailed)="artFailed()"
+                />
+              }
+            }
+          </ng-template>
+          <!-- Barra: cartucho + estado do slot e UMA ação (Inserir ou Ejetar). -->
+          <ng-template #consoleBar>
             <div class="bar">
               <span class="led" [attr.data-led]="v.slotLed" aria-hidden="true"></span>
               <p class="bar-text" id="inventory-status" tabindex="-1">
@@ -188,7 +162,64 @@
                 </button>
               }
             </div>
-          </div>
+          </ng-template>
+
+          @if (handheld()) {
+            <!-- Celular (D-095): o portátil carrega e apresenta; o cartucho entra por cima. -->
+            <div class="handheld-area">
+              <mc-handheld
+                id="project-viewer"
+                role="region"
+                [attr.aria-label]="ui().crt.regionLabel"
+                [cartridge]="cartridge()"
+                [pose]="v.pose"
+                [motion]="v.motion"
+                [lifted]="lifted()"
+                [standby]="v.screen === 'standby'"
+                sizes="calc(100vw - 8px)"
+                cartSizes="70vw"
+                (failed)="assetsFailed()"
+              >
+                <ng-container *ngTemplateOutlet="screenContent" />
+              </mc-handheld>
+              <ng-container *ngTemplateOutlet="consoleBar" />
+            </div>
+          } @else {
+            <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
+            <div
+              class="tv-area"
+              id="project-viewer"
+              role="region"
+              [attr.aria-label]="ui().crt.regionLabel"
+            >
+              <mc-crt-front
+                [standby]="v.screen === 'standby'"
+                [filter]="v.screen !== 'teaser'"
+                sizes="(min-width: 1200px) 860px, (min-width: 1024px) 70vw, 122vw"
+                (failed)="assetsFailed()"
+              >
+                <ng-container *ngTemplateOutlet="screenContent" />
+              </mc-crt-front>
+            </div>
+
+            <div class="console-area">
+              <!-- MC-01 físico; o clique no console é atalho de ponteiro do botão "Inserir cartucho". -->
+              <mc-console
+                [cartridge]="cartridge()"
+                [pose]="v.pose"
+                [motion]="v.motion"
+                [lifted]="lifted()"
+                [class.is-idle]="v.insert === 'enabled'"
+                sizes="(min-width: 1200px) 460px, (min-width: 1024px) 36vw, 70vw"
+                cartSizes="(min-width: 1200px) 216px, (min-width: 1024px) 17vw, 44vw"
+                (failed)="assetsFailed()"
+                (click)="v.insert === 'enabled' && insert()"
+                (pointerenter)="lifted.set(true)"
+                (pointerleave)="lifted.set(false)"
+              />
+              <ng-container *ngTemplateOutlet="consoleBar" />
+            </div>
+          }
         } @else {
           <!-- FALLBACK: o MC-01 não carregou. O MC-CART canônico (CSS) e o case seguem acessíveis. -->
           <div class="fallback">

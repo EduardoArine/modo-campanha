@@ -599,3 +599,16 @@ Pedido do Eduardo: biblioteca e estação em painéis, como na referência. Só 
   - **fallback:** fundo liso.
 - **Proporção na capa (≥ 1024):** 40/60, para o vidro manter a largura de antes da moldura.
 - **Asset:** `design/source/inventory/build-station.mjs` gera os WebP de 640 a 1672 px.
+
+## 21. Moldura única, MC-01 frontal e portátil no celular (D-095, 2026-10-21)
+
+- **Desktop e tablet (≥ 768):**
+  - uma moldura com a BIBLIOTECA DE CARTUCHOS em cima e a estação embaixo;
+  - o MC-01 no ângulo frontal, com o cartucho no slot laranja (traseira < cartucho < frente);
+  - a TV e o console apoiados na mesa, com sombra de contato;
+  - filtro CRT leve no vidro, exceto no teaser.
+- **Celular (< 768):**
+  - o portátil (`mc-handheld`) no lugar do MC-01 + CRT;
+  - o carrossel de cartuchos por cima: escolher insere (ou troca), e o cartucho desce por trás do corpo;
+  - a tela do portátil mostra capa, dossiê e teaser.
+- **Assets:** `design/source/mc-01/build-console.mjs` (MC-01 frontal) e `design/source/handheld/build-handheld.mjs` (portátil).

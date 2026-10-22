@@ -6,3 +6,5 @@ export * from './crt-frame/crt-frame';
 export * from './crt-project-viewer/crt-project-viewer';
 export * from './player-card/player-card';
 export * from './project-summary/project-summary';
+export * from './handheld/handheld';
+export * from './handheld/handheld.geometry';

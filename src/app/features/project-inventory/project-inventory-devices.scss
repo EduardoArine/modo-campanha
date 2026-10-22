@@ -169,3 +169,46 @@ mc-console::after {
   inset: auto 1% -2% 1%;
   height: 12%;
 }
+
+// ------------------------------------------------------------------ Portátil (celular, D-095)
+// O visor precisa da largura: o portátil ocupa quase a tela inteira (passa do padding da estação,
+// centrado) e a barra fica embaixo, na largura do conteúdo.
+.handheld-area {
+  display: grid;
+  gap: space(4);
+
+  mc-handheld {
+    --w: min(calc(100vw - #{space(2)}), 30rem);
+    width: var(--w);
+    // Centrado mesmo passando da largura do conteúdo (margens negativas simétricas).
+    margin-inline: calc((100% - var(--w)) / 2);
+  }
+
+  .bar {
+    justify-self: stretch;
+  }
+}
+
+mc-handheld::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: auto 6% -1% 6%;
+  height: 5%;
+  border-radius: var(--mc-radius-round);
+  background: radial-gradient(closest-side, var(--mc-material-groove), transparent);
+  pointer-events: none;
+}
+
+// Visor estreito (portátil, D-095): controles do teaser compactos para não cobrir a cena.
+@container (max-width: 420px) {
+  .teaser-bar {
+    gap: space(1);
+
+    .mc-action {
+      min-height: 0;
+      padding: space(1) space(2);
+      font-size: 0.75rem;
+    }
+  }
+}

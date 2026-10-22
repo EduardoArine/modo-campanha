@@ -115,6 +115,37 @@ describe('ProjectInventorySection', () => {
     );
   });
 
+  it('uses the handheld on phones: choosing a cartridge inserts it and the cover opens on its screen', async () => {
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes('max-width'),
+      addEventListener: () => undefined,
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    const el = await renderAt('/');
+    vi.useFakeTimers();
+
+    // Portátil no lugar do MC-01 + CRT; a mesma região acessível e a mesma barra.
+    expect(el.querySelector('mc-console, mc-crt-front')).toBeNull();
+    const handheld = el.querySelector('mc-handheld')!;
+    expect(handheld.id).toBe('project-viewer');
+    expect(handheld.getAttribute('role')).toBe('region');
+    expect(handheld.classList).toContain('is-standby');
+    expect(text(handheld, '.glass-system')).toBe('INSIRA UM CARTUCHO');
+
+    // Escolher o MC-002 já insere (sem o passo "Inserir cartucho").
+    click(library(el)[1]);
+    expect(handheld.getAttribute('data-pose')).toBe('seated');
+    expect(text(el, '.slot-status')).toBe('CARREGANDO');
+    step(620, 450);
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(handheld.querySelector('.screen app-crt-cover')).not.toBeNull();
+    expect(text(el, '#crt-cover-title')).toBe('Aedes Revenge');
+    // A escolha veio do carrossel: o foco não sai dele.
+    await fixture.whenStable();
+    expect(document.activeElement?.id).not.toBe('crt-cover-title');
+    expect(el.querySelector('#inventory-eject')).not.toBeNull();
+  });
+
   it('explores the dossier inside the CRT: header, sections, one section at a time, navigation', async () => {
     reducedMotion(true);
     const el = await renderAt('/');
