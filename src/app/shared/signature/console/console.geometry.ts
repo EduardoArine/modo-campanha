@@ -1,6 +1,6 @@
-// Geometria do MC-01 em camadas (D-076/D-077; ângulo frontal desde D-095). Referência: o render inteiro
-// do Eduardo (2508 × 1170, fora do repositório); traseira (tampa com a abertura do slot, y 0–296) e
-// frente (y 296–1170, design/source/mc-01/console-v2/) são recortes exatos dele (diferença < 0,05%).
+// Geometria do MC-01 em camadas (D-076/D-077; ângulo frontal desde D-095). Referência: o render
+// inteiro do Eduardo (2508 × 1170, fora do repositório); traseira (tampa com a abertura do slot,
+// y 0–296) e frente (y 296–1170, design/source/mc-01/console-v2/) são recortes exatos dele (diferença < 0,05%).
 // O cartucho em escala do console (699 × 500) entra na abertura laranja: 1150 px de largura,
 // centrado; encaixado, a frente esconde tudo abaixo de y 296, logo acima da faixa do rótulo. As
 // coordenadas pertencem ao CONSOLE: qualquer MC-CART com render em escala do console usa o mesmo slot.
