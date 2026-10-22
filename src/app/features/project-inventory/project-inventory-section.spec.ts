@@ -159,20 +159,58 @@ describe('ProjectInventorySection', () => {
     expect(document.activeElement).toBe(library(el)[2]);
   });
 
+  it('opens the dossier full screen on phones and closes it back to the cover without ejecting', async () => {
+    phone(true, true);
+    const el = await renderAt('/');
+    document.body.appendChild(el);
+    click(library(el)[1]);
+    click(el.querySelector('#inventory-explore'));
+    await fixture.whenStable();
+
+    const zoom = el.querySelector('app-screen-zoom')!;
+    expect(zoom.querySelector('dialog')).not.toBeNull();
+    expect(text(zoom, '#dossier-title')).toBe('MC-002 / Aedes Revenge');
+    expect(document.activeElement?.id).toBe('dossier-title');
+    // A biblioteca não sai do lugar atrás da tela cheia (a página não pula ao fechar).
+    expect(el.querySelector('app-cartridge-library')).not.toBeNull();
+    expect(el.querySelector('.to-library')).toBeNull();
+
+    // Voltar à capa: a tela encolhe, a capa volta ao visor, o cartucho segue inserido.
+    click(zoom.querySelector('#dossier-back'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(el.querySelector('app-screen-zoom')).toBeNull();
+    expect(el.querySelector('mc-handheld app-crt-cover')).not.toBeNull();
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+
+    // Esc (cancel do diálogo) também volta à capa.
+    click(el.querySelector('#inventory-explore'));
+    await fixture.whenStable();
+    el.querySelector('app-screen-zoom dialog')!.dispatchEvent(
+      new Event('cancel', { cancelable: true }),
+    );
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(el.querySelector('app-screen-zoom')).toBeNull();
+    el.remove();
+  });
+
   it('switches device at runtime keeping the state and the focus equivalent', async () => {
     const media = phone(true, true);
     const el = await renderAt('/');
     document.body.appendChild(el);
     click(library(el)[1]);
     click(el.querySelector('#inventory-explore'));
-    expect(el.querySelector('mc-handheld app-crt-dossier')).not.toBeNull();
+    // Celular (D-096): o dossiê em tela cheia; o visor do portátil segue com a capa.
+    expect(el.querySelector('app-screen-zoom app-crt-dossier')).not.toBeNull();
+    expect(el.querySelector('mc-handheld app-crt-cover')).not.toBeNull();
     el.querySelector<HTMLElement>('#dossier-title')?.focus();
 
     // O celular gira para o tablet: o CRT entra com o mesmo dossiê, e o foco vai ao título dele.
     media.change?.({ matches: false });
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(el.querySelector('mc-handheld')).toBeNull();
+    expect(el.querySelector('mc-handheld, app-screen-zoom')).toBeNull();
     expect(glass(el).querySelector('app-crt-dossier')).not.toBeNull();
     expect(text(el, '.slot-status')).toBe('INSERIDO');
     expect(document.activeElement?.id).toBe('dossier-title');

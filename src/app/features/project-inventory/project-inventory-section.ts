@@ -11,6 +11,7 @@ import {
   signal,
   Type,
   untracked,
+  viewChild,
 } from '@angular/core';
 
 import { LocaleService } from '../../core/i18n';
@@ -18,6 +19,7 @@ import { McCart, McConsole, McCrtFront, McHandheld } from '../../shared/signatur
 import { McAction, McIcon, McSectionHeader, McStatus } from '../../shared/ui';
 import { AttractPlayback } from '../../system-horizon/attract-playback';
 import { CartridgeLibrary } from './cartridge-library';
+import { ScreenZoom } from './screen-zoom';
 import { CrtCover } from './crt-cover';
 import { CrtDossier, dossierSections } from './crt-dossier';
 import {
@@ -68,6 +70,7 @@ const STATION_BACKGROUND = {
     McCrtFront,
     McHandheld,
     ProjectCase,
+    ScreenZoom,
   ],
   templateUrl: './project-inventory-section.html',
   styleUrls: ['./project-inventory-section.scss', './project-inventory-devices.scss'],
@@ -124,6 +127,8 @@ export class ProjectInventorySection {
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
+  /** Tela cheia do dossiê no celular (D-096), quando aberta. */
+  private readonly zoom = viewChild(ScreenZoom);
   protected readonly teaserScreen = signal<Type<unknown> | null>(null);
 
   constructor() {
@@ -172,7 +177,8 @@ export class ProjectInventorySection {
    */
   private switchDevice(phone: boolean): void {
     const active = this.window?.document.activeElement;
-    const inside = !!active?.closest('#project-viewer, .bar');
+    // Inclui a tela cheia do dossiê no celular (D-096).
+    const inside = !!active?.closest('#project-viewer, .bar, app-screen-zoom');
     this.handheld.set(phone);
     if (!inside) return;
     const s = this.state();
@@ -229,6 +235,8 @@ export class ProjectInventorySection {
   /** EXPLORAR PROJETO: abre o dossiê na 1ª seção e traz a estação à vista; o foco vai ao título. */
   protected explore(): void {
     this.dispatch({ type: 'explore' });
+    // Celular (D-096): a tela cheia cresce do visor e cuida do foco; a página não rola.
+    if (this.handheld()) return;
     this.afterRender(() => {
       this.scroller.scrollToAnchor('inventory-station', {
         behavior: this.reducedMotion() ? 'auto' : 'smooth',
@@ -246,6 +254,16 @@ export class ProjectInventorySection {
 
   /** Voltar à capa (do dossiê ou do teaser): o cartucho continua inserido; foco no EXPLORAR. */
   protected toCover(): void {
+    // Celular (D-096): a tela cheia encolhe até o visor antes de a capa voltar.
+    const zoom = this.zoom();
+    if (zoom) {
+      void zoom.collapse().then(() => this.coverNow());
+      return;
+    }
+    this.coverNow();
+  }
+
+  private coverNow(): void {
     this.dispatch({ type: 'cover' });
     this.afterRender(() => this.byId('inventory-explore')?.focus());
   }

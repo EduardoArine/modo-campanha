@@ -1,0 +1,49 @@
+// Tela cheia do portátil (D-096): o mesmo vidro escuro do visor, com um filete de acento no aro e o
+// reflexo leve do vidro por cima (mais fraco que no visor: aqui é texto longo). O dossiê usa o
+// diálogo como container (cqw) e recebe tipografia de leitura pelas variáveis --dossier-*.
+@use 'mc' as *;
+
+dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  container-type: inline-size;
+  background: var(--mc-bg);
+  color: var(--mc-text);
+  // Filete de acento no aro (abaixo do conteúdo, que não tem fundo).
+  box-shadow: inset 0 0 0 var(--mc-border-width-default) var(--mc-border-accent);
+  --dossier-size: 1rem;
+  --dossier-title: 1.375rem;
+  --dossier-back-text: inline;
+  --dossier-top: flex;
+  --dossier-pad: max(#{space(4)}, env(safe-area-inset-top)) #{space(4)}
+    max(#{space(3)}, env(safe-area-inset-bottom));
+
+  // A página fica visível enquanto a tela cresce; cheia, o diálogo cobre tudo.
+  &::backdrop {
+    background: transparent;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+      155deg,
+      var(--mc-material-highlight),
+      transparent 24%,
+      transparent 76%,
+      var(--mc-material-groove)
+    );
+    opacity: 0.45;
+  }
+}
