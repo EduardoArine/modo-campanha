@@ -1406,6 +1406,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Asset:**
   - **Mestre:** `design/source/inventory/station-background.png` (1672 × 941).
   - **Derivados:** `public/assets/inventory/station-background-{640,960,1280,1672}.webp` (20 / 38 / 57 / 85 KB), gerados por `node design/source/inventory/build-station.mjs`. Só redimensiona.
+  - **Novo cenário (2026-10-22, escolha do Eduardo entre duas versões):** a mesa vista levemente de cima, como o MC-01 e a TV, com a borda do tampo a 46% da altura e a estante bem desfocada e escura. Entre as duas versões, ficou a mais escura: pico de brilho 57/255 no fundo e 45 no canto superior esquerdo, atrás da barra, contra 66 e 56 na outra. Assim, o CRT e as bordas laranja continuam sendo o que mais brilha. Mesmo tamanho (1672 × 941). Derivados: 10 / 20 / 31 / 51 KB.
 - **Validação:**
   - 1440 / 1280 / 1024 / 820 / 390 / 360 em pt, e 1440 / 390 em en, nos estados inicial, capa e dossiê: sem rolagem lateral nem erro;
   - testes, typecheck, Prettier e builds sem aviso;
