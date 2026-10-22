@@ -200,15 +200,14 @@ mc-handheld::after {
   pointer-events: none;
 }
 
-// Visor estreito (portátil, D-095): controles do teaser compactos para não cobrir a cena.
-@container (max-width: 420px) {
-  .teaser-bar {
-    gap: space(1);
+// Visor do portátil (D-095): controles do teaser compactos para não cobrir a cena (≥ 24 px).
+// Só no portátil: o CRT a 1024 também tem vidro estreito e mantém os controles normais.
+mc-handheld .teaser-bar {
+  gap: space(1);
 
-    .mc-action {
-      min-height: 0;
-      padding: space(1) space(2);
-      font-size: 0.75rem;
-    }
+  .mc-action {
+    min-height: 0;
+    padding: space(1) space(2);
+    @include type(caption);
   }
 }

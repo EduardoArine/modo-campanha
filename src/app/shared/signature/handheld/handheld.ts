@@ -48,6 +48,7 @@ import { handheldVars, MC_HANDHELD, McHandheldPose } from './handheld.geometry';
     '[attr.data-motion]': 'motion()',
     '[class.is-lifted]': 'lifted()',
     '[class.is-standby]': 'standby()',
+    '[class.no-filter]': '!filter()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -60,6 +61,8 @@ export class McHandheld {
   readonly lifted = input(false);
   /** Tela apagada: mostra o visor da arte (sem camada digital). */
   readonly standby = input(false);
+  /** Reflexo do vidro por cima do conteúdo (desligar no teaser, que tem o próprio tratamento). */
+  readonly filter = input(true);
   readonly sizes = input('100vw');
   readonly cartSizes = input('72vw');
   readonly failed = output<void>();

@@ -157,13 +157,32 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
-    const onPhone = (event: MediaQueryListEvent) => this.handheld.set(event.matches);
+    const onPhone = (event: MediaQueryListEvent) => this.switchDevice(event.matches);
     this.phoneQuery?.addEventListener('change', onPhone);
     inject(DestroyRef).onDestroy(() => {
       reduce?.removeEventListener('change', onChange);
       this.phoneQuery?.removeEventListener('change', onPhone);
       this.playback.pause();
     });
+  }
+
+  /**
+   * Celular ↔ tablet/desktop (D-095): troca o aparelho sem mexer no estado. Se o foco estava nele,
+   * vai ao equivalente no novo (título do dossiê, título da capa ou estado do slot).
+   */
+  private switchDevice(phone: boolean): void {
+    const active = this.window?.document.activeElement;
+    const inside = !!active?.closest('#project-viewer, .bar');
+    this.handheld.set(phone);
+    if (!inside) return;
+    const s = this.state();
+    const target =
+      s.kind === 'ready' && s.screen === 'dossier'
+        ? 'dossier-title'
+        : s.kind === 'ready' && s.screen !== 'teaser'
+          ? 'crt-cover-title'
+          : 'inventory-status';
+    this.afterRender(() => this.byId(target)?.focus({ preventScroll: true }));
   }
 
   protected insert(): void {

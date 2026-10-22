@@ -86,6 +86,10 @@
   }
 }
 
+:host(.no-filter) .screen::after {
+  display: none;
+}
+
 :host(.is-standby) .screen {
   background: transparent;
 }

@@ -176,6 +176,7 @@
                 [motion]="v.motion"
                 [lifted]="lifted()"
                 [standby]="v.screen === 'standby'"
+                [filter]="v.screen !== 'teaser'"
                 sizes="calc(100vw - 8px)"
                 cartSizes="70vw"
                 (failed)="assetsFailed()"

@@ -1459,4 +1459,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - sem rolagem lateral, com o portátil centrado (4 px de cada lado);
   - 1440 / 1280 / 1024 / 820 em pt, e 1440 / 390 em en;
   - 200 testes, incluindo um novo do portátil; typecheck, Prettier e build sem aviso.
+- **Revisão independente:** aprovada com ressalvas, sem bloqueantes. Corrigido:
+  - os controles compactos do teaser valem só no portátil (o CRT a 1024 mantém 46 px);
+  - dossiê no visor do portátil (≤ 360 px) com seletor e navegação mais baixos (≥ 31 px): área de leitura de 98 → 113 px em 390;
+  - ao girar o celular com o foco no aparelho, o foco vai ao equivalente no outro;
+  - o reflexo do portátil sai no teaser;
+  - testes do portátil (inserir o selecionado, nomes "Inserir" / "Trocar para", troca, mudança de aparelho em runtime) e do filtro no teaser (203 testes).
+- **Pendente de decisão do Eduardo:**
+  - entre 768 e 1023 px (layout empilhado), a TV fica sobre a estante e só o console fica na mesa;
+  - os PNGs só de referência (`console-v2/reference.png` e `handheld/reference-with-cartridge.png`, cerca de 4 MB cada) ficam no repositório.
 - **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.

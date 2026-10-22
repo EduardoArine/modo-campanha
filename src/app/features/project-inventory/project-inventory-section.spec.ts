@@ -115,6 +115,70 @@ describe('ProjectInventorySection', () => {
     );
   });
 
+  /** Celular simulado; devolve o listener de mudança da media query do portátil. */
+  function phone(on: boolean, reduce = false): { change?: (event: { matches: boolean }) => void } {
+    const ref: { change?: (event: { matches: boolean }) => void } = {};
+    window.matchMedia = ((query: string) => ({
+      matches: query.includes('max-width') ? on : reduce && query.includes('reduce'),
+      addEventListener: (_: string, fn: (event: { matches: boolean }) => void) => {
+        if (query.includes('max-width')) ref.change = fn;
+      },
+      removeEventListener: () => undefined,
+    })) as unknown as typeof window.matchMedia;
+    return ref;
+  }
+
+  it('on the handheld, the selected cartridge inserts too and the library says Insert / Swap to', async () => {
+    phone(true, true);
+    const el = await renderAt('/');
+
+    expect(library(el)[0].getAttribute('aria-label')).toBe('Inserir MC-001 — SYSTEM HORIZON');
+    expect(library(el)[0].getAttribute('aria-disabled')).toBeNull();
+    // Tocar no MC-001, já selecionado com o slot vazio, insere.
+    click(library(el)[0]);
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
+    expect(library(el)[2].getAttribute('aria-label')).toBe('Trocar para MC-003 — ScoutEvo');
+  });
+
+  it('swaps on the handheld (eject, insert, load) without taking focus from the carousel', async () => {
+    phone(true);
+    const el = await renderAt('/');
+    vi.useFakeTimers();
+    click(library(el)[0]);
+    step(620, 450);
+    library(el)[2].focus();
+    click(library(el)[2]);
+
+    expect(el.querySelector('mc-handheld')?.getAttribute('data-pose')).toBe('out');
+    expect(text(el, '[role="status"]')).toBe('Trocando para MC-003 — ScoutEvo.');
+    step(600, 620, 450);
+    expect(text(el, '#crt-cover-title')).toBe('ScoutEvo');
+    expect(text(el, '[role="status"]')).toBe('MC-003 — ScoutEvo pronto.');
+    await fixture.whenStable();
+    expect(document.activeElement).toBe(library(el)[2]);
+  });
+
+  it('switches device at runtime keeping the state and the focus equivalent', async () => {
+    const media = phone(true, true);
+    const el = await renderAt('/');
+    document.body.appendChild(el);
+    click(library(el)[1]);
+    click(el.querySelector('#inventory-explore'));
+    expect(el.querySelector('mc-handheld app-crt-dossier')).not.toBeNull();
+    el.querySelector<HTMLElement>('#dossier-title')?.focus();
+
+    // O celular gira para o tablet: o CRT entra com o mesmo dossiê, e o foco vai ao título dele.
+    media.change?.({ matches: false });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(el.querySelector('mc-handheld')).toBeNull();
+    expect(glass(el).querySelector('app-crt-dossier')).not.toBeNull();
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(document.activeElement?.id).toBe('dossier-title');
+    el.remove();
+  });
+
   it('uses the handheld on phones: choosing a cartridge inserts it and the cover opens on its screen', async () => {
     window.matchMedia = ((query: string) => ({
       matches: query.includes('max-width'),
@@ -253,12 +317,15 @@ describe('ProjectInventorySection', () => {
     }
 
     expect(el.querySelector('.glass-fill')).not.toBeNull();
+    // O teaser tem as próprias scanlines: o filtro de tubo (D-095) sai.
+    expect(glass(el).querySelector('.filter')).toBeNull();
     // A capa saiu: o foco vai ao Pausar, dentro do vidro.
     await fixture.whenStable();
     expect(document.activeElement?.id).toBe('teaser-toggle');
     expect(text(el, '.teaser-bar')).toContain('Voltar à capa');
     click(el.querySelector('#teaser-back'));
     expect(glass(el).querySelector('app-crt-cover')).not.toBeNull();
+    expect(glass(el).querySelector('.filter')).not.toBeNull();
   });
 
   it('ejects for real from the dossier and goes back to a coherent empty slot', async () => {
