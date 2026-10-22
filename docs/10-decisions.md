@@ -1406,6 +1406,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Asset:**
   - **Mestre:** `design/source/inventory/station-background.png` (1672 × 941).
   - **Derivados:** `public/assets/inventory/station-background-{640,960,1280,1672}.webp` (20 / 38 / 57 / 85 KB), gerados por `node design/source/inventory/build-station.mjs`. Só redimensiona.
+  - **Novo cenário (2026-10-22, escolha do Eduardo entre duas versões):** a mesa vista levemente de cima, como o MC-01 e a TV, com a borda do tampo a 46% da altura e a estante bem desfocada e escura. Entre as duas versões, ficou a mais escura: pico de brilho 57/255 no fundo e 45 no canto superior esquerdo, atrás da barra, contra 66 e 56 na outra. Assim, o CRT e as bordas laranja continuam sendo o que mais brilha. Mesmo tamanho (1672 × 941). Derivados: 10 / 20 / 31 / 51 KB.
 - **Validação:**
   - 1440 / 1280 / 1024 / 820 / 390 / 360 em pt, e 1440 / 390 em en, nos estados inicial, capa e dossiê: sem rolagem lateral nem erro;
   - testes, typecheck, Prettier e builds sem aviso;
@@ -1428,9 +1429,11 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Moldura única:** a biblioteca e a estação são dois compartimentos de uma só moldura (`.rig`), separados por um filete de acento. No dossiê, o "← Biblioteca" fica logo acima.
 - **MC-01 frontal (revê a geometria da D-077):**
   - **Camadas:** traseira (tampa com a abertura do slot, y 0–296) e frente (y 296–1170), recortes exatos do render inteiro do Eduardo (fora do repositório; 2508 × 1170; diferença < 0,05%).
-  - **Cartucho:** em escala do console, com 1150 px, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" (−560 px) paira acima da tampa.
+  - **Cartucho:** em escala do console, entra na abertura laranja. Encaixado, a frente esconde tudo abaixo do slot, logo acima da faixa do rótulo. A pose "fora" paira acima da tampa.
+    - **Ajuste de 2026-10-22 (pedido do Eduardo, sobrava lateral no slot):** de 1150 para 1270 px (+10%), centrado no miolo escuro do slot (x 607–1880 na base da tampa). A parte visível segue em 66%, a pose "fora" passou de −560 para −618 px e o espaço acima do console, de 820 para 935 px.
   - **Componente:** mesma ordem de camadas, só `transform` e as mesmas durações do `mc-console`.
   - **Derivados:** `mc01-{back,front}-{640,960,1280}.webp` (10 a 58 KB), por `node design/source/mc-01/build-console.mjs`. Os derivados antigos saíram do `public/`; os mestres antigos ficam em `design/source/mc-01/`.
+- **Barra do console no topo (2026-10-22, pedido do Eduardo):** com os aparelhos lado a lado (≥ 1024), a barra (cartucho, estado e Inserir/Ejetar) fica no topo da coluna, alinhada ao topo da TV, e o MC-01 desce até a mesma linha de apoio da TV. Empilhado (< 1024), a barra fica logo acima do console. Com a coluna abaixo de 400 px, a ação desce para a linha de baixo. O portátil do celular não muda.
 - **Apoio na mesa:** sombra de contato elíptica sob a TV, o console e o portátil (só objetos físicos), e uma base mais alta na estação (≥ 1024: 64 px), para a mesa aparecer à frente dos aparelhos.
 - **Filtro CRT** (`mc-crt-front`, input `filter`, ligado por padrão):
   - fica por cima do conteúdo, sem capturar o ponteiro;
@@ -1469,3 +1472,32 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - entre 768 e 1023 px (layout empilhado), a TV fica sobre a estante e só o console fica na mesa;
   - ~~os PNGs só de referência ficam no repositório~~: removidos por decisão do Eduardo (cerca de 8 MB).
 - **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
+
+## D-096 — Project Inventory: dossiê em tela cheia no celular ("entrar na tela")
+
+- **Data:** 2026-10-22
+- **Pedido do Eduardo:** no celular, o portátil deixava o dossiê muito apertado.
+  - **Medição:** o visor tem 334 × 240 px em 390 (308 × 222 em 360), e a área de leitura do dossiê ficava com 113 px (96 em 360), cerca de 4 a 5 linhas.
+  - O aparelho ocupa quase a tela toda, mas só 37% dele é visor.
+- **Escolha do Eduardo, entre três opções** (as outras eram o dossiê abaixo do portátil e voltar ao CRT no celular): **entrar na tela.**
+  - A capa continua no visor do portátil.
+  - EXPLORAR PROJETO faz a tela crescer a partir do visor até ocupar o celular inteiro.
+  - Voltar à capa a encolhe de volta.
+  - O conteúdo segue "dentro da tela": o mesmo vidro escuro, com um filete de acento no aro e o reflexo do vidro mais fraco (é texto longo).
+- **Implementação (`screen-zoom`, só no celular, < 768):**
+  - **Diálogo:** `<dialog>` nativo modal, com o foco preso e o fundo inerte. Ao abrir, o foco vai ao título do dossiê.
+  - **Animação:** a expansão é um recorte (`clip-path`) do retângulo do visor até a tela cheia, em 320 ms, e o caminho inverso ao fechar. Sem animação com reduced motion.
+  - **Fechar:** por Voltar à capa, Esc ou o voltar do sistema (uma entrada no histórico, consumida ao fechar, sem mudar a URL). Ao fechar, o foco volta ao EXPLORAR PROJETO.
+  - **Página atrás:** não rola com a tela cheia aberta e não se mexe ao fechar. Para isso, a biblioteca não recolhe no celular e o "← Biblioteca" é só do CRT.
+  - **Leitura:** o dossiê recebe tipografia de leitura por variáveis CSS do diálogo (texto 16 px, título da seção 22 px).
+    - O cabeçalho fica numa linha: código / nome e "Voltar à capa", com o texto.
+    - O seletor de seções ocupa a largura toda.
+    - A área de leitura vai de 113 para ~690 px em 390.
+  - **Girar o celular para o tablet com o dossiê aberto:** o CRT assume o dossiê e o foco vai ao título dele.
+- **Desktop e tablet (≥ 768):** sem mudança; o dossiê segue dentro do CRT.
+- **Validação:**
+  - **Navegador:** 390 e 360, pt e en, com movimento e com reduced motion. Abrir, trocar de seção e fechar pelos três caminhos: o foco, a URL e a posição da página se mantêm, e não há rolagem lateral.
+  - **Desktop:** o CRT em 1024 / 820 / 1440 está igual.
+  - **Testes:** 204, incluindo a tela cheia, o Esc e a troca de aparelho.
+  - **Código:** typecheck, Prettier, builds e guardas passam, com o orçamento de CSS respeitado (removidas regras mortas do dossiê).
+- **Status:** implementado na branch `feat/inventory-station-tweaks`, aguardando a aprovação do Eduardo. Sem merge e sem deploy.

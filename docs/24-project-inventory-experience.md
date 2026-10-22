@@ -585,6 +585,10 @@ empty → (inserir) → inserting → loading → **ready(art = CAPA)** → (exp
 - **Fluxo com movimento real:** seleção, inserção, explorar, seções, voltar à capa, voltar à biblioteca, troca automática, teaser e ejeção.
 - **Teclado:** Tab, Enter e Espaço, com o foco nos lugares descritos na D-093.
 
+### 19.4 Dossiê em tela cheia no celular (D-096)
+
+No celular, o visor do portátil mostra só a capa. EXPLORAR PROJETO faz a tela crescer até ocupar o celular inteiro (`screen-zoom`, um `<dialog>` modal). Voltar à capa, Esc ou o voltar do sistema a encolhem de volta. A leitura vai de ~113 px para ~690 px em 390.
+
 ## 20. Moldura e cenário (D-094, 2026-10-21)
 
 Pedido do Eduardo: biblioteca e estação em painéis, como na referência. Só o visual muda; a máquina de estados, os fluxos e a acessibilidade continuam os da D-093.

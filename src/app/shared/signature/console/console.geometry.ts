@@ -1,8 +1,8 @@
 // Geometria do MC-01 em camadas (D-076/D-077; ângulo frontal desde D-095). Referência: o render
 // inteiro do Eduardo (2508 × 1170, fora do repositório); traseira (tampa com a abertura do slot,
 // y 0–296) e frente (y 296–1170, design/source/mc-01/console-v2/) são recortes exatos dele (diferença < 0,05%).
-// O cartucho em escala do console (699 × 500) entra na abertura laranja: 1150 px de largura,
-// centrado; encaixado, a frente esconde tudo abaixo de y 296, logo acima da faixa do rótulo. As
+// O cartucho em escala do console (699 × 500) entra na abertura laranja: 1270 px de largura (o miolo
+// escuro do slot vai de x 607 a 1880 na base da tampa), centrado nele; encaixado, a frente esconde tudo abaixo de y 296, logo acima da faixa do rótulo. As
 // coordenadas pertencem ao CONSOLE: qualquer MC-CART com render em escala do console usa o mesmo slot.
 
 const A = 'assets/mc-01/';
@@ -12,8 +12,8 @@ const set = (name: string) => [640, 960, 1280].map((w) => `${A}${name}-${w}.webp
 export const MC01_CONSOLE = {
   width: 2508,
   height: 1170,
-  /** Espaço acima do console para o cartucho fora do slot (pose `out`, topo em y −805). */
-  headroom: 820,
+  /** Espaço acima do console para o cartucho fora do slot (pose `out`, topo em y −919). */
+  headroom: 935,
   back: {
     src: `${A}mc01-back-1280.webp`,
     srcset: set('mc01-back'),
@@ -28,10 +28,11 @@ export const MC01_CONSOLE = {
     width: 2508,
     height: 874,
   },
-  /** Cartucho ENCAIXADO (1150 × 823): do topo em y −245, a base passa atrás da frente (y ≥ 296). */
-  slot: { left: 679, top: -245, width: 1150, height: 823 },
+  /** Cartucho ENCAIXADO (1270 × 908): do topo em y −301, a base passa atrás da frente (y ≥ 296); a
+   * parte visível é a mesma proporção de antes (66%), logo acima da faixa do rótulo. */
+  slot: { left: 608, top: -301, width: 1270, height: 908 },
   /** Deslocamento vertical do cartucho (px da referência; 0 = encaixado; fora = acima da tampa). */
-  poses: { out: -560, seated: 0 },
+  poses: { out: -618, seated: 0 },
   /** Sombra de contato sobre a abertura do slot com o cartucho fora. */
   shadow: { top: 150, height: 70 },
 } as const;

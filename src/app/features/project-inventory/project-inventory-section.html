@@ -16,7 +16,8 @@
     @let v = view();
     @let title = locale.pick(project.title);
 
-    @if (dossier()) {
+    <!-- No celular (D-096), o dossiê fica em tela cheia e a biblioteca não sai do lugar. -->
+    @if (dossier() && !handheld()) {
       <!-- Dossiê (D-093): a biblioteca recolhe; voltar a ela não ejeta o cartucho. -->
       <button
         mcAction="secondary"
@@ -32,7 +33,7 @@
 
     <!-- Moldura única (D-095): biblioteca em cima, estação embaixo, como um só aparelho. -->
     <div class="rig">
-      @if (!dossier() && projects.length > 1) {
+      @if ((!dossier() || handheld()) && projects.length > 1) {
         <!-- Biblioteca MC-CART (D-087): escolher seleciona; com um cartucho inserido, troca. -->
         <app-cartridge-library
           class="library"
@@ -104,26 +105,37 @@
                 </div>
               }
               @case ('dossier') {
-                <app-crt-dossier
-                  [project]="project"
-                  [section]="section()"
-                  (go)="goSection($event)"
-                  (cover)="toCover()"
-                />
+                <!-- Celular (D-096): o dossiê vai para a tela cheia; o visor segue com a capa. -->
+                @if (handheld()) {
+                  <ng-container *ngTemplateOutlet="cover" />
+                } @else {
+                  <ng-container *ngTemplateOutlet="dossierView" />
+                }
               }
               @default {
-                <!-- CAPA: arte oficial + nome, tipo, descrição, tecnologias e EXPLORAR PROJETO. -->
-                <app-crt-cover
-                  [project]="project"
-                  [showArt]="v.screen !== 'art-unavailable'"
-                  [teaser]="!!project.cartridge.teaser && v.screen !== 'teaser-unavailable'"
-                  [teaserFailed]="v.screen === 'teaser-unavailable'"
-                  (explore)="explore()"
-                  (playTeaser)="toggleTeaser()"
-                  (artFailed)="artFailed()"
-                />
+                <ng-container *ngTemplateOutlet="cover" />
               }
             }
+          </ng-template>
+          <ng-template #dossierView>
+            <app-crt-dossier
+              [project]="project"
+              [section]="section()"
+              (go)="goSection($event)"
+              (cover)="toCover()"
+            />
+          </ng-template>
+          <!-- CAPA: arte oficial + nome, tipo, descrição, tecnologias e EXPLORAR PROJETO. -->
+          <ng-template #cover>
+            <app-crt-cover
+              [project]="project"
+              [showArt]="v.screen !== 'art-unavailable'"
+              [teaser]="!!project.cartridge.teaser && v.screen !== 'teaser-unavailable'"
+              [teaserFailed]="v.screen === 'teaser-unavailable'"
+              (explore)="explore()"
+              (playTeaser)="toggleTeaser()"
+              (artFailed)="artFailed()"
+            />
           </ng-template>
           <!-- Barra: cartucho + estado do slot e UMA ação (Inserir ou Ejetar). -->
           <ng-template #consoleBar>
@@ -185,6 +197,11 @@
               </mc-handheld>
               <ng-container *ngTemplateOutlet="consoleBar" />
             </div>
+            @if (dossier()) {
+              <app-screen-zoom origin="#project-viewer .screen" (dismiss)="toCover()">
+                <ng-container *ngTemplateOutlet="dossierView" />
+              </app-screen-zoom>
+            }
           } @else {
             <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
             <div
@@ -204,6 +221,8 @@
             </div>
 
             <div class="console-area">
+              <!-- Estado e ação no topo da coluna; o MC-01 embaixo, na mesma linha de apoio da TV. -->
+              <ng-container *ngTemplateOutlet="consoleBar" />
               <!-- MC-01 físico; o clique no console é atalho de ponteiro do botão "Inserir cartucho". -->
               <mc-console
                 [cartridge]="cartridge()"
@@ -212,13 +231,12 @@
                 [lifted]="lifted()"
                 [class.is-idle]="v.insert === 'enabled'"
                 sizes="(min-width: 1200px) 460px, (min-width: 1024px) 36vw, 70vw"
-                cartSizes="(min-width: 1200px) 216px, (min-width: 1024px) 17vw, 44vw"
+                cartSizes="(min-width: 1200px) 236px, (min-width: 1024px) 19vw, 48vw"
                 (failed)="assetsFailed()"
                 (click)="v.insert === 'enabled' && insert()"
                 (pointerenter)="lifted.set(true)"
                 (pointerleave)="lifted.set(false)"
               />
-              <ng-container *ngTemplateOutlet="consoleBar" />
             </div>
           }
         } @else {

@@ -1,7 +1,8 @@
 // Project Inventory — H3 (D-093, docs/24 §19): biblioteca no topo; estação com o MC-01 à esquerda e
 // o CRT, protagonista, à direita (≥ 1024: 40/60 na capa, D-094; no dossiê, 34/66 e 28/72 a partir de
 // 1200). Abaixo de 1024: CRT em cima e console embaixo; no celular (< 768) o CRT sangra pelas laterais (o vidro 4:3 real precisa
-// da largura toda) e o console fica menor. A barra do console junta estado e ação.
+// da largura toda) e o console fica menor. A barra do console junta estado e ação e fica acima dele;
+// com os aparelhos lado a lado, no topo da coluna, e o MC-01 apoiado na mesma linha da TV.
 @use 'mc' as *;
 
 :host {
@@ -88,8 +89,14 @@ p {
   @include mq(lg) {
     grid-column: 1;
     grid-row: 1;
+    grid-template-rows: auto minmax(0, 1fr);
+    align-self: stretch;
     justify-self: stretch;
     width: auto;
+
+    mc-console {
+      align-self: end;
+    }
   }
 }
 
@@ -120,8 +127,8 @@ p {
   }
 }
 
-// Coluna do console estreita (dossiê): a ação desce para a linha de baixo.
-@container (max-width: 340px) {
+// Coluna do console estreita (1024 e dossiê): a ação desce para a linha de baixo e o nome cabe numa linha.
+@container (max-width: 400px) {
   .bar {
     grid-template-columns: auto minmax(0, 1fr);
 
