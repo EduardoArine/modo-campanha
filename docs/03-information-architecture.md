@@ -13,14 +13,11 @@ O site é, inicialmente, uma **onepage**. O Angular Router já está configurado
 | 4   | Project Inventory  | `#project-inventory`             | `ProjectInventorySection`                | Projetos como cartuchos (MC-CART + Project Summary); só `publication: 'approved'` (D-044).                                                |
 | 4a  | CRT Project Viewer | `#project-viewer` (dentro do #4) | `ProjectCase` em `mc-crt-project-viewer` | Case no CRT, abaixo da grade, ao inserir um cartucho (D-058).                                                                             |
 | 5   | Campaign Log       | `#campaign-log`                  | `CampaignLogSection`                     | Trajetória profissional em checkpoints.                                                                                                   |
-| 6   | Achievements       | `#achievements`                  | `AchievementsSection`                    | Conquistas baseadas em fatos concretos.                                                                                                   |
-| 7   | Current Main Quest | `#current-quest`                 | `CurrentQuestSection`                    | Destaque para a Comunidade On, sem informações confidenciais.                                                                             |
-| 8   | Side Quests        | `#side-quests`                   | `SideQuestsSection`                      | Projetos pessoais, games, experimentos e estudos.                                                                                         |
 | 9   | Final Checkpoint   | `#final-checkpoint`              | `FinalCheckpointSection`                 | Encerramento, contato e links.                                                                                                            |
 
 A ordem é garantida por `src/app/pages/home/home-page.ts` e verificada em `home-page.spec.ts`. **Ao mudar a ordem, atualizar esta tabela e o teste.**
 
-> **A Home renderiza só as seções construídas (D-047).** Em produção: Hero, Player Status, Skill Loadout, Project Inventory, Campaign Log (conteúdo real, D-074) e **Final Checkpoint** (#9, sempre a última, D-052), seguidos do **footer** da Home (fora do `<main>`). Achievements, Current Main Quest e Side Quests só aparecem quando há conteúdo publicado (hoje, MOCK dev-only). Nenhum placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos / Jornada / Contato** (en: About / Projects / Journey / Contact; Jornada → `#campaign-log`, Contato → `#final-checkpoint`; D-084). Em pt os títulos das seções são em português (STATUS DO JOGADOR, ARSENAL DE HABILIDADES, INVENTÁRIO DE PROJETOS, DIÁRIO DE CAMPANHA, A CAMPANHA CONTINUA...).
+> **A Home renderiza só as seções construídas (D-047).** Em produção: Hero, Player Status, Skill Loadout, Project Inventory, Campaign Log (conteúdo real, D-074) e **Final Checkpoint** (#9, sempre a última, D-052), seguidos do **footer** da Home (fora do `<main>`). Achievements, Current Main Quest e Side Quests foram **removidas** (D-097): repetiam o que o Diário, o Inventário e o Player Status já mostram. Nenhum placeholder público. A navegação só expõe destinos existentes: **Sobre / Projetos / Jornada / Contato** (en: About / Projects / Journey / Contact; Jornada → `#campaign-log`, Contato → `#final-checkpoint`; D-084). Em pt os títulos das seções são em português (STATUS DO JOGADOR, ARSENAL DE HABILIDADES, INVENTÁRIO DE PROJETOS, DIÁRIO DE CAMPANHA, A CAMPANHA CONTINUA...).
 
 ## Header (aprovado no Concept 03)
 
@@ -43,9 +40,10 @@ Não é uma seção, é a moldura fixa do site. Base 03-A:
 1. **Hero → Player Status**: em segundos o visitante sabe quem é Eduardo.
 2. **Skill Loadout antes dos projetos**: dá contexto de repertório antes da prova ("Loadout informa. Inventory impressiona.").
 3. **Project Inventory no meio da página**: é o coração do portfólio; fica cedo o suficiente para quem tem pressa.
-4. **Campaign Log → Achievements → Current Quest**: a história e os marcos, culminando no presente.
-5. **Side Quests**: o lado autoral/pessoal, depois do profissional.
-6. **Final Checkpoint**: contato.
+4. **Campaign Log**: a história e os marcos, culminando no presente (a Comunidade ON, CURRENT QUEST do capítulo 02).
+5. **Final Checkpoint**: contato.
+
+> Achievements, Current Main Quest e Side Quests saíram em D-097: os marcos e conquistas estão no Diário e nos dossiês dos cartuchos; a missão atual, no Player Status, no MC-006 e no capítulo 02. Projetos pessoais futuros (ex.: Paco) entram como novos cartuchos MC-CART.
 
 > Skill Tree foi renomeado para Skill Loadout (D-040); a âncora `#skill-tree` não tem alias (o site ainda não foi lançado).
 

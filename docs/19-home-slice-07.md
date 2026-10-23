@@ -1,5 +1,7 @@
 # 19 — Home Slice 07: Side Quests
 
+> ⛔ **REMOVIDA em D-097 (2026-10-23, decisão do Eduardo):** a seção repetia o que outras seções já mostram; componente, dados MOCK, modelo e textos saíram do código. Este documento fica como histórico.
+
 > Status: **07-A e 07-B APPROVED** (D-056, REVIEWER). Estrutura e visual construídos com **MOCK**; **07-C editorial pendente**.
 >
 > ⚠️ **SIDE QUESTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** `src/app/data/side-quests.data.development.ts` é fictício ("Experimento de exemplo A…"). Só existe em desenvolvimento e testes; a produção usa `side-quests.data.ts` (vazio) e não renderiza a seção.

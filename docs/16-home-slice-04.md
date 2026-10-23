@@ -1,5 +1,7 @@
 # 16 — Home Slice 04: Achievements
 
+> ⛔ **REMOVIDA em D-097 (2026-10-23, decisão do Eduardo):** a seção repetia o que outras seções já mostram; componente, dados MOCK, modelo e textos saíram do código. Este documento fica como histórico.
+
 > Status: **plano aprovado (D-051).** Direção **A + B — Achievement Record Panel** aprovada para exploração. **04-B — ACHIEVEMENTS VISUAL: APPROVED e FROZEN** (D-051, inclui 04-B.1). Estado: STRUCTURE / VISUAL approved · **EDITORIAL CONTENT pending factual review**. 04-0 (fatos reais) pendente; 04-C não iniciado.
 >
 > ⚠️ **ACHIEVEMENTS CONTENT = MOCK FOR VISUAL DEVELOPMENT.** Os itens em `src/app/data/achievements.data.development.ts` são textos genéricos e deliberadamente fictícios. Só existem em desenvolvimento e testes; a produção usa `achievements.data.ts` (vazio) e não renderiza a seção.

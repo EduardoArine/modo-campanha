@@ -1,5 +1,7 @@
 # 18 — Home Slice 06: Current Main Quest
 
+> ⛔ **REMOVIDA em D-097 (2026-10-23, decisão do Eduardo):** a seção repetia o que outras seções já mostram; componente, dados MOCK, modelo e textos saíram do código. Este documento fica como histórico.
+
 > Status: **06-A e 06-B APPROVED** (D-055, REVIEWER). Estrutura e visual construídos com **MOCK**; **06-C editorial pendente** (texto público aprovado pelo Eduardo).
 >
 > ⚠️ **CURRENT MAIN QUEST CONTENT = MOCK FOR VISUAL DEVELOPMENT.** `src/app/data/current-quest.data.development.ts` é fictício ("Campanha de exemplo"). Só existe em desenvolvimento e testes; a produção usa `current-quest.data.ts` (`null`) e não renderiza a seção.

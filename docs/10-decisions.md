@@ -1501,3 +1501,19 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Testes:** 204, incluindo a tela cheia, o Esc e a troca de aparelho.
   - **Código:** typecheck, Prettier, builds e guardas passam, com o orçamento de CSS respeitado (removidas regras mortas do dossiê).
 - **Status:** implementado na branch `feat/inventory-station-tweaks`, aguardando a aprovação do Eduardo. Sem merge e sem deploy.
+
+## D-097 — Remoção de Conquistas, Missão principal atual e Missões secundárias
+
+- **Data:** 2026-10-23
+- **Decisão do Eduardo:** as três seções repetiam o que a Home já mostra. Nenhuma estava no ar: em produção os dados eram vazios, e só havia conteúdo MOCK em desenvolvimento.
+  - **Conquistas (D-051):** TCC nota 10, Mostra de Jogos, FAEL, publicação e lançamentos já estão nos marcos do Diário e nos dossiês dos cartuchos, junto da história que os explica.
+  - **Missão principal atual (D-055):** a Comunidade ON já aparece no Player Status ("Estado atual"), no MC-006 (EM ANDAMENTO) e no capítulo 02 do Diário (CURRENT QUEST).
+  - **Missões secundárias (D-056):** era a única com conteúdo próprio (projetos pessoais em andamento), mas exigiria manutenção constante. Projetos pessoais, como o *Paco*, entram como novos cartuchos MC-CART quando aprovados.
+- **Removido:**
+  - componentes `features/achievements`, `features/current-quest` e `features/side-quests`;
+  - dados de produção e MOCK, `achievements.rules` e os modelos `Achievement`, `CurrentQuest` e `SideQuest`;
+  - as substituições de arquivo no `angular.json`;
+  - os textos `sections.achievements/currentQuest/sideQuests` e os grupos `achievements`, `currentQuest` e `sideQuests` do dicionário (pt e en);
+  - as referências na Home, no teste da Home e no showcase de desenvolvimento.
+- **Mantido:** a guarda do deploy contra ids `mock-*`. `docs/16`, `docs/18` e `docs/19` ficam como histórico, marcados como removidos.
+- **Home:** Hero → Player Status → Arsenal → Inventário → Diário → Final Checkpoint + footer. **Sem mudança visível no site publicado.**

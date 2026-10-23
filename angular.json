@@ -59,18 +59,6 @@
                 {
                   "replace": "src/app/dev/dev.routes.ts",
                   "with": "src/app/dev/dev.routes.development.ts"
-                },
-                {
-                  "replace": "src/app/data/achievements.data.ts",
-                  "with": "src/app/data/achievements.data.development.ts"
-                },
-                {
-                  "replace": "src/app/data/current-quest.data.ts",
-                  "with": "src/app/data/current-quest.data.development.ts"
-                },
-                {
-                  "replace": "src/app/data/side-quests.data.ts",
-                  "with": "src/app/data/side-quests.data.development.ts"
                 }
               ]
             }

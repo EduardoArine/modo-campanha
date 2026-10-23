@@ -122,28 +122,26 @@ CRT Project Viewer completo na Home · seleção de cartucho · inserção no co
 
 - ✅ Campaign Log (Slice 03, D-074)
 - 🔄 **Diário de Campanha: mapa por capítulos** (D-091, `docs/15` §18): híbrido A + C sobre o conteúdo real; aguardando aprovação do Eduardo e as artes (cenários e imagens editoriais)
-- 🟡 Achievements (Slice 04)
+- ⛔ Achievements (Slice 04): **removida** (D-097)
 
-### Home Slice 04 — Achievements 🟡 (plano aprovado, D-051; `docs/16-home-slice-04.md`)
+### Home Slice 04 — Achievements ⛔ (removida em D-097; histórico em `docs/16-home-slice-04.md`)
 
-- 🟡 04-0 content intake (fatos novos do Eduardo, pendente) · ✅ 04-A model / data (**MOCK**, D-051) · ✅ 04-B visual (**APPROVED / FROZEN**, D-051) · ⬜ 04-C editorial (pendente de fatos reais; não bloqueia o resto da Home)
+- Repetia os marcos do Diário e os dossiês dos cartuchos; código, dados MOCK e textos removidos.
 
 ### Home Slice 05 — Final Checkpoint ✅ (**APPROVED**, D-054; `docs/17-home-slice-05.md`)
 
-Construído antes de Current Quest e Side Quests; continua sendo a última seção da Home (D-052).
+Continua sendo a última seção da Home (D-052).
 
 - ✅ 05-0 decisões e conteúdo · ✅ 05-A estrutura + dados · ✅ 05-B visual (**APPROVED / FROZEN**) · ✅ 05-C footer (**APPROVED / FROZEN**) · ✅ 05-D revisão integrada (Contato no header; **HOME SLICE 05 — APPROVED**, D-054)
 - ✅ Final Checkpoint + footer (Slice 05)
 
-### Home Slice 06 — Current Main Quest 🟡 (D-055; `docs/18-home-slice-06.md`)
+### Home Slice 06 — Current Main Quest ⛔ (removida em D-097; histórico em `docs/18-home-slice-06.md`)
 
-- ✅ 06-A modelo / dados (**MOCK**, produção `null`) · ✅ 06-B visual (**APPROVED**, Quest Briefing) · ⬜ 06-C editorial (texto público aprovado pelo Eduardo; não bloqueia o resto da Home)
-- 🟡 Current Main Quest (Slice 06)
+- A Comunidade ON já aparece no Player Status, no MC-006 (EM ANDAMENTO) e no capítulo 02 do Diário.
 
-### Home Slice 07 — Side Quests 🟡 (D-056; `docs/19-home-slice-07.md`)
+### Home Slice 07 — Side Quests ⛔ (removida em D-097; histórico em `docs/19-home-slice-07.md`)
 
-- ✅ 07-A modelo / dados (**MOCK**, produção vazia) · ✅ 07-B visual (**APPROVED**, Side Quest Log) · ⬜ 07-C editorial (conteúdo real do Eduardo; não bloqueia o resto da Home)
-- 🟡 Side Quests (Slice 07)
+- Projetos pessoais (ex.: Paco) entram como novos cartuchos MC-CART quando aprovados.
 
 ## FASE 5 — GAME FEEL ✅ (D-058, D-059; Progress pendente de definição)
 
