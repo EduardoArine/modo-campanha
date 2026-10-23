@@ -60,7 +60,7 @@ describe('HeroScene', () => {
 
     toggle(el).click();
     detect();
-    expect(toggle(el).getAttribute('aria-label')).toBe('Reproduzir');
+    expect(toggle(el).getAttribute('aria-label')).toBe('Reproduzir demonstração');
     toggle(el).click();
     detect();
     expect(toggle(el).getAttribute('aria-label')).toBe('Pausar demonstração');
@@ -80,6 +80,6 @@ describe('HeroScene', () => {
     }));
     const { el } = await renderWithTeaser('/');
 
-    expect(toggle(el).getAttribute('aria-label')).toBe('Reproduzir');
+    expect(toggle(el).getAttribute('aria-label')).toBe('Reproduzir demonstração');
   });
 });

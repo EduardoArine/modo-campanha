@@ -1,6 +1,7 @@
 import { DOCUMENT, NgComponentOutlet, NgTemplateOutlet, ViewportScroller } from '@angular/common';
 import {
   afterNextRender,
+  ApplicationRef,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -88,6 +89,7 @@ export class ProjectInventorySection {
   protected readonly ui = this.locale.ui;
   protected readonly stationBackground = STATION_BACKGROUND;
   private readonly injector = inject(Injector);
+  private readonly appRef = inject(ApplicationRef);
   private readonly scroller = inject(ViewportScroller);
   private readonly window = inject(DOCUMENT).defaultView;
 
@@ -183,9 +185,14 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
+    // A troca espera a hidratação terminar e os cliques guardados serem repetidos (eles miram os
+    // botões do HTML do servidor, que saem com a troca).
     afterNextRender(() => {
       hydratedOnce = true;
-      if (this.hydrating && this.phoneQuery?.matches) this.switchDevice(true);
+      if (!this.hydrating) return;
+      void this.appRef
+        .whenStable()
+        .then(() => setTimeout(() => this.phoneQuery?.matches && this.switchDevice(true)));
     });
     const onPhone = (event: MediaQueryListEvent) => this.switchDevice(event.matches);
     this.phoneQuery?.addEventListener('change', onPhone);
@@ -263,8 +270,8 @@ export class ProjectInventorySection {
    * não estiver inteira à vista, rola o mínimo para mostrá-la; o visitante vê o cartucho entrar e
    * a capa aparecer. Pelo teclado nada se move (o foco segue no carrossel).
    */
-  private revealScreen(): void {
-    if (!this.pointer) return;
+  private revealScreen(always = false): void {
+    if (!this.pointer && !always) return;
     const screen = this.window?.document.querySelector(
       '#project-viewer .glass, #project-viewer .screen',
     );
@@ -309,7 +316,11 @@ export class ProjectInventorySection {
 
   private coverNow(): void {
     this.dispatch({ type: 'cover' });
-    this.afterRender(() => this.byId('inventory-explore')?.focus());
+    // A biblioteca reaparece acima e empurra a capa: a tela volta à vista antes do foco (D-098).
+    this.afterRender(() => {
+      this.revealScreen(true);
+      this.byId('inventory-explore')?.focus({ preventScroll: true });
+    });
   }
 
   /** Voltar à biblioteca: a capa volta e a biblioteca reaparece; foco no cartucho inserido. */

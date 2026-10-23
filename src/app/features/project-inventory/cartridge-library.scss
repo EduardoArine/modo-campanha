@@ -17,6 +17,13 @@
   align-items: baseline;
   column-gap: space(4);
   row-gap: space(1);
+  // Abaixo de 1200 a faixa sempre transborda e os botões ‹ › aparecem depois de carregar: a altura
+  // deles (68 px medidos) já vem reservada no HTML pré-renderizado, sem empurrar os cartuchos (D-098).
+  min-height: 4.3rem;
+
+  @include mq(xl) {
+    min-height: 0;
+  }
 }
 
 .title {

@@ -1597,4 +1597,24 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     | CLS | 0,0002 | 0 |
 
   - **Erros de console:** nenhum.
-- **Status:** branch `feat/ux-review-fixes` (sobre `chore/remove-redundant-sections`), aguardando nova rodada do revisor e aprovação do Eduardo. Sem merge e sem deploy.
+- **Terceira rodada do revisor:** nenhum problema crítico nem importante. Notas: UX 8,8 · visual 8,8 · acessibilidade 9 · conteúdo 8,5. Os seis menores foram corrigidos:
+  - **Clique antes da hidratação no celular:** os cliques guardados miravam o "Inserir" do HTML do servidor (CRT), que saía com a troca para o portátil. A troca agora espera a hidratação terminar e os cliques serem repetidos (`whenStable` + próxima tarefa). Conferido com clique real de mouse a 390 e 1440 px: o cartucho entra.
+  - **Salto de layout com a seção à vista durante a carga (0,0307 → 0,0002 a 390 px):**
+    - **Causa:** o texto pré-renderizado pintava com a fonte do sistema, mais estreita que a IBM Plex Sans, e as larguras em `ch` dependiam da fonte ativa. Com a Plex, o Arsenal e o Diário ganhavam linhas e empurravam o Inventário.
+    - **`ch` → `em`:** todas as larguras em `ch` dos componentes viraram `em`, com a mesma largura final (0,6 em por `ch` na Plex).
+    - **Fontes reserva ajustadas** (`size-adjust` medido no navegador): Arial/Helvetica 100,1% e Roboto 110,9%, antes da fonte do sistema na pilha.
+    - **Paginação da biblioteca:** o cabeçalho reserva a altura dos botões ‹ › abaixo de 1200 px (68 px medidos).
+  - **Voltar à capa a 1024:** a tela volta à vista antes do foco em EXPLORAR PROJETO.
+  - **Próximo/Anterior marco:** só rola quando o título saiu pelo topo com mais de 40 px de folga; nos toques seguintes, o botão não muda de lugar.
+  - **Botão do teaser no Hero:** o nome acessível passou a ser "Reproduzir demonstração" / "Play demo" (só o dicionário; o visual não muda).
+  - **Fica como está:** a capa lado a lado e o dossiê empilhado de 1024 a 1199, uma consequência aceita da correção da área de leitura.
+  - **Medição com limitação:**
+
+    | | 1440 | 390 |
+    | --- | --- | --- |
+    | Primeiro conteúdo | 0,68 s | 0,75 s |
+    | LCP | 0,92 s | 1,8 s |
+    | CLS | 0,0001 | 0,0001 |
+
+  - **Erros de console:** nenhum.
+- **Status:** branch `feat/ux-review-fixes` (sobre `chore/remove-redundant-sections`), aguardando a aprovação do Eduardo. Sem merge e sem deploy.

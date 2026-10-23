@@ -97,7 +97,7 @@ export class CampaignLogSection {
    * (empilhado abaixo do mapa, a ≤ 1024 e no celular), a página rola até o topo dele. Pelo teclado
    * nada se move: o foco segue no marco.
    */
-  protected selectMilestone(id: string): void {
+  protected selectMilestone(id: string, fromPanel = false): void {
     this.milestoneId.set(id);
     if (!this.pointer) return;
     afterNextRender(
@@ -108,7 +108,10 @@ export class CampaignLogSection {
         const header =
           this.window.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ??
           0;
-        if (top >= header && top <= this.window.innerHeight * 0.6) return;
+        // Dos botões do próprio painel, só se o título saiu pelo topo (folga de 40 px): o botão não
+        // muda de lugar a cada toque.
+        if (fromPanel ? top >= header - 40 : top >= header && top <= this.window.innerHeight * 0.6)
+          return;
         panel.scrollIntoView({
           block: 'start',
           behavior: this.reducedMotion() ? 'auto' : 'smooth',
@@ -121,7 +124,7 @@ export class CampaignLogSection {
   protected step(delta: 1 | -1): void {
     const entries = this.chapter().entries;
     const target = entries[this.index() + delta];
-    if (target) this.selectMilestone(target.id);
+    if (target) this.selectMilestone(target.id, true);
   }
 
   private reducedMotion(): boolean {

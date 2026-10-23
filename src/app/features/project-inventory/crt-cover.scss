@@ -98,7 +98,7 @@ ul {
 }
 
 .desc {
-  max-width: 34ch;
+  max-width: 20.4em; // 34ch da IBM Plex Sans (D-098)
   font-size: clamp(0.875rem, 2.9cqw, 1.125rem);
   line-height: 1.4;
   color: var(--mc-text);

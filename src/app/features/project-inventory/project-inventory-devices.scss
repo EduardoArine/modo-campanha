@@ -84,13 +84,13 @@ mc-console.is-idle {
 
 // ------------------------------------------------------------------ Fallback
 .fallback-desc {
-  max-width: 52ch;
+  max-width: 31.2em; // 52ch da IBM Plex Sans (D-098)
   @include type(body);
   color: var(--mc-text);
 }
 
 .fallback-text {
-  max-width: 44ch;
+  max-width: 26.4em; // 44ch da IBM Plex Sans (D-098)
   @include type(body-s);
   color: var(--mc-text-secondary);
 }

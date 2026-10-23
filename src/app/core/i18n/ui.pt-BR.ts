@@ -224,7 +224,7 @@ export const UI_PT_BR = {
     unlocked: 'CAMPANHA LIBERADA',
     continues: 'A CAMPANHA CONTINUA...',
     pause: 'Pausar demonstração',
-    play: 'Reproduzir',
+    play: 'Reproduzir demonstração',
   },
 };
 

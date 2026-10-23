@@ -210,6 +210,6 @@ export const UI_EN: UiDictionary = {
     unlocked: 'CAMPAIGN UNLOCKED',
     continues: 'THE CAMPAIGN CONTINUES...',
     pause: 'Pause demo',
-    play: 'Play',
+    play: 'Play demo',
   },
 };
