@@ -1578,16 +1578,16 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - contato por e-mail e CV.
 - **Segunda rodada do revisor:** os oito achados foram confirmados como resolvidos, mas apareceu uma regressão crítica introduzida aqui. Correções:
   - **Teclado preso no Inventário e no Diário (CRÍTICO):**
-    - **Causa:** o handler  do host valia , e o Angular cancela o evento quando o handler devolve .
-    - **Correção:** o handler passou a ser um método que devolve  ().
+    - **Causa:** o handler `(keydown)` do host valia `false`, e o Angular cancela o evento quando o handler devolve `false`.
+    - **Correção:** o handler passou a ser um método que devolve `void` (`markPointer`).
     - **Teste:** um teste garante que Tab, Enter, Espaço e Esc não são cancelados; com o código antigo, ele falha.
-  - **Clique antes da hidratação no Inventário:** o  saiu. Na página pré-renderizada, o Inventário nasce como o do servidor (CRT) e troca para o portátil logo depois, no celular. Assim ele hidrata e os cliques feitos antes do JavaScript são repetidos.
+  - **Clique antes da hidratação no Inventário:** o `ngSkipHydration` saiu. Na página pré-renderizada, o Inventário nasce como o do servidor (CRT) e troca para o portátil logo depois, no celular. Assim ele hidrata e os cliques feitos antes do JavaScript são repetidos.
   - **Dossiê a 1024–1199:** a TV vai para cima, com até 48 rem, e o console desce. A área de leitura vai de ~140 para 287 px, com a lista de seções ao lado.
   - **Diário, "Próximo marco" por ponteiro:** o painel volta à vista quando o título fica acima da tela.
   - **Carrossel no celular:** o cartucho escolhido fica no centro da faixa.
   - **MC-005:** "aplicação web em Angular, API em .NET".
-  - **Salto de layout no Hero (CLS 0,0065 → 0,0002):** o  do resumo virou . É a mesma largura com a IBM Plex Sans, que mede 0,6 em por "0"; com a fonte reserva,  era menor e o parágrafo passava de 4 para 3 linhas.
-  - **CSS global bloqueante:**  na produção; a primeira pintura já tem os tokens. O primeiro conteúdo segue em ~0,7 s.
+  - **Salto de layout no Hero (CLS 0,0065 → 0,0002):** o `max-width: 46ch` do resumo virou `27.6em`. É a mesma largura com a IBM Plex Sans, que mede 0,6 em por "0"; com a fonte reserva, `ch` era menor e o parágrafo passava de 4 para 3 linhas.
+  - **CSS global bloqueante:** `inlineCritical: false` na produção; a primeira pintura já tem os tokens. O primeiro conteúdo segue em ~0,7 s.
   - **Medição com limitação:**
 
     | | 1440 | 390 |
