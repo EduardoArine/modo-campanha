@@ -22,13 +22,17 @@ const ZOOM_MS = 320;
  */
 @Component({
   selector: 'app-screen-zoom',
-  template: `<dialog #dialog (cancel)="onCancel($event)"><ng-content /></dialog>`,
+  template: `<dialog #dialog [attr.aria-labelledby]="labelledBy()" (cancel)="onCancel($event)">
+    <ng-content />
+  </dialog>`,
   styleUrl: './screen-zoom.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScreenZoom {
   /** Seletor do visor de onde a tela cresce (e para onde volta). */
   readonly origin = input.required<string>();
+  /** Id do título que dá nome ao diálogo (leitores de tela). */
+  readonly labelledBy = input<string | null>(null);
   /** Seletor do que recebe o foco ao abrir. */
   readonly focus = input('h3');
   readonly dismiss = output<void>();

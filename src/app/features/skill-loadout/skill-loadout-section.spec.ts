@@ -33,7 +33,7 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
 
     expect(section.getAttribute('aria-labelledby')).toBe('skill-loadout-title');
     expect(section.querySelector('h2')?.textContent).toBe('ARSENAL DE HABILIDADES');
-    expect(section.querySelector('.eyebrow')?.textContent).toBe('LOADOUT DE ESPECIALIDADES');
+    expect(section.querySelector('.eyebrow')?.textContent).toBe('ESPECIALIDADES');
     const group = section.querySelector('.selectors')!;
     expect(group.getAttribute('role')).toBe('group');
     expect(group.getAttribute('aria-label')).toBe('Especialidades');
@@ -49,17 +49,15 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
       'INTELIGÊNCIA ARTIFICIAL',
       'DNA DE GAMES',
     ]);
-    // Código decorativo: o nome acessível é o nome da especialidade.
-    expect(Array.from(group.querySelectorAll('.code')).every((c) => c.ariaHidden === 'true')).toBe(
-      true,
-    );
+    // Sem siglas (D-098): o seletor mostra só ícone e nome.
+    expect(group.querySelector('.code')).toBeNull();
   });
 
   it('starts on CON with its six skills', async () => {
     const { el } = await renderAt('/');
 
     expect(pressed(el)).toEqual(['true', 'false', 'false', 'false']);
-    expect(texts(el, '.board h3')).toEqual(['CON — CONSTRUÇÃO']);
+    expect(texts(el, '.board h3')).toEqual(['CONSTRUÇÃO']);
     expect(el.querySelector('.group-text')?.textContent).toBe(
       'Tecnologias e ferramentas para transformar ideias em produtos digitais.',
     );
@@ -79,15 +77,15 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
 
     click('.selector[data-group="product"]');
     expect(pressed(el)).toEqual(['false', 'true', 'false', 'false']);
-    expect(texts(el, '.board h3')).toEqual(['PRD — PRODUTO']);
+    expect(texts(el, '.board h3')).toEqual(['PRODUTO']);
     expect(texts(el, '.skill')).toContain('Colaboração UX/UI');
 
     click('.selector[data-group="ai"]');
-    expect(texts(el, '.board h3')).toEqual(['IA — INTELIGÊNCIA ARTIFICIAL']);
+    expect(texts(el, '.board h3')).toEqual(['INTELIGÊNCIA ARTIFICIAL']);
     expect(texts(el, '.skill')).toContain('Agentes de desenvolvimento');
 
     click('.selector[data-group="game-dna"]');
-    expect(texts(el, '.board h3')).toEqual(['DNA — DNA DE GAMES']);
+    expect(texts(el, '.board h3')).toEqual(['DNA DE GAMES']);
     expect(texts(el, '.skill')).toEqual([
       'Sistemas de jogo',
       'Gamificação',
@@ -107,15 +105,15 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
     expect(el.querySelector('.all')?.textContent?.trim()).toBe('Ver todas as habilidades');
 
     click('.all');
-    expect(el.querySelector('.all')?.textContent?.trim()).toBe('Voltar ao loadout');
+    expect(el.querySelector('.all')?.textContent?.trim()).toBe('Voltar ao arsenal');
     expect(pressed(el)).toEqual(['false', 'false', 'false', 'false']);
     expect(el.querySelector('.board')?.classList).toContain('is-all');
     expect(texts(el, '.board h3')).toEqual(['TODAS AS HABILIDADES']);
     expect(texts(el, '.board h4')).toEqual([
-      'CON — CONSTRUÇÃO',
-      'PRD — PRODUTO',
-      'IA — INTELIGÊNCIA ARTIFICIAL',
-      'DNA — DNA DE GAMES',
+      'CONSTRUÇÃO',
+      'PRODUTO',
+      'INTELIGÊNCIA ARTIFICIAL',
+      'DNA DE GAMES',
     ]);
     // Os 18 itens, cada um uma vez.
     expect(el.querySelectorAll('.skill').length).toBe(18);
@@ -123,7 +121,7 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
 
     click('.all');
     expect(pressed(el)).toEqual(['false', 'false', 'true', 'false']);
-    expect(texts(el, '.board h3')).toEqual(['IA — INTELIGÊNCIA ARTIFICIAL']);
+    expect(texts(el, '.board h3')).toEqual(['INTELIGÊNCIA ARTIFICIAL']);
   });
 
   it('offers a second "back" at the end of "view all", returning focus to the header toggle', async () => {
@@ -132,7 +130,7 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
     expect(el.querySelector('.back-end')).toBeNull();
 
     click('.all');
-    expect(el.querySelector('.back-end')?.textContent?.trim()).toBe('Voltar ao loadout');
+    expect(el.querySelector('.back-end')?.textContent?.trim()).toBe('Voltar ao arsenal');
 
     click('.back-end');
     expect(el.querySelector('.board')?.classList).not.toContain('is-all');
@@ -172,7 +170,7 @@ describe('SkillLoadoutSection (Concept C, D-092)', () => {
       'ARTIFICIAL INTELLIGENCE',
       'GAME DNA',
     ]);
-    expect(texts(el, '.board h3')).toEqual(['DEV — DEVELOPMENT']);
+    expect(texts(el, '.board h3')).toEqual(['DEVELOPMENT']);
     expect(texts(el, '.count')).toEqual(['6 SKILLS']);
     expect(el.querySelector('.all')?.textContent?.trim()).toBe('View all skills');
 

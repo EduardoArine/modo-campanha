@@ -1,5 +1,4 @@
 import { CampaignLogChapter, CampaignLogImage, CampaignLogPhoto } from '../models';
-import { PLAYER_PROFILE } from './profile.data';
 
 const ASSETS = 'assets/campaign-log/';
 
@@ -628,7 +627,7 @@ export const CHAPTER_02: CampaignLogChapter = {
         'pt-BR': [
           'Um dos projetos mais completos da minha trajetória foi a Axia, uma plataforma de inteligência operacional desenvolvida pela Ativvus/Arppen para transformar a gestão de limpeza e facilities por meio de tecnologia, dados e dispositivos conectados.',
           'Participei de toda a evolução do produto, desde sua idealização e engenharia inicial até as melhorias e expansões realizadas nos anos seguintes, incluindo a evolução para a Inteligência Axia.',
-          'Minha atuação passou por diferentes camadas da solução: arquitetura, desenvolvimento do webapp em Angular, WebAPI em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C.',
+          'Minha atuação passou por diferentes camadas da solução: arquitetura, desenvolvimento da aplicação web em Angular, WebAPI em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C.',
           'Embora tenha trabalhado em praticamente todas as frentes, meu foco principal sempre esteve no desenvolvimento da plataforma web, das APIs e na experiência de uso.',
           'Acompanhar a Axia durante tantos ciclos de evolução foi uma experiência importante. O desafio não era apenas fazer tecnologias diferentes funcionarem juntas, mas transformar necessidades operacionais reais em um produto consistente, capaz de evoluir conforme novos problemas e oportunidades surgiam.',
           'Esse projeto consolidou minha visão de desenvolvimento de produtos digitais: participar das decisões, construir soluções, entender como são utilizadas e continuar evoluindo o produto.',
@@ -711,7 +710,6 @@ export const CHAPTER_02: CampaignLogChapter = {
       },
     },
   ],
-  // CURRENT QUEST — EM ANDAMENTO + o lema aprovado do Player Status (fonte única).
+  // CURRENT QUEST — EM ANDAMENTO. Sem texto de fechamento: o lema fica só no Hero (D-098).
   ongoing: true,
-  closing: PLAYER_PROFILE.motto,
 };

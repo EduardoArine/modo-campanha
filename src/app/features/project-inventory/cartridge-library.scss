@@ -148,8 +148,10 @@
     cursor: default;
   }
 
+  // Foco afastado da borda (D-098): não se confunde com a borda dupla do cartucho selecionado.
   &:focus-visible {
     @include focus-ring;
+    outline-offset: 4px;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -173,6 +175,13 @@
   @include type(body-s);
   font-weight: 600;
   overflow-wrap: anywhere;
+}
+
+// Tipo do projeto (D-098): até duas linhas reservadas, para os cards terem a mesma altura.
+.kind {
+  min-height: 2lh;
+  @include type(caption);
+  color: var(--mc-text-secondary);
 }
 
 // Reserva a linha mesmo vazia: selecionar não muda a altura do item (sem layout shift).

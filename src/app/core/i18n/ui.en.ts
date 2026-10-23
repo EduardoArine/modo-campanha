@@ -76,7 +76,7 @@ export const UI_EN: UiDictionary = {
     skillLoadout: 'SKILL ARSENAL',
     projectInventory: 'PROJECT INVENTORY',
     campaignLog: 'CAMPAIGN LOG',
-    finalCheckpoint: 'CAMPAIGN CONTINUES...',
+    finalCheckpoint: 'THE CAMPAIGN CONTINUES...',
   },
   inventory: {
     subtitle: 'Cartridges collected along the campaign.',
@@ -208,7 +208,7 @@ export const UI_EN: UiDictionary = {
     items: { build: 'BUILD', product: 'PRODUCT', ai: 'AI', gameDna: 'GAME DNA' },
     title: 'SYSTEM HORIZON',
     unlocked: 'CAMPAIGN UNLOCKED',
-    continues: 'CAMPAIGN CONTINUES...',
+    continues: 'THE CAMPAIGN CONTINUES...',
     pause: 'Pause demo',
     play: 'Play',
   },

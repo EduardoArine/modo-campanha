@@ -20,7 +20,9 @@ import { CampaignLogWhen } from '../../models';
       <time [attr.datetime]="w.span.end">{{ w.span.end }}</time>
     } @else if ('approx' in w) {
       @let approx = w.approx;
-      {{ ui().campaignLog.approx }}
+      <!-- "c." sempre minúsculo, mesmo em rótulo em caixa alta (D-098). -->
+      <span class="approx">{{ ui().campaignLog.approx }}</span
+      >{{ ' ' }}
       @if (typeof approx === 'number') {
         <time [attr.datetime]="approx">{{ approx }}</time>
       } @else {
@@ -31,6 +33,7 @@ import { CampaignLogWhen } from '../../models';
       {{ locale.pick(w.era) }}
     }
   `,
+  styles: '.approx { text-transform: none; }',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CampaignWhen {

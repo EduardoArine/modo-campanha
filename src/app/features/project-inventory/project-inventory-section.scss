@@ -66,6 +66,8 @@ p {
 
 .tv-area {
   min-width: 0;
+  // Empilhado (< 1024), a TV fica em cima do console, que vem antes dela no DOM.
+  order: -1;
 
   // Celular: a TV ocupa 122% da tela, centrada; o vidro fica a ~8 px das bordas.
   @media (max-width: 767.98px) {

@@ -47,6 +47,13 @@ a {
 // real do header vem em runtime (--mc-header-block, D-060); sem ela, vale a altura de desktop.
 html {
   scroll-padding-top: calc(var(--mc-header-block, var(--mc-header-height)) + var(--mc-space-4));
+  // Menu e CTAs rolam até a seção com suavidade (D-098); reduced motion volta ao salto abaixo.
+  scroll-behavior: smooth;
+}
+
+// Título que recebe o foco depois de uma navegação por âncora (D-098): sem anel no foco programático.
+.mc-anchor-target:focus {
+  outline: none;
 }
 
 img,

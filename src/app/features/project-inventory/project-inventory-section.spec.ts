@@ -69,7 +69,7 @@ describe('ProjectInventorySection', () => {
     expect(library(el).length).toBe(6);
     expect(library(el)[0].getAttribute('aria-current')).toBe('true');
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
-    expect(text(el, '.bar-text')).toBe('MC-001 · SYSTEM HORIZON SLOT VAZIO');
+    expect(text(el, '.bar-text')).toBe('MC-001 · SYSTEM HORIZON ENCAIXE VAZIO');
     expect(text(el, '.glass')).toBe('INSIRA UM CARTUCHO');
     const insert = el.querySelector('#inventory-insert')!;
     expect(insert.getAttribute('aria-label')).toBe('Inserir cartucho: SYSTEM HORIZON');
@@ -106,7 +106,9 @@ describe('ProjectInventorySection', () => {
     expect(el.querySelector('.copy img, app-crt-cover img.art')?.getAttribute('alt')).toBe('');
     // MC-001: explorar o case e o teaser (que não começa sozinho), sem prometer a campanha jogável.
     expect(text(el, '#inventory-explore')).toBe('Explorar projeto');
-    expect(text(el, '.copy .exp')).toBe('Teaser disponível · Campanha jogável em desenvolvimento');
+    expect(text(el, '.copy .exp')).toBe(
+      'Demonstração disponível · Campanha jogável em desenvolvimento',
+    );
     expect(el.querySelector('app-system-horizon-screen')).toBeNull();
     // Uma só ação no console: Ejetar.
     expect(el.querySelector('#inventory-insert')).toBeNull();
@@ -345,7 +347,7 @@ describe('ProjectInventorySection', () => {
     const el = await renderAt('/');
     click(el.querySelector('#inventory-insert'));
     const play = Array.from(el.querySelectorAll('app-crt-cover button')).find((b) =>
-      b.textContent?.includes('Reproduzir teaser'),
+      b.textContent?.includes('Reproduzir demonstração'),
     );
     click(play);
     // A tela do teaser chega por import() (chunk sob demanda): espera o READY(teaser).
@@ -373,7 +375,7 @@ describe('ProjectInventorySection', () => {
     click(el.querySelector('#inventory-explore'));
     click(el.querySelector('#inventory-eject'));
 
-    expect(text(el, '.slot-status')).toBe('SLOT VAZIO');
+    expect(text(el, '.slot-status')).toBe('ENCAIXE VAZIO');
     expect(text(el, '[role="status"]')).toBe('Cartucho ejetado.');
     expect(el.querySelector('app-cartridge-library')).not.toBeNull();
     expect(el.querySelector('app-crt-dossier, app-crt-cover')).toBeNull();
@@ -415,7 +417,7 @@ describe('ProjectInventorySection', () => {
     expect(el.querySelector('app-project-case')).not.toBeNull();
     // Sem o CRT, o "Sobre o projeto" segue em texto: descrição e experiências.
     expect(text(el, '.fallback-desc')).toMatch(/^O primeiro cartucho do Modo Campanha./);
-    expect(text(el, '.fallback')).toContain('Teaser disponível');
+    expect(text(el, '.fallback')).toContain('Demonstração disponível');
     // A biblioteca segue: escolher outro cartucho recupera a estação.
     click(library(el)[2]);
     expect(el.querySelector('mc-console')).not.toBeNull();

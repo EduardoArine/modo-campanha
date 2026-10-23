@@ -8,6 +8,15 @@
   display: block;
 }
 
+// O header é fixo e nunca fica encoberto: anula o scroll-padding-top do html para os focáveis
+// dele (sem isso, cada Tab no menu rolava a página ~450 px para cima).
+a,
+button {
+  scroll-margin-top: calc(
+    -1 * (var(--mc-header-block, var(--mc-header-height)) + var(--mc-space-4))
+  );
+}
+
 .header {
   background: var(--mc-surface);
   border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
@@ -103,11 +112,17 @@ ul {
     color: var(--mc-text-secondary);
     text-decoration: none;
 
-    &:hover {
+    &:hover,
+    &[aria-current='location'] {
       color: var(--mc-text);
       text-decoration: underline;
       text-decoration-color: var(--mc-accent);
       text-underline-offset: 6px;
+    }
+
+    // Seção atual (D-098): o sublinhado de acento fica, mais grosso que o do hover.
+    &[aria-current='location'] {
+      text-decoration-thickness: 2px;
     }
   }
 }

@@ -17,20 +17,19 @@ describe('SiteFooter', () => {
 
   const text = (el: Element | null) => el?.textContent?.replace(/\s+/g, ' ').trim();
 
-  it('renders the pt-BR motto and a copyright with the current year', async () => {
+  it('renders only the copyright with the current year (the motto stays in the Hero)', async () => {
     const el = await renderAt('/');
 
     expect(el.querySelector('footer')).not.toBeNull();
-    expect(text(el.querySelector('.motto'))).toBe('XP real, sem personagem.');
+    expect(el.querySelector('.motto')).toBeNull();
     expect(text(el.querySelector('.copyright small'))).toBe(
       `© ${new Date().getFullYear()} Eduardo Arine · Modo Campanha`,
     );
   });
 
-  it('renders the en motto', async () => {
+  it('renders the en copyright', async () => {
     const el = await renderAt('/en');
 
-    expect(text(el.querySelector('.motto'))).toBe('Real XP. No persona.');
     expect(text(el.querySelector('.copyright'))).toBe(
       `© ${new Date().getFullYear()} Eduardo Arine · Modo Campanha`,
     );

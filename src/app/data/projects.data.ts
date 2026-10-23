@@ -23,9 +23,15 @@ function consoleShell(serial: string) {
 /**
  * MC-CART da coleção (D-087): a carcaça oficial entra no slot e a ilustração do rótulo vai para o
  * CRT, inteira (2:1, `contain`). `artHeight` = altura do derivado de 952 px (o recorte varia por
- * cartucho). Shell/accent só valem para o fallback em CSS.
+ * cartucho); `logo` = lado do logo no alto do rótulo (D-098). Shell/accent só valem para o
+ * fallback em CSS.
  */
-function collectionCartridge(serial: string, artHeight: number, alt: Localized): ProjectCartridge {
+function collectionCartridge(
+  serial: string,
+  artHeight: number,
+  logo: 'left' | 'right',
+  alt: Localized,
+): ProjectCartridge {
   const dir = `${CART}${serial}/`;
   const shell = consoleShell(serial);
   return {
@@ -38,6 +44,7 @@ function collectionCartridge(serial: string, artHeight: number, alt: Localized):
       height: artHeight,
       alt,
       fit: 'contain',
+      logo,
     },
     renders: { front: shell, console: shell },
   };
@@ -61,8 +68,8 @@ export const PROJECTS: readonly Project[] = [
     title: { 'pt-BR': 'SYSTEM HORIZON', en: 'SYSTEM HORIZON' },
     challenge: {
       'pt-BR':
-        'Apresentar uma trajetória profissional real como uma campanha de videogame, sem inventar nada: XP real, sem personagem.',
-      en: 'Present a real professional journey as a video game campaign, without making anything up: real XP, no persona.',
+        'Apresentar uma trajetória profissional real como uma campanha de videogame, sem inventar nada.',
+      en: 'Present a real professional journey as a video game campaign, without making anything up.',
     },
     description: {
       'pt-BR':
@@ -72,7 +79,7 @@ export const PROJECTS: readonly Project[] = [
     type: { 'pt-BR': 'EXPERIÊNCIA NARRATIVA', en: 'NARRATIVE EXPERIENCE' },
     role: {
       'pt-BR':
-        'Conceito, direção de produto, direção visual e desenvolvimento, com IA integrada ao workflow de implementação, validação e documentação.',
+        'Conceito, direção de produto, direção visual e desenvolvimento, com IA integrada ao fluxo de implementação, validação e documentação.',
       en: 'Concept, product direction, visual direction, and development, with AI integrated into the implementation, validation, and documentation workflow.',
     },
     technologies: ['Angular', 'TypeScript', 'SCSS', 'Vitest', 'GitHub Actions / Pages'],
@@ -119,7 +126,7 @@ export const PROJECTS: readonly Project[] = [
       },
     },
     experiences: [
-      { kind: 'teaser', label: { 'pt-BR': 'Teaser', en: 'Teaser' }, status: 'available' },
+      { kind: 'teaser', label: { 'pt-BR': 'Demonstração', en: 'Teaser' }, status: 'available' },
       {
         kind: 'playable',
         label: { 'pt-BR': 'Campanha jogável', en: 'Playable campaign' },
@@ -188,7 +195,7 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['game-design'],
-    cartridge: collectionCartridge('mc-002', 462, {
+    cartridge: collectionCartridge('mc-002', 462, 'left', {
       'pt-BR':
         'Ilustração em pixel art: um personagem com mochila e arma de jato enfrenta um mosquito gigante ao pôr do sol sobre a cidade, com o título AEDES REVENGE.',
       en: 'Pixel-art illustration: a character with a backpack and a spray gun faces a giant mosquito at sunset over the city, with the title AEDES REVENGE.',
@@ -233,7 +240,7 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['product'],
-    cartridge: collectionCartridge('mc-003', 473, {
+    cartridge: collectionCartridge('mc-003', 473, 'right', {
       'pt-BR':
         'Ilustração: um jogador conduz a bola em um estádio iluminado, com um esquema tático sobreposto ao gramado e o título SCOUTEVO.',
       en: 'Illustration: a player dribbles the ball in a floodlit stadium, with a tactical diagram over the pitch and the title SCOUTEVO.',
@@ -286,7 +293,7 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['product'],
-    cartridge: collectionCartridge('mc-004', 469, {
+    cartridge: collectionCartridge('mc-004', 469, 'right', {
       'pt-BR':
         'Ilustração: à noite, uma rota luminosa atravessa a cidade ligando dois hospitais, com uma van no caminho e o título EOS.',
       en: 'Illustration: at night, a glowing route crosses the city connecting two hospitals, with a van on the way and the title EOS.',
@@ -332,7 +339,7 @@ export const PROJECTS: readonly Project[] = [
       ],
     },
     tags: ['product'],
-    cartridge: collectionCartridge('mc-005', 470, {
+    cartridge: collectionCartridge('mc-005', 470, 'right', {
       'pt-BR':
         'Ilustração isométrica: escritórios e um depósito à noite com sensores conectados a uma base de dados, com o título AXIA.',
       en: 'Isometric illustration: offices and a warehouse at night with sensors connected to a database, with the title AXIA.',
@@ -374,7 +381,7 @@ export const PROJECTS: readonly Project[] = [
     },
     ongoing: true,
     tags: ['product', 'gamification'],
-    cartridge: collectionCartridge('mc-006', 471, {
+    cartridge: collectionCartridge('mc-006', 471, 'right', {
       'pt-BR':
         'Ilustração: terraços com pessoas trabalhando e conversando ao redor de uma árvore iluminada ao entardecer, com o título COMUNIDADE ON.',
       en: 'Illustration: terraces with people working and talking around an illuminated tree at dusk, with the title COMUNIDADE ON.',

@@ -27,6 +27,8 @@ import { DiaryMilestones } from './diary-milestones';
   imports: [McSectionHeader, DiaryChapters, DiaryMap, DiaryMilestones, DiaryMilestone],
   templateUrl: './campaign-log-section.html',
   styleUrl: './campaign-log-section.scss',
+  // Última interação: ponteiro (toque/mouse) ou teclado. Decide se escolher um marco rola até o painel.
+  host: { '(pointerdown)': 'pointer = true', '(keydown)': 'pointer = false' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CampaignLogSection {
@@ -35,6 +37,9 @@ export class CampaignLogSection {
   private readonly injector = inject(Injector);
   private readonly scroller = inject(ViewportScroller);
   private readonly window = inject(DOCUMENT).defaultView;
+
+  /** A última interação na seção foi por ponteiro (toque ou mouse). */
+  protected pointer = false;
 
   protected readonly chapters = CAMPAIGN_LOG_CHAPTERS;
   protected readonly intro = CAMPAIGN_LOG_INTRO;
@@ -81,8 +86,30 @@ export class CampaignLogSection {
     );
   }
 
+  /**
+   * Escolha de um marco. Por toque ou mouse (D-098), se o painel de leitura estiver fora da vista
+   * (empilhado abaixo do mapa, a ≤ 1024 e no celular), a página rola até o topo dele. Pelo teclado
+   * nada se move: o foco segue no marco.
+   */
   protected selectMilestone(id: string): void {
     this.milestoneId.set(id);
+    if (!this.pointer) return;
+    afterNextRender(
+      () => {
+        const panel = this.window?.document.getElementById('diary-milestone');
+        if (!panel || !this.window) return;
+        const top = panel.getBoundingClientRect().top;
+        const header =
+          this.window.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ??
+          0;
+        if (top >= header && top <= this.window.innerHeight * 0.6) return;
+        panel.scrollIntoView({
+          block: 'start',
+          behavior: this.reducedMotion() ? 'auto' : 'smooth',
+        });
+      },
+      { injector: this.injector },
+    );
   }
 
   protected step(delta: 1 | -1): void {

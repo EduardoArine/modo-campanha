@@ -198,28 +198,16 @@
               <ng-container *ngTemplateOutlet="consoleBar" />
             </div>
             @if (dossier()) {
-              <app-screen-zoom origin="#project-viewer .screen" (dismiss)="toCover()">
+              <app-screen-zoom
+                origin="#project-viewer .screen"
+                labelledBy="dossier-title"
+                (dismiss)="toCover()"
+              >
                 <ng-container *ngTemplateOutlet="dossierView" />
               </app-screen-zoom>
             }
           } @else {
-            <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
-            <div
-              class="tv-area"
-              id="project-viewer"
-              role="region"
-              [attr.aria-label]="ui().crt.regionLabel"
-            >
-              <mc-crt-front
-                [standby]="v.screen === 'standby'"
-                [filter]="v.screen !== 'teaser'"
-                sizes="(min-width: 1200px) 860px, (min-width: 1024px) 70vw, 122vw"
-                (failed)="assetsFailed()"
-              >
-                <ng-container *ngTemplateOutlet="screenContent" />
-              </mc-crt-front>
-            </div>
-
+            <!-- Console antes da TV no DOM: o Tab segue a leitura do desktop (barra, console, TV). -->
             <div class="console-area">
               <!-- Estado e ação no topo da coluna; o MC-01 embaixo, na mesma linha de apoio da TV. -->
               <ng-container *ngTemplateOutlet="consoleBar" />
@@ -237,6 +225,23 @@
                 (pointerenter)="lifted.set(true)"
                 (pointerleave)="lifted.set(false)"
               />
+            </div>
+
+            <!-- A biblioteca escolhe, o MC-01 carrega, o CRT apresenta (H3). -->
+            <div
+              class="tv-area"
+              id="project-viewer"
+              role="region"
+              [attr.aria-label]="ui().crt.regionLabel"
+            >
+              <mc-crt-front
+                [standby]="v.screen === 'standby'"
+                [filter]="v.screen !== 'teaser'"
+                sizes="(min-width: 1200px) 860px, (min-width: 1024px) 70vw, 122vw"
+                (failed)="assetsFailed()"
+              >
+                <ng-container *ngTemplateOutlet="screenContent" />
+              </mc-crt-front>
             </div>
           }
         } @else {

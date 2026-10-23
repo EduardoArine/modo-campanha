@@ -74,6 +74,8 @@ const STATION_BACKGROUND = {
   ],
   templateUrl: './project-inventory-section.html',
   styleUrls: ['./project-inventory-section.scss', './project-inventory-devices.scss'],
+  // Última interação: ponteiro (toque/mouse) ou teclado. Decide se a escolha traz a tela à vista.
+  host: { '(pointerdown)': 'pointer = true', '(keydown)': 'pointer = false' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectInventorySection {
@@ -120,6 +122,8 @@ export class ProjectInventorySection {
    * visitante continua na biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
    */
   private librarySwap = false;
+  /** A última interação na seção foi por ponteiro (toque ou mouse). */
+  protected pointer = false;
 
   /** Celular (< 768, D-095): o portátil substitui o MC-01 + CRT. */
   private readonly phoneQuery = this.window?.matchMedia?.('(max-width: 767.98px)');
@@ -206,6 +210,7 @@ export class ProjectInventorySection {
   /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
   protected choose(id: string): void {
     const before = this.state();
+    this.revealScreen();
     // Portátil (D-095): o cartucho já selecionado com o slot vazio entra direto.
     if (this.handheld() && before.kind === 'empty' && before.cartridge === id) {
       this.librarySwap = true;
@@ -230,6 +235,24 @@ export class ProjectInventorySection {
     if (after.kind === 'empty') this.announcement.set(`${s.selected} ${name}.`);
     else if (after.kind === 'ejecting') this.announcement.set(`${s.swapping} ${name}.`);
     else if (after.kind === 'ready') this.announcement.set(`${name} ${s.ready}`);
+  }
+
+  /**
+   * Escolha por toque ou mouse (D-098): se a tela do aparelho (vidro do CRT ou visor do portátil)
+   * não estiver inteira à vista, rola o mínimo para mostrá-la; o visitante vê o cartucho entrar e
+   * a capa aparecer. Pelo teclado nada se move (o foco segue no carrossel).
+   */
+  private revealScreen(): void {
+    if (!this.pointer) return;
+    const screen = this.window?.document.querySelector(
+      '#project-viewer .glass, #project-viewer .screen',
+    );
+    if (!screen || !this.window) return;
+    const rect = screen.getBoundingClientRect();
+    const header =
+      this.window.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ?? 0;
+    if (rect.top >= header && rect.bottom <= this.window.innerHeight) return;
+    screen.scrollIntoView({ block: 'nearest', behavior: this.reducedMotion() ? 'auto' : 'smooth' });
   }
 
   /** EXPLORAR PROJETO: abre o dossiê na 1ª seção e traz a estação à vista; o foco vai ao título. */

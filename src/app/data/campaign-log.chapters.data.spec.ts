@@ -1,5 +1,4 @@
 import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
-import { PLAYER_PROFILE } from './profile.data';
 import { CAMPAIGN_LOG_CHAPTERS } from './campaign-log.data';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
@@ -265,8 +264,9 @@ describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
     expect(CHAPTER_02.ongoing).toBe(true);
   });
 
-  it('closes with the approved Player Status motto (single source)', () => {
-    expect(CHAPTER_02.closing).toBe(PLAYER_PROFILE.motto);
+  it('closes as an ongoing quest, without repeating the motto (D-098)', () => {
+    expect(CHAPTER_02.closing).toBeUndefined();
+    expect(CHAPTER_02.ongoing).toBe(true);
   });
 
   it('keeps the facts and stays a public, non-internal description', () => {
