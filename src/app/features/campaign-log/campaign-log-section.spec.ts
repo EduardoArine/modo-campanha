@@ -61,7 +61,8 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     ]);
     expect(nodes(el)[0].getAttribute('aria-current')).toBe('step');
     expect(text(el, 'app-diary-milestone .when')).toBe('c. 1991');
-    expect(text(el, 'app-diary-milestone .eyebrow')).toBe('MARCO 01 de 05 · PRIMEIRO CONTATO');
+    // Codinome igual ao título não se repete no rótulo (D-098).
+    expect(text(el, 'app-diary-milestone .eyebrow')).toBe('MARCO 01 de 05');
     expect(text(el, '#diary-milestone-title')).toBe('Primeiro contato');
     expect(text(el, 'app-diary-milestone .summary')).toMatch(/^Minha história com os videogames/);
   });
@@ -114,7 +115,7 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
 
     expect(text(el, '#diary-milestone-title')).toBe('O pedido à joaninha');
     expect(text(el, 'app-diary-milestone .when')).toBe('Infância');
-    expect(text(el, 'app-diary-milestone .eyebrow')).toBe('MARCO 03 de 05 · O PEDIDO À JOANINHA');
+    expect(text(el, 'app-diary-milestone .eyebrow')).toBe('MARCO 03 de 05');
     expect(nodes(el).map((n) => n.getAttribute('aria-current'))).toEqual([
       null,
       null,
@@ -207,7 +208,8 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
       chapter.entries.forEach((entry, i) => {
         click(nodes(el)[i]);
         expect(text(el, '#diary-milestone-title')).toBe(entry.title['pt-BR']);
-        if (entry.code)
+        // O codinome aparece quando difere do título (D-098); igual, não se repete.
+        if (entry.code && entry.code['pt-BR'].toLowerCase() !== entry.title['pt-BR'].toLowerCase())
           expect(text(el, 'app-diary-milestone .eyebrow')).toContain(entry.code['pt-BR']);
         expect(el.querySelectorAll('#diary-story > p').length).toBe(entry.story['pt-BR'].length);
         expect(el.querySelectorAll('#diary-story .refs a').length).toBe(entry.links?.length ?? 0);
@@ -231,6 +233,15 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
   it('ends with the active chapter: no redundant previews of the other chapters', async () => {
     const el = await renderAt('/');
     expect(el.querySelector('.others, .other')).toBeNull();
+  });
+
+  it('never cancels keys inside the section (Tab, Enter, Space work)', async () => {
+    const el = await renderAt('/');
+    for (const key of ['Tab', 'Enter', ' ']) {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+      el.querySelector('app-diary-chapters .card')!.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(false);
+    }
   });
 
   it('shows no game metrics or invented status', async () => {

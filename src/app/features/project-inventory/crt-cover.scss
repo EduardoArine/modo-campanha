@@ -24,6 +24,14 @@ ul {
   height: 100%;
   object-fit: cover;
   object-position: right center;
+
+  // Logo do rótulo à direita (D-098): a arte fica mais alta que o vidro, ancorada embaixo à
+  // direita; o logo sai do tubo e não disputa com o título em HTML, e a cena segue visível.
+  &.is-cropped {
+    inset: auto 0 0;
+    height: 140%;
+    object-position: right bottom;
+  }
 }
 
 .shade {
@@ -56,7 +64,8 @@ ul {
 .type,
 .notice {
   @include type(system);
-  font-size: clamp(0.6875rem, 2.2cqw, 0.875rem);
+  // Mínimos de leitura (D-098): 12 px nos rótulos, 14 px na descrição.
+  font-size: clamp(0.75rem, 2.2cqw, 0.875rem);
   color: var(--mc-text-secondary);
 }
 
@@ -89,8 +98,8 @@ ul {
 }
 
 .desc {
-  max-width: 34ch;
-  font-size: clamp(0.8125rem, 2.6cqw, 1.0625rem);
+  max-width: 20.4em; // 34ch da IBM Plex Sans (D-098)
+  font-size: clamp(0.875rem, 2.9cqw, 1.125rem);
   line-height: 1.4;
   color: var(--mc-text);
 }
@@ -107,13 +116,13 @@ ul {
     border: var(--mc-border-width-default) solid var(--mc-border-default);
     border-radius: var(--mc-radius-sm);
     background: color-mix(in srgb, var(--mc-bg) 70%, transparent);
-    font-size: clamp(0.6875rem, 2.1cqw, 0.875rem);
+    font-size: clamp(0.75rem, 2.1cqw, 0.875rem);
     color: var(--mc-text);
   }
 }
 
 .exp {
-  font-size: clamp(0.6875rem, 2.1cqw, 0.875rem);
+  font-size: clamp(0.75rem, 2.1cqw, 0.875rem);
   color: var(--mc-text-secondary);
 }
 

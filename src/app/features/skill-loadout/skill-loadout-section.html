@@ -28,7 +28,6 @@
           (click)="select(group.id)"
         >
           <span class="tile" aria-hidden="true"><mc-icon [name]="group.icon" [size]="24" /></span>
-          <span class="code" aria-hidden="true">{{ locale.pick(group.code) }}</span>
           <span class="name">{{ locale.pick(group.title) }}</span>
         </button>
       }
@@ -45,12 +44,10 @@
             <div class="group-titles">
               @if (showAll()) {
                 <h4 class="group-title">
-                  <span class="code">{{ locale.pick(group.code) }}</span> —
                   {{ locale.pick(group.title) }}
                 </h4>
               } @else {
                 <h3 class="group-title">
-                  <span class="code">{{ locale.pick(group.code) }}</span> —
                   {{ locale.pick(group.title) }}
                 </h3>
               }

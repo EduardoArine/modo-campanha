@@ -64,11 +64,11 @@ export const UI_PT_BR = {
   },
   // Arsenal de Habilidades (Concept C, D-092): rótulos do Loadout; o conteúdo está em skills.data.ts.
   skillLoadout: {
-    eyebrow: 'LOADOUT DE ESPECIALIDADES',
+    eyebrow: 'ESPECIALIDADES',
     lead: 'Selecione uma especialidade para explorar minhas principais habilidades.',
     specialties: 'Especialidades',
     viewAll: 'Ver todas as habilidades',
-    back: 'Voltar ao loadout',
+    back: 'Voltar ao arsenal',
     allTitle: 'TODAS AS HABILIDADES',
     skills: 'HABILIDADES',
   },
@@ -137,23 +137,23 @@ export const UI_PT_BR = {
       },
     },
     slot: {
-      empty: 'SLOT VAZIO',
+      empty: 'ENCAIXE VAZIO',
       loading: 'CARREGANDO',
       inserted: 'INSERIDO',
       ejecting: 'EJETANDO',
       unavailable: 'MC-01 INDISPONÍVEL',
     },
     teaser: {
-      play: 'Reproduzir teaser',
-      pause: 'Pausar teaser',
-      unavailable: 'TEASER INDISPONÍVEL',
+      play: 'Reproduzir demonstração',
+      pause: 'Pausar demonstração',
+      unavailable: 'DEMONSTRAÇÃO INDISPONÍVEL',
     },
     experience: { available: 'disponível', inDevelopment: 'em desenvolvimento' },
     // Anúncios (role="status") nas transições; o READY é anunciado pelo foco.
     status: {
       loading: 'Carregando cartucho.',
       ejected: 'Cartucho ejetado.',
-      teaserUnavailable: 'O teaser não carregou. O dossiê do projeto continua disponível.',
+      teaserUnavailable: 'A demonstração não carregou. O dossiê do projeto continua disponível.',
       selected: 'Cartucho selecionado:',
       swapping: 'Trocando para',
       ready: 'pronto.',
@@ -224,7 +224,7 @@ export const UI_PT_BR = {
     unlocked: 'CAMPANHA LIBERADA',
     continues: 'A CAMPANHA CONTINUA...',
     pause: 'Pausar demonstração',
-    play: 'Reproduzir',
+    play: 'Reproduzir demonstração',
   },
 };
 

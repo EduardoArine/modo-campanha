@@ -109,9 +109,20 @@ export class CartridgeLibrary {
     return `${verb} ${name}`;
   }
 
-  protected pick(project: Project): void {
+  protected pick(project: Project, event?: Event): void {
     if (this.busy() || !this.actionable(project)) return;
     this.choose.emit(project.id);
+    // Faixa rolável (celular): o cartucho escolhido vai para o centro, sem cortar na borda (D-098).
+    const card = (event?.currentTarget as HTMLElement | null)?.closest('li');
+    const strip = this.strip().nativeElement;
+    if (!card || strip.scrollWidth <= strip.clientWidth) return;
+    const reduce = strip.ownerDocument.defaultView?.matchMedia?.(
+      '(prefers-reduced-motion: reduce)',
+    );
+    strip.scrollTo({
+      left: card.offsetLeft - (strip.clientWidth - card.offsetWidth) / 2,
+      behavior: reduce?.matches ? 'auto' : 'smooth',
+    });
   }
 
   /** Avança ou volta quase uma página da faixa (respeita reduced motion). */

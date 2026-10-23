@@ -21,7 +21,12 @@
       <ul>
         @for (item of navItems(); track item.fragment) {
           <li>
-            <a [routerLink]="locale.homePath()" [fragment]="item.fragment">{{ item.label }}</a>
+            <a
+              [routerLink]="locale.homePath()"
+              [fragment]="item.fragment"
+              [attr.aria-current]="active() === item.fragment ? 'location' : null"
+              >{{ item.label }}</a
+            >
           </li>
         }
       </ul>

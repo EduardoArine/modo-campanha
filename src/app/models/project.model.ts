@@ -83,7 +83,15 @@ export interface ProjectCartridge {
    * ilustração do rótulo do cartucho (≈ 2:1), mostrada inteira (`fit: 'contain'`, faixas escuras
    * como uma TV de tubo) para não cortar o título da arte. Ausente = placeholder dev.
    */
-  artwork?: CartridgeImage & { alt: Localized; fit?: 'cover' | 'contain' };
+  artwork?: CartridgeImage & {
+    alt: Localized;
+    fit?: 'cover' | 'contain';
+    /**
+     * Lado do logo no alto da ilustração do rótulo (D-098). À direita, a capa do CRT corta o alto da
+     * arte para o logo não disputar com o título em HTML; à esquerda, ele já fica sob o degradê.
+     */
+    logo?: 'left' | 'right';
+  };
   /** Renders oficiais do objeto físico (D-065). */
   renders?: CartridgeRenders;
   /** Teaser que o CRT reproduz sob demanda (D-077). Ausente = só a arte. */

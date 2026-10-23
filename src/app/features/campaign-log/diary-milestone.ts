@@ -8,7 +8,7 @@ import {
   output,
 } from '@angular/core';
 
-import { LocaleService } from '../../core/i18n';
+import { Localized, LocaleService } from '../../core/i18n';
 import { CampaignLogChapter } from '../../models';
 import { McAction, McIcon } from '../../shared/ui';
 import { CampaignWhen } from './campaign-when';
@@ -49,6 +49,13 @@ export class DiaryMilestone {
     this.entry();
     return false;
   });
+
+  /** Codinome igual ao título (ignorando caixa): não repete no rótulo. */
+  protected sameAsTitle(code: Localized, title: Localized): boolean {
+    return (
+      this.locale.pick(code).toLocaleLowerCase() === this.locale.pick(title).toLocaleLowerCase()
+    );
+  }
 
   protected pad(n: number): string {
     return String(n).padStart(2, '0');

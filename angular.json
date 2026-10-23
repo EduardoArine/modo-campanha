@@ -49,7 +49,14 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "bundles"
+              "outputHashing": "bundles",
+              "optimization": {
+                "scripts": true,
+                "styles": { "minify": true, "inlineCritical": false },
+                "fonts": true
+              },
+              "server": "src/main.server.ts",
+              "outputMode": "static"
             },
             "development": {
               "optimization": false,

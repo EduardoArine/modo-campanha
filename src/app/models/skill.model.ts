@@ -18,8 +18,6 @@ export interface Skill {
 
 export interface SkillGroup {
   id: SkillGroupId;
-  /** Código de sistema decorativo (ex.: `CON` / `DEV`). Sem numeração: não sugere ordem nem nível. */
-  code: Localized;
   title: Localized;
   /** Frase curta da especialidade no painel do Loadout (D-092). */
   description: Localized;

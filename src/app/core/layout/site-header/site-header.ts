@@ -7,6 +7,7 @@ import {
   DestroyRef,
   ElementRef,
   inject,
+  signal,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 
@@ -44,6 +45,12 @@ export class SiteHeader {
     ];
   });
 
+  /**
+   * Seção que o visitante está lendo (D-098): a última cujo topo já passou de um terço da tela,
+   * abaixo do header; no fim da página, a última. Antes do Sobre (no Hero), nenhuma.
+   */
+  protected readonly active = signal<string | null>(null);
+
   /** Links de idioma: mesma URL (caminho + âncora) no outro idioma. */
   protected readonly languages = computed(() =>
     LOCALES.map((locale) => ({
@@ -61,6 +68,34 @@ export class SiteHeader {
     const host = inject<ElementRef<HTMLElement>>(ElementRef).nativeElement;
     const root = inject(DOCUMENT).documentElement;
     const destroyRef = inject(DestroyRef);
+    const view = inject(DOCUMENT).defaultView;
+    afterNextRender(() => {
+      if (!view) return;
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const line = view.innerHeight / 3;
+        const ids = this.navItems().map((item) => item.fragment);
+        // No topo nunca é "fim" (no primeiro cálculo a página ainda pode estar curta).
+        const atEnd = view.scrollY > 0 && view.innerHeight + view.scrollY >= root.scrollHeight - 2;
+        let current: string | null = atEnd ? ids[ids.length - 1] : null;
+        if (!atEnd)
+          for (const id of ids) {
+            const top = view.document.getElementById(id)?.getBoundingClientRect().top;
+            if (top !== undefined && top <= line) current = id;
+          }
+        this.active.set(current);
+      };
+      const onScroll = () => (frame ||= view.requestAnimationFrame(update));
+      view.addEventListener('scroll', onScroll, { passive: true });
+      view.addEventListener('resize', onScroll, { passive: true });
+      update();
+      destroyRef.onDestroy(() => {
+        view.removeEventListener('scroll', onScroll);
+        view.removeEventListener('resize', onScroll);
+        if (frame) view.cancelAnimationFrame(frame);
+      });
+    });
     afterNextRender(() => {
       if (typeof ResizeObserver === 'undefined') return;
       const observer = new ResizeObserver(([entry]) =>

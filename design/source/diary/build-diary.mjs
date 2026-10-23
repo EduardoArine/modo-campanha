@@ -17,7 +17,7 @@ const OUT = 'public/assets/diary';
 const QUALITY = 0.82;
 const GROUPS = [
   // Mapa: até 840 px CSS no desktop (2× = 1672, o próprio mestre).
-  { dir: 'maps', widths: [640, 960, 1280, 1672] },
+  { dir: 'maps', widths: [320, 640, 960, 1280, 1672] },
   // Imagem editorial: 305 px (≥ 1200), 448 px (tablet) ou a largura do mobile, em 1×–3×.
   { dir: 'stories', widths: [480, 720, 1080, 1536] },
 ];

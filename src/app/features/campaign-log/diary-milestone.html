@@ -9,8 +9,11 @@
         <p class="eyebrow">
           {{ ui().campaignLog.checkpoint }} {{ pad(index() + 1) }} {{ ui().campaignLog.diary.of }}
           {{ pad(total()) }}
+          <!-- O codinome só aparece quando acrescenta algo ao título (D-098). -->
           @if (e.code; as code) {
-            · {{ locale.pick(code) }}
+            @if (!sameAsTitle(code, e.title)) {
+              · {{ locale.pick(code) }}
+            }
           }
         </p>
         <h4 class="title" id="diary-milestone-title">{{ locale.pick(e.title) }}</h4>
@@ -95,7 +98,7 @@
           }
         </div>
 
-        @if (isLast() && c.closing; as closing) {
+        @if (isLast() && (c.closing || c.ongoing)) {
           <!-- Fechamento do capítulo: MARCO CONCLUÍDO + ano final, ou MISSÃO ATUAL — EM ANDAMENTO. -->
           <div class="closing" [class.is-ongoing]="c.ongoing">
             <p class="kind">
@@ -108,7 +111,9 @@
                 }
               }
             </p>
-            <p class="closing-text">{{ locale.pick(closing) }}</p>
+            @if (c.closing; as closing) {
+              <p class="closing-text">{{ locale.pick(closing) }}</p>
+            }
           </div>
         }
       </div>

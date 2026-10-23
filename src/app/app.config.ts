@@ -5,10 +5,12 @@ import {
   provideAppInitializer,
   provideBrowserGlobalErrorListeners,
 } from '@angular/core';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideRouter, withInMemoryScrolling, withRouterConfig } from '@angular/router';
 
 import { routes } from './app.routes';
 import { LocaleService } from './core/i18n';
+import { provideAnchorFocus } from './core/layout/anchor-focus';
 
 /** Respiro entre o header fixo e o topo da seção ao navegar por âncora (= --mc-space-4). */
 const ANCHOR_GAP = 16;
@@ -16,12 +18,17 @@ const ANCHOR_GAP = 16;
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
+    // A Home chega pré-renderizada (D-098): o navegador reaproveita o HTML e repete os cliques
+    // feitos antes de o JavaScript carregar.
+    provideClientHydration(withEventReplay()),
     provideRouter(
       routes,
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
       // Clicar de novo na marca ou numa âncora já ativa volta a rolar (onepage).
       withRouterConfig({ onSameUrlNavigation: 'reload' }),
     ),
+    // Âncoras levam o foco ao título da seção de destino (D-098).
+    provideAnchorFocus(),
     // Instancia o LocaleService no boot para sincronizar <html lang>, título e description.
     provideAppInitializer(() => {
       inject(LocaleService);

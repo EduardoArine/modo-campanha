@@ -118,7 +118,8 @@ $tones: (
   position: relative;
   display: grid;
   // Mobile: nome em linha própria, com a largura toda (sem quebrar palavras).
-  grid-template: 'tile code' auto 'name name' auto / auto minmax(0, 1fr);
+  // Ícone e nome lado a lado (as siglas CON/PRD/IA/DNA saíram, D-098).
+  grid-template: 'tile name' auto / auto minmax(0, 1fr);
   align-items: center;
   column-gap: space(3);
   min-height: 4.5rem;
@@ -131,10 +132,6 @@ $tones: (
   transition:
     border-color 160ms ease-out,
     background-color 160ms ease-out;
-
-  @include mq(md) {
-    grid-template: 'tile code' auto 'tile name' auto / auto minmax(0, 1fr);
-  }
 
   &:hover {
     border-color: var(--mc-border-default);
@@ -171,13 +168,6 @@ $tones: (
   .tile {
     grid-area: tile;
   }
-}
-
-.code {
-  grid-area: code;
-  @include type(title-m);
-  letter-spacing: 0.04em;
-  color: var(--tone);
 }
 
 .name {

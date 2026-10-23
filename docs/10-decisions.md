@@ -1500,7 +1500,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Desktop:** o CRT em 1024 / 820 / 1440 está igual.
   - **Testes:** 204, incluindo a tela cheia, o Esc e a troca de aparelho.
   - **Código:** typecheck, Prettier, builds e guardas passam, com o orçamento de CSS respeitado (removidas regras mortas do dossiê).
-- **Status:** implementado na branch `feat/inventory-station-tweaks`, aguardando a aprovação do Eduardo. Sem merge e sem deploy.
+- **Status:** mergeado na `main` (PR #5), aguardando a aprovação do Eduardo. Sem deploy.
 
 ## D-097 — Remoção de Conquistas, Missão principal atual e Missões secundárias
 
@@ -1517,3 +1517,114 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - as referências na Home, no teste da Home e no showcase de desenvolvimento.
 - **Mantido:** a guarda do deploy contra ids `mock-*`. `docs/16`, `docs/18` e `docs/19` ficam como histórico, marcados como removidos.
 - **Home:** Hero → Player Status → Arsenal → Inventário → Diário → Final Checkpoint + footer. **Sem mudança visível no site publicado.**
+- **Status:** mergeado na `main` (PR #6). Sem deploy.
+
+## D-098 — Ajustes da revisão de UI/UX e pré-renderização da Home
+
+- **Data:** 2026-10-23
+- **Origem:** revisão independente de UI/UX da Home, com notas UX 7,5 · visual 8,5 · acessibilidade 7,5 · conteúdo 7,5. O Eduardo concordou com tudo e quer chegar o mais perto de 10. Decisões dele:
+  - **contato:** fica para depois;
+  - **Inventário ao chegar:** continua vazio;
+  - **menu:** com a seção atual destacada e rolagem suave;
+  - **lema:** repetido em excesso;
+  - **pré-renderização:** sim;
+  - **Hero no celular:** fica como está;
+  - **siglas do Arsenal:** atrapalham.
+- **Navegação:**
+  - **Tab no header:** não rola mais a página (os focáveis do header anulam o `scroll-padding-top` do `html`).
+  - **Rolagem suave nas âncoras:** `scroll-behavior` no `html`; reduced motion mantém o salto.
+  - **Foco depois da âncora:** vai ao título da seção de destino (`provideAnchorFocus`, em `core/layout/anchor-focus.ts`), sem anel no foco programático.
+  - **Seção atual no menu:** `aria-current="location"` com o sublinhado de acento.
+- **Inventário:**
+  - **Cards:** a linha de tipo do projeto aparece em cada um.
+  - **Escolha por toque ou mouse:** traz a tela do aparelho à vista, para o visitante ver o cartucho entrar e a capa. Pelo teclado, nada se move.
+  - **Logo do rótulo na capa:** a arte é cortada no alto quando o logo fica do lado do título (`artwork.logo: 'right'`: ScoutEvo, EOS, Axia, Comunidade ON). No Aedes Revenge, com o logo à esquerda, a arte fica inteira.
+  - **Texto no CRT:** mínimos de 12 px nos rótulos e 14 px na descrição e no dossiê.
+  - **Foco nos cards:** o anel fica afastado da borda e não se confunde com o selecionado.
+  - **Ordem do Tab no desktop:** barra → console → TV, porque o console vem antes no DOM; empilhado, a TV segue em cima com `order`.
+  - **Tela cheia:** o diálogo tem nome (`aria-labelledby`).
+  - **Barra a 360 px:** a ação desce para a linha de baixo.
+- **Diário:**
+  - **Escolher um marco por toque ou mouse:** com o painel abaixo do mapa (≤ 1024 e celular), a página rola até ele.
+  - **Codinome igual ao título:** não se repete no rótulo do marco.
+  - **Datas aproximadas:** "c." sempre minúsculo.
+  - **Miniaturas dos capítulos:** versão de 320 px; antes baixavam a de 640 px.
+- **Textos:**
+  - **Sem inglês na versão pt:**
+    - Arsenal: "ESPECIALIDADES" e "Voltar ao arsenal";
+    - Inventário: "ENCAIXE VAZIO" e "demonstração" no lugar de teaser;
+    - habilidades: "fluxos de trabalho" e "Sistemas de design";
+    - Diário: "aplicação web".
+  - **Ficam como jargão aceito:** "facilities" e nomes de tecnologia (WebAPI, .NET).
+  - **Lema "XP real, sem personagem.":** só no Hero. Saiu do rodapé, do fechamento do capítulo 02 (que mostra só MISSÃO ATUAL — EM ANDAMENTO) e do fim do "Problema" do MC-001.
+  - **Siglas CON/PRD/IA/DNA:** fora do Arsenal (modelo, dados e interface); o seletor mostra ícone e nome.
+  - **en:** "THE CAMPAIGN CONTINUES...".
+- **Pré-renderização:**
+  - **Pacotes:** `@angular/ssr` e `@angular/platform-server` 22.2.2.
+  - **Build:** a Home em `/` e `/en` sai em HTML no build de produção (`outputMode: static`) e é hidratada no navegador.
+  - **Sem servidor:** o GitHub Pages continua servindo arquivos estáticos.
+  - **Pós-build:** usa o `en/index.html` pré-renderizado e faz do `index.csr.html` o 404.
+  - **Medição** (rede de 1,6 Mbps, 150 ms, CPU 4×):
+
+    | | Antes | Agora, 1440 | Agora, 390 |
+    | --- | --- | --- | --- |
+    | Primeiro conteúdo | 2,6 s | 0,86 s | 0,82 s |
+    | LCP | 4,3 s | 2,4 s (imagem do Hero) | 1,4 s |
+    | CLS | — | 0,006 | 0 |
+
+  - **Erros de console:** nenhum.
+- **Fora desta rodada:**
+  - repetições que tocam partes congeladas ("10+ anos" no Hero e no Player Status) ou textos do Eduardo (o marco 04 do capítulo 02 repete a descrição do MC-006);
+  - o header do celular ao rolar ("celular: ok");
+  - contato por e-mail e CV.
+- **Segunda rodada do revisor:** os oito achados foram confirmados como resolvidos, mas apareceu uma regressão crítica introduzida aqui. Correções:
+  - **Teclado preso no Inventário e no Diário (CRÍTICO):**
+    - **Causa:** o handler `(keydown)` do host valia `false`, e o Angular cancela o evento quando o handler devolve `false`.
+    - **Correção:** o handler passou a ser um método que devolve `void` (`markPointer`).
+    - **Teste:** um teste garante que Tab, Enter, Espaço e Esc não são cancelados; com o código antigo, ele falha.
+  - **Clique antes da hidratação no Inventário:** o `ngSkipHydration` saiu. Na página pré-renderizada, o Inventário nasce como o do servidor (CRT) e troca para o portátil logo depois, no celular. Assim ele hidrata e os cliques feitos antes do JavaScript são repetidos.
+  - **Dossiê a 1024–1199:** a TV vai para cima, com até 48 rem, e o console desce. A área de leitura vai de ~140 para 287 px, com a lista de seções ao lado.
+  - **Diário, "Próximo marco" por ponteiro:** o painel volta à vista quando o título fica acima da tela.
+  - **Carrossel no celular:** o cartucho escolhido fica no centro da faixa.
+  - **MC-005:** "aplicação web em Angular, API em .NET".
+  - **Salto de layout no Hero (CLS 0,0065 → 0,0002):** o `max-width: 46ch` do resumo virou `27.6em`. É a mesma largura com a IBM Plex Sans, que mede 0,6 em por "0"; com a fonte reserva, `ch` era menor e o parágrafo passava de 4 para 3 linhas.
+  - **CSS global bloqueante:** `inlineCritical: false` na produção; a primeira pintura já tem os tokens. O primeiro conteúdo segue em ~0,7 s.
+  - **Medição com limitação:**
+
+    | | 1440 | 390 |
+    | --- | --- | --- |
+    | Primeiro conteúdo | 0,70 s | 0,72 s |
+    | LCP | 0,90 s | 1,7 s |
+    | CLS | 0,0002 | 0 |
+
+  - **Erros de console:** nenhum.
+- **Terceira rodada do revisor:** nenhum problema crítico nem importante. Notas: UX 8,8 · visual 8,8 · acessibilidade 9 · conteúdo 8,5. Os seis menores foram corrigidos:
+  - **Clique antes da hidratação no celular:** os cliques guardados miravam o "Inserir" do HTML do servidor (CRT), que saía com a troca para o portátil. A troca agora espera a hidratação terminar e os cliques serem repetidos (`whenStable` + próxima tarefa). Conferido com clique real de mouse a 390 e 1440 px: o cartucho entra.
+  - **Salto de layout com a seção à vista durante a carga (0,0307 → 0,0002 a 390 px):**
+    - **Causa:** o texto pré-renderizado pintava com a fonte do sistema, mais estreita que a IBM Plex Sans, e as larguras em `ch` dependiam da fonte ativa. Com a Plex, o Arsenal e o Diário ganhavam linhas e empurravam o Inventário.
+    - **`ch` → `em`:** todas as larguras em `ch` dos componentes viraram `em`, com a mesma largura final (0,6 em por `ch` na Plex).
+    - **Fontes reserva ajustadas** (`size-adjust` medido no navegador): Arial/Helvetica 100,1% e Roboto 110,9%, antes da fonte do sistema na pilha.
+    - **Paginação da biblioteca:** o cabeçalho reserva a altura dos botões ‹ › abaixo de 1200 px (68 px medidos).
+  - **Voltar à capa a 1024:** a tela volta à vista antes do foco em EXPLORAR PROJETO.
+  - **Próximo/Anterior marco:** só rola quando o título saiu pelo topo com mais de 40 px de folga; nos toques seguintes, o botão não muda de lugar.
+  - **Botão do teaser no Hero:** o nome acessível passou a ser "Reproduzir demonstração" / "Play demo" (só o dicionário; o visual não muda).
+  - **Fica como está:** a capa lado a lado e o dossiê empilhado de 1024 a 1199, uma consequência aceita da correção da área de leitura.
+  - **Medição com limitação:**
+
+    | | 1440 | 390 |
+    | --- | --- | --- |
+    | Primeiro conteúdo | 0,68 s | 0,75 s |
+    | LCP | 0,92 s | 1,8 s |
+    | CLS | 0,0001 | 0,0001 |
+
+  - **Erros de console:** nenhum.
+- **Quarta rodada do revisor (final):** os seis ajustes foram confirmados e não há regressão funcional. Notas: UX 9 · visual 8,8 · acessibilidade 9,2 · conteúdo 8,5. Correções depois dela:
+  - **Salto de layout em en a 390 px com o Inventário à vista durante a carga (CLS 0,29 → 0,0002, em 4 de 4 execuções):**
+    - **Causa:** a régua do `mc-section-header` ia para o lado ou para baixo do título conforme a largura dele, e a troca da fonte reserva pela IBM Plex Sans mudava essa decisão.
+    - **Correção:** no celular (< 768) a régua fica sempre na linha de baixo, como já acontecia na maioria dos títulos. Muda só a posição dela em "PROJECT INVENTORY" e "CAMPAIGN LOG" na versão en do celular.
+  - **Primeira pintura com o Hero inteiro:** `<link rel="expect" href="#player-status" blocking="render">`. Em rede lenta, o navegador às vezes pintava parte do HTML do Hero e a linha de CTAs entrava depois (CLS 0,009 em 1 de 5 cargas); agora fica em 0,0001 em todas.
+    - **Custo:** o primeiro conteúdo passa de ~0,70 para ~0,85–0,94 s (rede de 1,6 Mbps, CPU 4×).
+    - **Imagem do Hero:** `fetchpriority="high"` (só atributo; o visual congelado não muda).
+  - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
+  - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
+- **Status:** mergeado na `main` (PRs #6 e #7), aguardando a aprovação do Eduardo. Sem deploy. Pendências em `PENDENCIAS.md`.

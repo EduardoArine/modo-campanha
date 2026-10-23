@@ -3,6 +3,7 @@
 @if (showArt() && p.cartridge.artwork; as art) {
   <img
     class="art"
+    [class.is-cropped]="art.logo === 'right'"
     [src]="art.src"
     [attr.srcset]="art.srcset ?? null"
     sizes="(min-width: 1024px) 560px, 92vw"

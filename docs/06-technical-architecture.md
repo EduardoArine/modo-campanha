@@ -168,6 +168,7 @@ src/app/core/i18n/
 - Imagens otimizadas (WebP/AVIF), `NgOptimizedImage` quando houver screenshots.
 - Fontes self-hosted (`src/styles/fonts/`, WOFF2 variável, subset latin, ~57 kB no total), empacotadas pelo build em `media/` sem hash (`outputHashing: "bundles"`, D-079; antes com hash, D-023), `font-display: swap`. Preload da Pixelify Sans (fonte do Hero) no `index.html` (D-079). Sem Google Fonts em runtime e sem pacote npm de fontes.
 - Meta Lighthouse ≥ 90 em todas as categorias (FASE 8). Medido (D-060): desktop 100 em tudo; mobile performance 87 (FCP ≈ 2,8 s em 4G simulado, limite de SPA sem prerender), a11y / best practices / SEO 100.
+- **Pré-renderização (D-098):** a Home sai em HTML no build, nos dois idiomas (`app.routes.server.ts`: `/` e `/en` em `RenderMode.Prerender`, o resto no cliente; `main.server.ts` e `app.config.server.ts` só para o build). O navegador hidrata com `provideClientHydration(withEventReplay())`. O Inventário usa `ngSkipHydration`, porque o aparelho (portátil × CRT) depende da largura. Tags com URL absoluta (canonical, hreflang, og:url, og:image) ficam com o pós-build do Pages; o `index.csr.html` vira o 404. Medido com rede de 1,6 Mbps, 150 ms e CPU 4×: primeiro conteúdo de 2,6 s para 0,86 s e LCP de 4,3 s para 2,4 s (1440); no celular, 0,8 s e 1,4 s.
 
 ## GitHub Pages
 

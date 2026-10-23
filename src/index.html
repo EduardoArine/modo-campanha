@@ -40,6 +40,10 @@
       type="font/woff2"
       crossorigin
     />
+    <!-- Home pré-renderizada (D-098): a primeira pintura espera o HTML do Hero chegar inteiro (até a
+         seção seguinte), para a linha de CTAs não entrar depois e deslocar o bloco em rede lenta.
+         Sem a seção (página sem pré-render) ou em navegadores sem suporte, nada muda. -->
+    <link rel="expect" href="#player-status" blocking="render" />
     <!-- Símbolo do Modo Campanha (D-085); fonte: design/source/brand/build-symbol.mjs. -->
     <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />

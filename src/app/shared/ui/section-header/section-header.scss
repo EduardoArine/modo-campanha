@@ -49,6 +49,13 @@ $marker-gap: space(4);
   flex: 1 1 space(6);
   height: var(--mc-border-width-default);
   background: var(--mc-border-subtle);
+
+  // Celular (D-098): a régua sempre na linha de baixo. Antes, ela ia para o lado ou para baixo
+  // conforme a largura do título, e a troca da fonte reserva pela IBM Plex Sans mudava essa
+  // decisão durante a carga (salto de layout).
+  @media (max-width: 767.98px) {
+    flex-basis: 100%;
+  }
 }
 
 // Sem divider, o status continua alinhado à direita.

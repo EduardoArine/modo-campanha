@@ -12,7 +12,6 @@ const same = (text: string): Localized => ({ 'pt-BR': text, en: text });
 export const SKILL_LOADOUT: readonly SkillGroup[] = [
   {
     id: 'build',
-    code: { 'pt-BR': 'CON', en: 'DEV' },
     title: { 'pt-BR': 'CONSTRUÇÃO', en: 'DEVELOPMENT' },
     description: {
       'pt-BR': 'Tecnologias e ferramentas para transformar ideias em produtos digitais.',
@@ -30,7 +29,6 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
   },
   {
     id: 'product',
-    code: { 'pt-BR': 'PRD', en: 'PRD' },
     title: { 'pt-BR': 'PRODUTO', en: 'PRODUCT' },
     description: {
       'pt-BR': 'Práticas para transformar problemas reais em produtos que fazem sentido.',
@@ -53,15 +51,19 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
         name: { 'pt-BR': 'Prototipação e iteração', en: 'Prototyping & iteration' },
         icon: 'frames',
       },
-      { id: 'design-systems', name: same('Design systems'), icon: 'components' },
+      {
+        id: 'design-systems',
+        name: { 'pt-BR': 'Sistemas de design', en: 'Design systems' },
+        icon: 'components',
+      },
     ],
   },
   {
     id: 'ai',
-    code: { 'pt-BR': 'IA', en: 'AI' },
     title: { 'pt-BR': 'INTELIGÊNCIA ARTIFICIAL', en: 'ARTIFICIAL INTELLIGENCE' },
     description: {
-      'pt-BR': 'IA aplicada ao desenvolvimento, com agentes, prompts e workflows automatizados.',
+      'pt-BR':
+        'IA aplicada ao desenvolvimento, com agentes, prompts e fluxos de trabalho automatizados.',
       en: 'AI applied to development, with agents, prompts and automated workflows.',
     },
     icon: 'chip',
@@ -78,19 +80,18 @@ export const SKILL_LOADOUT: readonly SkillGroup[] = [
       },
       {
         id: 'prompt-workflow-design',
-        name: { 'pt-BR': 'Design de prompts e workflows', en: 'Prompt & workflow design' },
+        name: { 'pt-BR': 'Design de prompts e fluxos de trabalho', en: 'Prompt & workflow design' },
         icon: 'bubble',
       },
       {
         id: 'workflow-automation',
-        name: { 'pt-BR': 'Automação de workflows', en: 'Workflow automation' },
+        name: { 'pt-BR': 'Automação de fluxos de trabalho', en: 'Workflow automation' },
         icon: 'flow',
       },
     ],
   },
   {
     id: 'game-dna',
-    code: { 'pt-BR': 'DNA', en: 'GDN' },
     title: { 'pt-BR': 'DNA DE GAMES', en: 'GAME DNA' },
     description: {
       'pt-BR': 'A formação em Jogos Digitais aplicada a sistemas, interação e gamificação.',

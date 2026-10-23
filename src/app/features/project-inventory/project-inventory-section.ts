@@ -1,6 +1,7 @@
 import { DOCUMENT, NgComponentOutlet, NgTemplateOutlet, ViewportScroller } from '@angular/common';
 import {
   afterNextRender,
+  ApplicationRef,
   ChangeDetectionStrategy,
   Component,
   computed,
@@ -31,6 +32,9 @@ import {
 } from './inventory.machine';
 import { INVENTORY_PROJECTS } from './inventory.projects';
 import { ProjectCase } from './project-case';
+
+/** A primeira Home montada no navegador já hidratou (as seguintes nascem no cliente). */
+let hydratedOnce = false;
 
 /** Inserção (só transform) e carregamento do MC-01; ejetar faz o caminho inverso. */
 const MOVE_MS = 620;
@@ -74,6 +78,10 @@ const STATION_BACKGROUND = {
   ],
   templateUrl: './project-inventory-section.html',
   styleUrls: ['./project-inventory-section.scss', './project-inventory-devices.scss'],
+  // Última interação: ponteiro (toque/mouse) ou teclado. Decide se a escolha traz a tela à vista.
+  // Os handlers devolvem void: uma expressão que vale false faria o Angular cancelar o evento
+  // (preventDefault), e nenhuma tecla funcionaria na seção.
+  host: { '(pointerdown)': 'markPointer(true)', '(keydown)': 'markPointer(false)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectInventorySection {
@@ -81,6 +89,7 @@ export class ProjectInventorySection {
   protected readonly ui = this.locale.ui;
   protected readonly stationBackground = STATION_BACKGROUND;
   private readonly injector = inject(Injector);
+  private readonly appRef = inject(ApplicationRef);
   private readonly scroller = inject(ViewportScroller);
   private readonly window = inject(DOCUMENT).defaultView;
 
@@ -120,10 +129,31 @@ export class ProjectInventorySection {
    * visitante continua na biblioteca). O "Inserir cartucho" mantém o comportamento do H2.
    */
   private librarySwap = false;
+  /** A última interação na seção foi por ponteiro (toque ou mouse). */
+  protected pointer = false;
+
+  protected markPointer(pointer: boolean): void {
+    this.pointer = pointer;
+  }
 
   /** Celular (< 768, D-095): o portátil substitui o MC-01 + CRT. */
   private readonly phoneQuery = this.window?.matchMedia?.('(max-width: 767.98px)');
-  protected readonly handheld = signal(this.phoneQuery?.matches ?? false);
+  /**
+   * Página pré-renderizada (D-098) sendo hidratada: o primeiro render repete o do servidor (CRT) e
+   * o portátil entra logo depois, no celular. Assim a seção hidrata como o resto da página e os
+   * cliques feitos antes de o JavaScript carregar são repetidos. Navegação no cliente, dev e
+   * testes decidem o aparelho de imediato.
+   */
+  private readonly hydrating =
+    !hydratedOnce && !!this.window?.document.querySelector('[ng-server-context]');
+  protected readonly handheld = signal(!this.hydrating && (this.phoneQuery?.matches ?? false));
+  /**
+   * Celular, já durante a hidratação (antes de o portátil entrar): escolher um cartucho insere
+   * (um toque feito antes de o JavaScript carregar é repetido com a regra do celular).
+   */
+  protected readonly phone = computed(
+    () => this.handheld() || (this.hydrating && (this.phoneQuery?.matches ?? false)),
+  );
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -162,6 +192,15 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
+    // A troca espera a hidratação terminar e os cliques guardados serem repetidos (eles miram os
+    // botões do HTML do servidor, que saem com a troca).
+    afterNextRender(() => {
+      hydratedOnce = true;
+      if (!this.hydrating) return;
+      void this.appRef
+        .whenStable()
+        .then(() => setTimeout(() => this.phoneQuery?.matches && this.switchDevice(true)));
+    });
     const onPhone = (event: MediaQueryListEvent) => this.switchDevice(event.matches);
     this.phoneQuery?.addEventListener('change', onPhone);
     inject(DestroyRef).onDestroy(() => {
@@ -206,8 +245,9 @@ export class ProjectInventorySection {
   /** Escolha na biblioteca: seleciona (slot vazio) ou troca (cartucho inserido), com anúncio curto. */
   protected choose(id: string): void {
     const before = this.state();
+    this.revealScreen();
     // Portátil (D-095): o cartucho já selecionado com o slot vazio entra direto.
-    if (this.handheld() && before.kind === 'empty' && before.cartridge === id) {
+    if (this.phone() && before.kind === 'empty' && before.cartridge === id) {
       this.librarySwap = true;
       this.insert();
       return;
@@ -222,7 +262,7 @@ export class ProjectInventorySection {
     const s = this.ui().inventory.status;
     const name = `${next.serial} — ${this.locale.pick(next.title)}`;
     // Portátil (D-095): escolher com o slot vazio já insere; o READY não rola nem leva o foco.
-    if (after.kind === 'empty' && this.handheld()) {
+    if (after.kind === 'empty' && this.phone()) {
       this.librarySwap = true;
       this.insert();
       return;
@@ -230,6 +270,24 @@ export class ProjectInventorySection {
     if (after.kind === 'empty') this.announcement.set(`${s.selected} ${name}.`);
     else if (after.kind === 'ejecting') this.announcement.set(`${s.swapping} ${name}.`);
     else if (after.kind === 'ready') this.announcement.set(`${name} ${s.ready}`);
+  }
+
+  /**
+   * Escolha por toque ou mouse (D-098): se a tela do aparelho (vidro do CRT ou visor do portátil)
+   * não estiver inteira à vista, rola o mínimo para mostrá-la; o visitante vê o cartucho entrar e
+   * a capa aparecer. Pelo teclado nada se move (o foco segue no carrossel).
+   */
+  private revealScreen(always = false): void {
+    if (!this.pointer && !always) return;
+    const screen = this.window?.document.querySelector(
+      '#project-viewer .glass, #project-viewer .screen',
+    );
+    if (!screen || !this.window) return;
+    const rect = screen.getBoundingClientRect();
+    const header =
+      this.window.document.querySelector('app-site-header')?.getBoundingClientRect().bottom ?? 0;
+    if (rect.top >= header && rect.bottom <= this.window.innerHeight) return;
+    screen.scrollIntoView({ block: 'nearest', behavior: this.reducedMotion() ? 'auto' : 'smooth' });
   }
 
   /** EXPLORAR PROJETO: abre o dossiê na 1ª seção e traz a estação à vista; o foco vai ao título. */
@@ -265,7 +323,11 @@ export class ProjectInventorySection {
 
   private coverNow(): void {
     this.dispatch({ type: 'cover' });
-    this.afterRender(() => this.byId('inventory-explore')?.focus());
+    // A biblioteca reaparece acima e empurra a capa: a tela volta à vista antes do foco (D-098).
+    this.afterRender(() => {
+      this.revealScreen(true);
+      this.byId('inventory-explore')?.focus({ preventScroll: true });
+    });
   }
 
   /** Voltar à biblioteca: a capa volta e a biblioteca reaparece; foco no cartucho inserido. */

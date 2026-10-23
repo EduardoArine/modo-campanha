@@ -19,7 +19,7 @@ ul {
 }
 
 .intro {
-  max-width: 62ch;
+  max-width: 37.2em; // 62ch da IBM Plex Sans (D-098)
   margin-top: space(4);
   @include type(body);
   color: var(--mc-text-secondary);
