@@ -3,22 +3,12 @@ import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
-import {
-  ACHIEVEMENTS,
-  CAMPAIGN_LOG_CHAPTERS,
-  CURRENT_QUEST,
-  SIDE_QUESTS,
-  shouldRenderAchievements,
-} from '../../data';
+import { CAMPAIGN_LOG_CHAPTERS } from '../../data';
 import { HomePage } from './home-page';
 
-// Os testes rodam na configuração `development`, onde Achievements (D-051), Current Main Quest
-// (docs/18) e Side Quests (docs/19) usam MOCK; em produção esses dados são vazios e as seções não
-// são renderizadas. O Campaign Log usa a mesma fonte real em todos os ambientes (D-074).
+// O Diário usa a mesma fonte real em todos os ambientes (D-074). Conquistas, Missão principal
+// atual e Missões secundárias saíram da Home (D-097).
 const hasCampaignLog = CAMPAIGN_LOG_CHAPTERS.length > 0;
-const hasAchievements = shouldRenderAchievements(ACHIEVEMENTS);
-const hasCurrentQuest = CURRENT_QUEST !== null;
-const hasSideQuests = SIDE_QUESTS.length > 0;
 
 describe('HomePage', () => {
   it('should render only the built sections, in order', async () => {
@@ -35,9 +25,6 @@ describe('HomePage', () => {
       'skill-loadout',
       'project-inventory',
       ...(hasCampaignLog ? ['campaign-log'] : []),
-      ...(hasAchievements ? ['achievements'] : []),
-      ...(hasCurrentQuest ? ['current-quest'] : []),
-      ...(hasSideQuests ? ['side-quests'] : []),
       'final-checkpoint',
     ]);
   });
@@ -52,8 +39,7 @@ describe('HomePage', () => {
     expect(el.querySelector('main')?.lastElementChild?.tagName).toBe(
       'APP-FINAL-CHECKPOINT-SECTION',
     );
-    if (!hasSideQuests) expect(el.textContent).not.toMatch(/SIDE QUESTS/);
-    if (!hasCurrentQuest) expect(el.textContent).not.toMatch(/CURRENT MAIN QUEST/);
+    expect(el.querySelector('#achievements, #current-quest, #side-quests')).toBeNull();
   });
 
   it('should close the page with the footer right after main, outside it', async () => {

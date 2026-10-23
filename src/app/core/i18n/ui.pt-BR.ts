@@ -81,9 +81,6 @@ export const UI_PT_BR = {
     skillLoadout: 'ARSENAL DE HABILIDADES',
     projectInventory: 'INVENTÁRIO DE PROJETOS',
     campaignLog: 'DIÁRIO DE CAMPANHA',
-    achievements: 'CONQUISTAS',
-    currentQuest: 'MISSÃO PRINCIPAL ATUAL',
-    sideQuests: 'MISSÕES SECUNDÁRIAS',
     finalCheckpoint: 'A CAMPANHA CONTINUA...',
   },
   inventory: {
@@ -202,23 +199,6 @@ export const UI_PT_BR = {
       previous: 'Marco anterior',
       next: 'Próximo marco',
       nextChapter: 'Próximo capítulo',
-    },
-  },
-  achievements: {
-    code: 'CONQ',
-    evidence: 'EVIDÊNCIA',
-  },
-  currentQuest: {
-    focus: 'FRENTES',
-  },
-  // Tipo de side quest: categoria do trabalho, nunca dificuldade ou raridade.
-  sideQuests: {
-    kind: {
-      game: 'DESENVOLVIMENTO DE JOGOS',
-      art: 'ARTE',
-      ai: 'IA',
-      interface: 'INTERFACE',
-      study: 'ESTUDO',
     },
   },
   // Único detalhe MC-01 do encerramento (D-052).

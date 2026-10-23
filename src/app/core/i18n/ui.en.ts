@@ -76,9 +76,6 @@ export const UI_EN: UiDictionary = {
     skillLoadout: 'SKILL ARSENAL',
     projectInventory: 'PROJECT INVENTORY',
     campaignLog: 'CAMPAIGN LOG',
-    achievements: 'ACHIEVEMENTS',
-    currentQuest: 'CURRENT MAIN QUEST',
-    sideQuests: 'SIDE QUESTS',
     finalCheckpoint: 'CAMPAIGN CONTINUES...',
   },
   inventory: {
@@ -190,22 +187,6 @@ export const UI_EN: UiDictionary = {
       previous: 'Previous checkpoint',
       next: 'Next checkpoint',
       nextChapter: 'Next chapter',
-    },
-  },
-  achievements: {
-    code: 'ACH',
-    evidence: 'EVIDENCE',
-  },
-  currentQuest: {
-    focus: 'FOCUS AREAS',
-  },
-  sideQuests: {
-    kind: {
-      game: 'GAME DEV',
-      art: 'ART',
-      ai: 'AI',
-      interface: 'INTERFACE',
-      study: 'STUDY',
     },
   },
   finalCheckpoint: {
