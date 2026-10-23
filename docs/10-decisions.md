@@ -1517,3 +1517,63 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - as referências na Home, no teste da Home e no showcase de desenvolvimento.
 - **Mantido:** a guarda do deploy contra ids `mock-*`. `docs/16`, `docs/18` e `docs/19` ficam como histórico, marcados como removidos.
 - **Home:** Hero → Player Status → Arsenal → Inventário → Diário → Final Checkpoint + footer. **Sem mudança visível no site publicado.**
+
+## D-098 — Ajustes da revisão de UI/UX e pré-renderização da Home
+
+- **Data:** 2026-10-23
+- **Origem:** revisão independente de UI/UX da Home, com notas UX 7,5 · visual 8,5 · acessibilidade 7,5 · conteúdo 7,5. O Eduardo concordou com tudo e quer chegar o mais perto de 10. Decisões dele:
+  - **contato:** fica para depois;
+  - **Inventário ao chegar:** continua vazio;
+  - **menu:** com a seção atual destacada e rolagem suave;
+  - **lema:** repetido em excesso;
+  - **pré-renderização:** sim;
+  - **Hero no celular:** fica como está;
+  - **siglas do Arsenal:** atrapalham.
+- **Navegação:**
+  - **Tab no header:** não rola mais a página (os focáveis do header anulam o `scroll-padding-top` do `html`).
+  - **Rolagem suave nas âncoras:** `scroll-behavior` no `html`; reduced motion mantém o salto.
+  - **Foco depois da âncora:** vai ao título da seção de destino (`provideAnchorFocus`, em `core/layout/anchor-focus.ts`), sem anel no foco programático.
+  - **Seção atual no menu:** `aria-current="location"` com o sublinhado de acento.
+- **Inventário:**
+  - **Cards:** a linha de tipo do projeto aparece em cada um.
+  - **Escolha por toque ou mouse:** traz a tela do aparelho à vista, para o visitante ver o cartucho entrar e a capa. Pelo teclado, nada se move.
+  - **Logo do rótulo na capa:** a arte é cortada no alto quando o logo fica do lado do título (`artwork.logo: 'right'`: ScoutEvo, EOS, Axia, Comunidade ON). No Aedes Revenge, com o logo à esquerda, a arte fica inteira.
+  - **Texto no CRT:** mínimos de 12 px nos rótulos e 14 px na descrição e no dossiê.
+  - **Foco nos cards:** o anel fica afastado da borda e não se confunde com o selecionado.
+  - **Ordem do Tab no desktop:** barra → console → TV, porque o console vem antes no DOM; empilhado, a TV segue em cima com `order`.
+  - **Tela cheia:** o diálogo tem nome (`aria-labelledby`).
+  - **Barra a 360 px:** a ação desce para a linha de baixo.
+- **Diário:**
+  - **Escolher um marco por toque ou mouse:** com o painel abaixo do mapa (≤ 1024 e celular), a página rola até ele.
+  - **Codinome igual ao título:** não se repete no rótulo do marco.
+  - **Datas aproximadas:** "c." sempre minúsculo.
+  - **Miniaturas dos capítulos:** versão de 320 px; antes baixavam a de 640 px.
+- **Textos:**
+  - **Sem inglês na versão pt:**
+    - Arsenal: "ESPECIALIDADES" e "Voltar ao arsenal";
+    - Inventário: "ENCAIXE VAZIO" e "demonstração" no lugar de teaser;
+    - habilidades: "fluxos de trabalho" e "Sistemas de design";
+    - Diário: "aplicação web".
+  - **Ficam como jargão aceito:** "facilities" e nomes de tecnologia (WebAPI, .NET).
+  - **Lema "XP real, sem personagem.":** só no Hero. Saiu do rodapé, do fechamento do capítulo 02 (que mostra só MISSÃO ATUAL — EM ANDAMENTO) e do fim do "Problema" do MC-001.
+  - **Siglas CON/PRD/IA/DNA:** fora do Arsenal (modelo, dados e interface); o seletor mostra ícone e nome.
+  - **en:** "THE CAMPAIGN CONTINUES...".
+- **Pré-renderização:**
+  - **Pacotes:** `@angular/ssr` e `@angular/platform-server` 22.2.2.
+  - **Build:** a Home em `/` e `/en` sai em HTML no build de produção (`outputMode: static`) e é hidratada no navegador.
+  - **Sem servidor:** o GitHub Pages continua servindo arquivos estáticos.
+  - **Pós-build:** usa o `en/index.html` pré-renderizado e faz do `index.csr.html` o 404.
+  - **Medição** (rede de 1,6 Mbps, 150 ms, CPU 4×):
+
+    | | Antes | Agora, 1440 | Agora, 390 |
+    | --- | --- | --- | --- |
+    | Primeiro conteúdo | 2,6 s | 0,86 s | 0,82 s |
+    | LCP | 4,3 s | 2,4 s (imagem do Hero) | 1,4 s |
+    | CLS | — | 0,006 | 0 |
+
+  - **Erros de console:** nenhum.
+- **Fora desta rodada:**
+  - repetições que tocam partes congeladas ("10+ anos" no Hero e no Player Status) ou textos do Eduardo (o marco 04 do capítulo 02 repete a descrição do MC-006);
+  - o header do celular ao rolar ("celular: ok");
+  - contato por e-mail e CV.
+- **Status:** branch `feat/ux-review-fixes` (sobre `chore/remove-redundant-sections`), aguardando nova rodada do revisor e aprovação do Eduardo. Sem merge e sem deploy.

@@ -1,8 +1,10 @@
 // Pós-build do GitHub Pages (D-084). Uso: node scripts/pages-postbuild.mjs <dir do build> <URL do site>
-// - 404.html: fallback de SPA (o Pages serve 404.html para rotas desconhecidas).
-// - en/index.html e en.html: a rota /en com idioma, título, descrição e Open Graph em inglês já no
-//   HTML (quem não executa JavaScript, como as prévias de redes sociais, lê o idioma certo). O
-//   en.html deixa /en responder sem o redirecionamento para /en/ (diretório).
+// - Home pré-renderizada (D-098): index.html (pt) e en/index.html (en) já saem do build com o
+//   conteúdo, o idioma, o título, a descrição e o Open Graph certos. Sem pré-renderização (build
+//   antigo), o en/index.html é derivado do pt, como antes.
+// - 404.html: fallback de SPA (o Pages serve 404.html para rotas desconhecidas), a partir do
+//   index.csr.html (sem conteúdo pré-renderizado, que não casaria com outra rota).
+// - en.html: deixa /en responder sem o redirecionamento para /en/ (diretório).
 // - canonical, hreflang, og:url e og:image (og-image-<idioma>.png, D-085) estáticos nos dois idiomas;
 //   o LocaleService atualiza as mesmas tags.
 // - sitemap.xml com as duas versões.
@@ -67,45 +69,56 @@ const pt = fs.readFileSync(indexPath, 'utf8');
 if (/rel="canonical"/.test(pt)) throw new Error('index.html já processado (canonical presente)');
 const meta = enMeta();
 
-let en = pt;
-en = replaceOnce(en, /<html lang="pt-BR"/, '<html lang="en"', 'html lang');
-en = replaceOnce(en, /(<title>)[^<]*(<\/title>)/, escapeHtml(meta.title), 'title');
-en = replaceOnce(
-  en,
-  /(<meta name="description" content=")[^"]*(")/,
-  escapeHtml(meta.description),
-  'description',
-);
-en = replaceOnce(
-  en,
-  /(<meta property="og:title" content=")[^"]*(")/,
-  escapeHtml(meta.title),
-  'og:title',
-);
-en = replaceOnce(
-  en,
-  /(<meta property="og:description" content=")[^"]*(")/,
-  escapeHtml(meta.description),
-  'og:description',
-);
-en = replaceOnce(en, /(<meta property="og:locale" content=")pt_BR(")/, 'en_US', 'og:locale');
-en = replaceOnce(
-  en,
-  /(<meta property="og:image:alt" content=")[^"]*(")/,
-  escapeHtml(meta.imageAlt),
-  'og:image:alt',
-);
-en = replaceOnce(
-  en,
-  /(<meta property="og:locale:alternate" content=")en_US(")/,
-  'pt_BR',
-  'og:locale:alternate',
-);
+const enPath = path.join(dir, 'en', 'index.html');
+const prerendered = fs.existsSync(enPath);
+const csrPath = path.join(dir, 'index.csr.html');
+const shell = fs.existsSync(csrPath) ? fs.readFileSync(csrPath, 'utf8') : pt;
+
+let en = prerendered ? fs.readFileSync(enPath, 'utf8') : pt;
+if (!prerendered) en = deriveEn(en);
+
+function deriveEn(html) {
+  let en = html;
+  en = replaceOnce(en, /<html lang="pt-BR"/, '<html lang="en"', 'html lang');
+  en = replaceOnce(en, /(<title>)[^<]*(<\/title>)/, escapeHtml(meta.title), 'title');
+  en = replaceOnce(
+    en,
+    /(<meta name="description" content=")[^"]*(")/,
+    escapeHtml(meta.description),
+    'description',
+  );
+  en = replaceOnce(
+    en,
+    /(<meta property="og:title" content=")[^"]*(")/,
+    escapeHtml(meta.title),
+    'og:title',
+  );
+  en = replaceOnce(
+    en,
+    /(<meta property="og:description" content=")[^"]*(")/,
+    escapeHtml(meta.description),
+    'og:description',
+  );
+  en = replaceOnce(en, /(<meta property="og:locale" content=")pt_BR(")/, 'en_US', 'og:locale');
+  en = replaceOnce(
+    en,
+    /(<meta property="og:image:alt" content=")[^"]*(")/,
+    escapeHtml(meta.imageAlt),
+    'og:image:alt',
+  );
+  en = replaceOnce(
+    en,
+    /(<meta property="og:locale:alternate" content=")en_US(")/,
+    'pt_BR',
+    'og:locale:alternate',
+  );
+  return en;
+}
 
 const ptOut = withLinks(pt, 'pt-BR');
 const enOut = withLinks(en, 'en');
 fs.writeFileSync(indexPath, ptOut);
-fs.writeFileSync(path.join(dir, '404.html'), ptOut);
+fs.writeFileSync(path.join(dir, '404.html'), withLinks(shell, 'pt-BR'));
 fs.mkdirSync(path.join(dir, 'en'), { recursive: true });
 fs.writeFileSync(path.join(dir, 'en', 'index.html'), enOut);
 fs.writeFileSync(path.join(dir, 'en.html'), enOut);
@@ -121,4 +134,6 @@ ${Object.values(urls)
 </urlset>
 `;
 fs.writeFileSync(path.join(dir, 'sitemap.xml'), sitemap);
-console.log(`pages-postbuild: 404.html, en/index.html, en.html e sitemap.xml para ${site}`);
+console.log(
+  `pages-postbuild: 404.html, en/index.html${prerendered ? ' (pré-renderizado)' : ''}, en.html e sitemap.xml para ${site}`,
+);

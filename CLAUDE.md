@@ -94,7 +94,7 @@ Mantenha os docs em sincronia com o código. Ao concluir itens do roadmap, atual
 
 ## Arquitetura (resumo)
 
-- Angular 22.2 + TypeScript 6.0, standalone, signals, `OnPush`, control flow nativo, SCSS, Vitest. Sem SSR. Node 24 (local e CI; upgrade em D-061).
+- Angular 22.2 + TypeScript 6.0, standalone, signals, `OnPush`, control flow nativo, SCSS, Vitest. Sem servidor: a Home (`/` e `/en`) é **pré-renderizada no build** (`@angular/ssr`, `outputMode: static`, só na configuração de produção) e hidratada no navegador; o Inventário não hidrata (`ngSkipHydration`, layout decidido no navegador); D-098. Node 24 (local e CI; upgrade em D-061).
 - `src/app/features/<seção>/`: uma pasta por seção da onepage (`<nome>-section.ts`, `<section id="<nome>">`).
 - `src/app/pages/home/home-page.ts`: compõe as seções **construídas** na ordem de `docs/03` (D-047). O teste `home-page.spec.ts` valida a ordem e que não há placeholders.
 - `src/app/models/`: interfaces (`CampaignLogChapter` [D-070–D-074; capítulos reais, linha profissional aposentada], `Project` [D-044: serial MC-NNN, publication, tags `TagId`, cartridge embutido], `Skill`, `SkillGroup` [Skill Loadout, sem proficiência; `icon` e `description` desde D-092], `PlayerProfile`, `SocialLink`).

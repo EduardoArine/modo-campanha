@@ -21,7 +21,8 @@ function diaryArt(
     height,
   };
 }
-const MAP_WIDTHS = [640, 960, 1280, 1672];
+// 320w (D-098): miniaturas do seletor de capítulos, exibidas com ~225–280 px.
+const MAP_WIDTHS = [320, 640, 960, 1280, 1672];
 const STORY_WIDTHS = [480, 720, 1080, 1536];
 
 /** Derivados WebP (proporção original, sem filtro) das fotos fornecidas pelo Eduardo. */

@@ -30,7 +30,8 @@ import { SkillLoadoutSection } from '../../features/skill-loadout/skill-loadout-
       <app-hero-section />
       <app-player-status-section />
       <app-skill-loadout-section />
-      <app-project-inventory-section />
+      <!-- Layout decidido no navegador (portátil × CRT, D-095): renderiza do zero, sem hidratar. -->
+      <app-project-inventory-section ngSkipHydration />
       @if (hasCampaignLog) {
         <app-campaign-log-section />
       }

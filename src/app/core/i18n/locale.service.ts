@@ -1,5 +1,5 @@
-import { DOCUMENT } from '@angular/common';
-import { computed, effect, inject, Injectable } from '@angular/core';
+import { DOCUMENT, isPlatformServer } from '@angular/common';
+import { computed, effect, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
@@ -23,6 +23,7 @@ const OG_LOCALE: Record<Locale, string> = { 'pt-BR': 'pt_BR', en: 'en_US' };
 export class LocaleService {
   private readonly router = inject(Router);
   private readonly document = inject(DOCUMENT);
+  private readonly server = isPlatformServer(inject(PLATFORM_ID));
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
 
@@ -53,12 +54,15 @@ export class LocaleService {
       this.meta.updateTag({ property: 'og:locale', content: OG_LOCALE[locale] });
       const other = LOCALES.find((candidate) => candidate !== locale) ?? DEFAULT_LOCALE;
       this.meta.updateTag({ property: 'og:locale:alternate', content: OG_LOCALE[other] });
+      this.meta.updateTag({ property: 'og:image:alt', content: ui.meta.imageAlt });
+      // URLs absolutas: na pré-renderização (D-098) o endereço do site não é conhecido; o
+      // pós-build do Pages grava essas tags com a URL real, e o navegador as mantém em dia.
+      if (this.server) return;
       this.meta.updateTag({ property: 'og:url', content: this.absoluteUrl(locale) });
       this.meta.updateTag({
         property: 'og:image',
         content: new URL(`og-image-${locale}.png`, this.document.baseURI).href,
       });
-      this.meta.updateTag({ property: 'og:image:alt', content: ui.meta.imageAlt });
       for (const alternate of LOCALES) {
         this.setLink('alternate', this.absoluteUrl(alternate), alternate);
       }
