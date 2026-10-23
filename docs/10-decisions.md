@@ -1500,7 +1500,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Desktop:** o CRT em 1024 / 820 / 1440 está igual.
   - **Testes:** 204, incluindo a tela cheia, o Esc e a troca de aparelho.
   - **Código:** typecheck, Prettier, builds e guardas passam, com o orçamento de CSS respeitado (removidas regras mortas do dossiê).
-- **Status:** implementado na branch `feat/inventory-station-tweaks`, aguardando a aprovação do Eduardo. Sem merge e sem deploy.
+- **Status:** mergeado na `main` (PR #5), aguardando a aprovação do Eduardo. Sem deploy.
 
 ## D-097 — Remoção de Conquistas, Missão principal atual e Missões secundárias
 
@@ -1517,6 +1517,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - as referências na Home, no teste da Home e no showcase de desenvolvimento.
 - **Mantido:** a guarda do deploy contra ids `mock-*`. `docs/16`, `docs/18` e `docs/19` ficam como histórico, marcados como removidos.
 - **Home:** Hero → Player Status → Arsenal → Inventário → Diário → Final Checkpoint + footer. **Sem mudança visível no site publicado.**
+- **Status:** mergeado na `main` (PR #6). Sem deploy.
 
 ## D-098 — Ajustes da revisão de UI/UX e pré-renderização da Home
 
@@ -1626,4 +1627,4 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - **Imagem do Hero:** `fetchpriority="high"` (só atributo; o visual congelado não muda).
   - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
   - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
-- **Status:** branch `feat/ux-review-fixes` (sobre `chore/remove-redundant-sections`), aguardando a aprovação do Eduardo. Sem merge e sem deploy.
+- **Status:** mergeado na `main` (PRs #6 e #7), aguardando a aprovação do Eduardo. Sem deploy. Pendências em `PENDENCIAS.md`.

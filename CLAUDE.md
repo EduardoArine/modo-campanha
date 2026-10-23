@@ -2,6 +2,8 @@
 
 Guia para qualquer sessão de IA que trabalhe neste repositório. Leia inteiro antes de propor ou alterar algo.
 
+**Pendências atuais (o que falta publicar, aprovar e decidir): `PENDENCIAS.md`, na raiz.** Leia antes de começar e mantenha atualizado.
+
 ## O que é
 
 **Modo Campanha** é o portfólio profissional pessoal de **Eduardo Arine**, que apresenta a carreira dele como **uma campanha de videogame** (jogos retrô, RPGs, card games, cartuchos, interfaces de consoles antigos).
