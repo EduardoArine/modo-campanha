@@ -97,7 +97,9 @@
 }
 
 .summary {
-  max-width: 46ch;
+  // 46ch da IBM Plex Sans (0,6 em por "0") em em (D-098): com ch, a largura mudava enquanto a fonte
+  // reserva estava ativa e o parágrafo passava de 4 para 3 linhas ao carregar (salto de layout).
+  max-width: 27.6em;
   margin: space(5) 0 0;
   @include type(body-l);
   color: var(--mc-text-secondary);

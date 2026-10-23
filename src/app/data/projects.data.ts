@@ -324,7 +324,7 @@ export const PROJECTS: readonly Project[] = [
     },
     role: {
       'pt-BR':
-        'Participei de toda a evolução do produto, da idealização e engenharia inicial às expansões seguintes, incluindo a evolução para a Inteligência Axia. Minha atuação passou por arquitetura, webapp em Angular, WebAPI em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C. Meu foco principal foi a plataforma web, as APIs e a experiência de uso.',
+        'Participei de toda a evolução do produto, da idealização e engenharia inicial às expansões seguintes, incluindo a evolução para a Inteligência Axia. Minha atuação passou por arquitetura, aplicação web em Angular, API em .NET com C#, SQL Server, design das interfaces e contribuições ao código embarcado dos dispositivos em C. Meu foco principal foi a plataforma web, as APIs e a experiência de uso.',
       en: "I contributed throughout the product's evolution, from its initial concept and engineering to later expansions, including its evolution into Axia Intelligence. My work spanned architecture, the Angular web application, .NET WebAPI with C#, SQL Server, interface design, and contributions to the devices' embedded C code. My primary focus was the web platform, APIs, and user experience.",
     },
     technologies: ['Angular', '.NET', 'C#', 'SQL Server', 'C'],

@@ -28,7 +28,9 @@ import { DiaryMilestones } from './diary-milestones';
   templateUrl: './campaign-log-section.html',
   styleUrl: './campaign-log-section.scss',
   // Última interação: ponteiro (toque/mouse) ou teclado. Decide se escolher um marco rola até o painel.
-  host: { '(pointerdown)': 'pointer = true', '(keydown)': 'pointer = false' },
+  // Os handlers devolvem void: uma expressão que vale false faria o Angular cancelar o evento
+  // (preventDefault), e nenhuma tecla funcionaria na seção.
+  host: { '(pointerdown)': 'markPointer(true)', '(keydown)': 'markPointer(false)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CampaignLogSection {
@@ -40,6 +42,10 @@ export class CampaignLogSection {
 
   /** A última interação na seção foi por ponteiro (toque ou mouse). */
   protected pointer = false;
+
+  protected markPointer(pointer: boolean): void {
+    this.pointer = pointer;
+  }
 
   protected readonly chapters = CAMPAIGN_LOG_CHAPTERS;
   protected readonly intro = CAMPAIGN_LOG_INTRO;
@@ -115,7 +121,7 @@ export class CampaignLogSection {
   protected step(delta: 1 | -1): void {
     const entries = this.chapter().entries;
     const target = entries[this.index() + delta];
-    if (target) this.milestoneId.set(target.id);
+    if (target) this.selectMilestone(target.id);
   }
 
   private reducedMotion(): boolean {

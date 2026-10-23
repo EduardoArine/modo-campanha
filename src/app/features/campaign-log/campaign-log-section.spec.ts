@@ -235,6 +235,15 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     expect(el.querySelector('.others, .other')).toBeNull();
   });
 
+  it('never cancels keys inside the section (Tab, Enter, Space work)', async () => {
+    const el = await renderAt('/');
+    for (const key of ['Tab', 'Enter', ' ']) {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+      el.querySelector('app-diary-chapters .card')!.dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(false);
+    }
+  });
+
   it('shows no game metrics or invented status', async () => {
     const el = await renderAt('/');
     const all = el.textContent ?? '';

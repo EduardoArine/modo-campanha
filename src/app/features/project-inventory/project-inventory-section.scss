@@ -81,6 +81,27 @@ p {
   }
 }
 
+// Dossiê de 1024 a 1199 (D-098): lado a lado, o vidro ficava baixo demais para ler. A TV vai para
+// cima, com a largura do tablet, e o console desce, como no empilhado do 820.
+@media (min-width: 1024px) and (max-width: 1199.98px) {
+  .is-dossier .station {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .is-dossier .tv-area {
+    grid-column: 1;
+    justify-self: center;
+    width: min(100%, 48rem);
+  }
+
+  .is-dossier .console-area {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: center;
+    width: min(100%, 30rem);
+  }
+}
+
 .console-area {
   container-type: inline-size;
   display: grid;

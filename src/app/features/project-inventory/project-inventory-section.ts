@@ -32,6 +32,9 @@ import {
 import { INVENTORY_PROJECTS } from './inventory.projects';
 import { ProjectCase } from './project-case';
 
+/** A primeira Home montada no navegador já hidratou (as seguintes nascem no cliente). */
+let hydratedOnce = false;
+
 /** Inserção (só transform) e carregamento do MC-01; ejetar faz o caminho inverso. */
 const MOVE_MS = 620;
 const BOOT_MS = 450;
@@ -75,7 +78,9 @@ const STATION_BACKGROUND = {
   templateUrl: './project-inventory-section.html',
   styleUrls: ['./project-inventory-section.scss', './project-inventory-devices.scss'],
   // Última interação: ponteiro (toque/mouse) ou teclado. Decide se a escolha traz a tela à vista.
-  host: { '(pointerdown)': 'pointer = true', '(keydown)': 'pointer = false' },
+  // Os handlers devolvem void: uma expressão que vale false faria o Angular cancelar o evento
+  // (preventDefault), e nenhuma tecla funcionaria na seção.
+  host: { '(pointerdown)': 'markPointer(true)', '(keydown)': 'markPointer(false)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectInventorySection {
@@ -125,9 +130,21 @@ export class ProjectInventorySection {
   /** A última interação na seção foi por ponteiro (toque ou mouse). */
   protected pointer = false;
 
+  protected markPointer(pointer: boolean): void {
+    this.pointer = pointer;
+  }
+
   /** Celular (< 768, D-095): o portátil substitui o MC-01 + CRT. */
   private readonly phoneQuery = this.window?.matchMedia?.('(max-width: 767.98px)');
-  protected readonly handheld = signal(this.phoneQuery?.matches ?? false);
+  /**
+   * Página pré-renderizada (D-098) sendo hidratada: o primeiro render repete o do servidor (CRT) e
+   * o portátil entra logo depois, no celular. Assim a seção hidrata como o resto da página e os
+   * cliques feitos antes de o JavaScript carregar são repetidos. Navegação no cliente, dev e
+   * testes decidem o aparelho de imediato.
+   */
+  private readonly hydrating =
+    !hydratedOnce && !!this.window?.document.querySelector('[ng-server-context]');
+  protected readonly handheld = signal(!this.hydrating && (this.phoneQuery?.matches ?? false));
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -166,6 +183,10 @@ export class ProjectInventorySection {
     const reduce = this.window?.matchMedia?.('(prefers-reduced-motion: reduce)');
     const onChange = (event: MediaQueryListEvent) => event.matches && this.playback.pause();
     reduce?.addEventListener('change', onChange);
+    afterNextRender(() => {
+      hydratedOnce = true;
+      if (this.hydrating && this.phoneQuery?.matches) this.switchDevice(true);
+    });
     const onPhone = (event: MediaQueryListEvent) => this.switchDevice(event.matches);
     this.phoneQuery?.addEventListener('change', onPhone);
     inject(DestroyRef).onDestroy(() => {

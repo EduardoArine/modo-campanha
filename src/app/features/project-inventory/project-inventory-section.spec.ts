@@ -79,6 +79,16 @@ describe('ProjectInventorySection', () => {
     expect(el.querySelector('app-project-case, app-crt-cover, app-crt-dossier')).toBeNull();
   });
 
+  it('never cancels keys inside the section (Tab, Enter, Space, Escape work)', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    for (const key of ['Tab', 'Enter', ' ', 'Escape']) {
+      const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+      library(el)[0].dispatchEvent(event);
+      expect(event.defaultPrevented).toBe(false);
+    }
+  });
+
   it('inserts with one coherent state per step and lands on the COVER inside the CRT', async () => {
     reducedMotion(false);
     const el = await renderAt('/');

@@ -43,7 +43,7 @@
           [attr.aria-disabled]="busy() || !actionable(project) ? 'true' : null"
           [class.is-selected]="isSelected"
           [class.is-inserted]="isInserted"
-          (click)="pick(project)"
+          (click)="pick(project, $event)"
         >
           @if (project.cartridge.renders?.console; as shell) {
             <img
