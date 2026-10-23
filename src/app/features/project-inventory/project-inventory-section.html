@@ -43,7 +43,7 @@
           [loading]="selection().loading"
           [busy]="!v.selectable"
           [viewer]="v.slot !== 'unavailable'"
-          [insertOnChoose]="handheld()"
+          [insertOnChoose]="phone()"
           (choose)="choose($event)"
         />
       }

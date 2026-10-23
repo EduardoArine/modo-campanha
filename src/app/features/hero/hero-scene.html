@@ -1,4 +1,5 @@
-<!-- Fundo aprovado (D-067), decorativo. Sem lazy: no desktop é o maior elemento da dobra. -->
+<!-- Fundo aprovado (D-067), decorativo. Sem lazy e com prioridade alta (D-098): no desktop é o maior
+     elemento da dobra. -->
 <div class="frame" aria-hidden="true">
   <div class="stage">
     <picture>
@@ -15,6 +16,7 @@
         [height]="background.mobile.height"
         alt=""
         decoding="async"
+        fetchpriority="high"
       />
     </picture>
     <!-- SYSTEM HORIZON sobre o vidro do CRT da imagem (D-068); só depois do load (não disputa o LCP). -->

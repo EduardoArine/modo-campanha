@@ -147,6 +147,13 @@ export class ProjectInventorySection {
   private readonly hydrating =
     !hydratedOnce && !!this.window?.document.querySelector('[ng-server-context]');
   protected readonly handheld = signal(!this.hydrating && (this.phoneQuery?.matches ?? false));
+  /**
+   * Celular, já durante a hidratação (antes de o portátil entrar): escolher um cartucho insere
+   * (um toque feito antes de o JavaScript carregar é repetido com a regra do celular).
+   */
+  protected readonly phone = computed(
+    () => this.handheld() || (this.hydrating && (this.phoneQuery?.matches ?? false)),
+  );
 
   protected readonly playback = new AttractPlayback();
   /** Tela do teaser, carregada sob demanda (o chunk é o mesmo da Hero). */
@@ -240,7 +247,7 @@ export class ProjectInventorySection {
     const before = this.state();
     this.revealScreen();
     // Portátil (D-095): o cartucho já selecionado com o slot vazio entra direto.
-    if (this.handheld() && before.kind === 'empty' && before.cartridge === id) {
+    if (this.phone() && before.kind === 'empty' && before.cartridge === id) {
       this.librarySwap = true;
       this.insert();
       return;
@@ -255,7 +262,7 @@ export class ProjectInventorySection {
     const s = this.ui().inventory.status;
     const name = `${next.serial} — ${this.locale.pick(next.title)}`;
     // Portátil (D-095): escolher com o slot vazio já insere; o READY não rola nem leva o foco.
-    if (after.kind === 'empty' && this.handheld()) {
+    if (after.kind === 'empty' && this.phone()) {
       this.librarySwap = true;
       this.insert();
       return;

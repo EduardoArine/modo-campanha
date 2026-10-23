@@ -1617,4 +1617,13 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     | CLS | 0,0001 | 0,0001 |
 
   - **Erros de console:** nenhum.
+- **Quarta rodada do revisor (final):** os seis ajustes foram confirmados e não há regressão funcional. Notas: UX 9 · visual 8,8 · acessibilidade 9,2 · conteúdo 8,5. Correções depois dela:
+  - **Salto de layout em en a 390 px com o Inventário à vista durante a carga (CLS 0,29 → 0,0002, em 4 de 4 execuções):**
+    - **Causa:** a régua do `mc-section-header` ia para o lado ou para baixo do título conforme a largura dele, e a troca da fonte reserva pela IBM Plex Sans mudava essa decisão.
+    - **Correção:** no celular (< 768) a régua fica sempre na linha de baixo, como já acontecia na maioria dos títulos. Muda só a posição dela em "PROJECT INVENTORY" e "CAMPAIGN LOG" na versão en do celular.
+  - **Primeira pintura com o Hero inteiro:** `<link rel="expect" href="#player-status" blocking="render">`. Em rede lenta, o navegador às vezes pintava parte do HTML do Hero e a linha de CTAs entrava depois (CLS 0,009 em 1 de 5 cargas); agora fica em 0,0001 em todas.
+    - **Custo:** o primeiro conteúdo passa de ~0,70 para ~0,85–0,94 s (rede de 1,6 Mbps, CPU 4×).
+    - **Imagem do Hero:** `fetchpriority="high"` (só atributo; o visual congelado não muda).
+  - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
+  - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
 - **Status:** branch `feat/ux-review-fixes` (sobre `chore/remove-redundant-sections`), aguardando a aprovação do Eduardo. Sem merge e sem deploy.
