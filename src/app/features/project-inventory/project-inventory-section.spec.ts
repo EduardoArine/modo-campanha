@@ -6,7 +6,7 @@ import { routes } from '../../app.routes';
 import { PROJECTS } from '../../data';
 import { Project } from '../../models';
 import { dossierSections } from './crt-dossier';
-import { INVENTORY_PROJECTS } from './inventory.projects';
+import { INVENTORY_PROJECTS, INVENTORY_START } from './inventory.projects';
 import { ProjectInventorySection } from './project-inventory-section';
 
 // Project Inventory H3 (D-093): biblioteca MC-CART (D-087) + estação MC-01 / CRT, com a CAPA e o
@@ -24,11 +24,20 @@ describe('ProjectInventorySection', () => {
     })) as unknown as typeof window.matchMedia;
   }
 
-  async function renderAt(url: string, projects?: readonly Project[]): Promise<HTMLElement> {
+  /**
+   * `start`: como o Inventory abre. Os fluxos partem do slot vazio (`'empty'`); `'page'` usa o
+   * padrão da página (MC-001 encaixado, D-101).
+   */
+  async function renderAt(
+    url: string,
+    projects?: readonly Project[],
+    start: 'inserted' | 'empty' | 'page' = 'empty',
+  ): Promise<HTMLElement> {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes),
         ...(projects ? [{ provide: INVENTORY_PROJECTS, useValue: projects }] : []),
+        ...(start === 'page' ? [] : [{ provide: INVENTORY_START, useValue: start }]),
       ],
     });
     const harness = await RouterTestingHarness.create(url);
@@ -58,6 +67,24 @@ describe('ProjectInventorySection', () => {
   afterEach(() => {
     window.matchMedia = realMatchMedia;
     vi.useRealTimers();
+  });
+
+  it('opens with MC-001 already inserted, on its cover, without moving the page (D-101)', async () => {
+    reducedMotion(false);
+    const el = await renderAt('/', undefined, 'page');
+
+    expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('seated');
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
+    expect(el.querySelector('#inventory-eject')).not.toBeNull();
+    expect(el.querySelector('#inventory-insert')).toBeNull();
+    // Na biblioteca, o MC-001 aparece inserido; a dica fala em trocar.
+    expect(library(el)[0].getAttribute('aria-label')).toBe('MC-001 — SYSTEM HORIZON, inserido');
+    expect(text(el, '.library .hint')).toBe('Escolher outro cartucho troca o que está inserido.');
+    // Sem anúncio, foco ou teaser ao abrir.
+    expect(text(el, '[role="status"]')).toBe('');
+    expect(document.activeElement?.id).not.toBe('crt-cover-title');
+    expect(el.querySelector('app-system-horizon-screen')).toBeNull();
   });
 
   it('opens with the collection, MC-001 above the empty slot and the CRT in standby', async () => {

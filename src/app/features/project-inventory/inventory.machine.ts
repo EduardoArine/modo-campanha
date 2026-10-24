@@ -61,6 +61,14 @@ export function initialInventoryState(cartridge: string): InventoryState {
   return { kind: 'empty', cartridge };
 }
 
+/**
+ * Estado ao abrir a página (D-101): o primeiro cartucho já encaixado, na capa. Entra direto no
+ * READY, sem as transições (nada de animação, rolagem, foco ou anúncio ao carregar).
+ */
+export function insertedInventoryState(cartridge: string): InventoryState {
+  return { kind: 'ready', cartridge, screen: 'art' };
+}
+
 /** Transição pura. Eventos fora de hora são ignorados (ex.: inserir durante a inserção). */
 export function nextInventoryState(state: InventoryState, event: InventoryEvent): InventoryState {
   const { cartridge } = state;

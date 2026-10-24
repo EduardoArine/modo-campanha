@@ -26,11 +26,12 @@ import { CrtDossier, dossierSections } from './crt-dossier';
 import {
   cartridgeSelection,
   initialInventoryState,
+  insertedInventoryState,
   InventoryEvent,
   inventoryView,
   nextInventoryState,
 } from './inventory.machine';
-import { INVENTORY_PROJECTS } from './inventory.projects';
+import { INVENTORY_PROJECTS, INVENTORY_START } from './inventory.projects';
 import { ProjectCase } from './project-case';
 
 /** A primeira Home montada no navegador já hidratou (as seguintes nascem no cliente). */
@@ -94,7 +95,12 @@ export class ProjectInventorySection {
   private readonly window = inject(DOCUMENT).defaultView;
 
   protected readonly projects = inject(INVENTORY_PROJECTS);
-  protected readonly state = signal(initialInventoryState(this.projects[0]?.id ?? ''));
+  /** Abre com o MC-001 encaixado, na capa (D-101); `INVENTORY_START` = 'empty' abre com o slot vazio. */
+  protected readonly state = signal(
+    inject(INVENTORY_START) === 'inserted' && this.projects[0]
+      ? insertedInventoryState(this.projects[0].id)
+      : initialInventoryState(this.projects[0]?.id ?? ''),
+  );
   protected readonly view = computed(() => inventoryView(this.state()));
   /** Cartucho FÍSICO (sobre o slot, entrando, encaixado ou saindo): console, CRT, status e case. */
   protected readonly project = computed(

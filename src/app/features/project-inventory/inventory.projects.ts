@@ -12,3 +12,12 @@ export const INVENTORY_PROJECTS = new InjectionToken<readonly Project[]>('INVENT
   providedIn: 'root',
   factory: () => inventoryProjects(isDevMode()),
 });
+
+/**
+ * Como o Inventory abre (D-101): com o primeiro cartucho encaixado (padrão) ou com o slot vazio.
+ * Os testes dos fluxos a partir do slot vazio fornecem `'empty'` por este token.
+ */
+export const INVENTORY_START = new InjectionToken<'inserted' | 'empty'>('INVENTORY_START', {
+  providedIn: 'root',
+  factory: () => 'inserted',
+});

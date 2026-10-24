@@ -1699,3 +1699,21 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Imagem do marco no Diário:** a do Eduardo (`design/source/diary/stories/ch01-03b-4change.png`, 1536 × 1024), derivados por `build-diary.mjs`. As outras histórias saíram iguais.
 - **Site da Arppen:** dispensado pelo Eduardo; o case fica sem link externo.
 - **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.
+
+## D-101 — Inventory abre com o MC-001 encaixado
+
+- **Data:** 2026-10-24
+- **Decisão do Eduardo:** o Project Inventory abre com o SYSTEM HORIZON (MC-001) já encaixado, na capa, como o revisor de UI/UX sugeriu na D-098. **Revê a D-098** ("Inventário ao chegar: continua vazio") e a primeira visita da D-087 ("slot vazio, CRT desligado").
+- **Como:** o estado inicial é o READY do primeiro cartucho (`insertedInventoryState` em `inventory.machine.ts`), aplicado direto, sem as transições.
+  - Ao carregar: sem animação, rolagem, foco ou anúncio; o teaser continua só sob demanda.
+  - O HTML pré-renderizado já sai com o cartucho encaixado e a capa.
+  - Vale para o MC-01 + CRT e para o portátil do celular.
+  - A biblioteca mostra o MC-001 como INSERIDO, com a dica "Escolher outro cartucho troca o que está inserido.".
+- **Ejetar e trocar:** iguais aos de qualquer READY. Ejetar volta ao slot vazio de sempre.
+- **Configuração:** `INVENTORY_START` (`inventory.projects.ts`), `'inserted'` por padrão. Os testes dos fluxos a partir do slot vazio fornecem `'empty'`.
+- **Validação:**
+  - 196 testes;
+  - axe sem violações em 1440 pt, 1024 en e 390 pt;
+  - a página abre no topo, sem foco movido;
+  - troca e ejeção funcionam a partir do estado inicial.
+- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.

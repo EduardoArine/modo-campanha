@@ -642,3 +642,7 @@ Usado para gerar a arte, como nos outros seis.
 
 - **Cena:** uma mesa de escritório em 2016 com um notebook (código ilegível), um smartphone Android e um iPhone com o protótipo de um aplicativo, e um monitor antigo com uma interface de sistema legado sem texto legível.
 - **Proibido:** UI do site e texto legível.
+
+## 23. Abre com o MC-001 encaixado (D-101, 2026-10-24)
+
+A primeira visita já mostra o SYSTEM HORIZON no MC-01 (ou no portátil), na capa dentro do CRT, sem animação nem rolagem. A partir daí, tudo é o READY de sempre: explorar, trocar pela biblioteca ou ejetar. O estado inicial é configurável por `INVENTORY_START` (padrão `'inserted'`).
