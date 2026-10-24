@@ -42,7 +42,7 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     const cards = Array.from(el.querySelectorAll('app-diary-chapters .card'));
     expect(cards.map((c) => c.getAttribute('aria-label'))).toEqual([
       'CAP. 00 — ORIGEM, 5 marcos',
-      'CAP. 01 — DO CONTROLE AO CÓDIGO, 5 marcos',
+      'CAP. 01 — DO CONTROLE AO CÓDIGO, 6 marcos',
       'CAP. 02 — DO CÓDIGO AO PRODUTO, 4 marcos',
     ]);
     expect(cards.map((c) => c.getAttribute('aria-current'))).toEqual(['true', null, null]);
@@ -101,7 +101,7 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
         click(nodes(el)[i]);
         const image = el.querySelector('app-diary-milestone img.image')!;
         expect(image.getAttribute('src')).toMatch(
-          /^assets\/diary\/stories\/ch0[0-2]-0[1-5]-[a-z-]+-1536\.webp$/,
+          /^assets\/diary\/stories\/ch0[0-2]-0[1-5]b?-[a-z0-9-]+-1536\.webp$/,
         );
         expect(image.getAttribute('alt')).toMatch(/^Ilustração em pixel art: /);
       });
@@ -183,7 +183,7 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
   it('closes each chapter as the timeline did: CHECKPOINT COMPLETE or the ongoing quest', async () => {
     const el = await renderAt('/');
     click(el.querySelectorAll('app-diary-chapters .card')[1]);
-    click(nodes(el)[4]);
+    click(nodes(el)[5]);
     expect(text(el, '.closing .kind')).toBe('MARCO CONCLUÍDO — 2017');
     expect(text(el, '.closing-text')).toBe('A campanha estava apenas começando.');
     click(el.querySelector('app-diary-milestone .toggle'));

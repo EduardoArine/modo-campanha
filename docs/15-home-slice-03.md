@@ -448,15 +448,15 @@ A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C 
 
 ### 18.1 Componentes (`features/campaign-log/`)
 
-| Componente | Papel |
-| --- | --- |
-| `campaign-log-section` | estado único (capítulo e marco), cabeçalho, capítulo ativo |
-| `diary-chapters` | seletor de capítulos (faixa horizontal, `aria-current`) |
-| `diary-map` | moldura 16:9: cenário + rota SVG + marcos (≥ 768) / pontos (mini mapa, < 768) |
-| `diary-milestones` | lista de marcos (só < 768) |
-| `diary-milestone` | painel de leitura |
-| `campaign-when` | época do marco (ano, intervalo, "desde", aproximado ou época em texto) |
-| `diary-labels.ts` | número e nome acessível do marco ("MARCO 02 de 05: …") |
+| Componente             | Papel                                                                         |
+| ---------------------- | ----------------------------------------------------------------------------- |
+| `campaign-log-section` | estado único (capítulo e marco), cabeçalho, capítulo ativo                    |
+| `diary-chapters`       | seletor de capítulos (faixa horizontal, `aria-current`)                       |
+| `diary-map`            | moldura 16:9: cenário + rota SVG + marcos (≥ 768) / pontos (mini mapa, < 768) |
+| `diary-milestones`     | lista de marcos (só < 768)                                                    |
+| `diary-milestone`      | painel de leitura                                                             |
+| `campaign-when`        | época do marco (ano, intervalo, "desde", aproximado ou época em texto)        |
+| `diary-labels.ts`      | número e nome acessível do marco ("MARCO 02 de 05: …")                        |
 
 ### 18.2 Layout
 
@@ -473,6 +473,8 @@ A timeline vertical deu lugar a uma experiência por capítulos (híbrido A + C 
 - **Nomes reservados:** os da D-091, com o sufixo de largura (ex.: `ch00-origem-1672.webp`). Para gerar: salvar o PNG em `design/source/diary/maps/` ou `stories/` e rodar `node design/source/diary/build-diary.mjs`.
 
 ### 18.4 Pendências
+
+- ~~**D-100:** imagem do marco "Entrando em um produto real: o 4Change"~~: recebida (`ch01-03b-4change`); inglês aprovado.
 
 - **Artes recebidas (D-091):** os mapas dos capítulos 00 e 01 e as imagens editoriais do Cap. 00, com mestres em `design/source/diary/` e derivados por `build-diary.mjs`.
 - **Mapa do Cap. 02 e imagens editoriais dos capítulos 01 e 02:** recebidos e integrados. Todas as artes do Diário estão no lugar.

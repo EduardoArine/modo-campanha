@@ -1628,3 +1628,92 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
   - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
 - **Status:** mergeado na `main` (PRs #6 e #7), aguardando a aprovação do Eduardo. Sem deploy. Pendências em `PENDENCIAS.md`.
+
+## D-099 — Currículo em PDF no cabeçalho e no Contato
+
+- **Data:** 2026-10-24
+- **Pedido do Eduardo:** publicar os currículos em PDF (pt e en). É a principal pendência de conteúdo da revisão de UI/UX (D-098).
+- **Arquivos:** `public/assets/cv/eduardo-arine-curriculo.pdf` (pt, 2 páginas) e `eduardo-arine-resume.pdf` (en, 2 páginas).
+  - Os arquivos são os do Eduardo, sem alteração. Conteúdo lido antes de publicar: sem telefone, e-mail ou endereço.
+  - Os links internos dos PDFs apontam para o portfólio, o GitHub, o LinkedIn e as referências públicas que o Diário já usa.
+- **Modelo:** `SocialLink.localizedUrl` (um arquivo por idioma); o link `resume` em `social-links.data.ts` abre o PDF do idioma da página.
+- **Onde aparece:**
+  - **Cabeçalho, a partir de 1024 px** (o espaço previsto desde a D-037: "Currículo só com URL real"). Abaixo disso, o botão quebrava o cabeçalho fixo:
+    - no celular, uma terceira linha (117 → 181 px);
+    - a 820 px, a marca e o PT / EN em duas linhas.
+
+    O cabeçalho mantém as alturas de antes em todas as larguras.
+  - **Contato (Final Checkpoint), em todas as larguras:** terceira ação `secondary`, depois de GitHub e LinkedIn, com o ícone de documento. Revê a D-054 nesse ponto ("currículo fora" valia enquanto não havia um destino real).
+- **Comportamento:**
+  - abre numa nova aba (`target="_blank"`, `rel="noopener"`, `type="application/pdf"`);
+  - o nome acessível é "Currículo (PDF, abre em nova aba)" / "Résumé (PDF, opens in a new tab)".
+- **E-mail:** continua sem destino público (não renderiza sem endereço real).
+- **Validação:**
+  - 190 testes;
+  - axe sem violações no cabeçalho e no Contato (1440, 390, 360; pt e en);
+  - sem rolagem lateral;
+  - prerender com o PDF certo em `/` e `/en`;
+  - o clique abre o PDF do idioma numa nova aba.
+- **Status:** implementado, aguardando a aprovação do Eduardo.
+
+## D-100 — MC-007 — 4Change: sétimo cartucho e marco de 2016 no Diário
+
+- **Data:** 2026-10-24
+- **Pedido do Eduardo:** acrescentar o 4Change à coleção, como "Do legado à evolução contínua" (detalhes em `docs/24` §22), e o começo dele no 4Change, em 2016, ao Diário de Campanha.
+- **Fatos usados:** o relato do Eduardo e o currículo atualizado (D-099).
+  - Ativvus em 2016, depois Arppen.
+  - O sistema já existia em VB.NET; o Eduardo não o criou.
+  - O aplicativo Xamarin/C# (Android e iOS) foi a primeira contribuição.
+  - Depois vieram a sustentação e a modernização para Angular, .NET/C# e SQL Server, e hoje a ampliação para desktops.
+- **Fora do público (D-042):** informações comerciais, de clientes ou internas.
+- **Biblioteca:** MC-007 depois do MC-006, sem mudar códigos nem ordem.
+  - O contador "07 CARTUCHOS" e o "01 / 06" do dossiê já eram calculados.
+  - Com sete itens, a faixa pagina: no desktop mostra seis e as setas levam ao sétimo, sem comprimir os cartuchos.
+- **Case (6 seções):**
+  - Sobre (descrição + `overview`);
+  - Problema;
+  - Minha contribuição (`role` + `roleSteps`, em quatro etapas);
+  - Tecnologias (`technologyGroups`: origem e integração mobile × arquitetura modernizada, em destaque);
+  - Marcos (`timeline`: 2016 · Evolução contínua · Modernização · 2026, sem data inventada);
+  - Aprendizados.
+- **Modelo (extensão opcional, os seis cartuchos não mudam):** `Project.overview`, `roleSteps`, `technologyGroups` e `timeline`. O dossiê usa `timeline` no lugar de `highlights` quando existe.
+- **Arte do cartucho:** a do Eduardo (2026-10-24), em `design/source/mc-cart/collection/mc-007-4change.png` (2442 × 1752, RGBA), gerada pelo `build-collection.mjs` como as outras: mesma carcaça, mesmo slot (699 × 500) e a ilustração do rótulo no CRT (952 × 473, `contain`, logo cortado no alto como em Axia e Comunidade ON).
+  - **Ajuste no script:** a busca do topo do rótulo pegava a última linha laranja da faixa, e no MC-007 essa linha era o filete do próprio título (o recorte começava em y 112,5 e cortava o "4CHANGE"). Agora ela para no fim do primeiro bloco laranja, a moldura (y 100,5). Os derivados dos seis cartuchos anteriores saíram byte a byte iguais.
+  - Antes da arte, uma carcaça provisória (rótulo apagado) serviu só para os testes em desenvolvimento; foi removida.
+  - **Produção:** "07 CARTUCHOS".
+- **Diário:** o marco "Entrando em um produto real: o 4Change" (2016; título que não sugere autoria do produto, a confirmar) entra no capítulo 01, depois do primeiro Melhor Jogo.
+  - O resumo é a primeira frase da história, como nos outros.
+  - Os outros marcos não mudam de texto.
+  - **Mapa:** os seis pontos do capítulo 01 foram redistribuídos com espaçamento uniforme (x 12 / 27 / 42 / 57 / 72 / 87). Com o sexto ponto entre os antigos, o rótulo dele cobria o marco seguinte. Na revisão, os marcos 01–03 e 05 mudaram de altura (y 62 / 56 / 78 e 42), porque os rótulos 01 e 03, e depois 04 e 05, se sobrepunham de 768 a 1280 px. Medido sem sobreposição de 768 a 1920 px, em pt e en.
+  - **Imagem do marco:** `ch01-03b-4change.png` (o "b" mantém os nomes das outras histórias do capítulo).
+  - **Ligação Diário → cartucho:** não existe na arquitetura atual; fica como possibilidade futura.
+- **Links:** nenhum (o site da Arppen foi dispensado pelo Eduardo).
+- **Validação (build de produção, com a arte final), em 1440 / 1024 / 820 / 390, pt e en:**
+  - biblioteca com sete itens e paginação até o MC-007;
+  - inserir, capa, as seis seções com Anterior / Próxima, voltar à capa, trocar e ejetar;
+  - axe sem violações e sem rolagem lateral;
+  - dossiê em tela cheia no celular legível;
+  - "07 CARTUCHOS" no HTML pré-renderizado de `/` e `/en`;
+  - 193 testes.
+- **Aprovação do Eduardo (2026-10-24):** conteúdo, inglês, título do marco, "2026" na linha do tempo, tecnologias e a arte do cartucho.
+- **Imagem do marco no Diário:** a do Eduardo (`design/source/diary/stories/ch01-03b-4change.png`, 1536 × 1024), derivados por `build-diary.mjs`. As outras histórias saíram iguais.
+- **Site da Arppen:** dispensado pelo Eduardo; o case fica sem link externo.
+- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.
+
+## D-101 — Inventory abre com o MC-001 encaixado
+
+- **Data:** 2026-10-24
+- **Decisão do Eduardo:** o Project Inventory abre com o SYSTEM HORIZON (MC-001) já encaixado, na capa, como o revisor de UI/UX sugeriu na D-098. **Revê a D-098** ("Inventário ao chegar: continua vazio") e a primeira visita da D-087 ("slot vazio, CRT desligado").
+- **Como:** o estado inicial é o READY do primeiro cartucho (`insertedInventoryState` em `inventory.machine.ts`), aplicado direto, sem as transições.
+  - Ao carregar: sem animação, rolagem, foco ou anúncio; o teaser continua só sob demanda.
+  - O HTML pré-renderizado já sai com o cartucho encaixado e a capa.
+  - Vale para o MC-01 + CRT e para o portátil do celular.
+  - A biblioteca mostra o MC-001 como INSERIDO, com a dica "Escolher outro cartucho troca o que está inserido.".
+- **Ejetar e trocar:** iguais aos de qualquer READY. Ejetar volta ao slot vazio de sempre.
+- **Configuração:** `INVENTORY_START` (`inventory.projects.ts`), `'inserted'` por padrão. Os testes dos fluxos a partir do slot vazio fornecem `'empty'`.
+- **Validação:**
+  - 196 testes;
+  - axe sem violações em 1440 pt, 1024 en e 390 pt;
+  - a página abre no topo, sem foco movido;
+  - troca e ejeção funcionam a partir do estado inicial.
+- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.

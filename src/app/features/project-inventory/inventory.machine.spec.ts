@@ -1,6 +1,7 @@
 import {
   cartridgeSelection,
   initialInventoryState,
+  insertedInventoryState,
   InventoryEvent,
   InventoryState,
   inventoryView,
@@ -262,5 +263,28 @@ describe('inventory machine — READY art failure', () => {
   it('ignores a late teaser failure once the dossier is open (H3)', () => {
     const dossier = run([{ type: 'insert', reduced: true }, { type: 'explore' }]);
     expect(run([{ type: 'teaser-failed' }], dossier)).toBe(dossier);
+  });
+
+  it('opens inserted on the cover (D-101) and ejects or swaps from there as any READY', () => {
+    const start = insertedInventoryState('mc-001');
+    expect(start).toEqual({ kind: 'ready', cartridge: 'mc-001', screen: 'art' });
+    expect(cartridgeSelection(start)).toEqual({
+      selected: 'mc-001',
+      inserted: 'mc-001',
+      loading: null,
+    });
+    expect(nextInventoryState(start, { type: 'eject', reduced: true })).toEqual({
+      kind: 'empty',
+      cartridge: 'mc-001',
+      ejected: true,
+    });
+    expect(
+      nextInventoryState(start, { type: 'select', cartridge: 'mc-002', reduced: false }),
+    ).toEqual({
+      kind: 'ejecting',
+      cartridge: 'mc-001',
+      next: 'mc-002',
+      then: 'insert',
+    });
   });
 });

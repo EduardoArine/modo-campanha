@@ -29,10 +29,10 @@ function localizedOf(entry: CampaignLogChapterEntry): Localized<string | readonl
 }
 
 describe('Campaign Log — canonical chapters', () => {
-  it('publishes CHAPTERS 00, 01 and 02, with 5 + 5 + 4 checkpoints', () => {
+  it('publishes CHAPTERS 00, 01 and 02, with 5 + 6 + 4 checkpoints', () => {
     expect(CAMPAIGN_LOG_CHAPTERS.map((c) => [c.number, c.entries.length])).toEqual([
       ['00', 5],
-      ['01', 5],
+      ['01', 6],
       ['02', 4],
     ]);
   });

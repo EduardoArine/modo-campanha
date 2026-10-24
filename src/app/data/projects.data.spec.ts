@@ -48,7 +48,7 @@ describe('PROJECTS (runtime data)', () => {
     expect(PROJECTS.every((p) => p.publication === 'approved')).toBe(true);
   });
 
-  it('contains the six official MC-CART cartridges, in serial order (D-087)', () => {
+  it('contains the seven MC-CART cartridges, in serial order (D-087, D-100)', () => {
     expect(PROJECTS.map((p) => [p.serial, p.slug])).toEqual([
       ['MC-001', 'modo-campanha'],
       ['MC-002', 'aedes-revenge'],
@@ -56,6 +56,7 @@ describe('PROJECTS (runtime data)', () => {
       ['MC-004', 'eos'],
       ['MC-005', 'axia'],
       ['MC-006', 'comunidade-on'],
+      ['MC-007', '4change'],
     ]);
     // D-077: SYSTEM HORIZON é o primeiro cartucho; Modo Campanha é o portfólio (não o projeto).
     expect(PROJECTS[0].title).toEqual({ 'pt-BR': 'SYSTEM HORIZON', en: 'SYSTEM HORIZON' });
@@ -150,7 +151,7 @@ describe('PROJECTS (runtime data)', () => {
     ).toBe(false);
   });
 
-  it('publishes the six cartridges in production (approved + approved artwork)', () => {
+  it('publishes the seven cartridges in production (approved + approved artwork)', () => {
     expect(inventoryProjects(false).map((p) => p.serial)).toEqual([
       'MC-001',
       'MC-002',
@@ -158,6 +159,7 @@ describe('PROJECTS (runtime data)', () => {
       'MC-004',
       'MC-005',
       'MC-006',
+      'MC-007',
     ]);
   });
 
@@ -180,7 +182,7 @@ describe('MC-CART collection (D-087)', () => {
     }
   });
 
-  it('shows the label art of MC-002…MC-006 whole on the CRT (contain), with a bilingual alt', () => {
+  it('shows the label art of MC-002…MC-007 whole on the CRT (contain), with a bilingual alt', () => {
     for (const p of PROJECTS.slice(1)) {
       const art = p.cartridge.artwork!;
       expect(art.src).toBe(`assets/cartridges/${p.id}/label-art-952.webp`);
@@ -220,11 +222,45 @@ describe('MC-CART collection (D-087)', () => {
       ['MC-004', ['launch', 'paper', 'press']],
       ['MC-005', ['press']],
       ['MC-006', []],
+      // Sem link externo: o site da Arppen foi dispensado (D-100).
+      ['MC-007', []],
     ]);
   });
 
-  it('marks only Comunidade ON as ongoing, with no public link yet', () => {
-    expect(PROJECTS.filter((p) => p.ongoing).map((p) => p.serial)).toEqual(['MC-006']);
+  it('publishes MC-007 (4Change) with its final collection art (D-100)', () => {
+    const p = PROJECTS[6];
+    expect(p.cartridge.artwork?.src).toBe('assets/cartridges/mc-007/label-art-952.webp');
+    expect(p.cartridge.artwork?.height).toBe(473);
+    expect(inventoryProjects(false).map((x) => x.serial)).toContain('MC-007');
+  });
+
+  it('tells MC-007 as the evolution of an existing system, in stages and phases (D-100)', () => {
+    const p = PROJECTS[6];
+    expect(p.role['pt-BR']).toMatch(/^Não criei o sistema original/);
+    expect(p.roleSteps?.map((s) => s.title['pt-BR'])).toEqual([
+      'Aplicação mobile — 2016',
+      'Sustentação e evolução',
+      'Modernização tecnológica',
+      'Evolução atual',
+    ]);
+    expect(p.technologyGroups?.map((g) => [g.label.en, g.items[0], !!g.featured])).toEqual([
+      ['Origin and mobile integration', 'VB.NET', false],
+      ['Modernized architecture', 'Angular', true],
+    ]);
+    // Só anos informados (2016, 2026); a modernização é uma fase, sem data inventada.
+    expect(p.timeline?.map((t) => t.when['pt-BR'])).toEqual([
+      '2016',
+      'Evolução contínua',
+      'Modernização',
+      '2026',
+    ]);
+    expect(p.learnings['pt-BR'].length).toBe(p.learnings.en.length);
+    // Sem informações comerciais nem de clientes (D-042).
+    expect(JSON.stringify(p)).not.toMatch(/cliente|contrato|client|contract/i);
+  });
+
+  it('marks Comunidade ON and 4Change as ongoing; Comunidade ON has no public link yet', () => {
+    expect(PROJECTS.filter((p) => p.ongoing).map((p) => p.serial)).toEqual(['MC-006', 'MC-007']);
     expect(PROJECTS[5].links).toEqual([]);
   });
 });

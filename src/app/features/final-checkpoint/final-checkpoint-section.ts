@@ -25,4 +25,6 @@ export class FinalCheckpointSection {
   protected readonly links = SOCIAL_LINKS.filter(
     (link) => link.kind === 'github' || link.kind === 'linkedin',
   );
+  /** Currículo em PDF (D-099), no idioma da página. */
+  protected readonly resume = SOCIAL_LINKS.find((link) => link.kind === 'resume');
 }

@@ -100,3 +100,82 @@ figcaption,
   font-size: 0.9em;
   color: var(--mc-text-muted);
 }
+
+// Case em etapas, tecnologias por fase e linha do tempo (D-100).
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.steps,
+.timeline {
+  display: grid;
+  gap: space(3);
+  max-width: 36em;
+  line-height: 1.5;
+}
+
+.steps li {
+  display: grid;
+  gap: space(1);
+  padding-inline-start: space(3);
+  border-inline-start: var(--mc-border-width-default) solid var(--mc-border-accent);
+}
+
+.step-title {
+  font-weight: 600;
+  color: var(--mc-text);
+}
+
+.step-text,
+.what {
+  color: var(--mc-text-secondary);
+}
+
+.group {
+  display: grid;
+  gap: space(2);
+  justify-items: start;
+
+  // Fase atual em destaque: rótulo e bordas no acento.
+  &.is-featured li {
+    border-color: var(--mc-accent);
+    color: var(--mc-text);
+  }
+
+  &:not(.is-featured) .kind {
+    color: var(--mc-text-muted);
+  }
+}
+
+// Linha do tempo: as fases numa coluna só (subgrid), para os textos alinharem entre as linhas.
+.timeline {
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: space(3);
+}
+
+.timeline li {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: subgrid;
+}
+
+// Vidro estreito (portátil, dossiê do celular, CRT de 820 a 1024): a fase em cima, o texto embaixo.
+@container (max-width: 520px) {
+  .timeline,
+  .timeline li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .timeline li {
+    gap: space(1);
+  }
+}
+
+.when {
+  @include type(system);
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--mc-accent);
+}

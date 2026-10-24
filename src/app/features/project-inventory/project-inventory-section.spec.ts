@@ -6,7 +6,7 @@ import { routes } from '../../app.routes';
 import { PROJECTS } from '../../data';
 import { Project } from '../../models';
 import { dossierSections } from './crt-dossier';
-import { INVENTORY_PROJECTS } from './inventory.projects';
+import { INVENTORY_PROJECTS, INVENTORY_START } from './inventory.projects';
 import { ProjectInventorySection } from './project-inventory-section';
 
 // Project Inventory H3 (D-093): biblioteca MC-CART (D-087) + estação MC-01 / CRT, com a CAPA e o
@@ -24,11 +24,20 @@ describe('ProjectInventorySection', () => {
     })) as unknown as typeof window.matchMedia;
   }
 
-  async function renderAt(url: string, projects?: readonly Project[]): Promise<HTMLElement> {
+  /**
+   * `start`: como o Inventory abre. Os fluxos partem do slot vazio (`'empty'`); `'page'` usa o
+   * padrão da página (MC-001 encaixado, D-101).
+   */
+  async function renderAt(
+    url: string,
+    projects?: readonly Project[],
+    start: 'inserted' | 'empty' | 'page' = 'empty',
+  ): Promise<HTMLElement> {
     TestBed.configureTestingModule({
       providers: [
         provideRouter(routes),
         ...(projects ? [{ provide: INVENTORY_PROJECTS, useValue: projects }] : []),
+        ...(start === 'page' ? [] : [{ provide: INVENTORY_START, useValue: start }]),
       ],
     });
     const harness = await RouterTestingHarness.create(url);
@@ -60,13 +69,32 @@ describe('ProjectInventorySection', () => {
     vi.useRealTimers();
   });
 
+  it('opens with MC-001 already inserted, on its cover, without moving the page (D-101)', async () => {
+    reducedMotion(false);
+    const el = await renderAt('/', undefined, 'page');
+
+    expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('seated');
+    expect(text(el, '.slot-status')).toBe('INSERIDO');
+    expect(text(el, '#crt-cover-title')).toBe('SYSTEM HORIZON');
+    expect(el.querySelector('#inventory-eject')).not.toBeNull();
+    expect(el.querySelector('#inventory-insert')).toBeNull();
+    // Na biblioteca, o MC-001 aparece inserido; a dica fala em trocar.
+    expect(library(el)[0].getAttribute('aria-label')).toBe('MC-001 — SYSTEM HORIZON, inserido');
+    expect(text(el, '.library .hint')).toBe('Escolher outro cartucho troca o que está inserido.');
+    // Sem anúncio, foco ou teaser ao abrir.
+    expect(text(el, '[role="status"]')).toBe('');
+    expect(document.activeElement?.id).not.toBe('crt-cover-title');
+    expect(el.querySelector('app-system-horizon-screen')).toBeNull();
+  });
+
   it('opens with the collection, MC-001 above the empty slot and the CRT in standby', async () => {
     reducedMotion(false);
     const el = await renderAt('/');
 
     expect(el.querySelector('h2')?.textContent).toBe('INVENTÁRIO DE PROJETOS');
     expect(text(el, '.library .title')).toBe('BIBLIOTECA DE CARTUCHOS');
-    expect(library(el).length).toBe(6);
+    expect(library(el).length).toBe(7);
+    expect(text(el, '.library .count')).toBe('07 CARTUCHOS');
     expect(library(el)[0].getAttribute('aria-current')).toBe('true');
     expect(el.querySelector('mc-console')?.getAttribute('data-pose')).toBe('out');
     expect(text(el, '.bar-text')).toBe('MC-001 · SYSTEM HORIZON ENCAIXE VAZIO');
@@ -400,6 +428,7 @@ describe('ProjectInventorySection', () => {
       ['MC-004', 6],
       ['MC-005', 5],
       ['MC-006', 5],
+      ['MC-007', 6],
     ]);
     reducedMotion(true);
     const el = await renderAt('/');
@@ -411,6 +440,38 @@ describe('ProjectInventorySection', () => {
     expect(sections(el).at(-1)?.textContent?.replace(/\s+/g, ' ').trim()).toBe('05 Aprendizados');
     click(sections(el)[4]);
     expect(el.querySelector('app-crt-dossier-section .links')).toBeNull();
+  });
+
+  it('renders the MC-007 case: overview, role in stages, technologies by phase and a timeline (D-100)', async () => {
+    reducedMotion(true);
+    const el = await renderAt('/');
+    click(library(el)[6]);
+    click(el.querySelector('#inventory-insert'));
+    click(el.querySelector('#inventory-explore'));
+    const body = () => el.querySelector('app-crt-dossier-section')!;
+    // 01 Sobre: descrição + os dois parágrafos do overview.
+    expect(body().querySelectorAll('.lead').length).toBe(3);
+    click(sections(el)[2]);
+    expect(
+      Array.from(body().querySelectorAll('.steps .step-title')).map((s) => s.textContent?.trim()),
+    ).toEqual([
+      'Aplicação mobile — 2016',
+      'Sustentação e evolução',
+      'Modernização tecnológica',
+      'Evolução atual',
+    ]);
+    click(sections(el)[3]);
+    expect(body().querySelectorAll('.group').length).toBe(2);
+    expect(body().querySelector('.group.is-featured .kind')?.textContent?.trim()).toBe(
+      'Arquitetura modernizada',
+    );
+    expect(body().querySelector('.group .note')?.textContent).toContain('sistema legado');
+    click(sections(el)[4]);
+    expect(
+      Array.from(body().querySelectorAll('.timeline .when')).map((w) => w.textContent?.trim()),
+    ).toEqual(['2016', 'Evolução contínua', 'Modernização', '2026']);
+    // Sem timeline, os outros cases seguem com a lista de marcos.
+    expect(body().querySelector('.list')).toBeNull();
   });
 
   it('falls back to the canonical MC-CART and the HTML case when a console layer fails', async () => {

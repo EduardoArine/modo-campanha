@@ -19,6 +19,20 @@
           <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
         </a>
       }
+      @if (resume; as cv) {
+        <!-- Currículo (D-099): o PDF do idioma da página, numa nova aba. -->
+        <a
+          mcAction="secondary"
+          class="resume"
+          [href]="cv.localizedUrl ? locale.pick(cv.localizedUrl) : cv.url"
+          type="application/pdf"
+          target="_blank"
+          rel="noopener"
+        >
+          <mc-icon name="document" /> {{ ui().cta.resume }}
+          <span class="mc-visually-hidden">{{ ui().a11y.pdf }}</span>
+        </a>
+      }
     </div>
   </div>
 </section>

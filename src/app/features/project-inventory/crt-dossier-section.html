@@ -3,6 +3,11 @@
 @switch (section()) {
   @case ('about') {
     <p class="lead">{{ locale.pick(p.description) }}</p>
+    @if (p.overview; as overview) {
+      @for (paragraph of locale.pick(overview); track $index) {
+        <p class="lead">{{ paragraph }}</p>
+      }
+    }
     @if (p.ongoing) {
       <mc-status state="in-progress">{{ ui().status.inProgress }}</mc-status>
     }
@@ -39,20 +44,60 @@
   }
   @case ('role') {
     <p class="lead">{{ locale.pick(p.role) }}</p>
+    @if (p.roleSteps; as steps) {
+      <!-- Contribuição em etapas (D-100), na ordem em que aconteceram. -->
+      <ol class="steps" role="list">
+        @for (step of steps; track $index) {
+          <li>
+            <p class="step-title">{{ locale.pick(step.title) }}</p>
+            <p class="step-text">{{ locale.pick(step.text) }}</p>
+          </li>
+        }
+      </ol>
+    }
   }
   @case ('stack') {
-    <ul class="chips" role="list">
-      @for (tech of p.technologies; track tech) {
-        <li>{{ tech }}</li>
+    @if (p.technologyGroups; as groups) {
+      <!-- Tecnologias por fase (D-100): a fase atual em destaque, sem sugerir tudo ao mesmo tempo. -->
+      @for (group of groups; track $index) {
+        <div class="group" [class.is-featured]="group.featured">
+          <p class="kind">{{ locale.pick(group.label) }}</p>
+          <ul class="chips" role="list">
+            @for (tech of group.items; track tech) {
+              <li>{{ tech }}</li>
+            }
+          </ul>
+          @if (group.note; as note) {
+            <p class="note">{{ locale.pick(note) }}</p>
+          }
+        </div>
       }
-    </ul>
+    } @else {
+      <ul class="chips" role="list">
+        @for (tech of p.technologies; track tech) {
+          <li>{{ tech }}</li>
+        }
+      </ul>
+    }
   }
   @case ('highlights') {
-    <ul class="list" role="list">
-      @for (h of locale.pick(p.highlights!); track h) {
-        <li>{{ h }}</li>
-      }
-    </ul>
+    @if (p.timeline; as timeline) {
+      <!-- Linha do tempo (D-100): anos reais ou fases descritas, nunca datas inventadas. -->
+      <ol class="timeline" role="list">
+        @for (item of timeline; track $index) {
+          <li>
+            <span class="when">{{ locale.pick(item.when) }}</span>
+            <span class="what">{{ locale.pick(item.text) }}</span>
+          </li>
+        }
+      </ol>
+    } @else {
+      <ul class="list" role="list">
+        @for (h of locale.pick(p.highlights!); track h) {
+          <li>{{ h }}</li>
+        }
+      </ul>
+    }
   }
   @case ('learnings') {
     <ul class="list" role="list">

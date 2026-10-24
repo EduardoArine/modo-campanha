@@ -245,7 +245,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   entries: [
     {
       id: 'fatec-passion-became-choice',
-      map: { x: 13, y: 70, label: 'below' },
+      map: { x: 12, y: 62, label: 'below' },
       image: {
         ...diaryArt('stories', 'ch01-01-paixao-escolha', STORY_WIDTHS, 1024),
         alt: {
@@ -273,7 +273,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-aedes-revenge',
-      map: { x: 31, y: 64, label: 'above' },
+      map: { x: 27, y: 56, label: 'above' },
       image: {
         ...diaryArt('stories', 'ch01-02-aedes-revenge', STORY_WIDTHS, 1024),
         alt: {
@@ -307,7 +307,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-first-best-game',
-      map: { x: 49, y: 74, label: 'below' },
+      map: { x: 42, y: 78, label: 'below' },
       image: {
         ...diaryArt('stories', 'ch01-03-melhor-jogo', STORY_WIDTHS, 1024),
         alt: {
@@ -335,8 +335,44 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
       },
     },
     {
+      // D-100: o começo no 4Change (MC-007). Texto a partir do relato do Eduardo (2026-10-24);
+      // inglês aprovado. Imagem do marco: arte do Eduardo (ch01-03b-4change).
+      id: 'fatec-ativvus-4change',
+      map: { x: 57, y: 64, label: 'above' },
+      image: {
+        ...diaryArt('stories', 'ch01-03b-4change', STORY_WIDTHS, 1024),
+        alt: {
+          'pt-BR':
+            'Ilustração em pixel art: uma mesa de escritório ao pôr do sol, com um monitor mostrando um painel de gestão de dispositivos, um smartphone num suporte e outros celulares, chips e um carregador com aparelhos enfileirados; ao fundo, a cidade pela janela.',
+          en: 'Pixel-art illustration: an office desk at sunset, with a monitor showing a device management dashboard, a smartphone on a stand, more phones, SIM cards, and a charging rack with devices lined up; the city seen through the window in the background.',
+        },
+      },
+      when: { year: 2016 },
+      title: {
+        'pt-BR': 'Entrando em um produto real: o 4Change',
+        en: 'Joining a Real Product: 4Change',
+      },
+      summary: {
+        'pt-BR':
+          'Em 2016, comecei a trabalhar na Ativvus, no 4Change, um sistema corporativo de gestão de ativos de TI que já existia em VB.NET.',
+        en: 'In 2016, I started working at Ativvus on 4Change, a corporate IT asset management system that already existed in VB.NET.',
+      },
+      story: {
+        'pt-BR': [
+          'Em 2016, comecei a trabalhar na Ativvus, no 4Change, um sistema corporativo de gestão de ativos de TI que já existia em VB.NET.',
+          'Minha primeira missão foi desenvolver um aplicativo em Xamarin e C#, para Android e iOS, que levava funcionalidades do sistema para os dispositivos móveis.',
+          'Foi o começo de uma longa trajetória no mesmo produto: depois vieram a sustentação, a modernização para Angular, .NET e SQL Server e uma evolução que continua até hoje.',
+        ],
+        en: [
+          'In 2016, I started working at Ativvus on 4Change, a corporate IT asset management system that already existed in VB.NET.',
+          "My first mission was to build a Xamarin/C# app for Android and iOS that brought the system's features to mobile devices.",
+          'It was the start of a long journey with the same product: maintenance came next, then the modernization to Angular, .NET, and SQL Server, and an evolution that continues to this day.',
+        ],
+      },
+    },
+    {
       id: 'fatec-real-players',
-      map: { x: 67, y: 52, label: 'above' },
+      map: { x: 72, y: 42, label: 'above' },
       image: {
         ...diaryArt('stories', 'ch01-04-jogadores-reais', STORY_WIDTHS, 1024),
         alt: {
@@ -369,7 +405,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
     },
     {
       id: 'fatec-two-awards-capstone',
-      map: { x: 86, y: 68, label: 'below' },
+      map: { x: 87, y: 68, label: 'below' },
       image: {
         ...diaryArt('stories', 'ch01-05-premios-tcc', STORY_WIDTHS, 1024),
         alt: {
