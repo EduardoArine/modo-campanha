@@ -1,7 +1,7 @@
 # Pendências — Modo Campanha
 
 Lista viva do que falta decidir, aprovar ou fazer. Atualize ao concluir um item (marque `[x]` ou apague a linha).
-Última atualização: 2026-10-23.
+Última atualização: 2026-10-24.
 
 ## Para retomar em outra máquina
 
@@ -17,13 +17,10 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 
 ## 1. Publicar (deploy)
 
-O site no ar tem o deploy de 2026-10-22 (Inventário H3, D-093 a D-095). **Ainda não publicado:**
-
-- cartucho maior no slot, barra do console no topo, novo fundo da estação (D-094, D-095) e dossiê em tela cheia no celular (D-096);
-- remoção de Conquistas, Missão principal atual e Missões secundárias (D-097);
-- ajustes da revisão de UI/UX e pré-renderização da Home (D-098).
-
-- [ ] Revisar no navegador (`npm start`, e o celular pela rede local) e, se ok, disparar o workflow **Deploy to GitHub Pages** (Actions → workflow_dispatch). Na primeira publicação com a pré-renderização, conferir `/` e `/en` no ar (HTML já com o conteúdo, idioma certo e sem erros no console).
+- [x] Publicado em 2026-10-24 (commit `b316a0d`, D-094 a D-098). Conferido no ar:
+  - `/` (pt-BR) e `/en` (en) com o HTML já pré-renderizado, no idioma certo;
+  - rota desconhecida → 404; `sitemap.xml` ok;
+  - seis seções, MC-01 no desktop e portátil no celular, sem erros de console nem rolagem lateral.
 
 ## 2. Aprovações formais (implementado e mergeado, falta o seu "aprovado")
 
