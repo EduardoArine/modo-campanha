@@ -17,10 +17,8 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 
 ## 1. Publicar (deploy)
 
-- [x] Publicado em 2026-10-24 (commit `b316a0d`, D-094 a D-098). Conferido no ar:
-  - `/` (pt-BR) e `/en` (en) com o HTML já pré-renderizado, no idioma certo;
-  - rota desconhecida → 404; `sitemap.xml` ok;
-  - seis seções, MC-01 no desktop e portátil no celular, sem erros de console nem rolagem lateral.
+- [x] Publicado em 2026-10-24 (PR #8, commit `3c6d7c9`): currículo em PDF (D-099), MC-007 — 4Change e o marco de 2016 no Diário (D-100), Inventário abrindo com o MC-001 encaixado (D-101). Conferido no ar: "07 CARTUCHOS" em `/` e `/en`, PDFs no idioma certo, sem erros nem rolagem lateral.
+- [x] Publicado antes, no mesmo dia: D-094 a D-098 (commit `b316a0d`).
 
 ## 2. Aprovações formais (implementado e mergeado, falta o seu "aprovado")
 

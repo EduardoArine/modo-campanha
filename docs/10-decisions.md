@@ -1654,7 +1654,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - sem rolagem lateral;
   - prerender com o PDF certo em `/` e `/en`;
   - o clique abre o PDF do idioma numa nova aba.
-- **Status:** implementado, aguardando a aprovação do Eduardo.
+- **Status:** aprovado e publicado em 2026-10-24 (PR #8).
 
 ## D-100 — MC-007 — 4Change: sétimo cartucho e marco de 2016 no Diário
 
@@ -1698,7 +1698,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Aprovação do Eduardo (2026-10-24):** conteúdo, inglês, título do marco, "2026" na linha do tempo, tecnologias e a arte do cartucho.
 - **Imagem do marco no Diário:** a do Eduardo (`design/source/diary/stories/ch01-03b-4change.png`, 1536 × 1024), derivados por `build-diary.mjs`. As outras histórias saíram iguais.
 - **Site da Arppen:** dispensado pelo Eduardo; o case fica sem link externo.
-- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.
+- **Status:** aprovado e publicado em 2026-10-24 (PR #8).
 
 ## D-101 — Inventory abre com o MC-001 encaixado
 
@@ -1716,4 +1716,4 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - axe sem violações em 1440 pt, 1024 en e 390 pt;
   - a página abre no topo, sem foco movido;
   - troca e ejeção funcionam a partir do estado inicial.
-- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.
+- **Status:** aprovado e publicado em 2026-10-24 (PR #8).
