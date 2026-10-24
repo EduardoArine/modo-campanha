@@ -32,6 +32,7 @@ export const UI_EN: UiDictionary = {
   },
   a11y: {
     newTab: '(opens in a new tab)',
+    pdf: '(PDF, opens in a new tab)',
     skipToContent: 'Skip to content',
   },
   cta: {

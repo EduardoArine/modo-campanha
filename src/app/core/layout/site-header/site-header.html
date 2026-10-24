@@ -48,8 +48,17 @@
       </ul>
 
       @if (resume; as link) {
-        <a mcAction="secondary" class="resume" [href]="link.url">
+        <!-- Currículo (D-099): o PDF do idioma da página, numa nova aba. -->
+        <a
+          mcAction="secondary"
+          class="resume"
+          [href]="link.localizedUrl ? locale.pick(link.localizedUrl) : link.url"
+          type="application/pdf"
+          target="_blank"
+          rel="noopener"
+        >
           <mc-icon name="document" /> {{ ui().cta.resume }}
+          <span class="mc-visually-hidden">{{ ui().a11y.pdf }}</span>
         </a>
       }
     </div>

@@ -1628,3 +1628,30 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
   - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
 - **Status:** mergeado na `main` (PRs #6 e #7), aguardando a aprovação do Eduardo. Sem deploy. Pendências em `PENDENCIAS.md`.
+
+## D-099 — Currículo em PDF no cabeçalho e no Contato
+
+- **Data:** 2026-10-24
+- **Pedido do Eduardo:** publicar os currículos em PDF (pt e en). É a principal pendência de conteúdo da revisão de UI/UX (D-098).
+- **Arquivos:** `public/assets/cv/eduardo-arine-curriculo.pdf` (pt, 2 páginas) e `eduardo-arine-resume.pdf` (en, 2 páginas).
+  - Os arquivos são os do Eduardo, sem alteração. Conteúdo lido antes de publicar: sem telefone, e-mail ou endereço.
+  - Os links internos dos PDFs apontam para o portfólio, o GitHub, o LinkedIn e as referências públicas que o Diário já usa.
+- **Modelo:** `SocialLink.localizedUrl` (um arquivo por idioma); o link `resume` em `social-links.data.ts` abre o PDF do idioma da página.
+- **Onde aparece:**
+  - **Cabeçalho, a partir de 1024 px** (o espaço previsto desde a D-037: "Currículo só com URL real"). Abaixo disso, o botão quebrava o cabeçalho fixo:
+    - no celular, uma terceira linha (117 → 181 px);
+    - a 820 px, a marca e o PT / EN em duas linhas.
+
+    O cabeçalho mantém as alturas de antes em todas as larguras.
+  - **Contato (Final Checkpoint), em todas as larguras:** terceira ação `secondary`, depois de GitHub e LinkedIn, com o ícone de documento. Revê a D-054 nesse ponto ("currículo fora" valia enquanto não havia um destino real).
+- **Comportamento:**
+  - abre numa nova aba (`target="_blank"`, `rel="noopener"`, `type="application/pdf"`);
+  - o nome acessível é "Currículo (PDF, abre em nova aba)" / "Résumé (PDF, opens in a new tab)".
+- **E-mail:** continua sem destino público (não renderiza sem endereço real).
+- **Validação:**
+  - 190 testes;
+  - axe sem violações no cabeçalho e no Contato (1440, 390, 360; pt e en);
+  - sem rolagem lateral;
+  - prerender com o PDF certo em `/` e `/en`;
+  - o clique abre o PDF do idioma numa nova aba.
+- **Status:** implementado, aguardando a aprovação do Eduardo.

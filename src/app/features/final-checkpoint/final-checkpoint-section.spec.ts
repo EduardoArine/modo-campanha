@@ -40,7 +40,7 @@ describe('FinalCheckpointSection', () => {
 
   it('offers GitHub and LinkedIn as equivalent secondary actions opening in a new tab', async () => {
     const el = await renderAt('/');
-    const links = Array.from(el.querySelectorAll<HTMLAnchorElement>('.actions a'));
+    const links = Array.from(el.querySelectorAll<HTMLAnchorElement>('.actions a:not(.resume)'));
 
     expect(links.map((a) => a.getAttribute('href'))).toEqual([
       'https://github.com/EduardoArine',
@@ -58,12 +58,36 @@ describe('FinalCheckpointSection', () => {
     expect(el.querySelector('.mc-action--primary')).toBeNull();
   });
 
+  it('offers the résumé PDF of the page language as a third secondary action (D-099)', async () => {
+    const pt = await renderAt('/');
+    const cv = pt.querySelector<HTMLAnchorElement>('.actions a.resume')!;
+
+    expect(cv.getAttribute('href')).toBe('assets/cv/eduardo-arine-curriculo.pdf');
+    expect(cv.classList).toContain('mc-action--secondary');
+    expect(cv.getAttribute('type')).toBe('application/pdf');
+    expect(cv.getAttribute('target')).toBe('_blank');
+    expect(cv.textContent?.replace(/\s+/g, ' ').trim()).toBe('Currículo (PDF, abre em nova aba)');
+    expect(cv.querySelector('mc-icon')?.classList).toContain('mc-icon--stroke');
+  });
+
+  it('links the English résumé on /en', async () => {
+    const en = await renderAt('/en');
+
+    expect(en.querySelector('.actions a.resume')?.getAttribute('href')).toBe(
+      'assets/cv/eduardo-arine-resume.pdf',
+    );
+    expect(en.querySelector('.actions a.resume')?.textContent).toContain(
+      '(PDF, opens in a new tab)',
+    );
+  });
+
   it('shows no destination without an approved public link', async () => {
     const el = await renderAt('/');
     const hrefs = Array.from(el.querySelectorAll('a')).map((a) => a.getAttribute('href') ?? '');
 
     expect(hrefs.some((href) => /^(mailto|tel):|wa\.me|whatsapp/i.test(href))).toBe(false);
     expect(el.querySelector('form, input, textarea')).toBeNull();
-    expect(el.textContent).not.toMatch(/Currículo|Résumé|e-?mail|WhatsApp/i);
+    // Currículo aprovado (D-099, PDF real); e-mail e WhatsApp seguem sem destino.
+    expect(el.textContent).not.toMatch(/e-?mail|WhatsApp/i);
   });
 });

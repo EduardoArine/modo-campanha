@@ -47,9 +47,22 @@ describe('SiteHeader', () => {
     expect(el.querySelector('.languages a[lang="pt-BR"]')?.getAttribute('href')).toBe('/');
   });
 
-  it('does not render the résumé link without a real URL', async () => {
-    const el = await renderAt('/');
+  it('links the résumé PDF of the page language, in a new tab (D-099)', async () => {
+    const pt = await renderAt('/');
+    const link = pt.querySelector<HTMLAnchorElement>('a.resume')!;
 
-    expect(el.querySelector('.resume')).toBeNull();
+    expect(link.getAttribute('href')).toBe('assets/cv/eduardo-arine-curriculo.pdf');
+    expect(link.getAttribute('target')).toBe('_blank');
+    expect(link.getAttribute('rel')).toBe('noopener');
+    expect(link.getAttribute('type')).toBe('application/pdf');
+    expect(link.textContent?.replace(/\s+/g, ' ').trim()).toBe('Currículo (PDF, abre em nova aba)');
+  });
+
+  it('links the English résumé on /en', async () => {
+    const en = await renderAt('/en');
+
+    expect(en.querySelector('a.resume')?.getAttribute('href')).toBe(
+      'assets/cv/eduardo-arine-resume.pdf',
+    );
   });
 });

@@ -61,7 +61,7 @@ XP real, sem personagem.         © 2026 Eduardo Arine · Modo Campanha
 | Ações            | GitHub · LinkedIn                                                                                                                              | GitHub · LinkedIn                                                                                                                           | `SOCIAL_LINKS`                  |
 | Footer (05-C)    | XP real, sem personagem. · © {ano atual} Eduardo Arine · Modo Campanha                                                                         | Real XP. No persona. · © {current year} Eduardo Arine · Modo Campanha                                                                       | `PlayerProfile.motto` + UI      |
 
-- **Fora:** currículo, email, WhatsApp e formulário (não existem destinos públicos aprovados). Dado real faltando simplesmente não aparece.
+- **Fora:** email, WhatsApp e formulário (não existem destinos públicos aprovados). Dado real faltando simplesmente não aparece. O currículo em PDF entrou na D-099 como terceira ação `secondary`.
 - **Sem MOCK:** a seção não lê Campaign Log nem Achievements.
 
 ## 5. Responsivo

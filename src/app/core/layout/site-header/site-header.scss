@@ -139,6 +139,15 @@ ul {
   }
 }
 
+// Currículo (D-099): só a partir de 1024 px. Abaixo disso ele quebra o cabeçalho fixo (no celular,
+// uma terceira linha: 117 → 181 px; a 820 px, a marca e o PT / EN em duas linhas); lá ele fica no
+// Contato.
+.resume {
+  @media (max-width: 1023.98px) {
+    display: none;
+  }
+}
+
 // PT / EN: idioma ativo em accent, com aria-current.
 .languages {
   gap: space(1);
