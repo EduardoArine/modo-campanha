@@ -29,7 +29,7 @@ export function dossierSections(project: Project): readonly DossierSectionId[] {
   const sections: DossierSectionId[] = ['about'];
   if (project.challenge) sections.push('challenge');
   sections.push('role', 'stack');
-  if (project.highlights?.['pt-BR'].length) sections.push('highlights');
+  if (project.timeline?.length || project.highlights?.['pt-BR'].length) sections.push('highlights');
   if (project.learnings['pt-BR'].length || project.links.length) sections.push('learnings');
   return sections;
 }

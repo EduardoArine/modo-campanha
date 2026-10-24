@@ -81,14 +81,35 @@ describe('Campaign Log — CHAPTER 01 FATEC', () => {
     expect(FATEC_CHAPTER.period).toEqual({ start: 2013, end: 2017 });
     expect(FATEC_CHAPTER.context?.['pt-BR']).toBe('Tecnologia em Jogos Digitais · FATEC Americana');
     expect(FATEC_CHAPTER.closing?.['pt-BR']).toBe('A campanha estava apenas começando.');
-    expect(entries.length).toBe(5);
+    expect(entries.length).toBe(6);
     expect(entries.every((e) => !e.code)).toBe(true);
+  });
+
+  it('adds the 2016 start on 4Change (D-100) after the first award, without inventing facts', () => {
+    const ativvus = entries.find((e) => e.id === 'fatec-ativvus-4change')!;
+    expect(entries.map((e) => e.id).indexOf('fatec-ativvus-4change')).toBe(3);
+    expect(ativvus.when).toEqual({ year: 2016 });
+    for (const locale of ['pt-BR', 'en'] as const) {
+      // Resumo = a primeira frase da história, literal.
+      expect(ativvus.summary[locale]).toBe(ativvus.story[locale][0]);
+      expect(ativvus.story[locale].length).toBe(3);
+    }
+    const pt = ativvus.story['pt-BR'].join(' ');
+    expect(pt).toContain('Ativvus');
+    expect(pt).toContain('já existia em VB.NET');
+    expect(pt).toContain('Xamarin e C#, para Android e iOS');
+    // Sem informações comerciais nem de clientes (D-042).
+    expect(JSON.stringify(ativvus)).not.toMatch(/cliente|contrato|client|contract/i);
+    // Imagem do marco do Eduardo, sem links inventados.
+    expect(ativvus.image?.src).toBe('assets/diary/stories/ch01-03b-4change-1536.webp');
+    expect(ativvus.links).toBeUndefined();
   });
 
   it('uses only the years Eduardo gave; the project checkpoint is an era', () => {
     expect(entries.map((e) => e.when)).toEqual([
       { year: 2013 },
       { era: { 'pt-BR': 'Durante a graduação', en: 'During college' } },
+      { year: 2016 },
       { year: 2016 },
       { year: 2017 },
       { year: 2017 },

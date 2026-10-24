@@ -34,7 +34,10 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 - [x] **Currículo em PDF** (pt e en): no cabeçalho (≥ 1024 px) e no Contato (D-099).
 - [ ] **E-mail de contato:** opcional. `src/app/data/social-links.data.ts` já está preparado (só renderiza com endereço real).
 - [ ] **Hero (congelado):** botão de pausa da demonstração com 32 px (o recomendado para toque é 44 px) e, no celular, a primeira tela só com texto.
-- [ ] **Paco: 23 Horas para a Última Vela:** entra como cartucho MC-007 quando você aprovar o conteúdo.
+- [x] **MC-007 — 4Change (D-100):** conteúdo, inglês e arte do cartucho aprovados.
+  - [x] imagem do marco de 2016 no Diário;
+  - site da Arppen: dispensado.
+- [ ] **Paco: 23 Horas para a Última Vela:** entra como próximo cartucho (MC-008) quando você aprovar o conteúdo.
 - [ ] **FASE 6 (segredos):** qual efeito para o Konami Code, Secret Area etc. (`docs/08`).
 - [ ] **Progress e XP de campanha:** sem definição (D-021, D-059).
 

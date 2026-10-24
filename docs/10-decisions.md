@@ -1655,3 +1655,47 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - prerender com o PDF certo em `/` e `/en`;
   - o clique abre o PDF do idioma numa nova aba.
 - **Status:** implementado, aguardando a aprovação do Eduardo.
+
+## D-100 — MC-007 — 4Change: sétimo cartucho e marco de 2016 no Diário
+
+- **Data:** 2026-10-24
+- **Pedido do Eduardo:** acrescentar o 4Change à coleção, como "Do legado à evolução contínua" (detalhes em `docs/24` §22), e o começo dele no 4Change, em 2016, ao Diário de Campanha.
+- **Fatos usados:** o relato do Eduardo e o currículo atualizado (D-099).
+  - Ativvus em 2016, depois Arppen.
+  - O sistema já existia em VB.NET; o Eduardo não o criou.
+  - O aplicativo Xamarin/C# (Android e iOS) foi a primeira contribuição.
+  - Depois vieram a sustentação e a modernização para Angular, .NET/C# e SQL Server, e hoje a ampliação para desktops.
+- **Fora do público (D-042):** informações comerciais, de clientes ou internas.
+- **Biblioteca:** MC-007 depois do MC-006, sem mudar códigos nem ordem.
+  - O contador "07 CARTUCHOS" e o "01 / 06" do dossiê já eram calculados.
+  - Com sete itens, a faixa pagina: no desktop mostra seis e as setas levam ao sétimo, sem comprimir os cartuchos.
+- **Case (6 seções):**
+  - Sobre (descrição + `overview`);
+  - Problema;
+  - Minha contribuição (`role` + `roleSteps`, em quatro etapas);
+  - Tecnologias (`technologyGroups`: origem e integração mobile × arquitetura modernizada, em destaque);
+  - Marcos (`timeline`: 2016 · Evolução contínua · Modernização · 2026, sem data inventada);
+  - Aprendizados.
+- **Modelo (extensão opcional, os seis cartuchos não mudam):** `Project.overview`, `roleSteps`, `technologyGroups` e `timeline`. O dossiê usa `timeline` no lugar de `highlights` quando existe.
+- **Arte do cartucho:** a do Eduardo (2026-10-24), em `design/source/mc-cart/collection/mc-007-4change.png` (2442 × 1752, RGBA), gerada pelo `build-collection.mjs` como as outras: mesma carcaça, mesmo slot (699 × 500) e a ilustração do rótulo no CRT (952 × 473, `contain`, logo cortado no alto como em Axia e Comunidade ON).
+  - **Ajuste no script:** a busca do topo do rótulo pegava a última linha laranja da faixa, e no MC-007 essa linha era o filete do próprio título (o recorte começava em y 112,5 e cortava o "4CHANGE"). Agora ela para no fim do primeiro bloco laranja, a moldura (y 100,5). Os derivados dos seis cartuchos anteriores saíram byte a byte iguais.
+  - Antes da arte, uma carcaça provisória (rótulo apagado) serviu só para os testes em desenvolvimento; foi removida.
+  - **Produção:** "07 CARTUCHOS".
+- **Diário:** o marco "Entrando em um produto real: o 4Change" (2016; título que não sugere autoria do produto, a confirmar) entra no capítulo 01, depois do primeiro Melhor Jogo.
+  - O resumo é a primeira frase da história, como nos outros.
+  - Os outros marcos não mudam de texto.
+  - **Mapa:** os seis pontos do capítulo 01 foram redistribuídos com espaçamento uniforme (x 12 / 27 / 42 / 57 / 72 / 87). Com o sexto ponto entre os antigos, o rótulo dele cobria o marco seguinte. Na revisão, os marcos 01–03 e 05 mudaram de altura (y 62 / 56 / 78 e 42), porque os rótulos 01 e 03, e depois 04 e 05, se sobrepunham de 768 a 1280 px. Medido sem sobreposição de 768 a 1920 px, em pt e en.
+  - **Imagem do marco:** `ch01-03b-4change.png` (o "b" mantém os nomes das outras histórias do capítulo).
+  - **Ligação Diário → cartucho:** não existe na arquitetura atual; fica como possibilidade futura.
+- **Links:** nenhum (o site da Arppen foi dispensado pelo Eduardo).
+- **Validação (build de produção, com a arte final), em 1440 / 1024 / 820 / 390, pt e en:**
+  - biblioteca com sete itens e paginação até o MC-007;
+  - inserir, capa, as seis seções com Anterior / Próxima, voltar à capa, trocar e ejetar;
+  - axe sem violações e sem rolagem lateral;
+  - dossiê em tela cheia no celular legível;
+  - "07 CARTUCHOS" no HTML pré-renderizado de `/` e `/en`;
+  - 193 testes.
+- **Aprovação do Eduardo (2026-10-24):** conteúdo, inglês, título do marco, "2026" na linha do tempo, tecnologias e a arte do cartucho.
+- **Imagem do marco no Diário:** a do Eduardo (`design/source/diary/stories/ch01-03b-4change.png`, 1536 × 1024), derivados por `build-diary.mjs`. As outras histórias saíram iguais.
+- **Site da Arppen:** dispensado pelo Eduardo; o case fica sem link externo.
+- **Status:** implementado na branch `feat/mc-007-4change`. Sem merge e sem deploy.

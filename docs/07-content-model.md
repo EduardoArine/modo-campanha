@@ -97,6 +97,15 @@ Regras:
 
 Dados: `src/app/data/projects.data.ts`: **coleção MC-CART, MC-001 a MC-006 (D-087)**; os cases de MC-002 a MC-006 são condensados do Campaign Log e as evidências são importadas de `campaign-log.chapters.data.ts` (mesma fonte). Histórico: **MC-001 Modo Campanha** (`approved`, shell grafite com acentos laranja, artwork SYSTEM HORIZON e renders `front`/`threeQuarter` em `assets/cartridges/mc-001/`, D-065). Dentro do MC-CART a arte é decorativa (o cartucho é um único `role="img"`); `artwork.alt` serve para usos independentes. **Regra: o runtime contém somente projetos aprovados para publicação**; projetos em revisão (Paco, novo serial a definir, D-087) ficam só em `docs/14` até a aprovação. O filtro é testado com fixtures neutros (`approved`, `review`, `draft`, `blocked`, ausente), nunca com conteúdo editorial real não aprovado.
 
+## Project: campos opcionais do case (D-100)
+
+- `overview`: parágrafos do "Sobre o projeto", depois da descrição.
+- `roleSteps`: contribuição em etapas (`title` + `text`), depois do `role`.
+- `technologyGroups`: tecnologias por fase (`label`, `items`, `note`, `featured` para a fase atual). A capa continua com `technologies`.
+- `timeline`: marcos com `when` (ano real ou fase descrita) e `text`. No dossiê, substitui `highlights`.
+
+Ausentes, o dossiê se comporta como antes (D-093).
+
 ## Skill / SkillGroup (Skill Loadout, D-042)
 
 `src/app/models/skill.model.ts`

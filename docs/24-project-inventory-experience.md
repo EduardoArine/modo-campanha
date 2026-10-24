@@ -616,3 +616,29 @@ Pedido do Eduardo: biblioteca e estação em painéis, como na referência. Só 
   - o carrossel de cartuchos por cima: escolher insere (ou troca), e o cartucho desce por trás do corpo;
   - a tela do portátil mostra capa, dossiê e teaser.
 - **Assets:** `design/source/mc-01/build-console.mjs` (MC-01 frontal) e `design/source/handheld/build-handheld.mjs` (portátil).
+
+## 22. MC-007 — 4Change (D-100, 2026-10-24)
+
+"Do legado à evolução contínua": um produto corporativo real, que o Eduardo ajuda a evoluir desde 2016, e não um sistema criado do zero.
+
+- **Dados:** `projects.data.ts` (MC-007), com `overview`, `roleSteps`, `technologyGroups` e `timeline`.
+- **Arte:** a do Eduardo, na coleção (`mc-007-4change.png`, `build-collection.mjs`). O cartucho está em produção.
+
+### 22.1 Briefing da arte do cartucho (atendido)
+
+Usado para gerar a arte, como nos outros seis.
+
+- **Referência obrigatória:** `design/source/mc-cart/collection/` (1483 × 1061, RGBA, fundo transparente). Mesma carcaça, mesmas proporções e a mesma estrutura do rótulo: alça laranja no topo, pegas laranja nas laterais e triângulo na base.
+- **Rótulo:**
+  - **Faixa inferior:** "MC-CART", "MC-007", "MODO CAMPANHA" e o glifo de quatro quadrados, iguais aos outros.
+  - **Ilustração:** título "4CHANGE" no alto, à direita (como Axia e Comunidade ON).
+- **Ilustração:** centro de operações de TI ao entardecer ou à noite, com smartphones, linhas e desktops ligados por linhas de dados a um inventário organizado; sensação de controle e rastreabilidade.
+- **Estilo e paleta:** o mesmo das outras ilustrações da coleção, em grafite, azul técnico, laranja e âmbar.
+- **Proibido:** logos de clientes, nomes de empresas, dados reais, telas internas e qualquer texto além do título e da faixa.
+
+### 22.2 Briefing da imagem do marco no Diário (atendido)
+
+`design/source/diary/stories/ch01-03b-4change.png` (3:2, 1536 × 1024), no estilo pixel art das outras histórias do capítulo 01.
+
+- **Cena:** uma mesa de escritório em 2016 com um notebook (código ilegível), um smartphone Android e um iPhone com o protótipo de um aplicativo, e um monitor antigo com uma interface de sistema legado sem texto legível.
+- **Proibido:** UI do site e texto legível.

@@ -106,6 +106,30 @@ export interface ProjectExperience {
   status: 'available' | 'in-development';
 }
 
+/** Etapa da contribuição no case (D-100): título curto + o que foi feito, sem atribuir tudo ao Eduardo. */
+export interface ProjectRoleStep {
+  title: Localized;
+  text: Localized;
+}
+
+/**
+ * Contexto tecnológico do case (D-100): tecnologias de uma fase. `featured` destaca a fase atual (ex.:
+ * a arquitetura modernizada) sem sugerir que tudo foi introduzido ao mesmo tempo.
+ */
+export interface ProjectTechnologyGroup {
+  label: Localized;
+  items: readonly string[];
+  /** Contexto factual curto (ex.: o sistema legado já existia). */
+  note?: Localized;
+  featured?: true;
+}
+
+/** Marco da linha do tempo do case (D-100). `when` é um ano real ou uma fase descrita, nunca uma data inventada. */
+export interface ProjectTimelineItem {
+  when: Localized;
+  text: Localized;
+}
+
 /**
  * Conteúdo público de um projeto (D-042). Nada editorial ou privado (aprovadores,
  * revisão, confidencialidade) entra aqui: o repositório é público.
@@ -126,12 +150,21 @@ export interface Project {
   description: Localized;
   /** Texto impresso no cartucho (ex.: PORTFÓLIO INTERATIVO). */
   type: Localized;
+  /** Parágrafos do "Sobre o projeto", depois da descrição (case, D-100). */
+  overview?: Localized<readonly string[]>;
   /** Problema / contexto que o projeto resolve (case, D-087). */
   challenge?: Localized;
   role: Localized;
+  /** Contribuição em etapas, depois do `role` (case, D-100). */
+  roleSteps?: readonly ProjectRoleStep[];
+  /** Tecnologias da capa (as principais). */
   technologies: readonly string[];
+  /** Tecnologias do dossiê por fase (case, D-100); ausente = a lista `technologies`. */
+  technologyGroups?: readonly ProjectTechnologyGroup[];
   /** Marcos e reconhecimentos documentados (case, D-087). Nunca métricas inventadas. */
   highlights?: Localized<readonly string[]>;
+  /** Marcos em linha do tempo (case, D-100); substitui `highlights` na seção Marcos. */
+  timeline?: readonly ProjectTimelineItem[];
   learnings: Localized<readonly string[]>;
   /** Só quando houver dado real; nunca inventado. */
   year?: number;

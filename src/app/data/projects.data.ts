@@ -390,6 +390,152 @@ export const PROJECTS: readonly Project[] = [
     // Sem link público aprovado para a Comunidade ON (pendente com o Eduardo).
     links: [],
   },
+  {
+    // MC-007 — 4Change (D-100): "Do legado à evolução contínua". Conteúdo do Eduardo (2026-10-24) e
+    // do currículo atualizado. Sistema que já existia em VB.NET (não foi criado por ele); sem
+    // informações comerciais, de clientes ou internas (D-042). Arte do Eduardo (2026-10-24), na
+    // coleção por build-collection.mjs.
+    id: 'mc-007',
+    serial: 'MC-007',
+    slug: '4change',
+    origin: 'other',
+    publication: 'approved',
+    title: { 'pt-BR': '4Change', en: '4Change' },
+    description: {
+      'pt-BR':
+        'Plataforma corporativa de gestão de ativos, modernizada e continuamente evoluída para acompanhar as necessidades operacionais de seus usuários.',
+      en: "A corporate asset management platform, modernized and continuously evolved to keep up with its users' operational needs.",
+    },
+    overview: {
+      'pt-BR': [
+        'O 4Change é um sistema corporativo de gestão e controle de ativos de TI, usado em operações reais. Seu foco histórico é a telefonia corporativa: smartphones e dispositivos móveis, linhas e os vínculos entre equipamentos, linhas e usuários, com o inventário e o acompanhamento dos ativos.',
+        'A plataforma segue em evolução, agora com a ampliação para equipamentos desktop. Participo do produto desde 2016, na Ativvus, depois Arppen, e continuo atuando na sua evolução.',
+      ],
+      en: [
+        '4Change is a corporate IT asset management and control system used in real operations. Historically, it has focused on corporate telephony: smartphones and mobile devices, phone lines, and the links between devices, lines, and users, along with asset inventory and tracking.',
+        "The platform keeps evolving, now expanding to desktop equipment. I've worked on the product since 2016, at Ativvus (later Arppen), and I'm still part of its evolution.",
+      ],
+    },
+    type: { 'pt-BR': 'GESTÃO DE ATIVOS DE TI', en: 'IT ASSET MANAGEMENT' },
+    challenge: {
+      'pt-BR':
+        'Manter um sistema corporativo relevante por muitos anos: centralizar e organizar as informações dos ativos, controlar os vínculos entre equipamentos e linhas, evoluir uma base legada e adaptar a plataforma a novas demandas operacionais.',
+      en: 'Keep a corporate system relevant for many years: centralize and organize asset information, manage the links between devices and lines, evolve a legacy codebase, and adapt the platform to new operational needs.',
+    },
+    role: {
+      'pt-BR':
+        'Não criei o sistema original: quando cheguei, em 2016, ele já existia em VB.NET. Minha trajetória no 4Change é a de evoluir, em equipe, um produto em uso, passando por várias camadas da aplicação.',
+      en: "I didn't create the original system: when I joined in 2016, it already existed in VB.NET. My path with 4Change has been about evolving a product in use, as part of a team, across several layers of the application.",
+    },
+    roleSteps: [
+      {
+        title: { 'pt-BR': 'Aplicação mobile — 2016', en: 'Mobile app — 2016' },
+        text: {
+          'pt-BR':
+            'Desenvolvimento de um aplicativo em Xamarin e C#, para Android e iOS, integrado ao sistema VB.NET existente, levando funcionalidades da plataforma aos dispositivos móveis.',
+          en: "Built a Xamarin/C# app for Android and iOS, integrated with the existing VB.NET system, bringing the platform's features to mobile devices.",
+        },
+      },
+      {
+        title: { 'pt-BR': 'Sustentação e evolução', en: 'Maintenance and evolution' },
+        text: {
+          'pt-BR':
+            'Participação contínua na manutenção, na melhoria e no desenvolvimento de funcionalidades de uma plataforma em produção.',
+          en: 'Ongoing work on maintenance, improvements, and new features for a platform in production.',
+        },
+      },
+      {
+        title: { 'pt-BR': 'Modernização tecnológica', en: 'Technology modernization' },
+        text: {
+          'pt-BR':
+            'Participação na evolução para uma arquitetura moderna, com Angular, APIs em .NET/C# e SQL Server, atuando em frontend, backend, banco de dados, arquitetura e UX/UI.',
+          en: 'Took part in its move to a modern architecture with Angular, .NET/C# APIs, and SQL Server, working on the frontend, backend, database, architecture, and UX/UI.',
+        },
+      },
+      {
+        title: { 'pt-BR': 'Evolução atual', en: 'Current evolution' },
+        text: {
+          'pt-BR':
+            'Ampliação da gestão para novos tipos de ativos corporativos, incluindo desktops.',
+          en: 'Expanding management to new types of corporate assets, including desktops.',
+        },
+      },
+    ],
+    technologies: ['Angular', '.NET', 'C#', 'SQL Server'],
+    technologyGroups: [
+      {
+        label: { 'pt-BR': 'Origem e integração mobile', en: 'Origin and mobile integration' },
+        items: ['VB.NET', 'Xamarin', 'C#', 'Android', 'iOS'],
+        note: {
+          'pt-BR':
+            'O VB.NET é o sistema legado, que já existia; o aplicativo Xamarin se integrou a ele.',
+          en: 'VB.NET is the legacy system, which already existed; the Xamarin app was integrated with it.',
+        },
+      },
+      {
+        label: { 'pt-BR': 'Arquitetura modernizada', en: 'Modernized architecture' },
+        items: ['Angular', '.NET / ASP.NET Core Web API', 'C#', 'SQL Server', 'REST APIs'],
+        featured: true,
+      },
+    ],
+    timeline: [
+      {
+        when: { 'pt-BR': '2016', en: '2016' },
+        text: {
+          'pt-BR': 'Início da atuação e desenvolvimento do aplicativo em Xamarin.',
+          en: 'Joined the product and built the Xamarin app.',
+        },
+      },
+      {
+        when: { 'pt-BR': 'Evolução contínua', en: 'Ongoing' },
+        text: {
+          'pt-BR': 'Manutenção e desenvolvimento de funcionalidades.',
+          en: 'Maintenance and new features.',
+        },
+      },
+      {
+        when: { 'pt-BR': 'Modernização', en: 'Modernization' },
+        text: {
+          'pt-BR': 'Evolução tecnológica para Angular, .NET e SQL Server.',
+          en: 'Technology upgrade to Angular, .NET, and SQL Server.',
+        },
+      },
+      {
+        when: { 'pt-BR': '2026', en: '2026' },
+        text: {
+          'pt-BR': 'Participação na ampliação para a gestão de desktops.',
+          en: 'Working on the expansion to desktop management.',
+        },
+      },
+    ],
+    learnings: {
+      'pt-BR': [
+        'Evoluir um sistema existente, respeitando o que já funciona para quem o usa.',
+        'Entender as restrições de um software em produção, em que cada mudança precisa conviver com a operação.',
+        'Equilibrar modernização tecnológica e continuidade operacional.',
+        'Trabalhar nas diferentes camadas de uma aplicação: banco de dados, APIs, frontend e interface.',
+        'Desenhar interfaces a partir das necessidades reais de quem usa o sistema no dia a dia.',
+        'Manter um produto relevante por um longo período.',
+      ],
+      en: [
+        'Evolve an existing system while respecting what already works for the people who use it.',
+        'Understand the constraints of software in production, where every change has to coexist with day-to-day operations.',
+        'Balance technology modernization with operational continuity.',
+        'Work across the different layers of an application: database, APIs, frontend, and interface.',
+        'Design interfaces around the real needs of the people who use the system every day.',
+        'Keep a product relevant over a long period.',
+      ],
+    },
+    ongoing: true,
+    tags: ['product'],
+    cartridge: collectionCartridge('mc-007', 473, 'right', {
+      'pt-BR':
+        'Ilustração em pixel art: um centro de gestão de ativos de TI com smartphones, notebooks, desktops e um servidor ligados por linhas de dados, e prateleiras com equipamentos etiquetados, com o título 4CHANGE.',
+      en: 'Pixel-art illustration: an IT asset management hub with smartphones, laptops, desktops, and a server linked by data lines, and shelves of labeled equipment, with the title 4CHANGE.',
+    }),
+    experiences: [],
+    links: [],
+  },
 ];
 
 /** Regra conservadora: somente `publication: 'approved'` é público (ausente = não publica). */

@@ -1,5 +1,6 @@
-// Coleção MC-CART (D-087): normaliza os seis cartuchos oficiais e gera os derivados do runtime.
-// Fontes preservadas em design/source/mc-cart/collection/<serial>-<slug>.png (1483 × 1061, RGBA).
+// Coleção MC-CART (D-087, MC-007 em D-100): normaliza os cartuchos oficiais e gera os derivados do runtime.
+// Fontes preservadas em design/source/mc-cart/collection/<serial>-<slug>.png (RGBA; 1483 × 1061, o
+// MC-007 em 2442 × 1752: a escala é por cartucho, pela caixa do objeto).
 //
 // 1. Alfa: o corpo vem do gerador com 240–254; vira 255 (como no CRT, D-080). Borda e fundo intactos.
 // 2. Caixa do objeto (alfa ≥ 128) → escala UNIFORME para caber no slot do MC-01 (699 × 500, mesma
@@ -26,6 +27,7 @@ export const CARTRIDGES = [
   'mc-004-eos',
   'mc-005-axia',
   'mc-006-comunidade-on',
+  'mc-007-4change',
 ];
 /** Slot do MC-01 (console.geometry.ts) e mestre 2×. */
 const SLOT = { width: 699, height: 500, margin: 1 };
@@ -248,7 +250,11 @@ try {
       const rowShare = (y, test) => { let n = 0, t = 0; for (let x = Math.round(W * 0.3); x < W * 0.7; x += 4) { t++; if (test(at(x, y))) n++; } return n / t; };
       const colShare = (x, test) => { let n = 0, t = 0; for (let y = Math.round(H * 0.3); y < H * 0.6; y += 4) { t++; if (test(at(x, y))) n++; } return n / t; };
       let top = search.top[0] * k, bottom = search.bottom[1] * k, left = search.left[0] * k, right = search.right[1] * k;
-      for (let y = search.top[0] * k; y < search.top[1] * k; y++) if (rowShare(y, orange) > 0.6) top = y + 1;
+      // Topo: fim do PRIMEIRO bloco laranja (a moldura). Uma linha laranja da própria arte logo abaixo
+      // (ex.: o filete do título do MC-007) não conta.
+      for (let y = search.top[0] * k, seen = false; y < search.top[1] * k; y++) {
+        if (rowShare(y, orange) > 0.6) { top = y + 1; seen = true; } else if (seen) break;
+      }
       for (let y = search.bottom[0] * k; y < search.bottom[1] * k; y++) if (rowShare(y, dark) > 0.8) { bottom = y; break; }
       // A moldura laranja entre a arte e a faixa escura também fica de fora.
       // (procura a linha laranja mais alta numa janela de até 7 px acima da faixa).
