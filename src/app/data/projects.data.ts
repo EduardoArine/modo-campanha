@@ -190,7 +190,7 @@ export const PROJECTS: readonly Project[] = [
         'Avaliações e pesquisas com jogadores reais mostram o que funciona e o que precisa melhorar.',
       ],
       en: [
-        "Development isn't just about making something work: it's about thinking about the people who will use it.",
+        "Development isn't just about making something work: it's about thinking of the people who will use it.",
         'Reviews and surveys with real players show what works and what needs improvement.',
       ],
     },
@@ -213,7 +213,7 @@ export const PROJECTS: readonly Project[] = [
     description: {
       'pt-BR':
         'Plataforma criada para ajudar a descobrir novos talentos no futebol, reunindo informações de jovens jogadores coletadas por aplicativo.',
-      en: 'A platform designed to help discover young football talent, bringing together information about young players collected through an app.',
+      en: 'A platform designed to help discover new football talent, bringing together information about young players collected through an app.',
     },
     type: { 'pt-BR': 'PLATAFORMA DE TALENTOS NO FUTEBOL', en: 'FOOTBALL TALENT PLATFORM' },
     challenge: {
@@ -278,7 +278,7 @@ export const PROJECTS: readonly Project[] = [
         'A pesquisa que fundamentou a solução foi publicada na revista científica Case Studies on Transport Policy, em 2021.',
       ],
       en: [
-        "In September 2019, the system was made available to São Paulo's State Transplant Center and featured by Unicamp.",
+        "In September 2019, the system was made available to São Paulo's State Transplant Center and announced by Unicamp.",
         'The underlying research was published in the journal Case Studies on Transport Policy in 2021.',
       ],
     },
@@ -334,7 +334,7 @@ export const PROJECTS: readonly Project[] = [
         'Participar das decisões, construir, entender como a solução é usada e continuar evoluindo o produto.',
       ],
       en: [
-        "The challenge isn't just connecting different technologies, but turning real needs into a consistent product.",
+        "The challenge isn't just making different technologies work together, but turning real needs into a consistent product.",
         'Contribute to decisions, build, understand how the solution is used, and keep improving the product.',
       ],
     },

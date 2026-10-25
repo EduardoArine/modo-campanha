@@ -1,6 +1,7 @@
 import { PlayerProfile } from '../models';
 
 // Conteúdo aprovado por Eduardo (Home Slice 01, 2026-10-08). Não inventar nem completar.
+// D-102: o "10+ anos" aparece só no Player Status (linha XP e selo); saiu do resumo da Hero.
 export const PLAYER_PROFILE: PlayerProfile = {
   name: 'Eduardo Arine',
   role: {
@@ -13,8 +14,8 @@ export const PLAYER_PROFILE: PlayerProfile = {
   },
   summary: {
     'pt-BR':
-      'Construo produtos digitais conectando desenvolvimento, produto, IA e experiência — com mais de 10 anos em tecnologia e formação em Jogos Digitais.',
-    en: 'I build digital products connecting development, product, AI, and experience — backed by 10+ years in tech and a degree in Digital Games Technology.',
+      'Construo produtos digitais conectando desenvolvimento, produto, IA e experiência, com formação em Jogos Digitais.',
+    en: 'I build digital products connecting development, product, AI, and experience, with a degree in Digital Games Technology.',
   },
   motto: {
     'pt-BR': 'XP real, sem personagem.',
@@ -49,14 +50,15 @@ export const PLAYER_PROFILE: PlayerProfile = {
       },
     },
   },
-  // Player Status definitivo (D-082). Texto aprovado por Eduardo em 2026-10-18.
+  // Player Status definitivo (D-082). Texto aprovado por Eduardo em 2026-10-18; o "mais de 10 anos"
+  // saiu da jornada em D-102 (fica na linha XP e no selo, logo ao lado).
   journey: {
     'pt-BR': [
-      'Sou desenvolvedor de produtos digitais com mais de 10 anos de experiência, atuando na interseção entre tecnologia, produto, desenvolvimento e gamificação.',
+      'Sou desenvolvedor de produtos digitais e atuo na interseção entre tecnologia, produto, desenvolvimento e gamificação.',
       'Acredito em soluções que unem pessoas, tecnologia e propósito, gerando impacto real e experiências que fazem sentido.',
     ],
     en: [
-      "I'm a digital product developer with more than 10 years of experience, working at the intersection of technology, product, development, and gamification.",
+      "I'm a digital product developer working at the intersection of technology, product, development, and gamification.",
       'I believe in solutions that bring people, technology, and purpose together, creating real impact and meaningful experiences.',
     ],
   },

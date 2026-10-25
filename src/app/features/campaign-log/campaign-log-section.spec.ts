@@ -255,7 +255,7 @@ describe('CampaignLogSection (Diário de Campanha)', () => {
     expect(text(el, 'h2')).toBe('CAMPAIGN LOG');
     expect(text(el, '#diary-chapter-title')).toBe('ORIGIN');
     expect(nodes(el)[1].getAttribute('aria-label')).toBe(
-      'CHECKPOINT 02 of 05: The Rental Store Years',
+      'CHECKPOINT 02 of 05: The Rental Store School',
     );
     expect(steps(el)[1].textContent?.trim()).toBe('Next checkpoint');
     expect(text(el, 'app-diary-milestone .toggle')).toBe('Read the full story');

@@ -69,7 +69,7 @@ describe('PlayerStatusSection', () => {
     expect(texts(el, '.box-title')).toEqual(['SOBRE A JORNADA', 'ESTADO ATUAL']);
     expect(texts(el, '.journey .text')).toHaveLength(2);
     expect(el.querySelector('.journey .text')?.textContent).toMatch(
-      /^Sou desenvolvedor de produtos digitais com mais de 10 anos/,
+      /^Sou desenvolvedor de produtos digitais e atuo na interseção/,
     );
     expect(el.querySelector('.tagline')?.textContent?.trim()).toBe(
       'Tecnologia para pessoas reais.',

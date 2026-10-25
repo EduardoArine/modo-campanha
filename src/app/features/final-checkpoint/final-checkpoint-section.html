@@ -33,6 +33,13 @@
           <span class="mc-visually-hidden">{{ ui().a11y.pdf }}</span>
         </a>
       }
+      @if (email; as mail) {
+        <!-- E-mail (D-102): o endereço visível; o nome acessível começa por "E-mail". -->
+        <a mcAction="secondary" class="email" [href]="mail.url">
+          <mc-icon name="mail" />
+          <span class="mc-visually-hidden">{{ ui().cta.email }}:</span> {{ mail.label }}
+        </a>
+      }
     </div>
   </div>
 </section>

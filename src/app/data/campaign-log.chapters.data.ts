@@ -46,8 +46,7 @@ function photo(
 // ele (2026-10-17), sem alteração de fatos, cronologia ou intenção. Não é MOCK.
 // Datas: só "c. 1991" é aproximada e informada; os demais checkpoints usam a época descrita por ele,
 // sem inventar anos. O `summary` é a primeira frase do próprio texto (extração literal).
-// Publicação: ainda NÃO entra em produção (CAMPAIGN_LOG_CHAPTERS vazio em campaign-log.data.ts)
-// até o Eduardo congelar o capítulo; em desenvolvimento aparece antes da linha profissional.
+// Publicação: aprovado e publicado (D-074, D-091).
 export const ORIGIN_CHAPTER: CampaignLogChapter = {
   id: 'chapter-00-origin',
   number: '00',
@@ -83,8 +82,8 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
           'Por volta dos sete anos, finalmente ganhei meu próprio Atari. Pitfall, Enduro e River Raid fizeram parte de muitas horas da minha infância. Foi ali que começou uma paixão que nunca mais me deixou.',
         ],
         en: [
-          "My story with video games began around 1991, at my cousins' house, in front of an Atari 2600. I was about six, and I still remember everyone gathered around, playing and having fun. It felt like magic.",
-          "Around age seven, I finally got an Atari of my own. Pitfall, Enduro, and River Raid became a big part of my childhood. That's where a lifelong passion began.",
+          "My story with video games began around 1991, at my cousins' house, in front of an Atari 2600. I was about six, and I remember the feeling of seeing everyone gathered together, playing and having fun. It felt like magic.",
+          "Around age seven, I finally got an Atari of my own. Pitfall, Enduro, and River Raid filled many hours of my childhood. That's where a passion began that has never left me.",
         ],
       },
     },
@@ -101,7 +100,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
       },
       code: { 'pt-BR': 'OS ANOS DE LOCADORA', en: 'THE RENTAL STORE YEARS' },
       when: { era: { 'pt-BR': 'Época do SNES', en: 'SNES era' } },
-      title: { 'pt-BR': 'A escola das locadoras', en: 'The Rental Store Years' },
+      title: { 'pt-BR': 'A escola das locadoras', en: 'The Rental Store School' },
       summary: {
         'pt-BR': 'Quando conheci o Super Nintendo, aquela paixão ganhou ainda mais força.',
         en: 'When I discovered the Super Nintendo, that passion grew even stronger.',
@@ -112,8 +111,8 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
           'As locadoras também faziam parte dessa história. Muitas vezes eu ficava por perto esperando uma oportunidade de jogar ou ajudando alguém a passar de uma fase difícil. Lembro até hoje de esconder o controle debaixo da camiseta para ninguém descobrir como eu fazia o fatality do Scorpion no primeiro Mortal Kombat.',
         ],
         en: [
-          "When I discovered the Super Nintendo, that passion grew even stronger. I didn't own one yet, so I spent hours at a friend's house playing Super Mario World, Mega Man X, and many other games.",
-          "Rental stores were a big part of those years, too. I'd often hang around waiting for a chance to play or helping someone get past a difficult section. I still remember hiding the controller under my shirt so nobody could see how I performed Scorpion's fatality in the first Mortal Kombat.",
+          "When I discovered the Super Nintendo, that passion grew even stronger. Since I didn't have one, I spent hours at a friend's house playing Super Mario World, Mega Man X, and so many other games.",
+          "Rental stores were part of that story too. I'd often hang around waiting for a chance to play or helping someone get past a difficult section. I still remember hiding the controller under my shirt so nobody would figure out how I pulled off Scorpion's fatality in the first Mortal Kombat.",
         ],
       },
     },
@@ -142,7 +141,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           "I got my first Super Nintendo in a way I'll never forget. One day at my grandmother's house, a ladybug landed on my finger. I remembered the story about making a wish and letting it fly away. Of course, I wished for a Super Nintendo.",
-          "That same day, my mother told me she had a surprise. When I got home, there it was, brand new, with Prehistorik Man. I still don't know whether it was coincidence or luck. I just know it was one of the happiest moments of those years.",
+          "That same day, my mother showed up saying she had a surprise. When I got home, there it was, brand new, with Prehistorik Man. I still don't know whether it was coincidence or luck. All I know is that it was one of the happiest moments of those years.",
         ],
       },
     },
@@ -175,7 +174,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           "Then came the Nintendo 64 and the original PlayStation. I mostly experienced those consoles at rental stores and friends' houses, because owning one wasn't easy.",
-          "When I wanted a PlayStation of my own, my mother made it clear that I'd have to work for it. So I did. Working as a construction laborer's assistant, I saved enough money to buy my console. It was one of those experiences that makes you appreciate something even more because of what it took to get there.",
+          "When I wanted a PlayStation of my own, my mother made it clear that I'd have to work for it. And that's how it happened: working as a construction laborer's assistant, I saved enough money to buy my console. It was one of those experiences that make you value what you achieve even more.",
         ],
       },
     },
@@ -204,8 +203,8 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
           'Eu sempre sonhei em ter um espaço para expor meus videogames e poder jogar neles. Depois de imaginar vários projetos, resolvi construir o móvel com minhas próprias mãos. As fotos mostram um pouco desse sonho ganhando forma. Para mim, cada console guarda muito mais do que jogos: guarda histórias.',
         ],
         en: [
-          "As the years went by, I started collecting the consoles that had been part of my childhood and teenage years. I couldn't always keep them all. At different points, I had to sell some and gradually worked on finding them again. Friends became part of that story too, sometimes helping me rebuild the collection.",
-          "I'd always dreamed of having a space to display my consoles and play them. After sketching out several ideas, I decided to build the furniture myself. The photos capture part of that dream taking shape. To me, every console holds much more than games. It holds memories.",
+          "As the years went by, I started collecting the consoles that had been part of my childhood and teenage years. I couldn't always keep them all. At times, I had to sell some of them and then gradually tried to get them back. Friends were part of that story too, even helping me track down pieces of the collection.",
+          "I'd always dreamed of having a space to display my consoles and play them. After imagining several designs, I decided to build the cabinet with my own hands. The photos show a little of that dream taking shape. To me, every console holds much more than games. It holds stories.",
         ],
       },
       // Fotos da coleção e do móvel construído pelo Eduardo (fornecidas por ele, 2026-10-17).
@@ -227,7 +226,7 @@ export const ORIGIN_CHAPTER: CampaignLogChapter = {
 
 // CHAPTER 01 — DO CONTROLE AO CÓDIGO (docs/15 §14). Texto pt fornecido pelo Eduardo (2026-10-17),
 // sem alteração de fatos; ênfases (negrito/itálico) viram texto simples. Inglês: tradução fiel,
-// PENDENTE de aprovação. Datas: só as informadas (2013, 2016, 2017; período 2013–2017).
+// revisada em D-102. Datas: só as informadas (2013, 2016, 2017; período 2013–2017).
 export const FATEC_CHAPTER: CampaignLogChapter = {
   id: 'chapter-01-fatec',
   number: '01',
@@ -240,7 +239,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
   },
   signature: {
     'pt-BR': 'O que começou como paixão na infância se transformou em uma escolha de vida.',
-    en: 'What started as a childhood passion became the path I chose.',
+    en: 'What started as a childhood passion became a life choice.',
   },
   entries: [
     {
@@ -251,7 +250,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
         alt: {
           'pt-BR':
             'Ilustração em pixel art: a mesa de um laboratório de faculdade ao pôr do sol, com um notebook aberto num editor de jogo 2D, um caderno de esboços e um controle; pela janela, o campus.',
-          en: 'Pixel-art illustration: a desk in a college lab at sunset, with a laptop open in a 2D game editor, a sketchbook, and a controller; the campus seen through the window.',
+          en: 'Pixel-art illustration: a desk in a college lab at sunset, with a laptop open to a 2D game editor, a sketchbook, and a controller; the campus seen through the window.',
         },
       },
       when: { year: 2013 },
@@ -300,7 +299,7 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           "Aedes Revenge was born during college: a 2D mobile game that approached dengue awareness from a different perspective — the mosquito's own.",
-          'The project started as a group effort, but after the other members left, I kept developing the game on my own. I worked with Unity, C#, mechanics, interfaces, characters, and a wide range of development challenges.',
+          'The project started as a group effort, but after the other members left, I kept developing the game on my own. I worked with Unity, C#, mechanics, interfaces, characters, and many different development challenges.',
           'It was a chance to put what I was learning into practice and discover, firsthand, how much work goes into making a game.',
         ],
       },
@@ -398,8 +397,8 @@ export const FATEC_CHAPTER: CampaignLogChapter = {
         ],
         en: [
           'Aedes Revenge launched on Google Play in May 2017.',
-          'The beta version had three playable levels and a boss. More important than getting the game online was starting to see how real people interacted with it.',
-          "Reviews and surveys showed what worked and what needed improvement. That experience helped me understand that development isn't just about making something work: it's about thinking about the people who will use it.",
+          'The beta version had three playable levels and a boss. More important than getting the game out there was starting to see how real people interacted with it.',
+          "Reviews and surveys showed what worked and what needed improvement. That experience helped me understand that development isn't just about making something work: it's about thinking of the people who will use it.",
         ],
       },
     },
@@ -489,7 +488,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       summary: {
         'pt-BR':
           'Depois da faculdade, um dos projetos mais marcantes de que participei foi o ScoutEvo, uma plataforma criada para ajudar a descobrir novos talentos no futebol.',
-        en: 'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover young football talent.',
+        en: 'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover new football talent.',
       },
       story: {
         'pt-BR': [
@@ -500,10 +499,10 @@ export const CHAPTER_02: CampaignLogChapter = {
           'O ScoutEvo marcou uma evolução na minha trajetória: eu já não estava apenas desenvolvendo jogos. Estava usando o conhecimento que havia construído para criar soluções digitais com outras finalidades.',
         ],
         en: [
-          'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover young football talent.',
+          'After college, one of the most memorable projects I worked on was ScoutEvo, a platform designed to help discover new football talent.',
           'The idea was to collect scouting information about young players through an app and bring that data together in a platform that could support talent evaluation by clubs in Brazil and abroad.',
-          'I was responsible for the solution architecture, developing the scouting app with Unity and C#, building the web frontend with ASP.NET and C#, and designing the interfaces. Database development was handled by another team member.',
-          'In 2018, our solution won an innovation competition connected to Flamengo. It was an important achievement and an opportunity to work on a product that brought technology, sport, and a real-world challenge together.',
+          'I was responsible for the solution architecture, developing the scouting app with Unity and C#, building the web frontend with ASP.NET and C#, and all of the interface design. Database development was handled by another team member.',
+          'In 2018, our solution won an innovation competition connected to Flamengo. It was an important achievement and an opportunity to work on a product that brought technology, sport, and a real-world problem together.',
           "ScoutEvo marked a new stage in my journey. I was no longer just developing games. I was applying what I'd learned to build digital solutions for different purposes.",
         ],
       },
@@ -566,8 +565,8 @@ export const CHAPTER_02: CampaignLogChapter = {
           'EOS — Intelligent Platform for Organ Donation and Transplant Logistics was designed to assist in planning the transportation of organs and medical teams, considering routes, transportation modes, travel times, and organ preservation constraints.',
           "I contributed to the solution's engineering and was responsible for the entire web application frontend, built with ASP.NET and C#.",
           'The challenge went beyond building screens. It meant organizing complex information and presenting it clearly to support professionals making time-sensitive decisions.',
-          "In September 2019, the system was made available to São Paulo's State Transplant Center and featured by Unicamp. The underlying research also gained international academic visibility through a paper published in Case Studies on Transport Policy in 2021.",
-          "This project reinforced something important for me: building digital products isn't just about technology. It's about understanding real problems and creating solutions that can make a difference.",
+          "In September 2019, the system was made available to São Paulo's State Transplant Center and announced by Unicamp. The underlying research also gained international visibility, with a paper published in the scientific journal Case Studies on Transport Policy in 2021.",
+          "This project reinforced something important to me: building digital products isn't just about technology. It's about understanding real problems and creating solutions that can make a difference.",
         ],
       },
       // Referências fornecidas pelo Eduardo (2026-10-17), verificadas (título, data, autoria via
@@ -658,7 +657,7 @@ export const CHAPTER_02: CampaignLogChapter = {
       summary: {
         'pt-BR':
           'Um dos projetos mais completos da minha trajetória foi a Axia, uma plataforma de inteligência operacional desenvolvida pela Ativvus/Arppen para transformar a gestão de limpeza e facilities por meio de tecnologia, dados e dispositivos conectados.',
-        en: 'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to improve cleaning and facilities management through technology, data, and connected devices.',
+        en: 'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to transform cleaning and facilities management through technology, data, and connected devices.',
       },
       story: {
         'pt-BR': [
@@ -670,12 +669,12 @@ export const CHAPTER_02: CampaignLogChapter = {
           'Esse projeto consolidou minha visão de desenvolvimento de produtos digitais: participar das decisões, construir soluções, entender como são utilizadas e continuar evoluindo o produto.',
         ],
         en: [
-          'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to improve cleaning and facilities management through technology, data, and connected devices.',
-          "I contributed throughout the product's evolution, from its initial concept and engineering to subsequent improvements and expansions, including its evolution into Axia Intelligence.",
+          'One of the most comprehensive projects in my career was Axia, an operational intelligence platform developed by Ativvus/Arppen to transform cleaning and facilities management through technology, data, and connected devices.',
+          "I took part in the product's entire evolution, from its initial concept and engineering to the improvements and expansions of the following years, including its evolution into Axia Intelligence.",
           "My work covered several parts of the solution: architecture, the Angular web application, .NET WebAPI with C#, SQL Server, interface design, and contributions to the devices' embedded C code.",
-          'Although I worked across nearly every area, my primary focus remained on the web platform, APIs, and user experience.',
-          "Being involved in Axia across multiple development cycles was an important experience. The challenge wasn't simply connecting different technologies, but turning real operational needs into a consistent product that could evolve as new challenges and opportunities emerged.",
-          "This project strengthened my approach to digital product development: contributing to decisions, building solutions, understanding how they're used, and continuously improving the product.",
+          'Although I worked across nearly every area, my main focus was always on the web platform, the APIs, and the user experience.',
+          "Being involved in Axia across multiple development cycles was an important experience. The challenge wasn't simply making different technologies work together, but turning real operational needs into a consistent product that could evolve as new problems and opportunities emerged.",
+          "This project solidified my view of digital product development: taking part in decisions, building solutions, understanding how they're used, and continuing to evolve the product.",
         ],
       },
       // Fonte pública funcional, verificada em 2026-10-17 (não cita o Eduardo). A página do produto
@@ -719,9 +718,10 @@ export const CHAPTER_02: CampaignLogChapter = {
         en: 'When Games Became a Product Language',
       },
       summary: {
+        // Resumo próprio (D-073), a partir da história; deixou de repetir a descrição do MC-006 (D-102).
         'pt-BR':
-          'Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais.',
-        en: 'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
+          'Na Comunidade ON, a paixão por games que me levou a estudar Jogos Digitais virou parte de como penso e construo experiências digitais.',
+        en: 'At Comunidade ON, the passion for games that led me to study Digital Games became part of how I think about and build digital experiences.',
       },
       story: {
         'pt-BR': [
@@ -741,7 +741,7 @@ export const CHAPTER_02: CampaignLogChapter = {
           'But this project brought something particularly meaningful back into my career: gamification.',
           'The passion for video games that led me to study Digital Games found a practical application in my everyday work. Concepts such as progression, challenges, achievements, feedback, and recognition became part of how I think about and build digital experiences.',
           "The challenge isn't simply adding game elements to an interface. It's using that language to make work and learning experiences clearer, more engaging, and more meaningful without sacrificing usability or operational efficiency.",
-          'At Comunidade ON, I get to work at the intersection of engineering, product design, artificial intelligence, and gamification.',
+          'At Comunidade ON, I get to work at the intersection of engineering, product, design, artificial intelligence, and gamification.',
           "This is an ongoing campaign — and perhaps one of the projects that best reflects the professional I've become.",
         ],
       },

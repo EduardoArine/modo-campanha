@@ -1301,7 +1301,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Prévias dos outros capítulos removidas (decisão do Eduardo, 2026-10-21):** eram redundantes com o seletor de capítulos (mesmos capítulos, nome e arte) e com o "Próximo capítulo" do painel, que já convida a seguir no último marco. A seção termina na moldura do capítulo ativo. Strings `diary.open` e `diary.others` removidas.
   - **Fora (anotação da prancha ou sem base nos dados):** CONCEITO HÍBRIDO, CAPÍTULO ATIVO, Recolher mapa, zoom, ficha com Status, barra de progresso e cadeados.
   - **Decisão do Eduardo: a estética do controle do SNES pode ficar nas ilustrações do Diário.** A história fala dele (Super Nintendo, "O pedido à joaninha"). É uma exceção à regra de não usar marcas de consoles nos assets: valem a forma e as cores do controle, **sem logos nem nomes de marca** legíveis.
-- **Status:** implementado, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-092 — Arsenal de Habilidades: Concept C, Loadout Interativo
 
@@ -1330,7 +1330,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - as outras seções e o painel do Player Status idênticos à `main`, pixel a pixel;
   - testes e builds passam;
   - revisão independente: aprovada com ressalvas, sem bloqueantes; ressalvas corrigidas (ícone do TypeScript, docs, segundo "Voltar" no mobile).
-- **Status:** implementado na branch `feat/skill-loadout-concept-c`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-093 — Project Inventory H3: MC-CART Library + CRT Project Viewer
 
@@ -1385,7 +1385,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Botão Próxima:** "Próxima: Problema" sem espaço extra, com o nome acessível igual ao texto visível.
   - **Rolagem:** a área da seção só entra no Tab quando rola, e no fim do texto a rolagem passa para a página.
   - **Limpeza:** strings e estilos mortos removidos; o aviso do teaser agora diz "o dossiê do projeto continua disponível".
-- **Status:** implementado na branch `feat/hero-refinement`, aguardando aprovação visual e funcional do Eduardo. Sem merge e sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-094 — Project Inventory: moldura e cenário da estação
 
@@ -1411,7 +1411,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - 1440 / 1280 / 1024 / 820 / 390 / 360 em pt, e 1440 / 390 em en, nos estados inicial, capa e dossiê: sem rolagem lateral nem erro;
   - testes, typecheck, Prettier e builds sem aviso;
   - orçamento de CSS respeitado.
-- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual do Eduardo**. Sem merge e sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-095 — Project Inventory: moldura única, MC-01 frontal, mesa, filtro CRT e portátil no celular
 
@@ -1471,7 +1471,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Pendente de decisão do Eduardo:**
   - entre 768 e 1023 px (layout empilhado), a TV fica sobre a estante e só o console fica na mesa;
   - ~~os PNGs só de referência ficam no repositório~~: removidos por decisão do Eduardo (cerca de 8 MB).
-- **Status:** implementado na branch `feat/hero-refinement`, **aguardando a aprovação visual e funcional do Eduardo**. Sem merge e sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-096 — Project Inventory: dossiê em tela cheia no celular ("entrar na tela")
 
@@ -1500,7 +1500,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Desktop:** o CRT em 1024 / 820 / 1440 está igual.
   - **Testes:** 204, incluindo a tela cheia, o Esc e a troca de aparelho.
   - **Código:** typecheck, Prettier, builds e guardas passam, com o orçamento de CSS respeitado (removidas regras mortas do dossiê).
-- **Status:** mergeado na `main` (PR #5), aguardando a aprovação do Eduardo. Sem deploy.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-097 — Remoção de Conquistas, Missão principal atual e Missões secundárias
 
@@ -1627,7 +1627,7 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
     - **Imagem do Hero:** `fetchpriority="high"` (só atributo; o visual congelado não muda).
   - **Toque num cartucho antes da hidratação, no celular:** já insere, como depois de carregar. A seção sabe que é um celular desde a hidratação (`phone()`), antes de o portátil entrar.
   - **Fica como está:** o painel do Diário a 1440 pode ficar até 24 px sob o header depois de "Próximo marco" (limiar de 40 px, para o botão não pular).
-- **Status:** mergeado na `main` (PRs #6 e #7), aguardando a aprovação do Eduardo. Sem deploy. Pendências em `PENDENCIAS.md`.
+- **Status:** **aprovado pelo Eduardo (2026-10-25)** e publicado.
 
 ## D-099 — Currículo em PDF no cabeçalho e no Contato
 
@@ -1717,3 +1717,23 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - a página abre no topo, sem foco movido;
   - troca e ejeção funcionam a partir do estado inicial.
 - **Status:** aprovado e publicado em 2026-10-24 (PR #8).
+
+## D-102 — Aprovações, passe de conteúdo e testes pós-publicação
+
+- **Data:** 2026-10-25
+- **Aprovações do Eduardo:** D-091 (Diário por capítulos), D-092 (Arsenal, Concept C, inclusive as frases de PRD, IA e DNA), D-093 a D-096 (Inventário H3, moldura, MC-01 frontal, portátil, dossiê em tela cheia) e D-098 (revisão de UI/UX).
+- **Contato:** o e-mail do Eduardo entra no Contato como quarta ação `secondary` (`mailto:`, endereço visível para copiar, ícone de sistema `mail`). Nome acessível: "E-mail: …" / "Email: …".
+- **Hero (congelado, mudança pedida pelo Eduardo):** o botão de pausa da demonstração passa de 32 para 44 px (alvo de toque recomendado). O ícone continua com 16 px.
+- **"10+ anos" só no Player Status:** fica na linha XP e no selo da foto (o mesmo dado). Saiu do resumo da Hero e do primeiro parágrafo de "Sobre a jornada", que repetia a linha XP ao lado.
+- **Diário, marco da Comunidade ON (capítulo 02):** o resumo repetia a descrição do cartucho MC-006. Ganhou um resumo próprio a partir da história: "Na Comunidade ON, a paixão por games que me levou a estudar Jogos Digitais virou parte de como penso e construo experiências digitais." A descrição do MC-006 não mudou.
+- **"facilities"** fica na versão pt (decisão do Eduardo).
+- **Traduções do Diário (revisão independente):** 26 ajustes, só no inglês, por fidelidade ao português, naturalidade e coerência (ex.: "The Rental Store School", "a life choice", "announced by Unicamp", "engineering, product, design…"). Nenhum texto pt, fato, data ou link mudou. Os mesmos trechos foram alinhados nos cases dos cartuchos.
+- **Testes depois da publicação (2026-10-25):**
+  - **Links externos:** todos respondem, menos:
+    - LinkedIn (999) e ScienceDirect (403), que bloqueiam acesso automático (o DOI do artigo resolve);
+    - o PDF do TCC no repositório da FATEC (`ric.cps.sp.gov.br`), cujo servidor não aceitou conexão (nem a página inicial). A conferir no navegador.
+  - **Firefox (Gecko) e WebKit (motor do Safari), no Playwright:** `/` e `/en` em 1440 e 390 px, com as seis seções, fontes, teaser, troca de cartucho, dossiê e Diário; sem erros nem rolagem lateral.
+  - **Achado no WebKit:** o build do WebKit para Windows ignora o eixo de peso da IBM Plex Sans (fonte variável, um arquivo com os pesos 100–700) e desenha tudo no peso padrão do arquivo, o mais fino (100). O Safari de macOS e iOS suporta fontes variáveis desde 2017, então o provável é ser uma limitação desse build. **A conferir num iPhone ou Mac.** Se o texto aparecer fino lá, a correção é trocar o arquivo variável por pesos estáticos (400, 500, 600 e 700).
+  - **Não dá para fazer daqui (contas do Eduardo):** LinkedIn Post Inspector e envio do `sitemap.xml` ao Search Console.
+- **Status:** implementado na branch `feat/content-pass`, para revisão do Eduardo. Sem merge e sem deploy.
+

@@ -1,10 +1,11 @@
 import { SocialLink } from '../models';
 
 // Links reais aprovados. Currículo (D-099): os PDFs do Eduardo, um por idioma, em public/assets/cv/.
-// E-mail: aguardando (não renderizar sem endereço real).
+// E-mail (D-102): endereço informado pelo Eduardo.
 export const SOCIAL_LINKS: SocialLink[] = [
   { kind: 'github', label: 'GitHub', url: 'https://github.com/EduardoArine' },
   { kind: 'linkedin', label: 'LinkedIn', url: 'https://www.linkedin.com/in/eduardoarine' },
+  { kind: 'email', label: 'eduardo.arine@gmail.com', url: 'mailto:eduardo.arine@gmail.com' },
   {
     kind: 'resume',
     label: 'Currículo',

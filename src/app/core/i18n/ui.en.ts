@@ -38,6 +38,7 @@ export const UI_EN: UiDictionary = {
   cta: {
     explore: 'Explore the campaign',
     resume: 'Résumé',
+    email: 'Email',
     github: 'GitHub',
     linkedin: 'LinkedIn',
   },

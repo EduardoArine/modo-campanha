@@ -56,6 +56,12 @@ export const MC_ICONS = {
     style: 'stroke',
     paths: ['M6 3.5 10.5 8 6 12.5'],
   },
+  // E-mail (D-102): envelope.
+  mail: {
+    viewBox: '0 0 16 16',
+    style: 'stroke',
+    paths: ['M1.75 3.75h12.5v8.5H1.75z', 'M1.75 3.75 8 9l6.25-5.25'],
+  },
   document: {
     viewBox: '0 0 16 16',
     style: 'stroke',
