@@ -132,7 +132,7 @@ ul {
 
 .actions {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: space(2);
   margin-top: clamp(0.125rem, 1cqw, 0.5rem);
 }
