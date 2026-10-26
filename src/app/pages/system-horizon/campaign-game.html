@@ -43,7 +43,6 @@
   role="group"
   [attr.aria-label]="game.stage"
   aria-describedby="horizon-stage-help"
-  (keydown)="onKeydown($event)"
   (click)="onStageClick($event)"
 >
   <div class="view" aria-hidden="true">
@@ -157,6 +156,7 @@
         <button mcAction="secondary" type="button" (click)="restartFromMenu()">
           {{ game.replay }}
         </button>
+        <button mcAction="text" type="button" (click)="closeReader()">{{ game.close }}</button>
       } @else {
         <button mcAction="primary" type="button" (click)="closeReader()">{{ game.close }}</button>
       }

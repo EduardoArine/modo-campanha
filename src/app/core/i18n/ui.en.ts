@@ -220,7 +220,6 @@ export const UI_EN: UiDictionary = {
       start: 'Start',
       textVersion: 'Text version',
       back: 'Back to portfolio',
-      backShort: 'Portfolio',
       howTo: 'HOW TO PLAY',
       howToLead:
         'It takes 3 to 5 minutes. Nothing here is made up: every milestone is a fact from the portfolio.',

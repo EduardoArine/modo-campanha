@@ -4,7 +4,14 @@ import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
 import { CAMPAIGN_LOG_CHAPTERS, PLAYER_PROFILE } from '../../data';
+import { CampaignScene } from '../../system-horizon/scenes/campaign';
 import { HORIZON_WORLD } from './horizon-world.provider';
+
+/** Instância do jogo (a cena é estado protegido; o teste só lê). */
+const ng = (el: HTMLElement) =>
+  (window as unknown as { ng: { getComponent: (e: HTMLElement) => unknown } }).ng.getComponent(
+    el,
+  ) as { scene: () => CampaignScene | null };
 
 // SYSTEM HORIZON interativo (D-103): rota própria, título → como jogar → jogo, versão em texto.
 describe('SystemHorizonPage', () => {
@@ -86,7 +93,7 @@ describe('SystemHorizonPage', () => {
     );
     // Os fatos são os do Diário e do Contato (nenhum texto próprio do jogo).
     const first = CAMPAIGN_LOG_CHAPTERS[0].entries[0];
-    expect(text(el, 'app-horizon-entry h3')).toBe(first.title['pt-BR']);
+    expect(text(el, 'app-horizon-entry h4')).toBe(first.title['pt-BR']);
     expect(el.textContent).toContain(first.summary['pt-BR']);
     expect(el.textContent).toContain(PLAYER_PROFILE.closing['pt-BR']);
     expect(el.querySelector('app-horizon-entry img')).toBeNull();
@@ -99,6 +106,31 @@ describe('SystemHorizonPage', () => {
     await click(/^Play/);
     expect(text(el, 'app-campaign-game .act')).toBe('ACT 01 — ORIGIN');
     expect(el.querySelector('a.back')?.getAttribute('href')).toBe('/en#project-inventory');
+  });
+
+  it('walks while an arrow key is held and stops when it is released anywhere', async () => {
+    const { el, click, settle } = await renderAt('/system-horizon');
+    await click(/^Começar/);
+    await click(/^Jogar/);
+    await settle();
+    const host = el.querySelector<HTMLElement>('app-campaign-game')!;
+    const game = ng(host);
+    const scene = game.scene()!;
+    const x0 = scene.playerState.x;
+
+    // A tecla vale com o foco em qualquer controle do jogo (aqui, o botão de pausa).
+    const pause = host.querySelector<HTMLElement>('.pause')!;
+    pause.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    scene.step();
+    scene.step();
+    expect(scene.playerState.x).toBeGreaterThan(x0);
+
+    // Soltar a tecla com o foco fora do jogo também para.
+    window.dispatchEvent(new KeyboardEvent('keyup', { key: 'ArrowRight' }));
+    const x1 = scene.playerState.x;
+    scene.step();
+    expect(scene.playerState.x).toBe(x1);
+    expect(scene.playerState.pose).toBe('idle');
   });
 
   it('keeps the game mounted and hidden while the text version is open', async () => {

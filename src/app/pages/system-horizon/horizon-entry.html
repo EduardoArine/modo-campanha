@@ -6,8 +6,11 @@
   @case (2) {
     <h2 class="title" [id]="titleId()" tabindex="-1">{{ title() }}</h2>
   }
-  @default {
+  @case (3) {
     <h3 class="title" [id]="titleId()">{{ title() }}</h3>
+  }
+  @default {
+    <h4 class="title" [id]="titleId()">{{ title() }}</h4>
   }
 }
 

@@ -236,7 +236,6 @@ export const UI_PT_BR = {
       start: 'Começar',
       textVersion: 'Versão em texto',
       back: 'Voltar ao portfólio',
-      backShort: 'Portfólio',
       howTo: 'COMO JOGAR',
       howToLead: 'Leva de 3 a 5 minutos. Nada aqui é inventado: cada marco é um fato do portfólio.',
       keysLabel: 'Teclado',

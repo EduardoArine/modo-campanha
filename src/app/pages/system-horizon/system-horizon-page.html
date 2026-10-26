@@ -16,6 +16,16 @@
           <!-- Só no navegador (a pré-renderização entrega a moldura; o teaser liga depois). -->
           @defer (on idle) {
             <app-system-horizon-screen class="screen" [playback]="playback" />
+            <button
+              type="button"
+              class="toggle"
+              [attr.aria-label]="
+                playback.playing() ? ui().systemHorizon.pause : ui().systemHorizon.play
+              "
+              (click)="playback.toggle()"
+            >
+              <mc-icon [name]="playback.playing() ? 'pause' : 'play'" />
+            </button>
           }
         </div>
         <div class="intro">

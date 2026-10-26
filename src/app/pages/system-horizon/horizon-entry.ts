@@ -20,8 +20,8 @@ import { HorizonStop } from '../../system-horizon/content/horizon-world';
 })
 export class HorizonEntry {
   readonly stop = input.required<HorizonStop>();
-  /** Nível do título: 2 no painel (diálogo), 3 na versão em texto (dentro do ato). */
-  readonly level = input<2 | 3>(2);
+  /** Nível do título: 2 no painel (diálogo), 4 na versão em texto (dentro do ato, h3). */
+  readonly level = input<2 | 3 | 4>(2);
   readonly titleId = input<string | null>(null);
   readonly compact = input(false);
 

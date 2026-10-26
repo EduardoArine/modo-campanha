@@ -57,6 +57,26 @@ dd {
   inset: 0;
 }
 
+// Pausa do attract mode (a mesma da Hero): 44 px, no canto da tela.
+.toggle {
+  position: absolute;
+  right: space(3);
+  bottom: space(3);
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  background: var(--mc-bg);
+  color: var(--mc-text-muted);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--mc-text);
+  }
+}
+
 .intro,
 .howto {
   display: grid;

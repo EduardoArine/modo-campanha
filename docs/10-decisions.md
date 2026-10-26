@@ -1754,5 +1754,12 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Engine (teaser congelado, regressão zero):** `Renderer.sprite` ganhou `flip` opcional e `strip` (faixa espelhada); sem `flip`, a chamada é a mesma de antes. O quadro-chave do teaser na Hero ficou idêntico pixel a pixel ao publicado. Nada do teaser (cena, roteiro, tela, controles) mudou. O jogo tem cena própria (`scenes/campaign.ts`, determinística), entrada própria (`control/held-input.ts`) e terreno próprio (`world/campaign-terrain.ts`).
 - **Arte:** o PixelLab **não estava conectado** nesta sessão (nenhum servidor MCP configurado). O jogo reusa toda a arte do teaser (céu, montanhas, árvores e chão repetidos espelhados, sem emenda; o final é o chão original com a placa do mirante) e uma folha nova de marcadores em pixel art gerada no repositório, só com a paleta oficial (`design/source/system-horizon/pixel/build-campaign.mjs` → `sh-markers.png`, 9 quadros 12 × 24, pivot 6,23). Trocar pela arte final = gerar o mesmo arquivo com o mesmo contrato (`docs/23` §18.6).
 - **Publicação:** as duas rotas do jogo são pré-renderizadas; o pós-build do Pages grava canonical/hreflang com as URLs do jogo, cria `system-horizon.html` (sem a barra final, como o `en.html`) e põe as duas URLs no `sitemap.xml`.
+- **Revisão independente (REVIEWER):** 1 bloqueio e 3 ajustes, todos corrigidos antes da entrega:
+  - teclado: a seta solta não parava o jogador (o `keyup` não estava ligado); agora as teclas valem em todo o jogo (HUD, controles, tela), soltar a tecla em qualquer lugar da janela para, e o foco saindo do jogo solta as teclas (teste novo);
+  - encerramento: ganhou Fechar (no toque não há Esc);
+  - tela de título: o attract mode passa de 5 s, então ganhou a mesma pausa de 44 px da Hero (WCAG 2.2.2);
+  - versão em texto: títulos aninhados (h2 → ato h3 → marco h4);
+  - também: o foco volta a quem abriu a leitura ou a pausa, e o mesmo anúncio repetido volta a ser lido.
+- **Limitações aceitas:** trocar de idioma no meio do jogo volta à tela de título (são duas rotas); o `og:title` e a descrição das páginas do jogo são os da Home (o `<title>` é o do jogo).
 - **Fica para depois:** segredos da FASE 6 (podem entrar no jogo), progresso salvo (`docs/26`), personagem definitivo, epílogo pessoal, gamepad, som.
 - **Status:** implementado na branch `feat/system-horizon-mvp`, para revisão do Eduardo. Sem merge e sem deploy.

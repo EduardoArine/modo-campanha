@@ -23,7 +23,7 @@ import { HorizonEntry } from './horizon-entry';
         <ol class="stops">
           @for (stop of act.stops; track stop.id) {
             <li>
-              <app-horizon-entry [stop]="stop" [level]="3" [compact]="true" />
+              <app-horizon-entry [stop]="stop" [level]="4" [compact]="true" />
             </li>
           }
         </ol>

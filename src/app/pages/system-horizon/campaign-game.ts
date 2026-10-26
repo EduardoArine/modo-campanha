@@ -59,6 +59,7 @@ const KEY_DIR: Record<string, -1 | 1> = {
   imports: [HorizonEntry, McAction, McIcon, RouterLink],
   templateUrl: './campaign-game.html',
   styleUrls: ['./campaign-game.scss', './campaign-game-panels.scss'],
+  host: { '(keydown)': 'onKeydown($event)', '(focusout)': 'onFocusOut($event)' },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CampaignGame {
@@ -85,6 +86,10 @@ export class CampaignGame {
   private frame = 0;
   private last = 0;
   private actCardUntil = 0;
+  /** Quem abriu a leitura ou a pausa (recebe o foco de volta). */
+  private opener: HTMLElement | null = null;
+  /** Alterna um espaço invisível: o mesmo anúncio repetido muda o DOM e volta a ser lido. */
+  private echo = false;
 
   protected readonly scene = signal<CampaignScene | null>(null);
   private readonly ready = signal(false);
@@ -177,6 +182,7 @@ export class CampaignGame {
 
   protected pause(): void {
     this.release();
+    this.rememberOpener();
     this.paused.set(true);
     this.pauseMenu().nativeElement.showModal?.();
   }
@@ -184,7 +190,7 @@ export class CampaignGame {
   protected resumeGame(): void {
     this.pauseMenu().nativeElement.close?.();
     this.paused.set(false);
-    this.focusStage();
+    this.restoreFocus();
   }
 
   protected toText(): void {
@@ -210,7 +216,7 @@ export class CampaignGame {
     this.scene()?.markRead(stop.id);
     this.read.update((ids) => new Set(ids).add(stop.id));
     this.draw();
-    this.focusStage();
+    this.restoreFocus();
   }
 
   protected onPauseCancel(event: Event): void {
@@ -255,10 +261,17 @@ export class CampaignGame {
     }
   }
 
-  protected onKeyup(event: KeyboardEvent): void {
+  /** Soltar a tecla: ouvido na janela (a tecla pode ser solta com o foco em outro lugar). */
+  private onKeyup(event: KeyboardEvent): void {
     if (!KEY_DIR[event.key]) return;
     this.input.release(event.key.toLowerCase());
     this.scene()?.setMove(this.input.dir);
+  }
+
+  /** O foco saiu do jogo (Tab para fora, outro elemento da página): para de andar. */
+  protected onFocusOut(event: FocusEvent): void {
+    const next = event.relatedTarget as Node | null;
+    if (!next || !(event.currentTarget as HTMLElement).contains(next)) this.release();
   }
 
   /** Botões ◀ ▶: segurar anda; pelo teclado (sem ponteiro), vão à parada seguinte. */
@@ -326,9 +339,19 @@ export class CampaignGame {
 
   private async setup(destroyRef: DestroyRef): Promise<void> {
     const win = this.document.defaultView;
+    if (!win) return;
+    // Entrada primeiro (vale mesmo sem canvas): soltar a tecla ou sair da janela para de andar.
+    const onBlur = () => this.release();
+    const onKeyup = (event: KeyboardEvent) => this.onKeyup(event);
+    win.addEventListener('blur', onBlur);
+    win.addEventListener('keyup', onKeyup);
+    destroyRef.onDestroy(() => {
+      win.removeEventListener('blur', onBlur);
+      win.removeEventListener('keyup', onKeyup);
+    });
     const canvas = this.canvas().nativeElement;
-    this.renderer = win ? Renderer.create(canvas) : null;
-    if (!win || !this.renderer) return;
+    this.renderer = Renderer.create(canvas);
+    if (!this.renderer) return;
     this.palette = readPalette(win.getComputedStyle(canvas));
     let destroyed = false;
     destroyRef.onDestroy(() => (destroyed = true));
@@ -341,12 +364,9 @@ export class CampaignGame {
     resize.observe(canvas);
     const onVisibility = () => this.pageVisible.set(this.document.visibilityState === 'visible');
     this.document.addEventListener('visibilitychange', onVisibility);
-    const onBlur = () => this.release();
-    win.addEventListener('blur', onBlur);
     destroyRef.onDestroy(() => {
       resize.disconnect();
       this.document.removeEventListener('visibilitychange', onVisibility);
-      win.removeEventListener('blur', onBlur);
     });
     this.ready.set(true);
     this.draw();
@@ -414,7 +434,9 @@ export class CampaignGame {
           break;
       }
     }
-    if (say.length) this.announcement.set(say.join(' '));
+    if (!say.length) return;
+    this.echo = !this.echo;
+    this.announcement.set(say.join(' ') + (this.echo ? '\u00a0' : ''));
   }
 
   private draw(): void {
@@ -430,6 +452,7 @@ export class CampaignGame {
 
   private openReader(stop: HorizonStop): void {
     this.release();
+    this.rememberOpener();
     this.reading.set(stop);
     const dialog = this.reader().nativeElement;
     dialog.showModal?.();
@@ -456,6 +479,18 @@ export class CampaignGame {
   private release(): void {
     this.input.clear();
     this.scene()?.setMove(0);
+  }
+
+  private rememberOpener(): void {
+    const active = this.document.activeElement as HTMLElement | null;
+    this.opener = active && !active.closest('dialog') ? active : null;
+  }
+
+  private restoreFocus(): void {
+    const opener = this.opener;
+    this.opener = null;
+    if (opener?.isConnected && !opener.closest('[hidden]')) opener.focus({ preventScroll: true });
+    else this.focusStage();
   }
 
   private focusStage(): void {
