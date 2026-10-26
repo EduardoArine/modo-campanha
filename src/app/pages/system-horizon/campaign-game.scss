@@ -1,0 +1,226 @@
+// Jogo do SYSTEM HORIZON (D-103): HUD, tela 4:3 e controles. A tela usa a maior largura que cabe
+// na altura disponível (`--horizon-chrome` = o que a página ocupa acima e abaixo dela).
+@use 'mc' as *;
+
+:host {
+  --horizon-width: min(100%, calc((100svh - var(--horizon-chrome, 16rem)) * 4 / 3));
+  display: grid;
+  gap: space(3);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+p {
+  margin: 0;
+}
+
+.hud,
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(2) space(3);
+  width: var(--horizon-width);
+  margin-inline: auto;
+}
+
+.player,
+.act {
+  @include type(label);
+  color: var(--mc-text-secondary);
+}
+
+// No celular o ato ocupa a linha; os slots e a pausa dividem a seguinte.
+.act {
+  flex: 1 1 100%;
+  color: var(--mc-text);
+
+  @include mq(md) {
+    flex-basis: 12rem;
+  }
+}
+
+.pause {
+  margin-inline-start: auto;
+}
+
+.slots {
+  display: flex;
+  gap: space(1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// Slot do HUD: vazio (borda tracejada, ícone apagado) ou preenchido (borda e ícone no acento).
+.slot {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: var(--mc-border-width-default) dashed var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-surface);
+  color: var(--mc-text-muted);
+
+  &.is-filled {
+    border-style: solid;
+    border-color: var(--mc-accent);
+    color: var(--mc-accent);
+  }
+}
+
+button.slot {
+  cursor: pointer;
+
+  &[aria-disabled='true'] {
+    cursor: default;
+  }
+}
+
+.stage {
+  position: relative;
+  width: var(--horizon-width);
+  margin-inline: auto;
+  aspect-ratio: 4 / 3;
+  background: var(--mc-bg);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+
+  &:focus-visible {
+    outline: var(--mc-focus-ring-width) solid var(--mc-focus-ring);
+    outline-offset: var(--mc-focus-ring-offset);
+  }
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  container-type: inline-size;
+}
+
+canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// Linguagem de sistema sobre a tela (como no teaser): etiqueta sólida, nunca pixel font.
+.caption,
+.act-card {
+  position: absolute;
+  translate: -50% -50%;
+  padding-inline: 0.8cqw;
+  background: var(--mc-bg);
+  color: var(--mc-text);
+  font: 600 3.4cqw / 1.3 var(--mc-font-text);
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+// Rótulo da parada: menor e no máximo meia tela (o nome completo está no botão de leitura).
+.caption {
+  max-width: 50%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 2.6cqw;
+  text-transform: uppercase;
+}
+
+.start {
+  translate: 0 -50%;
+}
+
+.act-card {
+  top: 12%;
+  left: 50%;
+  max-width: 92%;
+  padding: 1cqw 2cqw;
+  border: var(--mc-border-width-default) solid var(--mc-accent);
+  white-space: normal;
+  text-align: center;
+}
+
+@container (width < 420px) {
+  .caption {
+    font-size: 4cqw;
+  }
+
+  .act-card {
+    font-size: 4.6cqw;
+  }
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.dir {
+  display: grid;
+  place-items: center;
+  width: space(7);
+  height: space(7);
+  padding: 0;
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-surface);
+  color: var(--mc-text);
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+
+  &:hover {
+    background: var(--mc-interactive-hover);
+  }
+
+  &:active {
+    background: var(--mc-interactive-active);
+  }
+}
+
+.prompt {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+.read {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag {
+  @include type(label);
+  margin-inline-start: space(2);
+}
+
+.hint {
+  @include type(body-s);
+  color: var(--mc-text-muted);
+  text-align: center;
+}
+
+.next {
+  grid-column: 1 / -1;
+  justify-self: center;
+}
+
+@include mq(md) {
+  .controls {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+
+  .next {
+    grid-column: auto;
+  }
+}

@@ -166,6 +166,14 @@ Continua sendo a última seção da Home (D-052).
 - ✅ Transitions (CRT on, cartucho, D-058)
 - ✅ Decisão: CSS (transitions + keyframes), sem biblioteca (D-058)
 
+### SYSTEM HORIZON interativo 🟡 (D-103; `docs/23` §18; implementado, aguardando revisão)
+
+- [x] Rota `/system-horizon` (pt/en), título com o attract mode, como jogar, jogo, versão em texto
+- [x] Cinco atos a partir do Diário, do Arsenal, do Inventário e do Contato (mapa só com referências)
+- [x] Forja do MC-CART MC-001, mirante e encerramento com os links reais
+- [x] Teclado, toque e mouse; reduced motion; leitura em `<dialog>`; região viva
+- [ ] Revisão do Eduardo · personagem definitivo · arte final dos marcadores (opcional)
+
 ## FASE 6 — SECRETS ⏸ (bloqueada: efeitos exigem aprovação do Eduardo, `docs/08`)
 
 - ⬜ `???`

@@ -1,0 +1,185 @@
+@let game = ui().systemHorizon.game;
+<!-- HUD em DOM (D-103): ato atual, as quatro especialidades e o MC-CART; pausa sempre visível. -->
+<div class="hud" role="group" [attr.aria-label]="game.hud">
+  <p class="player">{{ ui().systemHorizon.player }}</p>
+  <p class="act">{{ actName() }}</p>
+  <ul class="slots" role="list" [attr.aria-label]="game.slots">
+    @for (slot of slots(); track slot.group.id) {
+      @let got = collected().has(slot.stop!.id);
+      <li>
+        <button
+          type="button"
+          class="slot"
+          [class.is-filled]="got"
+          [attr.aria-disabled]="!got"
+          [attr.aria-label]="locale.pick(slot.group.title) + (got ? '' : ': ' + game.notCollected)"
+          [attr.title]="locale.pick(slot.group.title)"
+          (click)="openSlot(slot.stop)"
+        >
+          <mc-icon [name]="slot.group.icon" />
+        </button>
+      </li>
+    }
+    <li>
+      <span
+        class="slot slot--cart"
+        [class.is-filled]="unlocked()"
+        role="img"
+        [attr.aria-label]="unlocked() ? game.cartFormed : game.cartLocked"
+        ><mc-icon name="glyph"
+      /></span>
+    </li>
+  </ul>
+  <button mcAction="secondary" type="button" class="pause" (click)="pause()">
+    <mc-icon name="pause" /> {{ game.pause }}
+  </button>
+</div>
+
+<!-- Área do jogo: focável e descrita; o canvas é decorativo (todo o conteúdo está em texto). -->
+<div
+  #stage
+  class="stage"
+  tabindex="0"
+  role="group"
+  [attr.aria-label]="game.stage"
+  aria-describedby="horizon-stage-help"
+  (keydown)="onKeydown($event)"
+  (click)="onStageClick($event)"
+>
+  <div class="view" aria-hidden="true">
+    <canvas #canvas></canvas>
+    @for (caption of captions(); track caption.kind) {
+      <span
+        class="caption"
+        [class.start]="caption.align === 'start'"
+        [style.left.%]="caption.x / 1.6"
+        [style.top.%]="caption.y / 1.2"
+        >{{ captionText(caption) }}</span
+      >
+    }
+    @if (actCard()) {
+      <p class="act-card">{{ actName() }}</p>
+    }
+  </div>
+</div>
+<p class="mc-visually-hidden" id="horizon-stage-help">{{ game.stageHelp }}</p>
+
+<!-- Controles: os mesmos para toque, mouse e teclado. -->
+<div class="controls" role="group" [attr.aria-label]="game.controls">
+  <button
+    type="button"
+    class="dir"
+    [attr.aria-label]="game.left"
+    (pointerdown)="hold($event, -1)"
+    (pointerup)="letGo(-1)"
+    (pointercancel)="letGo(-1)"
+    (lostpointercapture)="letGo(-1)"
+    (click)="stepButton($event, -1)"
+    (contextmenu)="$event.preventDefault()"
+  >
+    <mc-icon name="chevron-left" />
+  </button>
+  <div class="prompt">
+    @if (near(); as stop) {
+      <button mcAction="primary" type="button" class="read" (click)="readNear()">
+        {{ readLabel(stop) }}: {{ label(stop) }}
+        @if (read().has(stop.id)) {
+          <span class="tag">{{ game.readTag }}</span>
+        }
+      </button>
+    } @else {
+      <p class="hint">{{ game.walkHint }}</p>
+    }
+  </div>
+  <button
+    type="button"
+    class="dir"
+    [attr.aria-label]="game.right"
+    (pointerdown)="hold($event, 1)"
+    (pointerup)="letGo(1)"
+    (pointercancel)="letGo(1)"
+    (lostpointercapture)="letGo(1)"
+    (click)="stepButton($event, 1)"
+    (contextmenu)="$event.preventDefault()"
+  >
+    <mc-icon name="chevron-right" />
+  </button>
+  <button mcAction="secondary" type="button" class="next" (click)="goNext(1)">
+    {{ game.next }} <mc-icon name="chevron-right" />
+  </button>
+</div>
+
+<p class="mc-visually-hidden" role="status" aria-live="polite">{{ announcement() }}</p>
+
+<!-- Painel de leitura: modal nativo, título focado, Esc fecha, o foco volta à área do jogo. -->
+<dialog #reader class="reader" aria-labelledby="horizon-reader-title" (close)="onReaderClosed()">
+  @if (reading(); as stop) {
+    <div class="reader-body">
+      <app-horizon-entry [stop]="stop" titleId="horizon-reader-title" />
+      @if (stop.kind === 'closing') {
+        <div class="links">
+          @for (link of socialLinks; track link.kind) {
+            @switch (link.kind) {
+              @case ('email') {
+                <a mcAction="secondary" [href]="link.url">
+                  <mc-icon name="mail" />
+                  <span class="mc-visually-hidden">{{ ui().cta.email }}:</span> {{ link.label }}
+                </a>
+              }
+              @case ('resume') {
+                <a
+                  mcAction="secondary"
+                  [href]="link.localizedUrl ? locale.pick(link.localizedUrl) : link.url"
+                  type="application/pdf"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <mc-icon name="document" /> {{ ui().cta.resume }}
+                  <span class="mc-visually-hidden">{{ ui().a11y.pdf }}</span>
+                </a>
+              }
+              @default {
+                <a mcAction="secondary" [href]="link.url" target="_blank" rel="noopener noreferrer">
+                  {{ link.label }} <mc-icon name="external" />
+                  <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+                </a>
+              }
+            }
+          }
+        </div>
+      }
+    </div>
+    <div class="reader-foot">
+      @if (stop.kind === 'closing') {
+        <a mcAction="primary" [routerLink]="locale.homePath()" fragment="project-inventory">{{
+          game.back
+        }}</a>
+        <button mcAction="secondary" type="button" (click)="restartFromMenu()">
+          {{ game.replay }}
+        </button>
+      } @else {
+        <button mcAction="primary" type="button" (click)="closeReader()">{{ game.close }}</button>
+      }
+    </div>
+  }
+</dialog>
+
+<!-- Pausa: continuar, versão em texto, recomeçar ou sair. Esc continua. -->
+<dialog
+  #pauseMenu
+  class="pause-menu"
+  aria-labelledby="horizon-pause-title"
+  (cancel)="onPauseCancel($event)"
+>
+  <h2 class="pause-title" id="horizon-pause-title">{{ game.paused }}</h2>
+  <div class="pause-actions">
+    <button mcAction="primary" type="button" (click)="resumeGame()">{{ game.resume }}</button>
+    <button mcAction="secondary" type="button" (click)="toText()">{{ game.textVersion }}</button>
+    <button mcAction="secondary" type="button" (click)="restartFromMenu()">
+      {{ game.restart }}
+    </button>
+    <a mcAction="text" [routerLink]="locale.homePath()" fragment="project-inventory">{{
+      game.back
+    }}</a>
+  </div>
+</dialog>

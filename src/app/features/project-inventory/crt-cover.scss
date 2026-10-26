@@ -130,6 +130,14 @@ ul {
   color: var(--mc-text);
 }
 
+.play {
+  color: var(--mc-link);
+
+  &:hover {
+    color: var(--mc-link-hover);
+  }
+}
+
 .actions {
   display: flex;
   flex-wrap: nowrap;

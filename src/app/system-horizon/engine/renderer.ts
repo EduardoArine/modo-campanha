@@ -44,22 +44,61 @@ export class Renderer {
     this.ctx.drawImage(source, Math.round(x), Math.round(y));
   }
 
-  /** Quadro de uma folha, ancorado no pivot do quadro. */
-  sprite(source: CanvasImageSource, spec: SheetSpec, frame: number, x: number, y: number): void {
+  /**
+   * Quadro de uma folha, ancorado no pivot do quadro. `flip` espelha na horizontal em torno do
+   * pivot (andar para a esquerda sem arte nova, docs/23 §8); o teaser nunca espelha.
+   */
+  sprite(
+    source: CanvasImageSource,
+    spec: SheetSpec,
+    frame: number,
+    x: number,
+    y: number,
+    flip = false,
+  ): void {
     const o = frameOrigin(spec, frame);
     const w = spec.frameWidth;
     const h = spec.frameHeight;
-    this.ctx.drawImage(
-      source,
-      o.x,
-      o.y,
-      w,
-      h,
-      Math.round(x - spec.pivot.x),
-      Math.round(y - spec.pivot.y),
-      w,
-      h,
-    );
+    const dy = Math.round(y - spec.pivot.y);
+    if (!flip) {
+      this.ctx.drawImage(source, o.x, o.y, w, h, Math.round(x - spec.pivot.x), dy, w, h);
+      return;
+    }
+    this.mirrored(source, o.x, o.y, w, h, Math.round(x - (w - spec.pivot.x)), dy);
+  }
+
+  /**
+   * Faixa vertical `[sx, sx + w)` de uma imagem, com a altura `h`, em `x, y`; `flip` espelha. Base
+   * do cenário repetido do jogo (camadas espelhadas em sequência, sem emenda).
+   */
+  strip(
+    source: CanvasImageSource,
+    sx: number,
+    w: number,
+    h: number,
+    x: number,
+    y: number,
+    flip = false,
+  ): void {
+    const dx = Math.round(x);
+    const dy = Math.round(y);
+    if (flip) this.mirrored(source, sx, 0, w, h, dx, dy);
+    else this.ctx.drawImage(source, sx, 0, w, h, dx, dy, w, h);
+  }
+
+  private mirrored(
+    source: CanvasImageSource,
+    sx: number,
+    sy: number,
+    w: number,
+    h: number,
+    dx: number,
+    dy: number,
+  ): void {
+    this.ctx.save();
+    this.ctx.scale(-1, 1);
+    this.ctx.drawImage(source, sx, sy, w, h, -(dx + w), dy, w, h);
+    this.ctx.restore();
   }
 
   present(): void {

@@ -142,11 +142,10 @@ describe('ProjectInventorySection', () => {
     expect(text(el, '.copy .type')).toBe('EXPERIÊNCIA NARRATIVA');
     expect(text(el, '.copy .desc')).toMatch(/^O primeiro cartucho do Modo Campanha\./);
     expect(el.querySelector('.copy img, app-crt-cover img.art')?.getAttribute('alt')).toBe('');
-    // MC-001: explorar o case e o teaser (que não começa sozinho), sem prometer a campanha jogável.
+    // MC-001: explorar o case, o teaser (que não começa sozinho) e a campanha jogável (D-103).
     expect(text(el, '#inventory-explore')).toBe('Explorar projeto');
-    expect(text(el, '.copy .exp')).toBe(
-      'Demonstração disponível · Campanha jogável em desenvolvimento',
-    );
+    expect(text(el, '.copy .exp')).toBe('Demonstração disponível · Jogar SYSTEM HORIZON');
+    expect(el.querySelector('.copy .exp a.play')?.getAttribute('href')).toBe('/system-horizon');
     expect(el.querySelector('app-system-horizon-screen')).toBeNull();
     // Uma só ação no console: Ejetar.
     expect(el.querySelector('#inventory-insert')).toBeNull();

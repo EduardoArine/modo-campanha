@@ -7,7 +7,9 @@
 // - en.html: deixa /en responder sem o redirecionamento para /en/ (diretório).
 // - canonical, hreflang, og:url e og:image (og-image-<idioma>.png, D-085) estáticos nos dois idiomas;
 //   o LocaleService atualiza as mesmas tags.
-// - sitemap.xml com as duas versões.
+// - SYSTEM HORIZON interativo (D-103): as duas páginas pré-renderizadas do jogo recebem as mesmas
+//   tags (com as URLs do jogo) e uma cópia sem barra final (system-horizon.html), como o en.html.
+// - sitemap.xml com as duas versões da Home e do jogo.
 // Falha (exit 1) se alguma marcação esperada não existir ou se o build já tiver sido processado:
 // o deploy não sai pela metade nem com tags duplicadas.
 import fs from 'node:fs';
@@ -21,6 +23,7 @@ if (!dir || !siteUrlArg) {
 }
 const site = siteUrlArg.replace(/\/+$/, '') + '/';
 const urls = { 'pt-BR': site, en: site + 'en' };
+const gameUrls = { 'pt-BR': site + 'system-horizon', en: site + 'en/system-horizon' };
 
 /** Título, descrição e alt da imagem do dicionário en (fonte única dos textos). Só literais simples. */
 function enMeta() {
@@ -51,14 +54,14 @@ function replaceOnce(html, pattern, value, label) {
   return html.replace(pattern, () => replacement);
 }
 
-/** canonical + hreflang + og:url + og:image antes do </head>. */
-function withLinks(html, locale) {
+/** canonical + hreflang + og:url + og:image antes do </head> (URLs da Home ou do jogo). */
+function withLinks(html, locale, set = urls) {
   const tags = [
-    `<link rel="canonical" href="${urls[locale]}">`,
-    `<link rel="alternate" hreflang="pt-BR" href="${urls['pt-BR']}">`,
-    `<link rel="alternate" hreflang="en" href="${urls.en}">`,
-    `<link rel="alternate" hreflang="x-default" href="${urls['pt-BR']}">`,
-    `<meta property="og:url" content="${urls[locale]}">`,
+    `<link rel="canonical" href="${set[locale]}">`,
+    `<link rel="alternate" hreflang="pt-BR" href="${set['pt-BR']}">`,
+    `<link rel="alternate" hreflang="en" href="${set.en}">`,
+    `<link rel="alternate" hreflang="x-default" href="${set['pt-BR']}">`,
+    `<meta property="og:url" content="${set[locale]}">`,
     `<meta property="og:image" content="${site}og-image-${locale}.png">`,
   ].join('');
   return replaceOnce(html, /<\/head>/, `${tags}</head>`, '</head>');
@@ -123,17 +126,31 @@ fs.mkdirSync(path.join(dir, 'en'), { recursive: true });
 fs.writeFileSync(path.join(dir, 'en', 'index.html'), enOut);
 fs.writeFileSync(path.join(dir, 'en.html'), enOut);
 
-const alternates = Object.entries(urls)
-  .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
-  .join('');
+const gamePages = {
+  'pt-BR': path.join(dir, 'system-horizon', 'index.html'),
+  en: path.join(dir, 'en', 'system-horizon', 'index.html'),
+};
+const hasGame = Object.values(gamePages).every((file) => fs.existsSync(file));
+if (hasGame) {
+  for (const [locale, file] of Object.entries(gamePages)) {
+    const html = withLinks(fs.readFileSync(file, 'utf8'), locale, gameUrls);
+    fs.writeFileSync(file, html);
+    fs.writeFileSync(path.join(path.dirname(file), '..', 'system-horizon.html'), html);
+  }
+}
+
+const entries = (set) => {
+  const alternates = Object.entries(set)
+    .map(([lang, href]) => `<xhtml:link rel="alternate" hreflang="${lang}" href="${href}"/>`)
+    .join('');
+  return Object.values(set).map((loc) => `  <url><loc>${loc}</loc>${alternates}</url>`);
+};
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-${Object.values(urls)
-  .map((loc) => `  <url><loc>${loc}</loc>${alternates}</url>`)
-  .join('\n')}
+${[...entries(urls), ...(hasGame ? entries(gameUrls) : [])].join('\n')}
 </urlset>
 `;
 fs.writeFileSync(path.join(dir, 'sitemap.xml'), sitemap);
 console.log(
-  `pages-postbuild: 404.html, en/index.html${prerendered ? ' (pré-renderizado)' : ''}, en.html e sitemap.xml para ${site}`,
+  `pages-postbuild: 404.html, en/index.html${prerendered ? ' (pré-renderizado)' : ''}, en.html${hasGame ? ', SYSTEM HORIZON (pt/en)' : ''} e sitemap.xml para ${site}`,
 );

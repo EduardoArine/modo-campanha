@@ -1737,3 +1737,22 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Não dá para fazer daqui (contas do Eduardo):** LinkedIn Post Inspector e envio do `sitemap.xml` ao Search Console.
 - **Status:** implementado na branch `feat/content-pass`, para revisão do Eduardo. Sem merge e sem deploy.
 
+## D-103 — SYSTEM HORIZON interativo (MVP)
+
+- **Data:** 2026-10-25
+- **Pedido do Eduardo:** desenvolver o SYSTEM HORIZON interativo (proposta D-069, `docs/23`), "manda a ver em tudo", entregue pronto para revisão.
+- **O que é:** o Diário, o Arsenal, o Inventário e o Contato transformados em lugar. O visitante caminha por cinco atos, lê os marcos (os mesmos textos da Home), coleta as quatro especialidades, forma o MC-CART MC-001 e chega ao mirante. O jogo não tem texto próprio sobre o Eduardo: o mapa guarda só referências (`content/horizon-map.ts`), e um teste falha se ele tiver texto.
+- **Atos (adaptação da D-069 ao conteúdo atual):**
+  - 01 ORIGEM, 02 DO CONTROLE AO CÓDIGO e 03 DO CÓDIGO AO PRODUTO: os três capítulos do Diário, marco a marco; o fim do capítulo é o checkpoint;
+  - 04 CAMPANHAS: os cartuchos publicados (MC-002 a MC-007) e a forja, onde as quatro especialidades formam o MC-001 (a cena do teaser, agora conquistada);
+  - 05 HORIZONTE: o mirante, com o encerramento do Contato e os links reais (GitHub, LinkedIn, e-mail, currículo).
+  - Especialidades no caminho: DNA DE GAMES na origem, CONSTRUÇÃO na FATEC, PRODUTO e IA no capítulo 02 (ajustável só no mapa).
+  - Conquistas e Missão atual saíram da proposta (seções removidas em D-097).
+- **Entrada e saída (opção D da proposta):** rota própria `/system-horizon` e `/en/system-horizon`, carregada sob demanda (chunk de ~13 kB; a Home não baixa nada do jogo, nem a folha de marcadores). Entrada pela capa do MC-001 (a linha "Demonstração disponível · Jogar SYSTEM HORIZON", sem mudar a altura da capa) e pelo dossiê (Sobre o projeto), que é a entrada no celular. A experiência "Campanha jogável" do MC-001 passa a **disponível**. Saída: "Voltar ao portfólio" → `#project-inventory`, no mesmo idioma. O header do site fica (idioma, navegação e currículo iguais em todo o site).
+- **Telas:** título (o attract mode do teaser, intacto, ao fundo) → como jogar → jogo; versão em texto a um clique (título e pausa). A versão em texto é montada do mesmo mundo do jogo e é o caminho principal para leitor de tela.
+- **Acessibilidade:** canvas decorativo; HUD, card do ato, legendas, leitura e pausa em DOM; leitura num `<dialog>` modal com foco no título, Esc fecha e o foco volta à área do jogo; região viva; slots com texto ("ainda não coletada"); marcos lidos com forma diferente (placa com ✓, sem o losango); teclado (←/→, A/D, Enter/Espaço, N/B, Esc/P), toque e mouse fazem tudo; com `prefers-reduced-motion`, sem parallax nem flutuação e a forja vai direto ao resultado. axe sem violações em 1440, 1024 (en), 820 (reduced motion) e 390.
+- **Engine (teaser congelado, regressão zero):** `Renderer.sprite` ganhou `flip` opcional e `strip` (faixa espelhada); sem `flip`, a chamada é a mesma de antes. O quadro-chave do teaser na Hero ficou idêntico pixel a pixel ao publicado. Nada do teaser (cena, roteiro, tela, controles) mudou. O jogo tem cena própria (`scenes/campaign.ts`, determinística), entrada própria (`control/held-input.ts`) e terreno próprio (`world/campaign-terrain.ts`).
+- **Arte:** o PixelLab **não estava conectado** nesta sessão (nenhum servidor MCP configurado). O jogo reusa toda a arte do teaser (céu, montanhas, árvores e chão repetidos espelhados, sem emenda; o final é o chão original com a placa do mirante) e uma folha nova de marcadores em pixel art gerada no repositório, só com a paleta oficial (`design/source/system-horizon/pixel/build-campaign.mjs` → `sh-markers.png`, 9 quadros 12 × 24, pivot 6,23). Trocar pela arte final = gerar o mesmo arquivo com o mesmo contrato (`docs/23` §18.6).
+- **Publicação:** as duas rotas do jogo são pré-renderizadas; o pós-build do Pages grava canonical/hreflang com as URLs do jogo, cria `system-horizon.html` (sem a barra final, como o `en.html`) e põe as duas URLs no `sitemap.xml`.
+- **Fica para depois:** segredos da FASE 6 (podem entrar no jogo), progresso salvo (`docs/26`), personagem definitivo, epílogo pessoal, gamepad, som.
+- **Status:** implementado na branch `feat/system-horizon-mvp`, para revisão do Eduardo. Sem merge e sem deploy.

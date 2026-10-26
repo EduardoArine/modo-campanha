@@ -130,7 +130,8 @@ export const PROJECTS: readonly Project[] = [
       {
         kind: 'playable',
         label: { 'pt-BR': 'Campanha jogável', en: 'Playable campaign' },
-        status: 'in-development',
+        // SYSTEM HORIZON interativo (D-103): /system-horizon, aberto pela capa do MC-001.
+        status: 'available',
       },
     ],
     links: [

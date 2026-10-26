@@ -1,0 +1,50 @@
+// Versão em texto (D-103): leitura editorial simples, um ato por seção.
+@use 'mc' as *;
+
+:host {
+  display: grid;
+  gap: space(5);
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.title {
+  margin: 0;
+  @include type(section-title);
+  color: var(--mc-accent);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.lead {
+  margin: 0;
+  @include type(body-l);
+  color: var(--mc-text-secondary);
+}
+
+.act {
+  display: grid;
+  gap: space(4);
+}
+
+.act-title {
+  margin: 0;
+  padding-bottom: space(2);
+  @include type(label);
+  color: var(--mc-text);
+  border-bottom: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.stops {
+  display: grid;
+  gap: space(5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  justify-self: start;
+}

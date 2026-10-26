@@ -13,7 +13,7 @@ npm start       # http://localhost:4200 (dev, sem pré-renderização)
 npm run build   # produção: pré-renderiza / e /en em dist/modo-campanha/browser
 ```
 
-Estado: tudo mergeado na `main`. Nenhuma branch aberta.
+Estado: `feat/content-pass` (D-102) e `feat/system-horizon-mvp` (D-103, a partir da anterior) aguardando revisão. Sem merge e sem deploy.
 
 ## 1. Publicar (deploy)
 
@@ -46,7 +46,8 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 ## 5. SYSTEM HORIZON
 
 - [ ] Personagem definitivo (hoje provisório, `docs/22` §13).
-- [ ] MVP interativo: proposta aguardando aprovação (D-069, `docs/23`).
+- [ ] **MVP interativo implementado (D-103), aguardando sua revisão:** branch `feat/system-horizon-mvp` (sem merge e sem deploy). Abra `/system-horizon` ou, na capa do MC-001, "Jogar SYSTEM HORIZON".
+- [ ] Arte do jogo: marcadores em pixel art do repositório (`sh-markers.png`); o PixelLab não estava conectado nesta sessão. Para usar o PixelLab, configure o servidor MCP dele no Claude Code (`claude mcp add ...`) e peça a troca no contrato de `docs/23` §18.6.
 
 ## 6. Depois da publicação
 
@@ -55,6 +56,7 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 - [ ] Abrir no navegador o PDF do TCC no repositório da FATEC (o servidor não respondeu daqui).
 - [ ] LinkedIn Post Inspector e envio do `sitemap.xml` ao Search Console (precisam da sua conta).
 - [ ] Domínio próprio (opcional) e divulgação no LinkedIn.
+- [ ] Celular, publicado (achado em 2026-10-25): na capa do MC-001, o botão "Reproduzir demonstração" fica cortado à direita do vidro do portátil (a linha de ações não quebra desde `af11eb9`). Não mexi (Inventário congelado); dá para encurtar o rótulo no celular.
 
 ## Referências
 

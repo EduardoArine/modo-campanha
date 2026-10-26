@@ -1,0 +1,62 @@
+// Painéis do jogo (D-103): leitura e pausa em `<dialog>` nativo, superfície própria do design
+// system (texto nunca sobre a pixel art).
+@use 'mc' as *;
+
+dialog {
+  padding: 0;
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-panel);
+  color: var(--mc-text);
+
+  &::backdrop {
+    background: color-mix(in srgb, var(--mc-bg) 82%, transparent);
+  }
+}
+
+.reader {
+  width: min(40rem, calc(100% - #{space(5)}));
+  max-height: calc(100svh - #{space(6)});
+
+  &[open] {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+}
+
+.reader-body {
+  display: grid;
+  gap: space(4);
+  overflow-y: auto;
+  padding: space(5);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+}
+
+.reader-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(2);
+  padding: space(3) space(5);
+  border-top: var(--mc-border-width-default) solid var(--mc-border-subtle);
+}
+
+.pause-menu {
+  width: min(22rem, calc(100% - #{space(5)}));
+  padding: space(5);
+}
+
+.pause-title {
+  margin: 0 0 space(4);
+  @include type(section-title);
+  color: var(--mc-accent);
+}
+
+.pause-actions {
+  display: grid;
+  gap: space(2);
+}

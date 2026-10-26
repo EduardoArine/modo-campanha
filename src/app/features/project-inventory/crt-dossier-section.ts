@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { LocaleService } from '../../core/i18n';
 import { Project } from '../../models';
 import { McAction, McIcon, McStatus } from '../../shared/ui';
 import type { DossierSectionId } from './crt-dossier';
+import { playablePath } from './playable';
 
 /**
  * Conteúdo de uma seção do dossiê (H3, D-093), só com dados aprovados do projeto: descrição e arte
@@ -12,7 +14,7 @@ import type { DossierSectionId } from './crt-dossier';
  */
 @Component({
   selector: 'app-crt-dossier-section',
-  imports: [McAction, McIcon, McStatus],
+  imports: [McAction, McIcon, McStatus, RouterLink],
   templateUrl: './crt-dossier-section.html',
   styleUrl: './crt-dossier-section.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -23,4 +25,6 @@ export class CrtDossierSection {
 
   protected readonly locale = inject(LocaleService);
   protected readonly ui = this.locale.ui;
+  /** Campanha jogável disponível (MC-001, D-103). */
+  protected readonly playable = computed(() => playablePath(this.project(), this.locale.locale()));
 }

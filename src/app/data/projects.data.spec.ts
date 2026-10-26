@@ -137,18 +137,18 @@ describe('PROJECTS (runtime data)', () => {
     expect(renders.front.src).toBe('assets/cartridges/mc-001/front.webp');
   });
 
-  it('states what MC-001 offers today: teaser available, playable campaign in development', () => {
+  it('states what MC-001 offers today: teaser and the playable campaign (D-103)', () => {
     expect(PROJECTS[0].cartridge.teaser).toBe('system-horizon');
     expect(PROJECTS[0].experiences.map((e) => [e.kind, e.status])).toEqual([
       ['teaser', 'available'],
-      ['playable', 'in-development'],
+      ['playable', 'available'],
     ]);
-    // Nada jogável é apresentado como disponível.
+    // Só o MC-001 tem campanha jogável (o SYSTEM HORIZON é o único jogo que existe).
     expect(
-      PROJECTS.flatMap((p) => p.experiences).some(
-        (e) => e.kind === 'playable' && e.status === 'available',
-      ),
-    ).toBe(false);
+      PROJECTS.filter((p) =>
+        p.experiences.some((e) => e.kind === 'playable' && e.status === 'available'),
+      ).map((p) => p.serial),
+    ).toEqual(['MC-001']);
   });
 
   it('publishes the seven cartridges in production (approved + approved artwork)', () => {

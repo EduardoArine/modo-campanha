@@ -1,0 +1,127 @@
+// Página do SYSTEM HORIZON (D-103): título, como jogar, jogo e versão em texto, no grid da página.
+@use 'mc' as *;
+
+:host {
+  display: block;
+}
+
+p,
+h1,
+h2,
+dl,
+dd {
+  margin: 0;
+}
+
+.page {
+  // Altura que o jogo reserva para o header do site, o link de volta, o HUD e os controles.
+  --horizon-chrome: calc(var(--mc-header-block, 4.5rem) + 15rem);
+  display: grid;
+  gap: space(4);
+  max-width: var(--mc-container-max);
+  margin-inline: auto;
+  padding: space(4) var(--mc-page-margin) space(7);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.back {
+  justify-self: start;
+}
+
+.title-screen {
+  display: grid;
+  gap: space(5);
+  align-items: center;
+
+  @include mq(lg) {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: space(7);
+  }
+}
+
+// Attract mode ao fundo da tela de título (o teaser, intacto), numa moldura 4:3.
+.preview {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--mc-bg);
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+}
+
+.intro,
+.howto {
+  display: grid;
+  gap: space(4);
+  align-content: start;
+}
+
+.howto {
+  max-width: 48rem;
+}
+
+.kicker,
+.label {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.name {
+  @include type(section-title);
+  color: var(--mc-text);
+}
+
+.lead,
+.touch {
+  @include type(body-l);
+  color: var(--mc-text-secondary);
+}
+
+.touch {
+  @include type(body);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: space(3);
+}
+
+.howto-grid {
+  display: grid;
+  gap: space(5);
+
+  > div {
+    display: grid;
+    gap: space(3);
+    align-content: start;
+  }
+
+  @include mq(md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: space(2) space(4);
+
+  dt {
+    @include type(label);
+    color: var(--mc-text);
+  }
+
+  dd {
+    @include type(body);
+    color: var(--mc-text-secondary);
+  }
+}

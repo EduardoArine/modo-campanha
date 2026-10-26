@@ -1,8 +1,11 @@
 import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 
+import { RouterLink } from '@angular/router';
+
 import { LocaleService } from '../../core/i18n';
 import { Project } from '../../models';
 import { McAction, McIcon, McStatus } from '../../shared/ui';
+import { playablePath } from './playable';
 
 /**
  * Capa do projeto dentro do CRT (H3, D-093): a arte oficial do cartucho ao fundo e, por cima, em
@@ -12,7 +15,7 @@ import { McAction, McIcon, McStatus } from '../../shared/ui';
  */
 @Component({
   selector: 'app-crt-cover',
-  imports: [McAction, McIcon, McStatus],
+  imports: [McAction, McIcon, McStatus, RouterLink],
   templateUrl: './crt-cover.html',
   styleUrl: './crt-cover.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -40,11 +43,19 @@ export class CrtCover {
       : { head: words[0], tail: '' };
   });
 
-  /** "Teaser disponível · Campanha jogável em desenvolvimento" (o que o cartucho oferece hoje). */
+  /** Campanha jogável disponível (MC-001, D-103): o caminho do SYSTEM HORIZON. */
+  protected readonly playable = computed(() => playablePath(this.project(), this.locale.locale()));
+
+  /**
+   * "Demonstração disponível · Campanha jogável em desenvolvimento" (o que o cartucho oferece hoje).
+   * Com a campanha jogável disponível, ela vira o link ao lado (sem repetir o texto).
+   */
   protected readonly experiences = computed(() => {
     const status = this.ui().inventory.experience;
+    const linked = this.playable();
     return this.project()
-      .experiences.map(
+      .experiences.filter((e) => !(linked && e.kind === 'playable'))
+      .map(
         (e) =>
           `${this.locale.pick(e.label)} ${e.status === 'available' ? status.available : status.inDevelopment}`,
       )

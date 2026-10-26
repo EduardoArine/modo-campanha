@@ -1,6 +1,6 @@
 # 23 — SYSTEM HORIZON: MVP interativo (proposta)
 
-> Status: **PROPOSTA, aguardando aprovação do Eduardo** (D-069). Só arquitetura e experiência: nada implementado, nenhuma arte nova, nenhum fato novo. O teaser do CRT (D-068, `docs/22`) continua congelado.
+> Status: **implementado (D-103), aguardando a revisão do Eduardo.** A proposta original (D-069) está nas seções 1–17; o que foi construído, e onde difere dela, está na seção 18. O teaser do CRT (D-068, `docs/22`) continua congelado.
 
 ## 1. Visão do produto
 
@@ -285,3 +285,78 @@ JOGO
 6. **Controles de toque:** ◀ Ler ▶ + "próximo marco" (sem joystick).
 7. **Arte do MVP:** terreno por ato e marcadores (quem produz: PixelLab, artista ou pixel art no repositório como no §14 do `docs/22`).
 8. **Epílogo:** se vai existir, quando, e a descrição textual pública.
+
+## 18. Implementação (D-103)
+
+### 18.1 Diferenças em relação à proposta
+
+| Proposta (D-069) | Construído (D-103) | Por quê |
+|---|---|---|
+| Atos ORIGIN / BUILD / EVOLVE / CAMPAIGNS / HORIZON, com o Campaign Log antigo | Atos 01–03 = os três capítulos do Diário (D-091); 04 CAMPANHAS; 05 HORIZONTE | o Diário por capítulos já é a trajetória, na ordem |
+| Achievements e Current Main Quest como marcos | fora | seções removidas em D-097 |
+| Painel do cartucho reusa o case do projeto | painel próprio, curto (serial, tipo, arte, descrição, tecnologias, evidências) | o case completo está no dossiê; o jogo não mexe no Inventário congelado |
+| Novo `kind` de link no MC-001 | a experiência "Campanha jogável" vira disponível e a linha de experiências da capa ganha o link (o dossiê também) | mesma altura da capa; no celular a capa esconde essa linha, então a entrada é o dossiê |
+| Layout próprio, sem o header do site | header do site mantido + "Voltar ao portfólio" | idioma, navegação e currículo iguais em todo o site |
+| Viewport lógico variável (160–240 px) | 160 × 120 fixo (4:3) | o céu tem 160 px e o sol no centro: repetir o céu duplicaria o sol |
+| Convergência no ato 04 reusa a cena do teaser | mesma animação (folhas `items`, `cartForm`, `cartMini`), redesenhada na cena do jogo | a cena do teaser fica intacta |
+| ◀ Ler ▶ e toque duplo em ▶ para o próximo marco | ◀ ▶ (segurar), botão de leitura com o nome do marco, "Próximo marco", toque na tela anda até o ponto | um botão explícito é mais claro que o toque duplo |
+
+### 18.2 Arquivos
+
+```
+src/app/pages/system-horizon/       página (título, como jogar, jogo, versão em texto)
+  system-horizon-page.*             fases, attract mode ao fundo, título da página
+  campaign-game.*                   canvas + laço, HUD, controles, leitura (<dialog>), pausa, região viva
+  horizon-entry.*                   o que se lê numa parada (painel e versão em texto)
+  horizon-text.*                    versão em texto
+  horizon-world.provider.ts         HORIZON_WORLD (Diário + Arsenal + INVENTORY_PROJECTS)
+  horizon-labels.ts                 rótulos curtos (marco, capítulo, serial, ato)
+src/app/system-horizon/
+  content/horizon-map.ts            atos e referências (sem texto)
+  content/horizon-world.ts          mundo: paradas, posições, ato de cada uma
+  scenes/campaign.ts                cena jogável determinística (eventos para a página)
+  control/held-input.ts             direção mantida (teclas e botões)
+  world/campaign-terrain.ts         cenário repetido espelhado + trilha do jogo
+  world/campaign-art.ts             arte do teaser + sh-markers.png (só no jogo)
+```
+
+### 18.3 Mundo
+
+- Paradas em sequência, a 44 px uma da outra; cada ato começa 56 px antes da primeira parada.
+- Tipos de parada: marco do Diário, especialidade (coletada ao passar), fim de capítulo (checkpoint, ativado ao passar e legível), cartucho, forja (MC-001, legível depois de formado) e encerramento.
+- O mundo termina no chão original do teaser (240 px): o ato 05 começa nele e o encerramento fica ao lado da placa do mirante.
+- Dado não publicado some: capítulo, especialidade ou cartucho ausente não vira parada; sem o MC-001, não há forja.
+
+### 18.4 Ritmo
+
+- 36 px/s (3 px por tick a 12 fps); ~1 min andando direto, 3–5 min lendo.
+- A forja dura ~1,8 s (22 ticks): as especialidades descem do HUD, o MC-CART se forma (quadros do teaser) e pousa no altar. Com reduced motion, vai direto ao resultado.
+- No mirante: SYSTEM HORIZON e, depois de ~2 s, A CAMPANHA CONTINUA...
+
+### 18.5 Acessibilidade
+
+Ver D-103. O canvas é `aria-hidden`; tudo o que importa está em DOM. O laço para com a aba oculta, com a leitura ou a pausa abertas e na versão em texto (o jogo fica montado, oculto, e volta de onde parou).
+
+### 18.6 Contrato da arte nova
+
+`sh-markers.png`: 9 quadros de 12 × 24 em uma linha (108 × 24), pivot 6,23 (pés no chão), paleta `sh-palette.gpl`:
+
+| Quadro | Uso |
+|---|---|
+| 0 | placa do marco (não lido) |
+| 1 | placa lida (com ✓) |
+| 2 | checkpoint (bandeira baixa) |
+| 3 | checkpoint ativo (bandeira alta) |
+| 4 | forja |
+| 5 | forja acesa |
+| 6 | selo "não lido" (◆), desenhado acima da parada |
+| 7 | MC-001 no pedestal |
+| 8 | MC-CART no pedestal (rótulo neutro; a ilustração real aparece no painel) |
+
+Fonte editável: `design/source/system-horizon/pixel/build-campaign.mjs`. Arte do PixelLab ou de um artista entra no mesmo arquivo, com o mesmo layout.
+
+### 18.7 Pendências
+
+- Revisão do Eduardo (visual, ritmo, textos de sistema do jogo).
+- Personagem definitivo (o mesmo do teaser, `docs/22` §13).
+- FASE 6 (segredos) e progresso da visita (`docs/26`): o jogo já emite os eventos (marco lido, especialidade coletada, MC-CART formado, mirante) que um registro de progresso usaria.

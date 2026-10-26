@@ -38,8 +38,17 @@
       }
     </ul>
   }
-  @if (experiences()) {
-    <p class="exp">{{ experiences() }}</p>
+  @if (experiences() || playable()) {
+    <p class="exp">
+      {{ experiences() }}
+      @if (playable(); as path) {
+        <!-- SYSTEM HORIZON interativo (D-103): a campanha jogável, na rota própria. -->
+        @if (experiences()) {
+          ·
+        }
+        <a class="play" [routerLink]="path">{{ ui().systemHorizon.game.entry }}</a>
+      }
+    </p>
   }
   @if (teaserFailed()) {
     <p class="notice">{{ ui().inventory.teaser.unavailable }}</p>

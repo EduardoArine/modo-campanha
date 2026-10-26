@@ -1,0 +1,148 @@
+@let s = stop();
+@let game = ui().systemHorizon.game;
+<!-- Conteúdo de uma parada do SYSTEM HORIZON: os mesmos dados da Home, nunca uma cópia (D-103). -->
+<p class="kicker">{{ kicker() }}</p>
+@switch (level()) {
+  @case (2) {
+    <h2 class="title" [id]="titleId()" tabindex="-1">{{ title() }}</h2>
+  }
+  @default {
+    <h3 class="title" [id]="titleId()">{{ title() }}</h3>
+  }
+}
+
+@switch (s.kind) {
+  @case ('milestone') {
+    <p class="when"><app-campaign-when [when]="s.entry.when" /></p>
+    @if (!compact() && s.entry.image; as image) {
+      <img
+        class="image"
+        [src]="image.src"
+        [attr.srcset]="image.srcset ?? null"
+        sizes="(min-width: 768px) 560px, 92vw"
+        [width]="image.width"
+        [height]="image.height"
+        [alt]="locale.pick(image.alt)"
+        decoding="async"
+      />
+    }
+    @if (compact()) {
+      <p>{{ locale.pick(s.entry.summary) }}</p>
+      <details>
+        <summary>{{ ui().campaignLog.story.open }}</summary>
+        @for (paragraph of locale.pick(s.entry.story); track $index) {
+          <p>{{ paragraph }}</p>
+        }
+      </details>
+    } @else {
+      @for (paragraph of locale.pick(s.entry.story); track $index) {
+        <p>{{ paragraph }}</p>
+      }
+      @if (s.entry.photos; as photos) {
+        <div class="photos">
+          @for (photo of photos; track photo.src) {
+            <img
+              [src]="photo.src"
+              [srcset]="photo.srcset"
+              sizes="(min-width: 768px) 270px, 45vw"
+              [width]="photo.width"
+              [height]="photo.height"
+              [alt]="locale.pick(photo.alt)"
+              loading="lazy"
+              decoding="async"
+            />
+          }
+        </div>
+      }
+    }
+    @if (s.entry.links; as links) {
+      <ul class="links" role="list">
+        @for (link of links; track link.url) {
+          <li>
+            <span class="kind">{{ ui().campaignLog.links[link.kind] }}</span>
+            <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              {{ locale.pick(link.label) }} <mc-icon name="external" />
+              <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+            </a>
+            @if (link.note; as note) {
+              <span class="note">{{ locale.pick(note) }}</span>
+            }
+          </li>
+        }
+      </ul>
+    }
+  }
+  @case ('checkpoint') {
+    @let c = s.chapter;
+    @if (c.context; as context) {
+      <p class="when">{{ locale.pick(context) }}</p>
+    }
+    @if (c.signature; as signature) {
+      <p class="lead">{{ locale.pick(signature) }}</p>
+    }
+    <p class="kind">
+      @if (c.ongoing) {
+        {{ ui().campaignLog.ongoing }}
+      } @else {
+        {{ ui().campaignLog.complete }}
+        @if (c.period?.end; as end) {
+          — <time [attr.datetime]="end">{{ end }}</time>
+        }
+      }
+    </p>
+    @if (c.closing; as closing) {
+      <p>{{ locale.pick(closing) }}</p>
+    }
+  }
+  @case ('collectible') {
+    <p class="lead">{{ locale.pick(s.group.description) }}</p>
+    <p class="kind">{{ game.skills }}</p>
+    <ul class="skills" role="list">
+      @for (skill of s.group.skills; track skill.id) {
+        <li><mc-icon [name]="skill.icon" /> {{ locale.pick(skill.name) }}</li>
+      }
+    </ul>
+  }
+  @case ('closing') {
+    <p class="lead">{{ locale.pick(profile.closing) }}</p>
+  }
+  @default {
+    @let p = s.project;
+    @if (s.kind === 'forge') {
+      <p class="lead">{{ game.unlockedLead }}</p>
+    }
+    @if (!compact() && p.cartridge.artwork; as art) {
+      <img
+        class="image"
+        [class.is-contain]="art.fit === 'contain'"
+        [src]="art.src"
+        [attr.srcset]="art.srcset ?? null"
+        sizes="(min-width: 768px) 560px, 92vw"
+        [width]="art.width"
+        [height]="art.height"
+        [alt]="locale.pick(art.alt)"
+        decoding="async"
+      />
+    }
+    <p>{{ locale.pick(p.description) }}</p>
+    @if (p.technologies.length) {
+      <ul class="tech" role="list">
+        @for (tech of p.technologies; track tech) {
+          <li>{{ tech }}</li>
+        }
+      </ul>
+    }
+    @if (p.links.length) {
+      <ul class="links" role="list">
+        @for (link of p.links; track link.url) {
+          <li>
+            <a mcAction="text" [href]="link.url" target="_blank" rel="noopener noreferrer">
+              {{ locale.pick(link.label) }} <mc-icon name="external" />
+              <span class="mc-visually-hidden">{{ ui().a11y.newTab }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    }
+  }
+}

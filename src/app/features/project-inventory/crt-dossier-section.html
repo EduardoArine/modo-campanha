@@ -37,6 +37,12 @@
             : ui().inventory.experience.inDevelopment
         }}
       </p>
+      @if (e.kind === 'playable' && playable(); as path) {
+        <!-- SYSTEM HORIZON interativo (D-103). -->
+        <a mcAction="text" class="play" [routerLink]="path">
+          {{ ui().systemHorizon.game.entry }} <mc-icon name="chevron-right" />
+        </a>
+      }
     }
   }
   @case ('challenge') {

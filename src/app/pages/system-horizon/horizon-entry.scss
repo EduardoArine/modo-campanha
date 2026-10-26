@@ -1,0 +1,141 @@
+// Conteúdo de uma parada (D-103): leitura em superfície própria, nunca texto sobre a pixel art.
+@use 'mc' as *;
+
+:host {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: space(3);
+}
+
+p,
+h2,
+h3,
+ul {
+  margin: 0;
+}
+
+.kicker,
+.kind {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.when {
+  @include type(label);
+  color: var(--mc-text);
+}
+
+.title {
+  @include type(title-m);
+  color: var(--mc-text);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+p {
+  @include type(body);
+  color: var(--mc-text-secondary);
+}
+
+.lead {
+  color: var(--mc-text);
+}
+
+.image {
+  display: block;
+  width: 100%;
+  max-width: 28rem;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+  border-radius: var(--mc-radius-sm);
+}
+
+// Ilustração do rótulo do cartucho (≈ 2:1): inteira, sem corte.
+.is-contain {
+  aspect-ratio: auto;
+  object-fit: contain;
+  background: var(--mc-bg);
+}
+
+.photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  gap: space(2);
+
+  img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--mc-radius-sm);
+  }
+}
+
+.links,
+.skills,
+.tech {
+  display: grid;
+  gap: space(2);
+  padding: 0;
+  list-style: none;
+}
+
+.links li {
+  display: grid;
+  justify-items: start;
+  gap: space(1);
+
+  // Títulos longos quebram linha (como no Diário); o ícone externo segue o fim do texto.
+  a {
+    display: inline;
+    white-space: normal;
+  }
+}
+
+.note {
+  @include type(body-s);
+  color: var(--mc-text-muted);
+}
+
+.skills li {
+  display: flex;
+  align-items: center;
+  gap: space(2);
+  @include type(body);
+  color: var(--mc-text);
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+
+  li {
+    @include type(label);
+    padding: space(1) space(2);
+    border: var(--mc-border-width-default) solid var(--mc-border-subtle);
+    border-radius: var(--mc-radius-sm);
+    color: var(--mc-text-secondary);
+  }
+}
+
+details {
+  display: grid;
+  gap: space(2);
+
+  > p + p {
+    margin-top: space(2);
+  }
+}
+
+summary {
+  @include type(body-s);
+  font-weight: 600;
+  color: var(--mc-link);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--mc-link-hover);
+  }
+}

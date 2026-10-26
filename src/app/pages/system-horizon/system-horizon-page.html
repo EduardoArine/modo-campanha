@@ -1,0 +1,87 @@
+@let game = ui().systemHorizon.game;
+<main id="main-content" tabindex="-1" class="page">
+  <a mcAction="text" class="back" [routerLink]="locale.homePath()" fragment="project-inventory">
+    <mc-icon name="chevron-left" /> {{ game.back }}
+  </a>
+
+  @if (phase() === 'play' || phase() === 'text') {
+    <!-- Título da página no jogo e na versão em texto (as telas de título e de ajuda têm o seu). -->
+    <h1 class="mc-visually-hidden">{{ ui().systemHorizon.title }}</h1>
+  }
+
+  @switch (phase()) {
+    @case ('title') {
+      <section class="title-screen" aria-labelledby="horizon-title">
+        <div class="preview">
+          <!-- Só no navegador (a pré-renderização entrega a moldura; o teaser liga depois). -->
+          @defer (on idle) {
+            <app-system-horizon-screen class="screen" [playback]="playback" />
+          }
+        </div>
+        <div class="intro">
+          <p class="kicker">{{ serial }} · {{ ui().crt.identification }}</p>
+          <h1 class="name" id="horizon-title">{{ ui().systemHorizon.title }}</h1>
+          <p class="lead">{{ game.lead }}</p>
+          <div class="actions">
+            <button mcAction="primary" type="button" id="horizon-start" (click)="howTo()">
+              {{ game.start }} <mc-icon name="play" />
+            </button>
+            <button mcAction="secondary" type="button" (click)="showText()">
+              {{ game.textVersion }}
+            </button>
+          </div>
+        </div>
+      </section>
+    }
+    @case ('howto') {
+      <section class="howto" aria-labelledby="horizon-howto-title">
+        <h1 class="name" id="horizon-howto-title" tabindex="-1">{{ game.howTo }}</h1>
+        <p class="lead">{{ game.howToLead }}</p>
+        <div class="howto-grid">
+          <div>
+            <h2 class="label">{{ game.keysLabel }}</h2>
+            <dl class="keys">
+              <dt>{{ game.keys.moveKeys }}</dt>
+              <dd>{{ game.keys.move }}</dd>
+              <dt>{{ game.keys.readKeys }}</dt>
+              <dd>{{ game.keys.read }}</dd>
+              <dt>{{ game.keys.nextKeys }}</dt>
+              <dd>{{ game.keys.next }}</dd>
+              <dt>{{ game.keys.pauseKeys }}</dt>
+              <dd>{{ game.keys.pause }}</dd>
+            </dl>
+          </div>
+          <div>
+            <h2 class="label">{{ game.touchLabel }}</h2>
+            <p class="touch">{{ game.touch }}</p>
+          </div>
+        </div>
+        <div class="actions">
+          <button mcAction="primary" type="button" (click)="play()">
+            {{ game.play }} <mc-icon name="play" />
+          </button>
+          <button mcAction="secondary" type="button" (click)="showText()">
+            {{ game.textVersion }}
+          </button>
+        </div>
+      </section>
+    }
+    @case ('text') {
+      <app-horizon-text
+        [world]="world"
+        [backLabel]="started() ? game.resume : ui().systemHorizon.title"
+        (back)="leaveText()"
+      />
+    }
+  }
+
+  @if (started()) {
+    <app-campaign-game
+      [hidden]="phase() !== 'play'"
+      [world]="world"
+      [active]="phase() === 'play'"
+      [reducedMotion]="reducedMotion()"
+      (showText)="showText()"
+    />
+  }
+</main>
