@@ -264,7 +264,6 @@ export const UI_EN: UiDictionary = {
       unlockedLead: 'The four collected specialties form the MC-CART MC-001: Modo Campanha itself.',
       skills: 'SKILLS',
       announce: {
-        near: 'Near',
         enter: 'Press Enter to read.',
         play: 'Press Enter to play.',
         collected: 'collected.',

@@ -110,6 +110,51 @@ describe('JungleRun', () => {
     expect(winner!.tick).toBeLessThan(45 * 12);
   });
 
+  describe('vine', () => {
+    const vine = JUNGLE_SCREENS[1].vine!;
+    const lake = JUNGLE_SCREENS[1].lake!;
+    /** Jogador pendurado no cipó na tela 2, no tick `phase` do balanço. */
+    const hanging = (phase: number) => {
+      const g = new JungleRun();
+      Object.assign(g, { screen: 1, tick: phase });
+      const tip = vineTip(vine, phase);
+      Object.assign(g.runner, { x: tip.x, y: tip.y + 21, hanging: true, onGround: false });
+      return g;
+    };
+
+    it('never grabs the vine again right after letting go', () => {
+      for (let phase = 0; phase < vine.period; phase++) {
+        const g = hanging(phase);
+        g.step({ dir: 1, jump: true });
+        expect(g.runner.hanging).toBe(false);
+        for (let i = 0; i < 30 && !g.runner.onGround && !g.retries; i++) {
+          g.step({ dir: 1, jump: false });
+          expect(g.runner.hanging, `fase ${phase}, tick ${i}`).toBe(false);
+        }
+      }
+    });
+
+    it('lands on the far bank when released on the right half of the swing, holding →', () => {
+      let tried = 0;
+      for (let phase = 0; phase < vine.period; phase++) {
+        const tip = vineTip(vine, phase);
+        const next = vineTip(vine, phase + 1);
+        if (!(next.x > tip.x && tip.x >= 86)) continue;
+        tried++;
+        const g = hanging(phase - 1);
+        g.step({ dir: 1, jump: false });
+        g.step({ dir: 1, jump: true });
+        for (let i = 0; i < 40 && !g.runner.onGround && !g.retries; i++)
+          g.step({ dir: 1, jump: false });
+        expect(g.retries, `fase ${phase}`).toBe(0);
+        expect(g.runner.onGround && (g.screen === 2 || g.runner.x > lake[1]), `fase ${phase}`).toBe(
+          true,
+        );
+      }
+      expect(tried).toBeGreaterThanOrEqual(4);
+    });
+  });
+
   it('stops stepping once done', () => {
     const game = new JungleRun();
     game.done = true;

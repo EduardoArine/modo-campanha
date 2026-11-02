@@ -111,6 +111,7 @@
           (pointerup)="jumpRelease('pointer')"
           (pointercancel)="jumpRelease('pointer')"
           (pointerleave)="jumpRelease('pointer')"
+          (click)="jumpClick($event)"
           (contextmenu)="$event.preventDefault()"
         >
           {{ game.minigame.jump }}

@@ -11,8 +11,8 @@ export const HORIZON_BALLOONS: Readonly<Record<string, Localized>> = {
     en: "It all began with an Atari 2600 at my cousins' house.",
   },
   'origin-rental-store-years': {
-    'pt-BR': 'Nas locadoras, o Super Nintendo fez a paixão crescer.',
-    en: 'At the rental stores, the Super Nintendo made the passion grow.',
+    'pt-BR': 'Com o Super Nintendo, a paixão ganhou ainda mais força.',
+    en: 'With the Super Nintendo, the passion grew even stronger.',
   },
   'origin-ladybug-wish': {
     'pt-BR': 'Meu primeiro Super Nintendo chegou de um jeito inesquecível.',
@@ -44,8 +44,8 @@ export const HORIZON_BALLOONS: Readonly<Record<string, Localized>> = {
     en: '2016: Best Game at FAEL, academic category.',
   },
   'fatec-ativvus-4change': {
-    'pt-BR': '2016: meu primeiro produto real, o 4Change.',
-    en: '2016: my first real product, 4Change.',
+    'pt-BR': '2016: entrei num produto real, o 4Change.',
+    en: '2016: I joined a real product, 4Change.',
   },
   'fatec-real-players': {
     'pt-BR': 'Maio de 2017: o Aedes Revenge chegou ao Google Play.',

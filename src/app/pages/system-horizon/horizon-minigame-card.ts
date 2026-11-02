@@ -31,11 +31,16 @@ import type { MinigameRun } from './campaign-game';
     @let info = mg.games[r.game.id];
     @switch (r.phase) {
       @case ('intro') {
-        <div class="card" role="group" aria-labelledby="horizon-minigame-title">
+        <div
+          class="card"
+          role="group"
+          aria-labelledby="horizon-minigame-title"
+          aria-describedby="horizon-minigame-goal horizon-minigame-keys"
+        >
           <p class="kicker">{{ mg.kicker }}</p>
           <h2 class="title" id="horizon-minigame-title">{{ info.title }}</h2>
-          <p class="text">{{ info.goal }}</p>
-          <p class="keys">{{ info.keys }}</p>
+          <p class="text" id="horizon-minigame-goal">{{ info.goal }}</p>
+          <p class="keys" id="horizon-minigame-keys">{{ info.keys }}</p>
           <div class="actions">
             <button #main mcAction="primary" type="button" (click)="play.emit()">
               {{ mg.play }} <mc-icon name="play" />

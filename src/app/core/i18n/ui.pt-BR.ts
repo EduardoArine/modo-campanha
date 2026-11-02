@@ -280,7 +280,6 @@ export const UI_PT_BR = {
         'As quatro especialidades coletadas formam o MC-CART MC-001: o próprio Modo Campanha.',
       skills: 'HABILIDADES',
       announce: {
-        near: 'Perto de',
         enter: 'Enter para ler.',
         play: 'Enter para jogar.',
         collected: 'coletada.',

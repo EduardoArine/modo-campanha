@@ -45,8 +45,8 @@ const ACT_CARD_TICKS = 36;
 /** Teclas de pulo nos minijogos (Enter e Espaço também, fora de botões). */
 const JUMP_KEYS = new Set(['ArrowUp', 'w', 'W', ' ', 'Enter']);
 
-const MINIGAMES: Record<MinigameId, () => Minigame> = {
-  'jungle-run': () => new JungleRun(),
+const MINIGAMES: Record<MinigameId, (still: boolean) => Minigame> = {
+  'jungle-run': (still) => new JungleRun(still),
 };
 
 /** Minijogo aberto num marco: cartão de abertura, jogo, cartão de conclusão. */
@@ -102,6 +102,8 @@ export class CampaignGame {
   private art: (CampaignArt & MinigameArt) | null = null;
   /** Pulo segurado (teclas e botão Saltar) no minijogo. */
   private jumpHeld = new Set<string>();
+  /** Pulo pedido desde o último tick (um toque mais curto que um tick não se perde). */
+  private jumpQueued = false;
   private palette: Palette | null = null;
   private frame = 0;
   private last = 0;
@@ -210,7 +212,7 @@ export class CampaignGame {
 
   private openMinigame(stop: HorizonStop, id: MinigameId): void {
     this.release();
-    this.minigame.set({ stop, game: MINIGAMES[id](), phase: 'intro' });
+    this.minigame.set({ stop, game: MINIGAMES[id](this.reducedMotion()), phase: 'intro' });
     this.say(this.ui().systemHorizon.game.minigame.games[id].title);
     this.draw();
   }
@@ -227,6 +229,9 @@ export class CampaignGame {
     const run = this.minigame();
     if (!run) return;
     this.release();
+    // A campanha não herda nenhuma caminhada pedida durante o minijogo.
+    const scene = this.scene();
+    scene?.walkTo(scene.playerState.x);
     this.minigame.set(null);
     this.draw();
     this.focusStage();
@@ -235,6 +240,12 @@ export class CampaignGame {
   protected jumpPress(source: string, event?: Event): void {
     event?.preventDefault();
     this.jumpHeld.add(source);
+    this.jumpQueued = true;
+  }
+
+  /** Saltar pelo teclado ou leitor de tela (clique sem ponteiro): um pulo. */
+  protected jumpClick(event: MouseEvent): void {
+    if (event.detail === 0) this.jumpQueued = true;
   }
 
   protected jumpRelease(source: string): void {
@@ -313,9 +324,21 @@ export class CampaignGame {
         !(onControl && (event.key === ' ' || event.key === 'Enter'))
       ) {
         event.preventDefault();
-        this.jumpPress(event.key.toLowerCase());
+        if (!event.repeat) this.jumpPress(event.key.toLowerCase());
         return;
       }
+      // No minijogo, as teclas da campanha (N/B, leitura) não valem: só setas, pulo, Esc e P.
+      const step = KEY_DIR[event.key];
+      if (step) {
+        event.preventDefault();
+        if (!event.repeat) this.input.press(event.key.toLowerCase(), step);
+        return;
+      }
+      if (event.key === 'p' || event.key === 'P') {
+        event.preventDefault();
+        this.pause();
+      }
+      return;
     } else if (run) {
       // Abertura e conclusão: Esc volta; Enter/Espaço fora de um botão faz a ação principal.
       if (event.key === 'Escape') {
@@ -387,12 +410,12 @@ export class CampaignGame {
   }
 
   protected stepButton(event: MouseEvent, dir: -1 | 1): void {
-    if (event.detail === 0) this.goNext(dir);
+    if (event.detail === 0 && !this.minigame()) this.goNext(dir);
   }
 
   /** Toque/clique na tela: anda até a parada mais perto do ponto (ou até o ponto). */
   protected onStageClick(event: MouseEvent): void {
-    if (this.minigame()) return;
+    if (this.minigame() || (event.target as HTMLElement | null)?.closest('button, a')) return;
     const scene = this.scene();
     const canvas = this.canvas().nativeElement;
     const rect = canvas.getBoundingClientRect();
@@ -517,8 +540,12 @@ export class CampaignGame {
     const run = this.minigame();
     if (run) {
       if (run.phase === 'play' && steps) {
-        const pad = { dir: this.input.dir, jump: this.jumpHeld.size > 0 };
-        for (let i = 0; i < steps && !run.game.done; i++) run.game.step(pad);
+        for (let i = 0; i < steps && !run.game.done; i++) {
+          // O pedido na fila vale num tick; depois, só o que continua segurado.
+          const jump = this.jumpHeld.size > 0 || this.jumpQueued;
+          this.jumpQueued = false;
+          run.game.step({ dir: this.input.dir, jump });
+        }
         if (run.game.done) this.finishMinigame(run);
         this.draw();
       }
@@ -643,6 +670,7 @@ export class CampaignGame {
   private release(): void {
     this.input.clear();
     this.jumpHeld.clear();
+    this.jumpQueued = false;
     this.scene()?.setMove(0);
   }
 

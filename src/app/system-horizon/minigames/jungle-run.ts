@@ -42,6 +42,9 @@ export const GROUND = 98;
 const WATER = 101;
 const SINK = 106;
 const RUN = 2;
+/** Impulso máximo ao soltar o cipó e raio de alcance da mão (px). */
+const RELEASE_MAX = 3.5;
+const GRAB_RADIUS = 6;
 const JUMP = -6.4;
 const GRAVITY = 0.7;
 /** Corpo do jogador para colisão (a partir dos pés). */
@@ -114,6 +117,11 @@ export class JungleRun implements Minigame {
   private moving = false;
   /** Impulso horizontal ao soltar o cipó (até tocar o chão). */
   private releaseVx = 0;
+  /** Pode agarrar o cipó (falso depois de soltar, até tocar o chão). */
+  private regrab = true;
+
+  /** `still`: sem o piscar depois de voltar ao começo da tela (reduced motion). */
+  constructor(private readonly still = false) {}
 
   get runner(): Readonly<Runner> {
     return this.p;
@@ -135,13 +143,16 @@ export class JungleRun implements Minigame {
       p.y = tip.y + 21;
       this.moving = false;
       if (pressed) {
-        // Solta para o lado em que o cipó está indo.
+        // Solta para o lado em que o cipó está indo, com impulso limitado; não agarra de novo até
+        // tocar o chão (ou cair na água).
         const next = vineTip(s.vine, this.tick + 1);
         p.hanging = false;
         p.onGround = false;
         p.vy = -3;
         p.facing = next.x >= tip.x ? 1 : -1;
-        this.releaseVx = (next.x - tip.x) * 1.2 || p.facing * RUN;
+        const swing = (next.x - tip.x) * 0.6;
+        this.releaseVx = Math.max(-RELEASE_MAX, Math.min(RELEASE_MAX, swing)) || p.facing * RUN;
+        this.regrab = false;
       }
     } else {
       const vx = p.onGround || !this.releaseVx ? input.dir * RUN : this.releaseVx + input.dir * 0.5;
@@ -157,9 +168,9 @@ export class JungleRun implements Minigame {
         p.y += p.vy;
       }
       this.land(s);
-      if (!p.onGround && s.vine && p.vy > -2) {
+      if (!p.onGround && this.regrab && s.vine && p.vy > -2) {
         const tip = vineTip(s.vine, this.tick);
-        if (Math.hypot(tip.x - p.x, tip.y - (p.y - 21)) <= 9) {
+        if (Math.hypot(tip.x - p.x, tip.y - (p.y - 21)) <= GRAB_RADIUS) {
           p.hanging = true;
           this.releaseVx = 0;
         }
@@ -191,6 +202,7 @@ export class JungleRun implements Minigame {
       p.vy = 0;
       p.onGround = true;
       this.releaseVx = 0;
+      this.regrab = true;
       return;
     }
     if (p.y >= SINK) this.restartScreen();
@@ -233,6 +245,7 @@ export class JungleRun implements Minigame {
     const p = this.p;
     Object.assign(p, { x: START_X, y: GROUND, vy: 0, onGround: true, hanging: false, facing: 1 });
     this.releaseVx = 0;
+    this.regrab = true;
     this.retries++;
     this.flash = 8;
   }
@@ -295,7 +308,7 @@ export class JungleRun implements Minigame {
 
   private drawRunner(r: Renderer, art: MinigameArt): void {
     const p = this.p;
-    if (this.flash && this.flash % 2) return;
+    if (this.flash && this.flash % 2 && !this.still) return;
     const flip = p.facing < 0;
     if (!p.onGround || p.hanging) {
       // No ar e no cipó: o quadro de passada aberta (sem arte nova).
