@@ -1,4 +1,5 @@
 import { CampaignLogChapter, CampaignLogChapterEntry, Project, SkillGroup } from '../../models';
+import { MinigameId } from '../minigames/minigame';
 import { HORIZON_MAP, HorizonActId, HorizonActMap } from './horizon-map';
 
 /**
@@ -30,6 +31,8 @@ export type HorizonStop =
       readonly kind: 'milestone';
       readonly chapter: CampaignLogChapter;
       readonly entry: CampaignLogChapterEntry;
+      /** Minijogo do marco (D-104), quando houver. */
+      readonly game?: MinigameId;
     })
   | (StopBase & { readonly kind: 'collectible'; readonly group: SkillGroup })
   | (StopBase & { readonly kind: 'checkpoint'; readonly chapter: CampaignLogChapter })
@@ -114,7 +117,14 @@ export function buildHorizonWorld(
       const found = chapter;
       found.entries.forEach((entry, i) => {
         collect(i);
-        planned.push({ kind: 'milestone', id: entry.id, chapter: found, entry });
+        const game = act.games?.[entry.id];
+        planned.push({
+          kind: 'milestone',
+          id: entry.id,
+          chapter: found,
+          entry,
+          ...(game ? { game } : {}),
+        });
       });
       collect(found.entries.length);
       planned.push({ kind: 'checkpoint', id: `checkpoint-${found.id}`, chapter: found });

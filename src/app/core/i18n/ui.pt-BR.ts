@@ -263,14 +263,7 @@ export const UI_PT_BR = {
       right: 'Andar para a direita',
       next: 'Próximo marco',
       walkHint: 'Ande até um marco.',
-      read: {
-        milestone: 'Ler marco',
-        checkpoint: 'Ver capítulo',
-        cartridge: 'Ver cartucho',
-        forge: 'Ver cartucho',
-        closing: 'Ler encerramento',
-      },
-      readTag: 'LIDO',
+      read: { closing: 'Ler encerramento' },
       hud: 'Estado da campanha',
       slots: 'Especialidades coletadas',
       notCollected: 'ainda não coletada',
@@ -289,6 +282,7 @@ export const UI_PT_BR = {
       announce: {
         near: 'Perto de',
         enter: 'Enter para ler.',
+        play: 'Enter para jogar.',
         collected: 'coletada.',
         checkpoint: 'concluído.',
         unlocked: 'MC-CART MC-001 formado: campanha liberada.',
@@ -298,6 +292,22 @@ export const UI_PT_BR = {
         title: 'VERSÃO EM TEXTO',
         lead: 'A mesma jornada do jogo, em ordem, ato por ato.',
         collect: 'Especialidade coletada',
+      },
+      // Minijogos dos marcos (D-104): curtos, sem game over, sempre com saída.
+      minigame: {
+        kicker: 'MINIJOGO',
+        play: 'Jogar',
+        leave: 'Voltar à campanha',
+        jump: 'Saltar',
+        done: 'CONCLUÍDO',
+        continue: 'Continuar',
+        games: {
+          'jungle-run': {
+            title: 'CORRIDA NA SELVA',
+            goal: 'Pule a cobra e o escorpião, passe pela aranha quando ela subir, atravesse o lago no cipó e pise nos jacarés de boca fechada até chegar ao joystick.',
+            keys: 'Teclado: ← → andam; ↑, Espaço ou Enter saltam (no cipó, saltam para soltar). Toque: segure ◀ ▶ e use Saltar.',
+          },
+        },
       },
     },
   },

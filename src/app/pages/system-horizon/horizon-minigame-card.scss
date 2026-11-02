@@ -1,0 +1,71 @@
+// Cartões do minijogo (D-104): superfície própria sobre a tela, nunca texto solto sobre a pixel art.
+@use 'mc' as *;
+
+:host {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: space(3);
+  pointer-events: none;
+}
+
+p,
+h2 {
+  margin: 0;
+}
+
+.card,
+.bar {
+  pointer-events: auto;
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: color-mix(in srgb, var(--mc-panel) 94%, transparent);
+}
+
+.card {
+  display: grid;
+  gap: space(3);
+  width: min(30rem, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  padding: space(5);
+}
+
+// Durante o jogo: só o nome e a saída, no alto, sem cobrir a ação.
+.bar {
+  align-self: start;
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: space(3);
+  padding: space(1) space(3);
+}
+
+.kicker {
+  @include type(label);
+  color: var(--mc-accent);
+}
+
+.title {
+  @include type(title-m);
+  color: var(--mc-text);
+}
+
+.text {
+  @include type(body);
+  color: var(--mc-text);
+}
+
+.keys {
+  @include type(body-s);
+  color: var(--mc-text-secondary);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: space(2) space(4);
+}

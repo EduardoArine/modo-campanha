@@ -1,0 +1,119 @@
+import { PadInput } from './minigame';
+import {
+  CROC_CYCLE,
+  crocOpen,
+  GROUND,
+  JUNGLE_SCREENS,
+  JungleRun,
+  scorpionX,
+  spiderY,
+  vineTip,
+} from './jungle-run';
+
+// CORRIDA NA SELVA (D-104): determinística, sem game over, e vencível.
+describe('JungleRun', () => {
+  const idle: PadInput = { dir: 0, jump: false };
+  const run = (game: JungleRun, input: PadInput, ticks: number) => {
+    for (let i = 0; i < ticks; i++) game.step(input);
+  };
+  /** Cópia profunda do estado (para a busca abaixo). */
+  const clone = (game: JungleRun): JungleRun => {
+    const copy = Object.create(Object.getPrototypeOf(game)) as JungleRun;
+    for (const [key, value] of Object.entries(game)) {
+      (copy as unknown as Record<string, unknown>)[key] = structuredClone(value);
+    }
+    return copy;
+  };
+
+  it('starts on the first screen, on the ground, facing right', () => {
+    const game = new JungleRun();
+    expect(game.screen).toBe(0);
+    expect(game.runner).toMatchObject({ y: GROUND, onGround: true, facing: 1 });
+    expect(game.done).toBe(false);
+  });
+
+  it('jumps only from the ground and lands back on it', () => {
+    const game = new JungleRun();
+    game.step({ dir: 0, jump: true });
+    expect(game.runner.onGround).toBe(false);
+    const peak = Math.min(...Array.from({ length: 6 }, () => (game.step(idle), game.runner.y)));
+    expect(peak).toBeLessThan(GROUND - 12);
+    run(game, idle, 20);
+    expect(game.runner).toMatchObject({ y: GROUND, onGround: true });
+  });
+
+  it('has no game over: touching the snake sends the runner back to the start of the screen', () => {
+    const game = new JungleRun();
+    run(game, { dir: 1, jump: false }, 40);
+    expect(game.retries).toBeGreaterThan(0);
+    expect(game.screen).toBe(0);
+    expect(game.flash).toBeGreaterThanOrEqual(0);
+    expect(game.done).toBe(false);
+  });
+
+  it('moves its creatures on fixed cycles (scorpion patrol, spider, crocodiles)', () => {
+    const path = JUNGLE_SCREENS[0].scorpions![0];
+    const xs = Array.from({ length: 200 }, (_, t) => scorpionX(path, t));
+    expect(Math.min(...xs)).toBe(path[0]);
+    expect(Math.max(...xs)).toBe(path[1]);
+    const ys = Array.from({ length: 60 }, (_, t) => spiderY(t));
+    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(40);
+    const cycle = CROC_CYCLE.closed + CROC_CYCLE.open;
+    const open = Array.from({ length: cycle }, (_, t) => crocOpen(0, t)).filter(Boolean);
+    expect(open).toHaveLength(CROC_CYCLE.open);
+    const vine = JUNGLE_SCREENS[1].vine!;
+    const tips = Array.from({ length: vine.period }, (_, t) => vineTip(vine, t).x);
+    expect(Math.min(...tips)).toBeLessThan(JUNGLE_SCREENS[1].lake![0]);
+    expect(Math.max(...tips)).toBeGreaterThan(JUNGLE_SCREENS[1].lake![1]);
+  });
+
+  it('can be finished: a search finds a run from the start to the joystick without a retry', () => {
+    // Busca em feixe: a cada 2 ticks, quatro escolhas (andar, andar e pular, esperar, esperar e
+    // pular); mantém os 80 estados mais adiantados que nunca voltaram ao começo da tela.
+    const actions: PadInput[][] = [
+      [
+        { dir: 1, jump: false },
+        { dir: 1, jump: false },
+      ],
+      [
+        { dir: 1, jump: true },
+        { dir: 1, jump: false },
+      ],
+      [idle, idle],
+      [{ dir: 0, jump: true }, idle],
+    ];
+    let beam = [new JungleRun()];
+    let winner: JungleRun | undefined;
+    let hung = false;
+    for (let step = 0; step < 600 && !winner; step++) {
+      const next = new Map<string, JungleRun>();
+      for (const state of beam) {
+        for (const pair of actions) {
+          const g = clone(state);
+          pair.forEach((input) => g.step(input));
+          if (g.retries) continue;
+          hung ||= g.runner.hanging;
+          if (g.done) winner = g;
+          const r = g.runner;
+          const key = `${g.screen}:${Math.round(r.x)}:${Math.round(r.y)}:${r.hanging}:${Math.round(r.vy)}`;
+          if (!next.has(key)) next.set(key, g);
+        }
+      }
+      beam = [...next.values()]
+        .sort((a, b) => b.screen * 1000 + b.runner.x - (a.screen * 1000 + a.runner.x))
+        .slice(0, 80);
+    }
+    expect(hung).toBe(true);
+    expect(winner?.done).toBe(true);
+    expect(winner?.screen).toBe(JUNGLE_SCREENS.length - 1);
+    // Curto: menos de 45 s a 12 fps.
+    expect(winner!.tick).toBeLessThan(45 * 12);
+  });
+
+  it('stops stepping once done', () => {
+    const game = new JungleRun();
+    game.done = true;
+    game.step({ dir: 1, jump: true });
+    expect(game.tick).toBe(0);
+  });
+});

@@ -1763,3 +1763,27 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
 - **Limitações aceitas:** trocar de idioma no meio do jogo volta à tela de título (são duas rotas); o `og:title` e a descrição das páginas do jogo são os da Home (o `<title>` é o do jogo).
 - **Fica para depois:** segredos da FASE 6 (podem entrar no jogo), progresso salvo (`docs/26`), personagem definitivo, epílogo pessoal, gamepad, som.
 - **Status:** implementado na branch `feat/system-horizon-mvp`, para revisão do Eduardo. Sem merge e sem deploy.
+
+## D-104 — SYSTEM HORIZON: balões e minijogos (revê a D-103)
+
+- **Data:** 2026-11-02
+- **Pedido do Eduardo:** o jogo ficou redundante com o Diário (o painel abria a história inteira). No jogo, só frases curtas em balões, como em Super Mario World ou Braid, e um mínimo de desafio com minijogos curtos que representem cada marco (referências: o puzzle de canos do BioShock, o minijogo do Machinarium, os do Pip-Boy).
+- **Balões:** cada marco e cada fim de capítulo ganha uma frase de até ~70 caracteres (`src/app/data/horizon-balloons.data.ts`), mostrada sobre a tela quando o jogador chega perto. As frases só encurtam o que já está aprovado (título, resumo ou assinatura); nenhum fato novo. **São proposta, aguardando a aprovação do Eduardo.** Cartuchos mostram nome e tipo; a forja, a frase da campanha liberada.
+- **Fim do painel de leitura nos marcos:** a história completa fica no Diário e na versão em texto do jogo (o caminho para leitor de tela). O painel `<dialog>` continua só no encerramento (contatos) e nos slots do HUD (habilidades).
+- **Minijogos (aprovados pelo Eduardo):**
+
+  | Marco | Minijogo |
+  |---|---|
+  | Primeiro contato (Atari) | corrida na selva |
+  | A escola das locadoras | pares de cartuchos na prateleira |
+  | Aedes Revenge | shoot 'em up jogando como o mosquito |
+  | 4Change | esteira de ativos (separar notebook, celular, chip e carregador) |
+  | ScoutEvo | três cobranças de pênalti |
+  | EOS | rota do órgão contra o relógio (canos) |
+  | Axia | ligar sensores à central |
+
+  A Comunidade ON fica de fora por enquanto. Regras: 20 a 45 s; uma ação só; sem game over (errou, volta ao começo da tela); "Voltar à campanha" sempre visível; nenhuma pontuação sobre o Eduardo; teclado e toque.
+- **Protótipo desta rodada: CORRIDA NA SELVA** (marco "Primeiro contato"). Homenagem aos jogos de selva do Atari 2600, com mecânicas de gênero e arte própria: nunca o nome, o personagem ou a tela de um jogo real. Três telas: a cobra, o escorpião e a aranha; o lago com o cipó; o lago dos jacarés (pisar com a boca fechada) até o joystick. Vencível em ~20 s (um teste busca e encontra uma vitória sem erro).
+- **Arte:** bichos e fundo gerados no **PixelLab** com a paleta oficial forçada (fontes em `design/source/system-horizon/jungle/`), reduzidos 2:1 e encaixados na paleta por `design/source/system-horizon/pixel/build-jungle.mjs` → `sh-jungle.png` (7 quadros 16 × 16, pivot 8,15) e `sh-jungle-bg.png` (160 × 120, com o chão). O personagem é o mesmo do jogo. Custo: 11 gerações.
+- **Acessibilidade:** cartões do minijogo em DOM (abertura com o objetivo e os controles, barra com a saída, conclusão com a frase do marco); foco na ação principal; Esc volta à campanha; região viva anuncia a frase do marco e "Enter para jogar". axe sem violações (1440 pt, 390 en); alvos ≥ 44 px.
+- **Status:** protótipo na branch `feat/system-horizon-minigames` (a partir da D-103), para revisão do Eduardo. Sem merge e sem deploy. Os outros seis minijogos entram depois da aprovação do ritmo e da dificuldade da corrida na selva.

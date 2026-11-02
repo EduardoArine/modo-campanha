@@ -1,4 +1,5 @@
 import { SkillGroupId } from '../../models';
+import { MinigameId } from '../minigames/minigame';
 
 /**
  * Mapa do SYSTEM HORIZON interativo (D-103, docs/23 §4 e §18): os cinco atos da campanha, só com
@@ -29,6 +30,8 @@ export interface HorizonActMap {
   readonly id: HorizonActId;
   readonly source: HorizonActSource;
   readonly collect?: readonly HorizonCollectible[];
+  /** Minijogo de um marco (D-104): id do marco do Diário → minijogo. */
+  readonly games?: Readonly<Record<string, MinigameId>>;
 }
 
 export const HORIZON_MAP: readonly HorizonActMap[] = [
@@ -36,6 +39,7 @@ export const HORIZON_MAP: readonly HorizonActMap[] = [
     id: 'origin',
     source: { kind: 'chapter', chapter: 'chapter-00-origin' },
     collect: [{ group: 'game-dna', after: 2 }],
+    games: { 'origin-first-contact': 'jungle-run' },
   },
   {
     id: 'code',

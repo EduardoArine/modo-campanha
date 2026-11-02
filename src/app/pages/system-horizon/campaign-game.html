@@ -48,18 +48,39 @@
   <div class="view" aria-hidden="true">
     <canvas #canvas></canvas>
     @for (caption of captions(); track caption.kind) {
-      <span
-        class="caption"
-        [class.start]="caption.align === 'start'"
-        [style.left.%]="caption.x / 1.6"
-        [style.top.%]="caption.y / 1.2"
-        >{{ captionText(caption) }}</span
-      >
+      @if (caption.kind !== 'stop' && !minigame()) {
+        <span
+          class="caption"
+          [class.start]="caption.align === 'start'"
+          [style.left.%]="caption.x / 1.6"
+          [style.top.%]="caption.y / 1.2"
+          >{{ captionText(caption) }}</span
+        >
+      }
     }
-    @if (actCard()) {
+    <!-- Balão do marco próximo (D-104): a frase curta; a história completa fica no Diário. -->
+    @if (balloonAt(); as b) {
+      <p
+        class="balloon"
+        [class.is-action]="!!action(b.stop)"
+        [style.left.%]="clampX(b.x)"
+        [style.top.%]="b.y / 1.2"
+      >
+        {{ balloon(b.stop) }}
+      </p>
+    }
+    @if (actCard() && !minigame()) {
       <p class="act-card">{{ actName() }}</p>
     }
   </div>
+  @if (minigame(); as run) {
+    <app-horizon-minigame-card
+      [run]="run"
+      [balloon]="balloon(run.stop)"
+      (play)="startMinigame()"
+      (leave)="leaveMinigame()"
+    />
+  }
 </div>
 <p class="mc-visually-hidden" id="horizon-stage-help">{{ game.stageHelp }}</p>
 
@@ -79,13 +100,33 @@
     <mc-icon name="chevron-left" />
   </button>
   <div class="prompt">
-    @if (near(); as stop) {
-      <button mcAction="primary" type="button" class="read" (click)="readNear()">
-        {{ readLabel(stop) }}: {{ label(stop) }}
-        @if (read().has(stop.id)) {
-          <span class="tag">{{ game.readTag }}</span>
-        }
-      </button>
+    @if (minigame(); as run) {
+      @if (run.phase === 'play') {
+        <!-- Saltar: segurar no toque/mouse; no teclado, ↑, Espaço ou Enter. -->
+        <button
+          mcAction="primary"
+          type="button"
+          class="read"
+          (pointerdown)="jumpPress('pointer', $event)"
+          (pointerup)="jumpRelease('pointer')"
+          (pointercancel)="jumpRelease('pointer')"
+          (pointerleave)="jumpRelease('pointer')"
+          (contextmenu)="$event.preventDefault()"
+        >
+          {{ game.minigame.jump }}
+        </button>
+      }
+    } @else if (near(); as stop) {
+      @if (action(stop); as act) {
+        <button mcAction="primary" type="button" class="read" (click)="readNear()">
+          {{ act }}
+          @if (played().has(stop.id)) {
+            <span class="tag">{{ game.minigame.done }}</span>
+          }
+        </button>
+      } @else {
+        <p class="hint">{{ label(stop) }}</p>
+      }
     } @else {
       <p class="hint">{{ game.walkHint }}</p>
     }
@@ -103,9 +144,11 @@
   >
     <mc-icon name="chevron-right" />
   </button>
-  <button mcAction="secondary" type="button" class="next" (click)="goNext(1)">
-    {{ game.next }} <mc-icon name="chevron-right" />
-  </button>
+  @if (!minigame()) {
+    <button mcAction="secondary" type="button" class="next" (click)="goNext(1)">
+      {{ game.next }} <mc-icon name="chevron-right" />
+    </button>
+  }
 </div>
 
 <p class="mc-visually-hidden" role="status" aria-live="polite">{{ announcement() }}</p>

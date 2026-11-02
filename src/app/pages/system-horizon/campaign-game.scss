@@ -148,6 +148,41 @@ canvas {
   text-align: center;
 }
 
+// Balão do marco próximo (D-104): a frase curta, com a ponta para a parada; borda no acento quando
+// a parada tem ação (minijogo, encerramento).
+.balloon {
+  position: absolute;
+  translate: -50% -100%;
+  max-width: 60%;
+  margin: 0;
+  padding: 1cqw 1.6cqw;
+  border: var(--mc-border-width-default) solid var(--mc-border-default);
+  border-radius: var(--mc-radius-sm);
+  background: var(--mc-bg);
+  color: var(--mc-text);
+  font: 500 2.6cqw / 1.35 var(--mc-font-text);
+  text-align: center;
+  pointer-events: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    translate: -50% 0;
+    border: 1cqw solid transparent;
+    border-top-color: var(--mc-border-default);
+  }
+
+  &.is-action {
+    border-color: var(--mc-accent);
+
+    &::after {
+      border-top-color: var(--mc-accent);
+    }
+  }
+}
+
 @container (width < 420px) {
   .caption {
     font-size: 4cqw;
@@ -155,6 +190,11 @@ canvas {
 
   .act-card {
     font-size: 4.6cqw;
+  }
+
+  .balloon {
+    max-width: 64%;
+    font-size: 3.6cqw;
   }
 }
 

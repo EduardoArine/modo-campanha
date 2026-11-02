@@ -1,9 +1,11 @@
+import { WritableSignal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 
 import { routes } from '../../app.routes';
 import { CAMPAIGN_LOG_CHAPTERS, PLAYER_PROFILE } from '../../data';
+import { HorizonStop } from '../../system-horizon/content/horizon-world';
 import { CampaignScene } from '../../system-horizon/scenes/campaign';
 import { HORIZON_WORLD } from './horizon-world.provider';
 
@@ -11,7 +13,10 @@ import { HORIZON_WORLD } from './horizon-world.provider';
 const ng = (el: HTMLElement) =>
   (window as unknown as { ng: { getComponent: (e: HTMLElement) => unknown } }).ng.getComponent(
     el,
-  ) as { scene: () => CampaignScene | null };
+  ) as {
+    scene: () => CampaignScene | null;
+    near: WritableSignal<HorizonStop | null>;
+  };
 
 // SYSTEM HORIZON interativo (D-103): rota própria, título → como jogar → jogo, versão em texto.
 describe('SystemHorizonPage', () => {
@@ -131,6 +136,49 @@ describe('SystemHorizonPage', () => {
     scene.step();
     expect(scene.playerState.x).toBe(x1);
     expect(scene.playerState.pose).toBe('idle');
+  });
+
+  it('offers the milestone minigame (D-104): opening card, play, and back to the campaign', async () => {
+    const { el, click, settle } = await renderAt('/system-horizon');
+    await click(/^Começar/);
+    await click(/^Jogar/);
+    const host = el.querySelector<HTMLElement>('app-campaign-game')!;
+    const world = TestBed.inject(HORIZON_WORLD);
+    const first = world.stops.find((s) => s.kind === 'milestone' && s.game)!;
+    expect(first.id).toBe('origin-first-contact');
+
+    ng(host).near.set(first);
+    await settle();
+    expect(text(host, '.prompt')).toBe('Jogar: CORRIDA NA SELVA');
+    await click(/^Jogar: CORRIDA NA SELVA/);
+    const card = host.querySelector('app-horizon-minigame-card')!;
+    expect(text(card, '.kicker')).toBe('MINIJOGO');
+    expect(text(card, 'h2')).toBe('CORRIDA NA SELVA');
+    expect(text(card, '.text')).toMatch(/cipó/);
+    // Sempre dá para voltar sem jogar.
+    expect(text(card, '.actions')).toContain('Voltar à campanha');
+
+    await click(/^Jogar$/);
+    expect(host.querySelector('app-horizon-minigame-card .bar')).not.toBeNull();
+    expect(text(host, '.prompt')).toBe('Saltar');
+    expect(host.querySelector('.next')).toBeNull();
+
+    await click(/^Voltar à campanha$/);
+    expect(host.querySelector('app-horizon-minigame-card')).toBeNull();
+    expect(text(host, '.prompt')).toBe('Jogar: CORRIDA NA SELVA');
+  });
+
+  it('shows only the short balloon for a milestone without a minigame (no reader)', async () => {
+    const { el, click, settle } = await renderAt('/system-horizon');
+    await click(/^Começar/);
+    await click(/^Jogar/);
+    const host = el.querySelector<HTMLElement>('app-campaign-game')!;
+    const world = TestBed.inject(HORIZON_WORLD);
+    const second = world.stops.find((s) => s.kind === 'milestone' && !s.game)!;
+    ng(host).near.set(second);
+    await settle();
+    expect(host.querySelector('.prompt button')).toBeNull();
+    expect(text(host, '.prompt .hint')).toBe('OS ANOS DE LOCADORA');
   });
 
   it('keeps the game mounted and hidden while the text version is open', async () => {

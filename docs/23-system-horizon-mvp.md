@@ -360,3 +360,36 @@ Fonte editável: `design/source/system-horizon/pixel/build-campaign.mjs`. Arte d
 - Revisão do Eduardo (visual, ritmo, textos de sistema do jogo).
 - Personagem definitivo (o mesmo do teaser, `docs/22` §13).
 - FASE 6 (segredos) e progresso da visita (`docs/26`): o jogo já emite os eventos (marco lido, especialidade coletada, MC-CART formado, mirante) que um registro de progresso usaria.
+
+## 19. Balões e minijogos (D-104)
+
+O jogo deixa de repetir o Diário: cada parada mostra uma frase curta num balão, e alguns marcos têm um minijogo que representa o marco. A história completa fica no Diário e na versão em texto.
+
+### 19.1 Balões
+
+- Fonte: `src/app/data/horizon-balloons.data.ts` (chave = id do marco ou `checkpoint-<capítulo>`), pt-BR e en, até ~80 caracteres (teste), só encurtando texto aprovado; anos citados precisam estar na história (teste).
+- Na tela: balão em DOM sobre o canvas, acima da parada próxima, preso entre 32% e 68% da largura; borda no acento quando a parada tem ação.
+- Sem ação (a maioria), chegar perto já conta como lido (o selo ◆ some). Com ação (minijogo, encerramento), o botão da barra de controles faz a ação.
+
+### 19.2 Minijogos
+
+- Contrato: `src/app/system-horizon/minigames/minigame.ts` (`Minigame`: `step(pad)`, `draw`, `done`, `retries`; `PadInput`: direção + pulo segurado). Determinísticos, testáveis sem canvas, desenhados no mesmo canvas 160 × 120 do jogo (a campanha fica parada enquanto o minijogo roda).
+- Mapa: `games` em `horizon-map.ts` (id do marco → minijogo); o mundo põe `game` no marco.
+- Fluxo: Jogar: <NOME> → cartão de abertura (objetivo, controles, Jogar / Voltar à campanha) → jogo (barra com o nome e a saída; botão Saltar no toque) → cartão de conclusão (CONCLUÍDO + a frase do marco → Continuar).
+- Teclado: ← → andam; ↑, Espaço ou Enter saltam; Esc volta à campanha.
+
+### 19.3 CORRIDA NA SELVA (protótipo)
+
+| Tela | O que tem | Como passar |
+|---|---|---|
+| 1 | cobra parada, escorpião que patrulha, aranha que desce do alto | pular a cobra e o escorpião; passar pela aranha quando ela sobe |
+| 2 | lago com cipó balançando | pular no cipó perto da borda; saltar de novo para soltar do outro lado |
+| 3 | lago com três jacarés (boca fecha 20 ticks, abre 10) | pisar nas cabeças com a boca fechada até o joystick |
+
+Encostar num bicho ou cair na água volta ao começo da tela (pisca, sem game over).
+
+**Contrato da arte:** `sh-jungle.png`, 7 quadros 16 × 16 numa linha (escorpião A, escorpião B, jacaré fechado, jacaré aberto, cobra, joystick, aranha), pivot 8,15; `sh-jungle-bg.png`, 160 × 120, com o chão em y ≥ 98. Gerados por `build-jungle.mjs` a partir das fontes do PixelLab.
+
+### 19.4 Próximos minijogos
+
+Pares na prateleira (locadoras), shoot 'em up do mosquito (Aedes Revenge), esteira de ativos (4Change), pênaltis (ScoutEvo), rota do órgão (EOS) e sensores (Axia), na mesma estrutura, depois da aprovação do protótipo.

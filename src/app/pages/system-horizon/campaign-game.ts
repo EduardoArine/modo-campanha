@@ -18,12 +18,14 @@ import {
 import { RouterLink } from '@angular/router';
 
 import { LocaleService } from '../../core/i18n';
-import { SKILL_LOADOUT, SOCIAL_LINKS } from '../../data';
+import { HORIZON_BALLOONS, SKILL_LOADOUT, SOCIAL_LINKS } from '../../data';
 import { McAction, McIcon } from '../../shared/ui';
 import { HorizonStop, HorizonWorld } from '../../system-horizon/content/horizon-world';
 import { HeldInput } from '../../system-horizon/control/held-input';
 import { FixedClock } from '../../system-horizon/engine/clock';
 import { Renderer, VIEW } from '../../system-horizon/engine/renderer';
+import { JungleRun } from '../../system-horizon/minigames/jungle-run';
+import { Minigame, MinigameArt, MinigameId } from '../../system-horizon/minigames/minigame';
 import {
   CampaignArt,
   CampaignCaption,
@@ -35,9 +37,24 @@ import { loadCampaignArt } from '../../system-horizon/world/campaign-art';
 import { Palette, readPalette } from '../../system-horizon/world/palette';
 import { actLabel, stopLabel } from './horizon-labels';
 import { HorizonEntry } from './horizon-entry';
+import { HorizonMinigameCard } from './horizon-minigame-card';
 
 /** O card do ato fica ~3 s na tela (ticks de 12 fps). */
 const ACT_CARD_TICKS = 36;
+
+/** Teclas de pulo nos minijogos (Enter e Espaço também, fora de botões). */
+const JUMP_KEYS = new Set(['ArrowUp', 'w', 'W', ' ', 'Enter']);
+
+const MINIGAMES: Record<MinigameId, () => Minigame> = {
+  'jungle-run': () => new JungleRun(),
+};
+
+/** Minijogo aberto num marco: cartão de abertura, jogo, cartão de conclusão. */
+export interface MinigameRun {
+  readonly stop: HorizonStop;
+  readonly game: Minigame;
+  readonly phase: 'intro' | 'play' | 'done';
+}
 
 const KEY_DIR: Record<string, -1 | 1> = {
   ArrowLeft: -1,
@@ -49,14 +66,15 @@ const KEY_DIR: Record<string, -1 | 1> = {
 };
 
 /**
- * Jogo do SYSTEM HORIZON (D-103, docs/23 §18): canvas 160 × 120 em escala inteira (decorativo,
- * `aria-hidden`) + tudo o que importa em DOM: HUD, card do ato, botão de leitura, painel `<dialog>`
- * com os fatos, região viva e pausa. O laço só anda com o jogo ativo, a aba visível e nenhum painel
- * aberto. Teclado, toque e mouse fazem tudo.
+ * Jogo do SYSTEM HORIZON (D-103, docs/23 §18; balões e minijogos em D-104): canvas 160 × 120 em
+ * escala inteira (decorativo, `aria-hidden`) + tudo o que importa em DOM: HUD, card do ato, balão do
+ * marco próximo (frase curta), cartões do minijogo, região viva e pausa. A história completa fica no
+ * Diário e na versão em texto; o painel `<dialog>` só abre no encerramento (contatos) e nos slots do
+ * HUD (habilidades). O laço só anda com o jogo ativo, a aba visível e nenhum painel aberto.
  */
 @Component({
   selector: 'app-campaign-game',
-  imports: [HorizonEntry, McAction, McIcon, RouterLink],
+  imports: [HorizonEntry, HorizonMinigameCard, McAction, McIcon, RouterLink],
   templateUrl: './campaign-game.html',
   styleUrls: ['./campaign-game.scss', './campaign-game-panels.scss'],
   host: { '(keydown)': 'onKeydown($event)', '(focusout)': 'onFocusOut($event)' },
@@ -81,7 +99,9 @@ export class CampaignGame {
   private readonly clock = new FixedClock();
   private readonly input = new HeldInput();
   private renderer: Renderer | null = null;
-  private art: CampaignArt | null = null;
+  private art: (CampaignArt & MinigameArt) | null = null;
+  /** Pulo segurado (teclas e botão Saltar) no minijogo. */
+  private jumpHeld = new Set<string>();
   private palette: Palette | null = null;
   private frame = 0;
   private last = 0;
@@ -96,6 +116,7 @@ export class CampaignGame {
   private readonly pageVisible = signal(true);
   protected readonly paused = signal(false);
   protected readonly reading = signal<HorizonStop | null>(null);
+  protected readonly minigame = signal<MinigameRun | null>(null);
 
   // Estado espelhado da cena para o DOM (atualizado pelos eventos).
   protected readonly act = signal(0);
@@ -103,6 +124,8 @@ export class CampaignGame {
   protected readonly near = signal<HorizonStop | null>(null);
   protected readonly collected = signal<ReadonlySet<string>>(new Set());
   protected readonly read = signal<ReadonlySet<string>>(new Set());
+  /** Minijogos concluídos nesta visita (marco com o selo apagado). */
+  protected readonly played = signal<ReadonlySet<string>>(new Set());
   protected readonly unlocked = signal(false);
   protected readonly captions = signal<readonly CampaignCaption[]>([]);
   protected readonly announcement = signal('');
@@ -159,6 +182,8 @@ export class CampaignGame {
     this.near.set(null);
     this.collected.set(new Set());
     this.read.set(new Set());
+    this.played.set(new Set());
+    this.minigame.set(null);
     this.unlocked.set(false);
     this.actCard.set(true);
     this.actCardUntil = 0;
@@ -167,7 +192,53 @@ export class CampaignGame {
 
   protected readNear(): void {
     const stop = this.near();
-    if (stop) this.openReader(stop);
+    if (!stop) return;
+    if (stop.kind === 'milestone' && stop.game) this.openMinigame(stop, stop.game);
+    else if (stop.kind === 'closing') this.openReader(stop);
+  }
+
+  /** A parada próxima tem uma ação (minijogo ou encerramento); as outras só têm o balão. */
+  protected action(stop: HorizonStop): string | null {
+    const game = this.ui().systemHorizon.game;
+    if (stop.kind === 'milestone' && stop.game) {
+      return `${game.minigame.play}: ${game.minigame.games[stop.game].title}`;
+    }
+    return stop.kind === 'closing' ? `${game.read.closing}: ${this.label(stop)}` : null;
+  }
+
+  // Minijogos ----------------------------------------------------------------------------------
+
+  private openMinigame(stop: HorizonStop, id: MinigameId): void {
+    this.release();
+    this.minigame.set({ stop, game: MINIGAMES[id](), phase: 'intro' });
+    this.say(this.ui().systemHorizon.game.minigame.games[id].title);
+    this.draw();
+  }
+
+  protected startMinigame(): void {
+    const run = this.minigame();
+    if (!run) return;
+    this.minigame.set({ ...run, phase: 'play' });
+    this.focusStage();
+  }
+
+  /** Volta à campanha (desistir, ou depois de concluir). */
+  protected leaveMinigame(): void {
+    const run = this.minigame();
+    if (!run) return;
+    this.release();
+    this.minigame.set(null);
+    this.draw();
+    this.focusStage();
+  }
+
+  protected jumpPress(source: string, event?: Event): void {
+    event?.preventDefault();
+    this.jumpHeld.add(source);
+  }
+
+  protected jumpRelease(source: string): void {
+    this.jumpHeld.delete(source);
   }
 
   /** HUD: uma especialidade já coletada abre o mesmo painel (habilidades do grupo). */
@@ -230,6 +301,33 @@ export class CampaignGame {
     if (!this.active() || this.paused() || this.reading() || event.ctrlKey || event.metaKey) return;
     const target = event.target as HTMLElement | null;
     const onControl = !!target?.closest('button, a, input, summary');
+    const run = this.minigame();
+    if (run?.phase === 'play') {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        this.leaveMinigame();
+        return;
+      }
+      if (
+        JUMP_KEYS.has(event.key) &&
+        !(onControl && (event.key === ' ' || event.key === 'Enter'))
+      ) {
+        event.preventDefault();
+        this.jumpPress(event.key.toLowerCase());
+        return;
+      }
+    } else if (run) {
+      // Abertura e conclusão: Esc volta; Enter/Espaço fora de um botão faz a ação principal.
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        this.leaveMinigame();
+      } else if ((event.key === 'Enter' || event.key === ' ') && !onControl) {
+        event.preventDefault();
+        if (run.phase === 'intro') this.startMinigame();
+        else this.leaveMinigame();
+      }
+      return;
+    }
     const dir = KEY_DIR[event.key];
     if (dir) {
       event.preventDefault();
@@ -263,6 +361,7 @@ export class CampaignGame {
 
   /** Soltar a tecla: ouvido na janela (a tecla pode ser solta com o foco em outro lugar). */
   private onKeyup(event: KeyboardEvent): void {
+    if (JUMP_KEYS.has(event.key)) this.jumpRelease(event.key.toLowerCase());
     if (!KEY_DIR[event.key]) return;
     this.input.release(event.key.toLowerCase());
     this.scene()?.setMove(this.input.dir);
@@ -293,6 +392,7 @@ export class CampaignGame {
 
   /** Toque/clique na tela: anda até a parada mais perto do ponto (ou até o ponto). */
   protected onStageClick(event: MouseEvent): void {
+    if (this.minigame()) return;
     const scene = this.scene();
     const canvas = this.canvas().nativeElement;
     const rect = canvas.getBoundingClientRect();
@@ -325,10 +425,36 @@ export class CampaignGame {
     }
   }
 
-  protected readLabel(stop: HorizonStop): string {
-    const read = this.ui().systemHorizon.game.read;
-    return stop.kind === 'collectible' ? '' : read[stop.kind];
+  /** Frase curta da parada (D-104): o balão do marco, do capítulo, do cartucho ou da forja. */
+  protected balloon(stop: HorizonStop): string {
+    const own = HORIZON_BALLOONS[stop.id];
+    if (own) return this.locale.pick(own);
+    switch (stop.kind) {
+      case 'cartridge':
+        return `${this.locale.pick(stop.project.title)} · ${this.locale.pick(stop.project.type)}`;
+      case 'forge':
+        return this.ui().systemHorizon.game.unlockedLead;
+      case 'milestone':
+        return this.locale.pick(stop.entry.title);
+      case 'checkpoint':
+        return this.label(stop);
+      default:
+        return '';
+    }
   }
+
+  /** O balão nunca sai da tela: o centro fica entre 32% e 68% da largura. */
+  protected clampX(x: number): number {
+    return Math.min(Math.max(x / 1.6, 32), 68);
+  }
+
+  /** Posição do balão (em % da tela), acima da parada próxima. */
+  protected readonly balloonAt = computed(() => {
+    const caption = this.captions().find((c) => c.kind === 'stop');
+    const stop = caption?.stop;
+    if (!caption || !stop || stop.kind === 'closing' || this.minigame()) return null;
+    return { stop, x: caption.x, y: caption.y };
+  });
 
   private forgeSerial(): string | null {
     const forge = this.world().stops.find((s) => s.kind === 'forge');
@@ -388,6 +514,17 @@ export class CampaignGame {
   private readonly tick = (now: number): void => {
     const steps = this.clock.advance(now - this.last);
     this.last = now;
+    const run = this.minigame();
+    if (run) {
+      if (run.phase === 'play' && steps) {
+        const pad = { dir: this.input.dir, jump: this.jumpHeld.size > 0 };
+        for (let i = 0; i < steps && !run.game.done; i++) run.game.step(pad);
+        if (run.game.done) this.finishMinigame(run);
+        this.draw();
+      }
+      this.frame = requestAnimationFrame(this.tick);
+      return;
+    }
     const scene = this.scene();
     if (scene) {
       for (let i = 0; i < steps; i++) scene.step();
@@ -402,6 +539,20 @@ export class CampaignGame {
     this.frame = requestAnimationFrame(this.tick);
   };
 
+  private finishMinigame(run: MinigameRun): void {
+    this.release();
+    this.minigame.set({ ...run, phase: 'done' });
+    this.played.update((ids) => new Set(ids).add(run.stop.id));
+    this.scene()?.markRead(run.stop.id);
+    this.read.update((ids) => new Set(ids).add(run.stop.id));
+    this.say(`${this.ui().systemHorizon.game.minigame.done}. ${this.balloon(run.stop)}`);
+  }
+
+  private say(text: string): void {
+    this.echo = !this.echo;
+    this.announcement.set(text + (this.echo ? '\u00a0' : ''));
+  }
+
   private handle(events: readonly CampaignEvent[], scene: CampaignScene): void {
     const game = this.ui().systemHorizon.game;
     const say: string[] = [];
@@ -413,11 +564,20 @@ export class CampaignGame {
           this.actCardUntil = scene.tick + ACT_CARD_TICKS;
           say.push(this.actName());
           break;
-        case 'near':
-          this.near.set(event.stop);
-          if (event.stop)
-            say.push(`${game.announce.near} ${this.label(event.stop)}. ${game.announce.enter}`);
+        case 'near': {
+          const stop = event.stop;
+          this.near.set(stop);
+          if (!stop) break;
+          const action = this.action(stop);
+          const hint = stop.kind === 'closing' ? game.announce.enter : game.announce.play;
+          say.push(action ? `${this.balloon(stop)} ${hint}` : this.balloon(stop));
+          // Sem ação, o balão é a leitura: a parada fica lida (o selo some).
+          if (!action) {
+            scene.markRead(stop.id);
+            this.read.update((ids) => new Set(ids).add(stop.id));
+          }
           break;
+        }
         case 'collected':
           this.collected.update((ids) => new Set(ids).add(event.stop.id));
           say.push(`${this.label(event.stop)} ${game.announce.collected}`);
@@ -434,15 +594,19 @@ export class CampaignGame {
           break;
       }
     }
-    if (!say.length) return;
-    this.echo = !this.echo;
-    this.announcement.set(say.join(' ') + (this.echo ? '\u00a0' : ''));
+    if (say.length) this.say(say.join(' '));
   }
 
   private draw(): void {
     const { renderer, art, palette } = this;
     const scene = this.scene();
     if (!renderer || !art || !palette || !scene) return;
+    const run = this.minigame();
+    if (run) {
+      run.game.draw(renderer, art, palette);
+      renderer.present();
+      return;
+    }
     scene.draw(renderer, art, palette);
     renderer.present();
     this.captions.set(scene.captions());
@@ -478,6 +642,7 @@ export class CampaignGame {
 
   private release(): void {
     this.input.clear();
+    this.jumpHeld.clear();
     this.scene()?.setMove(0);
   }
 
