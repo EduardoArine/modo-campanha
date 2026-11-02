@@ -14,11 +14,19 @@ const SRC = 'design/source/system-horizon/jungle/';
 const OUT = 'public/assets/system-horizon/';
 const FRAMES = ['scorpion-a', 'scorpion-b', 'croc-closed', 'croc-open', 'snake', 'joystick', 'spider'];
 const CELL = 16;
+// Cobra e aranha ficam sobre a folhagem e os troncos escuros: o corpo quase preto da fonte sumia.
+// Recolorir dentro da paleta (contorno preto mantido). Cobra: corpo dourado, sombra laranja,
+// escamas bronze. Aranha: corpo bronze, sombra ameixa, olhos vermelhos.
+const RECOLOR = {
+  snake: { '3c372e': 'fdba3f', '312726': 'f8761a', '715313': 'c6805c' },
+  spider: { '3c372e': 'c6805c', '21191b': '693548', '162637': 'f04e1c', '312726': 'b43831' },
+};
 
+const hex = (h) => [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
 const PALETTE = [
   '393455', 'c6805c', 'f04e1c', 'b43831', 'f1ba8c', '3c372e', '693548', '51909a',
   '264f5e', '040403', '312726', '162637', '21191b', 'fdba3f', 'f8761a', '715313',
-].map((h) => [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)));
+].map(hex);
 
 const nearest = ([r, g, b]) =>
   PALETTE.reduce((best, c) =>
@@ -45,7 +53,9 @@ FRAMES.forEach((name, f) => {
       const total = [...counts.values()].reduce((a, b) => a + b, 0);
       if (total < 2) continue;
       const [key] = [...counts].sort((a, b) => b[1] - a[1])[0];
-      set(half, x, y, [...key.split(',').map(Number), 255]);
+      const rgb = key.split(',').map(Number);
+      const swap = RECOLOR[name]?.[rgb.map((v) => v.toString(16).padStart(2, '0')).join('')];
+      set(half, x, y, [...(swap ? hex(swap) : rgb), 255]);
     }
   // Encosta embaixo e centraliza no quadro (pés no pivot 8,15).
   const box = bbox(half);
@@ -67,7 +77,6 @@ for (let y = 0; y < bg.h; y++)
 // Chão chapado, como no 2600, assado no fundo (claro, para os bichos escuros aparecerem):
 // faixa dourada no topo, terra bronze com listras oliva. O lago é desenhado pelo jogo por cima.
 const GROUND = 98;
-const hex = (h) => [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
 for (let y = GROUND; y < bg.h; y++)
   for (let x = 0; x < bg.w; x++)
     set(bg, x, y, [...hex(y < GROUND + 2 ? 'fdba3f' : (y - GROUND) % 5 === 4 ? '715313' : 'c6805c'), 255]);

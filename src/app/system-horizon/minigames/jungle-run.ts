@@ -44,7 +44,12 @@ const SINK = 106;
 const RUN = 2;
 /** Impulso máximo ao soltar o cipó e raio de alcance da mão (px). */
 const RELEASE_MAX = 3.5;
-const GRAB_RADIUS = 6;
+const GRAB_RADIUS = 7;
+/** Trecho do cipó que a mão alcança (fração a partir do galho) e o deslize até a ponta por tick. */
+const GRIP_FROM = 0.55;
+const GRIP_SLIDE = 0.1;
+/** Mão do jogador, a partir dos pés (a mesma altura em que ele fica pendurado). */
+const HAND = 21;
 const JUMP = -6.4;
 const GRAVITY = 0.7;
 /** Corpo do jogador para colisão (a partir dos pés). */
@@ -72,7 +77,7 @@ interface Screen {
 
 export const JUNGLE_SCREENS: readonly Screen[] = [
   { snakes: [46], scorpions: [[70, 104]], spiders: [132] },
-  { lake: [44, 116], vine: { x: 80, y: 12, length: 62, amplitude: 0.72, period: 34 } },
+  { lake: [44, 116], vine: { x: 80, y: 12, length: 62, amplitude: 0.72, period: 40 } },
   { lake: [30, 136], crocs: [54, 83, 112], goal: 148 },
 ];
 
@@ -119,6 +124,8 @@ export class JungleRun implements Minigame {
   private releaseVx = 0;
   /** Pode agarrar o cipó (falso depois de soltar, até tocar o chão). */
   private regrab = true;
+  /** Onde a mão está no cipó (fração a partir do galho); desliza até a ponta (1). */
+  private grip = 1;
 
   /** `still`: sem o piscar depois de voltar ao começo da tela (reduced motion). */
   constructor(private readonly still = false) {}
@@ -138,14 +145,15 @@ export class JungleRun implements Minigame {
     const wasMoving = this.moving;
 
     if (p.hanging && s.vine) {
-      const tip = vineTip(s.vine, this.tick);
+      this.grip = Math.min(1, this.grip + GRIP_SLIDE);
+      const tip = vinePoint(s.vine, this.tick, this.grip);
       p.x = tip.x;
-      p.y = tip.y + 21;
+      p.y = tip.y + HAND;
       this.moving = false;
       if (pressed) {
         // Solta para o lado em que o cipó está indo, com impulso limitado; não agarra de novo até
         // tocar o chão (ou cair na água).
-        const next = vineTip(s.vine, this.tick + 1);
+        const next = vinePoint(s.vine, this.tick + 1, this.grip);
         p.hanging = false;
         p.onGround = false;
         p.vy = -3;
@@ -168,10 +176,11 @@ export class JungleRun implements Minigame {
         p.y += p.vy;
       }
       this.land(s);
-      if (!p.onGround && this.regrab && s.vine && p.vy > -2) {
-        const tip = vineTip(s.vine, this.tick);
-        if (Math.hypot(tip.x - p.x, tip.y - (p.y - 21)) <= GRAB_RADIUS) {
+      if (!p.onGround && this.regrab && s.vine) {
+        const grip = this.reach(s.vine);
+        if (grip !== null) {
           p.hanging = true;
+          this.grip = grip;
           this.releaseVx = 0;
         }
       }
@@ -182,6 +191,25 @@ export class JungleRun implements Minigame {
     if (this.hit(JUNGLE_SCREENS[this.screen])) this.restartScreen();
     const goal = JUNGLE_SCREENS[this.screen].goal;
     if (goal !== undefined && p.onGround && p.x >= goal - 6) this.done = true;
+  }
+
+  /**
+   * A mão toca a parte de baixo do cipó em algum momento entre o tick anterior e o atual? O cipó
+   * anda até ~7 px por tick na ponta: testar só a posição final deixava ele passar pela mão.
+   * Devolve onde a mão pegou (fração a partir do galho), ou `null`.
+   */
+  private reach(vine: Vine): number | null {
+    const hand = { x: this.p.x, y: this.p.y - HAND };
+    const base = { x: vine.x, y: vine.y };
+    for (let k = 0; k <= 4; k++) {
+      const tip = vineTip(vine, this.tick - 1 + k / 4);
+      const dx = tip.x - base.x;
+      const dy = tip.y - base.y;
+      const along = ((hand.x - base.x) * dx + (hand.y - base.y) * dy) / (dx * dx + dy * dy);
+      const f = Math.min(1, Math.max(GRIP_FROM, along));
+      if (Math.hypot(base.x + dx * f - hand.x, base.y + dy * f - hand.y) <= GRAB_RADIUS) return f;
+    }
+    return null;
   }
 
   /** Chão, cabeças de jacaré fechadas e água. */
@@ -246,6 +274,7 @@ export class JungleRun implements Minigame {
     Object.assign(p, { x: START_X, y: GROUND, vy: 0, onGround: true, hanging: false, facing: 1 });
     this.releaseVx = 0;
     this.regrab = true;
+    this.grip = 1;
     this.retries++;
     this.flash = 8;
   }
@@ -322,8 +351,13 @@ export class JungleRun implements Minigame {
 }
 
 export function vineTip(vine: Vine, tick: number): { x: number; y: number } {
+  return vinePoint(vine, tick, 1);
+}
+
+/** Ponto do cipó a uma fração `f` do comprimento, a partir do galho. */
+function vinePoint(vine: Vine, tick: number, f: number): { x: number; y: number } {
   const a = vine.amplitude * Math.sin((2 * Math.PI * tick) / vine.period);
-  return { x: vine.x + vine.length * Math.sin(a), y: vine.y + vine.length * Math.cos(a) };
+  return { x: vine.x + vine.length * f * Math.sin(a), y: vine.y + vine.length * f * Math.cos(a) };
 }
 
 export function crocOpen(index: number, tick: number): boolean {

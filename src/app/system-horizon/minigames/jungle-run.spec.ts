@@ -122,6 +122,33 @@ describe('JungleRun', () => {
       return g;
     };
 
+    it('is grabbed from the bank on most timings (the hand meets the rope between ticks)', () => {
+      for (const x0 of [36, 40, 43]) {
+        let grabbed = 0;
+        for (let phase = 0; phase < vine.period; phase++) {
+          const g = new JungleRun();
+          Object.assign(g, { screen: 1, tick: phase });
+          Object.assign(g.runner, { x: x0 });
+          g.step({ dir: 1, jump: true });
+          for (let i = 0; i < 40 && !g.retries && !g.runner.hanging; i++) {
+            g.step({ dir: 1, jump: false });
+            if (g.runner.onGround) break;
+          }
+          if (g.runner.hanging) grabbed++;
+        }
+        expect(grabbed / vine.period, `x0=${x0}`).toBeGreaterThanOrEqual(0.6);
+      }
+    });
+
+    it('slides down to the tip after grabbing higher up the rope', () => {
+      const g = hanging(0);
+      Object.assign(g, { grip: 0.6 });
+      for (let i = 0; i < 6; i++) g.step(idle);
+      const tip = vineTip(vine, g.tick);
+      expect(g.runner.x).toBeCloseTo(tip.x);
+      expect(g.runner.y).toBeCloseTo(tip.y + 21);
+    });
+
     it('never grabs the vine again right after letting go', () => {
       for (let phase = 0; phase < vine.period; phase++) {
         const g = hanging(phase);

@@ -388,7 +388,9 @@ O jogo deixa de repetir o Diário: cada parada mostra uma frase curta num balão
 
 Encostar num bicho ou cair na água volta ao começo da tela (pisca, sem game over).
 
-**Contrato da arte:** `sh-jungle.png`, 7 quadros 16 × 16 numa linha (escorpião A, escorpião B, jacaré fechado, jacaré aberto, cobra, joystick, aranha), pivot 8,15; `sh-jungle-bg.png`, 160 × 120, com o chão em y ≥ 98. Gerados por `build-jungle.mjs` a partir das fontes do PixelLab.
+**Cipó (ajuste de 2026-11-02, depois do teste do Eduardo):** a mão agarra qualquer ponto da parte de baixo do cipó (de 55% do comprimento até a ponta) e o toque é testado ao longo do movimento entre um tick e o outro; o personagem desliza até a ponta. Balanço de 40 ticks (era 34). Antes, só ~13% dos momentos de pulo da margem agarravam; agora ~80% (teste em `jungle-run.spec.ts`).
+
+**Contrato da arte:** `sh-jungle.png`, 7 quadros 16 × 16 numa linha (escorpião A, escorpião B, jacaré fechado, jacaré aberto, cobra, joystick, aranha), pivot 8,15; `sh-jungle-bg.png`, 160 × 120, com o chão em y ≥ 98. Gerados por `build-jungle.mjs` a partir das fontes do PixelLab; a cobra (dourada) e a aranha (bronze, olhos vermelhos) são recoloridas dentro da paleta, porque o corpo quase preto da fonte sumia na folhagem.
 
 ### 19.4 Próximos minijogos
 
