@@ -1,7 +1,7 @@
 # Pendências — Modo Campanha
 
 Lista viva do que falta decidir, aprovar ou fazer. Atualize ao concluir um item (marque `[x]` ou apague a linha).
-Última atualização: 2026-11-02.
+Última atualização: 2026-11-09.
 
 ## Para retomar em outra máquina
 
@@ -47,7 +47,7 @@ Estado: `feat/content-pass` (D-102) → `feat/system-horizon-mvp` (D-103) → `f
 
 - [ ] Personagem definitivo (hoje provisório, `docs/22` §13).
 - [ ] **MVP interativo implementado (D-103), aguardando sua revisão:** branch `feat/system-horizon-mvp` (sem merge e sem deploy). Abra `/system-horizon` ou, na capa do MC-001, "Jogar SYSTEM HORIZON".
-- [ ] **Balões e minijogos (D-104), protótipo para sua revisão:** branch `feat/system-horizon-minigames`. Jogue a CORRIDA NA SELVA no primeiro marco ("Jogar: CORRIDA NA SELVA") e diga se o ritmo e a dificuldade estão certos; aí faço os outros seis (locadoras, Aedes Revenge, 4Change, ScoutEvo, EOS, Axia).
+- [ ] **Balões e minijogos (D-104), protótipo para sua revisão:** branch `feat/system-horizon-minigames`. Dificuldade aumentada em 2026-11-09 (branch `claude/gallant-franklin-ee6a0b`, a partir da anterior), depois do seu teste. Jogue de novo a CORRIDA NA SELVA no primeiro marco ("Jogar: CORRIDA NA SELVA") e diga se o ritmo e a dificuldade estão certos; aí faço os outros seis (locadoras, Aedes Revenge, 4Change, ScoutEvo, EOS, Axia).
 - [ ] **Aprovar as frases dos balões** (`src/app/data/horizon-balloons.data.ts`): só encurtam textos já aprovados.
 - [ ] Arte do jogo: marcadores em pixel art do repositório (`sh-markers.png`); o PixelLab não estava conectado nesta sessão. Para usar o PixelLab, configure o servidor MCP dele no Claude Code (`claude mcp add ...`) e peça a troca no contrato de `docs/23` §18.6.
 

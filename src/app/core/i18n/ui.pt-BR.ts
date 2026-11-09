@@ -303,7 +303,7 @@ export const UI_PT_BR = {
         games: {
           'jungle-run': {
             title: 'CORRIDA NA SELVA',
-            goal: 'Pule a cobra e o escorpião, passe pela aranha quando ela subir, atravesse o lago no cipó e pise nos jacarés de boca fechada até chegar ao joystick.',
+            goal: 'Pule as cobras e o escorpião, passe pelas aranhas quando elas subirem, atravesse o lago no cipó e pise nos jacarés de boca fechada até chegar ao joystick.',
             keys: 'Teclado: ← → andam; ↑, Espaço ou Enter saltam (no cipó, saltam para soltar). Toque: segure ◀ ▶ e use Saltar.',
           },
         },

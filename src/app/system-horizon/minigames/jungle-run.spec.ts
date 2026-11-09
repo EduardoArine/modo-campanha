@@ -182,6 +182,41 @@ describe('JungleRun', () => {
     });
   });
 
+  // Dificuldade (ajuste de 2026-11-09): os obstáculos pedem tempo certo, mas com folga real.
+  describe('difficulty', () => {
+    const right: PadInput = { dir: 1, jump: false };
+
+    it('clears the two snakes only with a well-timed long jump (4 to 6 take-off points)', () => {
+      const cleared: number[] = [];
+      for (let walk = 0; walk < 16; walk++) {
+        const g = new JungleRun();
+        run(g, right, walk);
+        const from = g.runner.x;
+        if (g.retries) continue;
+        g.step({ dir: 1, jump: true });
+        for (let i = 0; i < 17 && !g.retries; i++) g.step(right);
+        if (!g.retries) cleared.push(from);
+      }
+      expect(cleared.length).toBeGreaterThanOrEqual(4);
+      expect(cleared.length).toBeLessThanOrEqual(6);
+    });
+
+    it('moves neighbouring spiders half a cycle apart: when one is down, the other is up', () => {
+      const ys = Array.from({ length: 80 }, (_, t) => [spiderY(t, 0), spiderY(t, 1)]);
+      const low = Math.max(...ys.map(([a]) => a));
+      const high = Math.min(...ys.map(([a]) => a));
+      for (const [a, b] of ys) expect(Math.abs(a + b - (low + high))).toBeLessThanOrEqual(1);
+    });
+
+    it('cannot be finished by just holding → and jumping on a fixed beat', () => {
+      for (let beat = 6; beat <= 24; beat++) {
+        const g = new JungleRun();
+        for (let t = 0; t < 400 && !g.done; t++) g.step({ dir: 1, jump: t % beat === 0 });
+        expect(g.done && !g.retries, `batida ${beat}`).toBe(false);
+      }
+    });
+  });
+
   it('stops stepping once done', () => {
     const game = new JungleRun();
     game.done = true;

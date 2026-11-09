@@ -8,9 +8,9 @@ import { Minigame, MinigameArt, PadInput } from './minigame';
  * CORRIDA NA SELVA (D-104), o minijogo do marco "Primeiro contato" (c. 1991, o Atari 2600): uma
  * homenagem aos jogos de selva da época, com mecânicas de gênero e arte própria (nunca o nome, o
  * personagem ou a tela de um jogo real). Três telas que trocam inteiras, como no 2600:
- * 1. a cobra parada e o escorpião que patrulha (pular);
- * 2. o lago com o cipó (pular no cipó, soltar do outro lado);
- * 3. o lago dos jacarés (pular de cabeça em cabeça com a boca fechada) até o joystick.
+ * 1. duas cobras juntas (um pulo longo), o escorpião que patrulha e duas aranhas em contratempo;
+ * 2. uma aranha na margem e o lago com o cipó (pular no cipó, soltar do outro lado);
+ * 3. o lago dos quatro jacarés (pular de cabeça em cabeça com a boca fechada) até o joystick.
  * Sem game over: encostar num bicho ou cair na água volta ao começo da tela.
  */
 
@@ -70,24 +70,28 @@ interface Screen {
   readonly snakes?: readonly number[];
   readonly scorpions?: readonly (readonly [number, number])[];
   readonly crocs?: readonly number[];
-  /** Aranhas que descem do alto e sobem de novo (passar quando estão em cima). */
+  /** Aranhas que descem do alto e sobem de novo (passar quando estão em cima); cada uma meio ciclo depois da anterior. */
   readonly spiders?: readonly number[];
   readonly goal?: number;
 }
 
 export const JUNGLE_SCREENS: readonly Screen[] = [
-  { snakes: [46], scorpions: [[70, 104]], spiders: [132] },
-  { lake: [44, 116], vine: { x: 80, y: 12, length: 62, amplitude: 0.72, period: 40 } },
-  { lake: [30, 136], crocs: [54, 83, 112], goal: 148 },
+  { snakes: [38, 45], scorpions: [[62, 100]], spiders: [118, 142] },
+  {
+    spiders: [28],
+    lake: [44, 116],
+    vine: { x: 80, y: 12, length: 62, amplitude: 0.72, period: 40 },
+  },
+  { lake: [26, 140], crocs: [46, 72, 98, 124], goal: 150 },
 ];
 
 /** Ciclo da boca dos jacarés (ticks): fechada, depois aberta. */
-export const CROC_CYCLE = { closed: 20, open: 10 } as const;
+export const CROC_CYCLE = { closed: 14, open: 12 } as const;
 const CROC_HALF = 7;
 /** Topo da cabeça do jacaré fechado (onde o jogador pisa). */
 const CROC_TOP = WATER - 4;
 /** Aranha: o fio desce do alto e sobe em ciclo. */
-const SPIDER = { top: 30, drop: 56, period: 44, half: 4 } as const;
+const SPIDER = { top: 30, drop: 62, period: 38, half: 4 } as const;
 const START_X = 12;
 
 interface Runner {
@@ -266,7 +270,7 @@ export class JungleRun implements Minigame {
     if (low && (s.scorpions ?? []).some((path) => near(scorpionX(path, this.tick), 4))) return true;
     // A aranha pega quem passa com ela embaixo (os pés dela abaixo da cabeça do jogador).
     const head = p.y - BODY.height;
-    return (s.spiders ?? []).some((x) => near(x, SPIDER.half) && spiderY(this.tick) > head);
+    return (s.spiders ?? []).some((x, i) => near(x, SPIDER.half) && spiderY(this.tick, i) > head);
   }
 
   private restartScreen(): void {
@@ -312,8 +316,8 @@ export class JungleRun implements Minigame {
       sprite(crocOpen(i, this.tick) ? SPRITE.crocOpen : SPRITE.crocClosed, x, WATER + 3),
     );
     (s.snakes ?? []).forEach((x) => sprite(SPRITE.snake, x, GROUND));
-    (s.spiders ?? []).forEach((x) => {
-      const y = spiderY(this.tick);
+    (s.spiders ?? []).forEach((x, i) => {
+      const y = spiderY(this.tick, i);
       for (let t = 0; t < y - 12; t += 2) r.rect(x, t, 1, 1, palette.creamDim);
       sprite(SPRITE.spider, x, y);
     });
@@ -376,8 +380,9 @@ function scorpionDir(path: readonly [number, number], tick: number): number {
   return scorpionX(path, tick + 1) - scorpionX(path, tick);
 }
 
-/** Pés da aranha (o fio vem do alto): sobe e desce em ciclo suave. */
-export function spiderY(tick: number): number {
-  const phase = (1 - Math.cos((2 * Math.PI * tick) / SPIDER.period)) / 2;
+/** Pés da aranha `index` (o fio vem do alto): sobe e desce em ciclo suave, meio ciclo depois da anterior. */
+export function spiderY(tick: number, index = 0): number {
+  const shifted = tick + (index * SPIDER.period) / 2;
+  const phase = (1 - Math.cos((2 * Math.PI * shifted) / SPIDER.period)) / 2;
   return Math.round(SPIDER.top + SPIDER.drop * phase);
 }

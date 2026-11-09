@@ -286,7 +286,7 @@ export const UI_EN: UiDictionary = {
         games: {
           'jungle-run': {
             title: 'JUNGLE RUN',
-            goal: 'Jump over the snake and the scorpion, pass the spider while it is up, swing across the lake on the vine, and step on the crocodiles while their mouths are shut to reach the joystick.',
+            goal: 'Jump over the snakes and the scorpion, pass the spiders while they are up, swing across the lake on the vine, and step on the crocodiles while their mouths are shut to reach the joystick.',
             keys: 'Keyboard: ← → walk; ↑, Space, or Enter jump (on the vine, jump to let go). Touch: hold ◀ ▶ and use Jump.',
           },
         },

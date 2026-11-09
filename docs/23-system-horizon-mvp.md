@@ -382,13 +382,15 @@ O jogo deixa de repetir o Diário: cada parada mostra uma frase curta num balão
 
 | Tela | O que tem | Como passar |
 |---|---|---|
-| 1 | cobra parada, escorpião que patrulha, aranha que desce do alto | pular a cobra e o escorpião; passar pela aranha quando ela sobe |
-| 2 | lago com cipó balançando | pular no cipó perto da borda; saltar de novo para soltar do outro lado |
-| 3 | lago com três jacarés (boca fecha 20 ticks, abre 10) | pisar nas cabeças com a boca fechada até o joystick |
+| 1 | duas cobras juntas, escorpião que patrulha, duas aranhas em contratempo | um pulo longo sobre as cobras; pular o escorpião; passar por uma aranha de cada vez, parando entre elas |
+| 2 | aranha na margem, lago com cipó balançando | passar pela aranha quando ela sobe; pular no cipó perto da borda; saltar de novo para soltar do outro lado |
+| 3 | lago mais largo com quatro jacarés (boca fecha 14 ticks, abre 12) | pisar nas cabeças com a boca fechada até o joystick |
 
 Encostar num bicho ou cair na água volta ao começo da tela (pisca, sem game over).
 
 **Cipó (ajuste de 2026-11-02, depois do teste do Eduardo):** a mão agarra qualquer ponto da parte de baixo do cipó (de 55% do comprimento até a ponta) e o toque é testado ao longo do movimento entre um tick e o outro; o personagem desliza até a ponta. Balanço de 40 ticks (era 34). Antes, só ~13% dos momentos de pulo da margem agarravam; agora ~80% (teste em `jungle-run.spec.ts`).
+
+**Dificuldade (ajuste de 2026-11-09, depois do teste do Eduardo, que achou o jogo sem desafio):** sem arte nova e sem mexer no cipó. Tela 1: segunda cobra colada na primeira (o pulo só passa de 5 pontos de partida, ~0,4 s de janela) e segunda aranha meio ciclo depois da primeira; as aranhas descem mais (62 px) e mais rápido (38 ticks). Tela 2: uma aranha na margem antes do cipó. Tela 3: lago de 26 a 140, quatro jacarés, boca fechada por 14 ticks e aberta por 12 (era 20 / 10). Continua sem game over e vencível sem erro (a busca do teste encontra); testes novos travam a janela do pulo, o contratempo das aranhas e que segurar → pulando num ritmo fixo não termina o jogo.
 
 **Contrato da arte:** `sh-jungle.png`, 7 quadros 16 × 16 numa linha (escorpião A, escorpião B, jacaré fechado, jacaré aberto, cobra, joystick, aranha), pivot 8,15; `sh-jungle-bg.png`, 160 × 120, com o chão em y ≥ 98. Gerados por `build-jungle.mjs` a partir das fontes do PixelLab; a cobra (dourada) e a aranha (bronze, olhos vermelhos) são recoloridas dentro da paleta, porque o corpo quase preto da fonte sumia na folhagem.
 
