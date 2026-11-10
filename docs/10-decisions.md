@@ -1735,5 +1735,5 @@ Status possíveis: `Aceita` · `Proposta` · `Substituída` · `Rejeitada`
   - **Firefox (Gecko) e WebKit (motor do Safari), no Playwright:** `/` e `/en` em 1440 e 390 px, com as seis seções, fontes, teaser, troca de cartucho, dossiê e Diário; sem erros nem rolagem lateral.
   - **Achado no WebKit:** o build do WebKit para Windows ignora o eixo de peso da IBM Plex Sans (fonte variável, um arquivo com os pesos 100–700) e desenha tudo no peso padrão do arquivo, o mais fino (100). O Safari de macOS e iOS suporta fontes variáveis desde 2017, então o provável é ser uma limitação desse build. **A conferir num iPhone ou Mac.** Se o texto aparecer fino lá, a correção é trocar o arquivo variável por pesos estáticos (400, 500, 600 e 700).
   - **Não dá para fazer daqui (contas do Eduardo):** LinkedIn Post Inspector e envio do `sitemap.xml` ao Search Console.
-- **Status:** implementado na branch `feat/content-pass`, para revisão do Eduardo. Sem merge e sem deploy.
+- **Status:** publicado em 2026-11-10 (PR #9), a pedido do Eduardo, para a divulgação no LinkedIn. O SYSTEM HORIZON jogável (D-103) e os minijogos (D-104) não entraram.
 

@@ -1,7 +1,7 @@
 # Pendências — Modo Campanha
 
 Lista viva do que falta decidir, aprovar ou fazer. Atualize ao concluir um item (marque `[x]` ou apague a linha).
-Última atualização: 2026-10-25.
+Última atualização: 2026-11-10.
 
 ## Para retomar em outra máquina
 
@@ -13,10 +13,11 @@ npm start       # http://localhost:4200 (dev, sem pré-renderização)
 npm run build   # produção: pré-renderiza / e /en em dist/modo-campanha/browser
 ```
 
-Estado: tudo mergeado na `main`. Nenhuma branch aberta.
+Estado: `main` publicada com a D-102. Em aberto, sem merge e sem deploy: `feat/system-horizon-mvp` (D-103) → `feat/system-horizon-minigames` (D-104) → `claude/gallant-franklin-ee6a0b` (dificuldade da CORRIDA NA SELVA), cada uma a partir da anterior.
 
 ## 1. Publicar (deploy)
 
+- [x] Publicado em 2026-11-10 (PR #9, commit `f727714`): passe de conteúdo da D-102 (aprovações, e-mail no Contato, pausa de 44 px na Hero, "10+ anos" só no Player Status, marco 04 com resumo próprio, traduções do Diário). Deploy concluído no GitHub Actions; falta você abrir o site no ar uma vez (não foi possível conferir daqui). O SYSTEM HORIZON jogável e os minijogos ficaram de fora.
 - [x] Publicado em 2026-10-24 (PR #8, commit `3c6d7c9`): currículo em PDF (D-099), MC-007 — 4Change e o marco de 2016 no Diário (D-100), Inventário abrindo com o MC-001 encaixado (D-101). Conferido no ar: "07 CARTUCHOS" em `/` e `/en`, PDFs no idioma certo, sem erros nem rolagem lateral.
 - [x] Publicado antes, no mesmo dia: D-094 a D-098 (commit `b316a0d`).
 
