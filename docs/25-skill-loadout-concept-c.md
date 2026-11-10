@@ -1,6 +1,6 @@
 # 25 — Arsenal de Habilidades: Concept C, Loadout Interativo (D-092)
 
-> Status: **implementado na branch `feat/skill-loadout-concept-c`, aguardando a aprovação visual e funcional do Eduardo.** Sem merge e sem deploy.
+> Status: **aprovado pelo Eduardo (D-102) e publicado.**
 > Substitui a composição aberta do Skill Loadout (02-B, D-043) pela **Concept C — Loadout Interativo**, escolhida pelo Eduardo. Conteúdo: o Skill Loadout v1 aprovado (D-041), sem nenhum item novo.
 
 ## 1. Direção

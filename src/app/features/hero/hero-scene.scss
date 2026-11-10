@@ -106,8 +106,10 @@ img {
   bottom: space(3);
   display: grid;
   place-items: center;
-  width: space(6);
-  height: space(6);
+  // 44 px: alvo de toque recomendado (D-102; era space(6) = 32 px). Fora da escala de spacing,
+  // como os ladrilhos de 2,75 rem do Player Status.
+  width: 2.75rem;
+  height: 2.75rem;
   padding: 0;
   border: var(--mc-border-width-default) solid var(--mc-border-subtle);
   background: var(--mc-bg);

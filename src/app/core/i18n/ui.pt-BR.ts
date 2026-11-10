@@ -41,6 +41,7 @@ export const UI_PT_BR = {
   cta: {
     explore: 'Explorar campanha',
     resume: 'Currículo',
+    email: 'E-mail',
     github: 'GitHub',
     linkedin: 'LinkedIn',
   },

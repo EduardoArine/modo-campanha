@@ -1,7 +1,7 @@
 # Pendências — Modo Campanha
 
 Lista viva do que falta decidir, aprovar ou fazer. Atualize ao concluir um item (marque `[x]` ou apague a linha).
-Última atualização: 2026-10-24.
+Última atualização: 2026-10-25.
 
 ## Para retomar em outra máquina
 
@@ -22,29 +22,26 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 
 ## 2. Aprovações formais (implementado e mergeado, falta o seu "aprovado")
 
-- [ ] Diário de Campanha por capítulos (D-091)
-- [ ] Arsenal de Habilidades, Concept C (D-092); frases de PRD, IA e DNA ainda são **proposta** (`src/app/data/skills.data.ts`)
-- [ ] Inventário H3, capa e dossiê dentro do CRT (D-093), moldura e cenário (D-094), MC-01 frontal e portátil (D-095), dossiê em tela cheia no celular (D-096)
-- [ ] Ajustes da revisão de UI/UX (D-098)
+- [x] Tudo aprovado pelo Eduardo em 2026-10-25 (D-102): Diário (D-091), Arsenal (D-092, com as frases), Inventário (D-093 a D-096) e revisão de UI/UX (D-098).
 
 ## 3. Decisões suas
 
 - [x] **Currículo em PDF** (pt e en): no cabeçalho (≥ 1024 px) e no Contato (D-099).
-- [ ] **E-mail de contato:** opcional. `src/app/data/social-links.data.ts` já está preparado (só renderiza com endereço real).
-- [ ] **Hero (congelado):** botão de pausa da demonstração com 32 px (o recomendado para toque é 44 px) e, no celular, a primeira tela só com texto.
+- [x] **E-mail de contato** no Contato (D-102).
+- [x] **Hero:** botão de pausa da demonstração com 44 px (D-102). A primeira tela do celular só com texto fica como está.
 - [x] **MC-007 — 4Change (D-100):** conteúdo, inglês e arte do cartucho aprovados.
   - [x] imagem do marco de 2016 no Diário;
   - site da Arppen: dispensado.
-- [ ] **Paco: 23 Horas para a Última Vela:** entra como próximo cartucho (MC-008) quando você aprovar o conteúdo.
-- [ ] **FASE 6 (segredos):** qual efeito para o Konami Code, Secret Area etc. (`docs/08`).
-- [ ] **Progress e XP de campanha:** sem definição (D-021, D-059).
+- [ ] **Paco: 23 Horas para a Última Vela:** fica para depois (MC-008, quando você quiser).
+- [ ] **FASE 6 (segredos):** talvez entre no SYSTEM HORIZON interativo.
+- [ ] **Progress e XP de campanha:** proposta em `docs/26-progress-xp.md`, aguardando sua decisão.
 
 ## 4. Conteúdo (textos seus)
 
-- [ ] "10+ anos" aparece 4 vezes nas duas primeiras telas (Hero e Player Status, ambos congelados).
-- [ ] Marco 04 do capítulo 02 do Diário repete a descrição do MC-006 (Comunidade ON).
-- [ ] "facilities" (Axia) ficou como jargão aceito na versão pt; trocar se preferir.
-- [ ] Revisão das traduções antigas do Campaign Log (D-088).
+- [x] "10+ anos" só no Player Status (D-102).
+- [x] Marco 04 do capítulo 02 com resumo próprio (D-102).
+- [x] "facilities" fica na versão pt.
+- [x] Traduções do Diário revisadas (D-102).
 
 ## 5. SYSTEM HORIZON
 
@@ -53,7 +50,10 @@ Estado: tudo mergeado na `main`. Nenhuma branch aberta.
 
 ## 6. Depois da publicação
 
-- [ ] Testar em Safari e Firefox reais; validar links do LinkedIn e da ScienceDirect; LinkedIn Post Inspector; `sitemap.xml` no Search Console.
+- [x] Firefox e WebKit (motor do Safari) testados no Playwright; links externos conferidos (D-102).
+- [ ] **Conferir num iPhone ou Mac** se o texto aparece no peso certo (no WebKit de teste ele ficou fino; ver D-102).
+- [ ] Abrir no navegador o PDF do TCC no repositório da FATEC (o servidor não respondeu daqui).
+- [ ] LinkedIn Post Inspector e envio do `sitemap.xml` ao Search Console (precisam da sua conta).
 - [ ] Domínio próprio (opcional) e divulgação no LinkedIn.
 
 ## Referências

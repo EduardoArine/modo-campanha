@@ -1,5 +1,6 @@
 import { CHAPTER_02, FATEC_CHAPTER, ORIGIN_CHAPTER } from './campaign-log.chapters.data';
 import { CAMPAIGN_LOG_CHAPTERS } from './campaign-log.data';
+import { PROJECTS } from './projects.data';
 
 // CHAPTER 00 — ORIGIN (docs/15 §13): relato real do Eduardo. Os testes protegem as regras
 // factuais (nada de anos inventados, nada de métrica) e a fidelidade ao texto fornecido.
@@ -301,11 +302,16 @@ describe('Campaign Log — CHAPTER 02 (Comunidade ON)', () => {
 
   it('uses its own approved card summary (not a repeat of the story) and keeps the full story', () => {
     expect(on.summary['pt-BR']).toBe(
-      'Onde conecto engenharia, design de produto, inteligência artificial e gamificação para construir experiências digitais que vão além das interfaces tradicionais.',
+      'Na Comunidade ON, a paixão por games que me levou a estudar Jogos Digitais virou parte de como penso e construo experiências digitais.',
     );
     expect(on.summary.en).toBe(
-      'Where I bring together engineering, product design, artificial intelligence, and gamification to build digital experiences that go beyond traditional interfaces.',
+      'At Comunidade ON, the passion for games that led me to study Digital Games became part of how I think about and build digital experiences.',
     );
+    // D-102: o resumo do marco não repete a descrição do cartucho MC-006.
+    const mc006 = PROJECTS.find((p) => p.serial === 'MC-006')!;
+    for (const locale of ['pt-BR', 'en'] as const) {
+      expect(on.summary[locale]).not.toBe(mc006.description[locale]);
+    }
     for (const locale of ['pt-BR', 'en'] as const) {
       expect(on.story[locale].join(' ')).not.toContain(on.summary[locale]);
       expect(on.story[locale].length).toBe(8);

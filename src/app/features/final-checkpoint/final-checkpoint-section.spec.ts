@@ -40,7 +40,9 @@ describe('FinalCheckpointSection', () => {
 
   it('offers GitHub and LinkedIn as equivalent secondary actions opening in a new tab', async () => {
     const el = await renderAt('/');
-    const links = Array.from(el.querySelectorAll<HTMLAnchorElement>('.actions a:not(.resume)'));
+    const links = Array.from(
+      el.querySelectorAll<HTMLAnchorElement>('.actions a:not(.resume, .email)'),
+    );
 
     expect(links.map((a) => a.getAttribute('href'))).toEqual([
       'https://github.com/EduardoArine',
@@ -81,13 +83,28 @@ describe('FinalCheckpointSection', () => {
     );
   });
 
-  it('shows no destination without an approved public link', async () => {
+  it('offers the real e-mail as a mailto action with the address visible (D-102)', async () => {
+    const pt = await renderAt('/');
+    const mail = pt.querySelector<HTMLAnchorElement>('.actions a.email')!;
+
+    expect(mail.getAttribute('href')).toBe('mailto:eduardo.arine@gmail.com');
+    expect(mail.classList).toContain('mc-action--secondary');
+    // Abre o cliente de e-mail: sem nova aba.
+    expect(mail.getAttribute('target')).toBeNull();
+    expect(mail.textContent?.replace(/\s+/g, ' ').trim()).toBe('E-mail: eduardo.arine@gmail.com');
+    expect(mail.querySelector('mc-icon')?.classList).toContain('mc-icon--stroke');
+  });
+
+  it('shows no other destination without an approved public link', async () => {
     const el = await renderAt('/');
     const hrefs = Array.from(el.querySelectorAll('a')).map((a) => a.getAttribute('href') ?? '');
 
-    expect(hrefs.some((href) => /^(mailto|tel):|wa\.me|whatsapp/i.test(href))).toBe(false);
+    // Só o e-mail aprovado; nada de telefone, WhatsApp ou formulário.
+    expect(hrefs.filter((href) => href.startsWith('mailto:'))).toEqual([
+      'mailto:eduardo.arine@gmail.com',
+    ]);
+    expect(hrefs.some((href) => /^tel:|wa\.me|whatsapp/i.test(href))).toBe(false);
     expect(el.querySelector('form, input, textarea')).toBeNull();
-    // Currículo aprovado (D-099, PDF real); e-mail e WhatsApp seguem sem destino.
-    expect(el.textContent).not.toMatch(/e-?mail|WhatsApp/i);
+    expect(el.textContent).not.toMatch(/WhatsApp/i);
   });
 });
